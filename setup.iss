@@ -35,32 +35,8 @@ DisableWelcomePage=False
 [Languages]
 Name: "english"; MessagesFile: "compiler:Default.isl"
 
-[Types]
-Name: "full"; Description: "Full installation"
-Name: "custom"; Description: "Custom installation"; Flags: iscustom
-
-[Components]
-Name: "advancedhud"; Description: "Advanced Widescreen HUD for 16:9 resolutions"; Types: custom full
-Name: "clipping"; Description: "Fix clipping with 16:9 resolution planetscapes"; Types: custom full
-Name: "smalltext"; Description: "Fix missing/small text on 1440p/4K resolutions"; Types: custom full
-Name: "compat"; Description: "Fix Windows 10 compatibility issues. TRY AT OWN RISK"; Types: custom
-Name: "console"; Description: "Add Single Player command console"; Types: custom full
-
 [Tasks]
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
-
-;[Files]
-;Source: "D:\Downloads\freelancer-hd-edition-v0-4-1.zip\EXE\Freelancer.exe"; DestDir: "{app}"; Flags: ignoreversion
-;Source: "D:\Downloads\freelancer-hd-edition-v0-4-1.zip\DATA\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
-;Source: "D:\Downloads\freelancer-hd-edition-v0-4-1.zip\DLLS\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
-;Source: "D:\Downloads\freelancer-hd-edition-v0-4-1.zip\EXE\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
-;Source: "D:\Downloads\freelancer-hd-edition-v0-4-1.zip\JFLP\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
-;Source: "D:\Downloads\freelancer-hd-edition-v0-4-1.zip\Freelancer-Manual.pdf"; DestDir: "{app}"; Flags: ignoreversion
-;Source: "D:\Downloads\freelancer-hd-edition-v0-4-1.zip\installinfo.txt"; DestDir: "{app}"; Flags: ignoreversion
-;Source: "D:\Downloads\freelancer-hd-edition-v0-4-1.zip\mod_options.rtf"; DestDir: "{app}"; Flags: ignoreversion
-;Source: "D:\Downloads\freelancer-hd-edition-v0-4-1.zip\README.txt"; DestDir: "{app}"; Flags: ignoreversion
-;Source: "D:\Downloads\freelancer-hd-edition-v0-4-1.zip\script.xml"; DestDir: "{app}"; Flags: ignoreversion
-; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]
 Name: "{group}\{#MyAppName}"; Filename: "{app}\EXE\{#MyAppExeName}"
@@ -78,72 +54,6 @@ var
   CallSign: TInputOptionWizardPage;
   StartupRes: TInputOptionWizardPage;
   LogoRes: TInputOptionWizardPage;
-procedure InitializeWizard;
-begin
-    { Download Mod and store in temp directory }
-    idpAddFile('https://pechey.net/files/freelancer-hd-edition-v0-4-1.zip.flmod', ExpandConstant('{tmp}\freelancerhd.zip'));
-    idpDownloadAfter(wpReady);
-
-    { Custom option pages }
-    DataDirPage := CreateInputDirPage(wpWelcome,
-    'Select Freelancer installation', 'Where is Freelancer installed?',
-    'Select the folder in which Freelancer is installed, then click Next. This is usually C:\Program Files (x86)\Microsoft Games\Freelancer',
-    False, '');
-    DataDirPage.Add('');
-
-    CallSign := CreateInputOptionPage(DataDirPage.ID,
-    'Simgle Player ID Code', 'Tired of being called Freelancer Alpha 1-1?',
-    'You know when each time an NPC talks to you in-game, they call you Freelancer Alpha 1-1? This is your ID Code. Well, this mod gives you the ability to change your ID Code in Single Player! Just select any option you like and the NPCs will call you by that.',
-    True, False);
-    CallSign.Add('Freelancer Alpha 1-1 (Default)');
-    CallSign.Add('Navy Beta 2-5');
-    CallSign.Add('Bretonia Police Iota 3-4');
-    CallSign.Add('Military Epsilon 11-6');
-    CallSign.Add('Naval Forces Matsu 4-9');
-    CallSign.Add('IMG Red 18-6');
-    CallSign.Add('Kishiro Yanagi 7-3');
-    CallSign.Add('Outcasts Lambda 9-12');
-    CallSign.Add('Dragons Green 16-13');
-    CallSign.Add('Spa and Cruise Omega 8-0');
-    CallSign.Add('Daumann Zeta 11-17');
-    CallSign.Add('Bowex Gamma 5-7');
-    CallSign.Add('Order Omicron 0-0');
-    CallSign.Add('LSF Delta 6-9');
-    CallSign.Add('Hacker Kappa 4-20');
-
-    StartupRes := CreateInputOptionPage(DataDirPage.ID,
-    'Startup Screen Resolution', 'Choose your native resolution',
-    'By default, the "Freelancer" splash screen you see when you start the game has a resolution of 1280x960. This makes it appear stretched and a bit blurry on HD 16:9 resolutions.' +
-    'We recommend setting this option to your monitor''s native resolution.' +
-    'Selecting the "None" option removes the start screen.',
-    True, False);
-    StartupRes.Add('None');
-    StartupRes.Add('720p 16:9 - 1280x720');
-    StartupRes.Add('960p 4:3 - 1280x960 (Default)');
-    StartupRes.Add('1080p 4:3 - 1440x1080');
-    StartupRes.Add('1080p 16:9 - 1920x1080');
-    StartupRes.Add('1440p 4:3 - 1920x1440');
-    StartupRes.Add('1440p 16:9 - 2560x1440');
-    StartupRes.Add('4K 4:3 - 2880x2160');
-    StartupRes.Add('4K 16:9 - 3840x2160');
-
-    LogoRes := CreateInputOptionPage(DataDirPage.ID,
-    'Freelancer Logo Resolution', 'In the game''s main menu',
-    'This logo has a resolution of 800x600 by default, which makes it look stretched and pixelated/blurry on HD 16:9 monitors.' +
-    'Setting this to a higher resolution with the correct aspect ratio makes the logo look nice and sharp and not stretched-out. Hence we recommend setting this option to your monitor''s native resolution.',
-    True, False);
-    LogoRes.Add('1080p 16:9 - 1920x1080');
-    LogoRes.Add('None');
-    LogoRes.Add('600p 4:3 - 800x600 (Default)');
-    LogoRes.Add('720p 4:3 - 960x720');
-    LogoRes.Add('720p 16:9 - 1280x720');
-    LogoRes.Add('1080p 4:3 - 1440x1080');
-    LogoRes.Add('1440p 4:3 - 1920x1440');
-    LogoRes.Add('1440p 16:9 - 2560x1440');
-    LogoRes.Add('4K 4:3 - 2880x2160');
-    LogoRes.Add('4K 16:9 - 3840x2160');
-
- end;
 
 procedure DirectoryCopy(SourcePath, DestPath: string);
 var
@@ -317,6 +227,197 @@ begin
   
 end;
 
+function FreelancerLogo():boolean;
+var
+  FolderPath : string;
+  OldFile : string;
+  NewFile : string;
+begin
+  FolderPath := ExpandConstant('{app}\DATA\INTERFACE\INTRO\IMAGES\');
+  NewFile := FolderPath + 'front_freelancerlogo.tga';
+
+  if(StartupRes.Values[0]) then
+    begin 
+      OldFile := NewFile
+      NewFile := FolderPath + 'front_freelancerlogo_800x600.tga'
+    end
+  else if(StartupRes.Values[2]) then 
+    OldFile := FolderPath + 'front_freelancerlogo_960x720.tga'
+  else if(StartupRes.Values[3]) then 
+    OldFile := FolderPath + 'front_freelancerlogo_1280x720.tga'
+  else if(StartupRes.Values[4]) then 
+    OldFile := FolderPath + 'front_freelancerlogo_1440x1080.tga'
+  else if(StartupRes.Values[5]) then 
+    OldFile := FolderPath + 'front_freelancerlogo_1920x1080.tga'
+  else if(StartupRes.Values[6]) then 
+    OldFile := FolderPath + 'front_freelancerlogo_1920x1440.tga'
+  else if(StartupRes.Values[7]) then 
+    OldFile := FolderPath + 'front_freelancerlogo_2560x1440.tga'
+  else if(StartupRes.Values[8]) then 
+    OldFile := FolderPath + 'front_freelancerlogo_2880x2160.tga'
+  else if(StartupRes.Values[8]) then 
+    OldFile := FolderPath + 'front_freelancerlogo_3840x2160.tga';
+
+  RenameFile(OldFile,NewFile);
+  
+end;
+
+// Custom Page
+var
+  // Advanced Widescreen HUD
+  lblWidescreenHud: TLabel;
+  WidescreenHud: TCheckBox;
+
+  // Fix clipping with 16:9 resolution planetscapes
+  lblPlanetScape: TLabel;
+  PlanetScape: TCheckBox;
+
+  // Fix Small Text on 1440p/4K resolutions
+  lblSmallText: TLabel;
+  SmallText: TCheckBox;
+
+  // Fix Windows 10 compatibility issues
+  lblWin10: TLabel;
+  Win10: TCheckBox;
+
+  // Add improved reflections
+  lblReflections: TLabel;
+  Reflections: TCheckBox;
+
+  // Add new missile effects
+  lblMissleEffects: TLabel;
+  MissileEffects: TCheckBox;
+
+  // Single Player Command Console
+  lblSinglePlayer: TLabel;
+  SinglePlayer: TCheckBox;
+
+procedure frmOptions_Activate(Page: TWizardPage);
+begin
+end;
+
+function frmOptions_ShouldSkipPage(Page: TWizardPage): Boolean;
+begin
+  Result := False;
+end;
+
+function frmOptions_BackButtonClick(Page: TWizardPage): Boolean;
+begin
+  Result := True;
+end;
+
+function frmOptions_NextButtonClick(Page: TWizardPage): Boolean;
+begin
+  Result := True;
+end;
+
+procedure frmOptions_CancelButtonClick(Page: TWizardPage; var Cancel, Confirm: Boolean);
+begin
+end;
+
+function frmOptions_CreatePage(PreviousPageId: Integer): Integer;
+var
+  Page: TWizardPage;
+begin
+  Page := CreateCustomPage(
+    PreviousPageId,
+    'Other Options',
+    'Choose other options here'
+  );
+
+  // Advanced Widescreen HUD
+  lblWidescreenHud := TLabel.Create(Page);
+  lblWidescreenHud.Parent := Page.Surface;
+  lblWidescreenHud.Caption := 'Advanced Widescreen HUD for 16:9 resolutions';
+  lblWidescreenHud.Left := ScaleX(20);
+
+  WidescreenHud := TCheckBox.Create(Page);
+  WidescreenHud.Parent := Page.Surface;
+  WidescreenHud.Checked := True;
+
+  // Fix clipping with 16:9 resolution planetscapes
+  lblPlanetScape := TLabel.Create(Page);
+  lblPlanetScape.Parent := Page.Surface;
+  lblPlanetScape.Caption := 'Fix clipping with 16:9 resolution planetscapes';
+  lblPlanetScape.Top := ScaleY(20);
+  lblPlanetScape.Left := ScaleX(20);
+
+  PlanetScape := TCheckBox.Create(Page);
+  PlanetScape.Parent := Page.Surface;
+  PlanetScape.Top := ScaleY(20);
+  PlanetScape.Checked := True;
+
+  // Fix Small Text on 1440p/4K resolutions
+  lblSmallText := TLabel.Create(Page);
+  lblSmallText.Parent := Page.Surface;
+  lblSmallText.Caption := 'Fix small text on 1440p/4K resolutions';
+  lblSmallText.Top := ScaleY(40);
+  lblSmallText.Left := ScaleX(20);
+
+  SmallText := TCheckBox.Create(Page);
+  SmallText.Parent := Page.Surface;
+  SmallText.Top := ScaleY(40);
+  SmallText.Checked := True;
+
+  // Fix Windows 10 compatibility issues
+  lblWin10 := TLabel.Create(Page);
+  lblWin10.Parent := Page.Surface;
+  lblWin10.Caption := 'Fix Windows 10 compatibility issues. TRY AT YOUR OWN RISK';
+  lblWin10.Top := ScaleY(60);
+  lblWin10.Left := ScaleX(20);
+
+  Win10 := TCheckBox.Create(Page);
+  Win10.Parent := Page.Surface;
+  Win10.Top := ScaleY(60);
+
+  // Add improved reflections
+  lblReflections := TLabel.Create(Page);
+  lblReflections.Parent := Page.Surface;
+  lblReflections.Caption := 'Add improved reflections';
+  lblReflections.Top := ScaleY(80);
+  lblReflections.Left := ScaleX(20);
+
+  Reflections := TCheckBox.Create(Page);
+  Reflections.Parent := Page.Surface;
+  Reflections.Top := ScaleY(80);
+  Reflections.Checked := True;
+
+  // Add new missile effects
+  lblMissleEffects := TLabel.Create(Page);
+  lblMissleEffects.Parent := Page.Surface;
+  lblMissleEffects.Caption := 'Add new missile effects';
+  lblMissleEffects.Top := ScaleY(100);
+  lblMissleEffects.Left := ScaleX(20);
+
+  MissileEffects := TCheckBox.Create(Page);
+  MissileEffects.Parent := Page.Surface;
+  MissileEffects.Top := ScaleY(100);
+  MissileEffects.Checked := True;
+
+  // Single Player Command Console
+  lblSinglePlayer := TLabel.Create(Page);
+  lblSinglePlayer.Parent := Page.Surface;
+  lblSinglePlayer.Caption := 'Single Player Command Console';
+  lblSinglePlayer.Top := ScaleY(120);
+  lblSinglePlayer.Left := ScaleX(20);
+
+  SinglePlayer := TCheckBox.Create(Page);
+  SinglePlayer.Parent := Page.Surface;
+  SinglePlayer.Top := ScaleY(120);
+  SinglePlayer.Checked := True;
+
+  with Page do
+  begin
+    OnActivate := @frmOptions_Activate;
+    OnShouldSkipPage := @frmOptions_ShouldSkipPage;
+    OnBackButtonClick := @frmOptions_BackButtonClick;
+    OnNextButtonClick := @frmOptions_NextButtonClick;
+    OnCancelButtonClick := @frmOptions_CancelButtonClick;
+  end;
+
+  Result := Page.ID;
+end;
+
 procedure CurStepChanged(CurStep: TSetupStep);
 begin
     if CurStep = ssPostInstall then 
@@ -327,6 +428,76 @@ begin
         UnZip(ExpandConstant('{tmp}\freelancerhd.zip'),ExpandConstant('{app}'));
         CallSignOption();
         StartUpLogo();
+        FreelancerLogo();
     end;
 end;
+
+procedure InitializeWizard;
+begin
+    { Download Mod and store in temp directory }
+    idpAddFile('https://github.com/BC46/freelancer-hd-edition/archive/refs/tags/0.4.1.zip', ExpandConstant('{tmp}\freelancerhd.zip'));
+    idpDownloadAfter(wpReady);
+
+    { Custom option pages }
+    DataDirPage := CreateInputDirPage(wpWelcome,
+    'Select Freelancer installation', 'Where is Freelancer installed?',
+    'Select the folder in which Freelancer is installed, then click Next. This is usually C:\Program Files (x86)\Microsoft Games\Freelancer',
+    False, '');
+    DataDirPage.Add('');
+
+    CallSign := CreateInputOptionPage(DataDirPage.ID,
+    'Simgle Player ID Code', 'Tired of being called Freelancer Alpha 1-1?',
+    'You know when each time an NPC talks to you in-game, they call you Freelancer Alpha 1-1? This is your ID Code. Well, this mod gives you the ability to change your ID Code in Single Player! Just select any option you like and the NPCs will call you by that.',
+    True, False);
+    CallSign.Add('Freelancer Alpha 1-1 (Default)');
+    CallSign.Add('Navy Beta 2-5');
+    CallSign.Add('Bretonia Police Iota 3-4');
+    CallSign.Add('Military Epsilon 11-6');
+    CallSign.Add('Naval Forces Matsu 4-9');
+    CallSign.Add('IMG Red 18-6');
+    CallSign.Add('Kishiro Yanagi 7-3');
+    CallSign.Add('Outcasts Lambda 9-12');
+    CallSign.Add('Dragons Green 16-13');
+    CallSign.Add('Spa and Cruise Omega 8-0');
+    CallSign.Add('Daumann Zeta 11-17');
+    CallSign.Add('Bowex Gamma 5-7');
+    CallSign.Add('Order Omicron 0-0');
+    CallSign.Add('LSF Delta 6-9');
+    CallSign.Add('Hacker Kappa 4-20');
+
+    StartupRes := CreateInputOptionPage(CallSign.ID,
+    'Startup Screen Resolution', 'Choose your native resolution',
+    'By default, the "Freelancer" splash screen you see when you start the game has a resolution of 1280x960. This makes it appear stretched and a bit blurry on HD 16:9 resolutions.' +
+    'We recommend setting this option to your monitor''s native resolution.' +
+    'Selecting the "None" option removes the start screen.',
+    True, False);
+    StartupRes.Add('None');
+    StartupRes.Add('720p 16:9 - 1280x720');
+    StartupRes.Add('960p 4:3 - 1280x960 (Default)');
+    StartupRes.Add('1080p 4:3 - 1440x1080');
+    StartupRes.Add('1080p 16:9 - 1920x1080');
+    StartupRes.Add('1440p 4:3 - 1920x1440');
+    StartupRes.Add('1440p 16:9 - 2560x1440');
+    StartupRes.Add('4K 4:3 - 2880x2160');
+    StartupRes.Add('4K 16:9 - 3840x2160');
+
+    LogoRes := CreateInputOptionPage(StartupRes.ID,
+    'Freelancer Logo Resolution', 'In the game''s main menu',
+    'This logo has a resolution of 800x600 by default, which makes it look stretched and pixelated/blurry on HD 16:9 monitors.' +
+    'Setting this to a higher resolution with the correct aspect ratio makes the logo look nice and sharp and not stretched-out. Hence we recommend setting this option to your monitor''s native resolution.',
+    True, False);
+    LogoRes.Add('1080p 16:9 - 1920x1080');
+    LogoRes.Add('None');
+    LogoRes.Add('600p 4:3 - 800x600 (Default)');
+    LogoRes.Add('720p 4:3 - 960x720');
+    LogoRes.Add('720p 16:9 - 1280x720');
+    LogoRes.Add('1080p 4:3 - 1440x1080');
+    LogoRes.Add('1440p 4:3 - 1920x1440');
+    LogoRes.Add('1440p 16:9 - 2560x1440');
+    LogoRes.Add('4K 4:3 - 2880x2160');
+    LogoRes.Add('4K 16:9 - 3840x2160');
+
+    frmOptions_CreatePage(LogoRes.ID);
+
+ end;
 
