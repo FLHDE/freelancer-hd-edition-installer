@@ -117,11 +117,11 @@ begin
     'We recommend setting this option to your monitor''s native resolution.' +
     'Selecting the "None" option removes the start screen.',
     True, False);
-    StartupRes.Add('1080p 16:9 - 1920x1080');
     StartupRes.Add('None');
     StartupRes.Add('720p 16:9 - 1280x720');
     StartupRes.Add('960p 4:3 - 1280x960 (Default)');
     StartupRes.Add('1080p 4:3 - 1440x1080');
+    StartupRes.Add('1080p 16:9 - 1920x1080');
     StartupRes.Add('1440p 4:3 - 1920x1440');
     StartupRes.Add('1440p 16:9 - 2560x1440');
     StartupRes.Add('4K 4:3 - 2880x2160');
@@ -248,7 +248,7 @@ begin
   end;
 end;
 
-function HandleOptions():boolean;
+function CallSignOption():boolean;
 var
   FilePath : string;
 begin
@@ -284,6 +284,39 @@ begin
     FileReplaceString(FilePath,'DLL = callsign.dll, player 1 1-1','DLL = callsign.dll, fc_lh 9 4-20')
 end;
 
+function StartUpLogo():boolean;
+var
+  FolderPath : string;
+  OldFile : string;
+  NewFile : string;
+begin
+  FolderPath := ExpandConstant('{app}\DATA\INTERFACE\INTRO\IMAGES\');
+  NewFile := FolderPath + 'startupscreen_1280.tga';
+
+  if(StartupRes.Values[0]) then
+    begin 
+      OldFile := NewFile
+      NewFile := FolderPath + 'startupscreen_1280_1280x960.tga'
+    end
+  else if(StartupRes.Values[1]) then 
+    OldFile := FolderPath + 'startupscreen_1280_1280x720.tga'
+  else if(StartupRes.Values[3]) then 
+    OldFile := FolderPath + 'startupscreen_1280_1440x1080.tga'
+  else if(StartupRes.Values[4]) then 
+    OldFile := FolderPath + 'startupscreen_1280_1920x1080.tga'
+  else if(StartupRes.Values[5]) then 
+    OldFile := FolderPath + 'startupscreen_1280_1920x1440.tga'
+  else if(StartupRes.Values[6]) then 
+    OldFile := FolderPath + 'startupscreen_1280_2560x1440.tga'
+  else if(StartupRes.Values[7]) then 
+    OldFile := FolderPath + 'startupscreen_1280_2880x2160.tga'
+  else if(StartupRes.Values[8]) then 
+    OldFile := FolderPath + 'startupscreen_1280_3840x2160.tga';
+
+  RenameFile(OldFile,NewFile);
+  
+end;
+
 procedure CurStepChanged(CurStep: TSetupStep);
 begin
     if CurStep = ssPostInstall then 
@@ -292,7 +325,8 @@ begin
         DirectoryCopy(DataDirPage.Values[0],ExpandConstant('{app}'));
         // Unzip
         UnZip(ExpandConstant('{tmp}\freelancerhd.zip'),ExpandConstant('{app}'));
-        HandleOptions();
+        CallSignOption();
+        StartUpLogo();
     end;
 end;
 
