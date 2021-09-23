@@ -443,6 +443,7 @@ begin
 end;
 
 procedure InitializeWizard;
+var dir : string;
 begin
     { Download Mod and store in temp directory }
     idpAddFile('https://github.com/BC46/freelancer-hd-edition/archive/refs/tags/0.4.1.zip', ExpandConstant('{tmp}\freelancerhd.zip'));
@@ -451,9 +452,16 @@ begin
     { Custom option pages }
     DataDirPage := CreateInputDirPage(wpWelcome,
     'Select Freelancer installation', 'Where is Freelancer installed?',
-    'Select the folder in which Freelancer is installed, then click Next. This is usually C:\Program Files (x86)\Microsoft Games\Freelancer',
+    'Select the folder in which a fresh copy of Freelancer is installed, then click Next. This is usually C:\Program Files (x86)\Microsoft Games\Freelancer',
     False, '');
     DataDirPage.Add('');
+
+    if RegQueryStringValue(HKEY_LOCAL_MACHINE, 'SOFTWARE\Wow6432Node\Microsoft\Microsoft Games\Freelancer\1.0',
+     'AppPath', dir) then
+    begin
+    // Successfully read the value
+      DataDirPage.Values[0] := dir
+    end;
 
     CallSign := CreateInputOptionPage(DataDirPage.ID,
     'Simgle Player ID Code', 'Tired of being called Freelancer Alpha 1-1?',
