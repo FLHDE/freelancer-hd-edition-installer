@@ -31,6 +31,7 @@ SolidCompression=yes
 WizardImageFile={#SourcePath}\backgroundpattern.bmp
 WizardSmallImageFile={#SourcePath}\icon.bmp
 DisableWelcomePage=False
+DisableDirPage=False
 
 [Languages]
 Name: "english"; MessagesFile: "compiler:Default.isl"
@@ -269,30 +270,46 @@ var
   // Advanced Widescreen HUD
   lblWidescreenHud: TLabel;
   WidescreenHud: TCheckBox;
+  descWidescreenHud: TNewStaticText;
 
   // Fix clipping with 16:9 resolution planetscapes
   lblPlanetScape: TLabel;
   PlanetScape: TCheckBox;
+  descPlanetScape: TNewStaticText;
 
   // Fix Small Text on 1440p/4K resolutions
   lblSmallText: TLabel;
   SmallText: TCheckBox;
+  descSmallText: TNewStaticText;
 
   // Fix Windows 10 compatibility issues
   lblWin10: TLabel;
   Win10: TCheckBox;
+  descWin10: TNewStaticText;
 
   // Add improved reflections
   lblReflections: TLabel;
   Reflections: TCheckBox;
+  descReflections: TNewStaticText;
 
   // Add new missile effects
   lblMissleEffects: TLabel;
   MissileEffects: TCheckBox;
+  descMissileEffects: TNewStaticText;
 
   // Single Player Command Console
   lblSinglePlayer: TLabel;
   SinglePlayer: TCheckBox;
+  descSinglePlayer: TNewStaticText;
+
+  // Custom Pages
+  PageWidescreenHud: TWizardPage;
+  PagePlanetScape: TWizardPage;
+  PageSmallText: TWizardPage;
+  PageWin10: TWizardPage;
+  PageReflections: TWizardPage;
+  PageEffects: TWizardPage;
+  PageSinglePlayer: TWizardPage;
 
 procedure frmOptions_Activate(Page: TWizardPage);
 begin
@@ -315,137 +332,6 @@ end;
 
 procedure frmOptions_CancelButtonClick(Page: TWizardPage; var Cancel, Confirm: Boolean);
 begin
-end;
-
-function frmOptions_CreatePage(PreviousPageId: Integer): Integer;
-var
-  Page: TWizardPage;
-begin
-  Page := CreateCustomPage(
-    PreviousPageId,
-    'Other Options',
-    'Choose other options here'
-  );
-
-  // Advanced Widescreen HUD
-  lblWidescreenHud := TLabel.Create(Page);
-  lblWidescreenHud.Parent := Page.Surface;
-  lblWidescreenHud.Caption := 'Advanced Widescreen HUD for 16:9 resolutions';
-  lblWidescreenHud.Left := ScaleX(20);
-
-  descWidescreenHud := TNewStaticText.Create(Page);
-  descWidescreenHud.Caption := 'This option aSdds two new useful widgets to your HUD. Next to your contact list, you will have a wireframe representation of your selected target. Next to your weapons list, you will have a wireframe of your own ship.'
-  '\n\nIf you play in 4:3, disable this option. It only works for widescreen resolutions. If you disable this option, you will still get support for the default 16:9 HUD and corresponding resolutions.
-The Advanced Widescreen HUD makes great use of the unused space that you normally see in widescreen, hence we recommend it for all players who play in 16:9. If you choose to enable this, go to the Controls settings in-game and under “User Interface”, disable Target View (Alt + T). This key binding has become obsolete as both the target view and contact list are visible simultaneously.
-'
-
-  WidescreenHud := TCheckBox.Create(Page);
-  WidescreenHud.Parent := Page.Surface;
-  WidescreenHud.Checked := True;
-
-  // Fix clipping with 16:9 resolution planetscapes
-  //lblPlanetScape := TLabel.Create(Page);
-  //lblPlanetScape.Parent := Page.Surface;
-  //lblPlanetScape.Caption := 'Fix clipping with 16:9 resolution planetscapes';
-  //lblPlanetScape.Top := ScaleY(20);
-  //lblPlanetScape.Left := ScaleX(20);
-
-  //PlanetScape := TCheckBox.Create(Page);
-  //PlanetScape.Parent := Page.Surface;
-  //PlanetScape.Top := ScaleY(20);
-  //PlanetScape.Checked := True;
-
-  // Fix Small Text on 1440p/4K resolutions
-  //lblSmallText := TLabel.Create(Page);
-  //lblSmallText.Parent := Page.Surface;
-  //lblSmallText.Caption := 'Fix small text on 1440p/4K resolutions';
-  //lblSmallText.Top := ScaleY(40);
-  //lblSmallText.Left := ScaleX(20);
-
-  //SmallText := TCheckBox.Create(Page);
-  //SmallText.Parent := Page.Surface;
-  //SmallText.Top := ScaleY(40);
-  //SmallText.Checked := True;
-
-  with Page do
-  begin
-    OnActivate := @frmOptions_Activate;
-    OnShouldSkipPage := @frmOptions_ShouldSkipPage;
-    OnBackButtonClick := @frmOptions_BackButtonClick;
-    OnNextButtonClick := @frmOptions_NextButtonClick;
-    OnCancelButtonClick := @frmOptions_CancelButtonClick;
-  end;
-
-  Result := Page.ID;
-end;
-
-function frmOptions2_CreatePage(PreviousPageId: Integer): Integer;
-var
-  Page: TWizardPage;
-begin
-  Page := CreateCustomPage(
-    PreviousPageId,
-    'Other Options',
-    'Choose other options here'
-  );
-
-  // Fix Windows 10 compatibility issues
-  lblWin10 := TLabel.Create(Page);
-  lblWin10.Parent := Page.Surface;
-  lblWin10.Caption := 'Fix Windows 10 compatibility issues. TRY AT YOUR OWN RISK';
-  lblWin10.Top := ScaleY(60);
-  lblWin10.Left := ScaleX(20);
-
-  Win10 := TCheckBox.Create(Page);
-  Win10.Parent := Page.Surface;
-  Win10.Top := ScaleY(60);
-
-  // Add improved reflections
-  lblReflections := TLabel.Create(Page);
-  lblReflections.Parent := Page.Surface;
-  lblReflections.Caption := 'Add improved reflections';
-  lblReflections.Top := ScaleY(80);
-  lblReflections.Left := ScaleX(20);
-
-  Reflections := TCheckBox.Create(Page);
-  Reflections.Parent := Page.Surface;
-  Reflections.Top := ScaleY(80);
-  Reflections.Checked := True;
-
-  // Add new missile effects
-  lblMissleEffects := TLabel.Create(Page);
-  lblMissleEffects.Parent := Page.Surface;
-  lblMissleEffects.Caption := 'Add new missile effects';
-  lblMissleEffects.Top := ScaleY(100);
-  lblMissleEffects.Left := ScaleX(20);
-
-  MissileEffects := TCheckBox.Create(Page);
-  MissileEffects.Parent := Page.Surface;
-  MissileEffects.Top := ScaleY(100);
-  MissileEffects.Checked := True;
-
-  // Single Player Command Console
-  lblSinglePlayer := TLabel.Create(Page);
-  lblSinglePlayer.Parent := Page.Surface;
-  lblSinglePlayer.Caption := 'Single Player Command Console';
-  lblSinglePlayer.Top := ScaleY(120);
-  lblSinglePlayer.Left := ScaleX(20);
-
-  SinglePlayer := TCheckBox.Create(Page);
-  SinglePlayer.Parent := Page.Surface;
-  SinglePlayer.Top := ScaleY(120);
-  SinglePlayer.Checked := True;
-
-  with Page do
-  begin
-    OnActivate := @frmOptions_Activate;
-    OnShouldSkipPage := @frmOptions_ShouldSkipPage;
-    OnBackButtonClick := @frmOptions_BackButtonClick;
-    OnNextButtonClick := @frmOptions_NextButtonClick;
-    OnCancelButtonClick := @frmOptions_CancelButtonClick;
-  end;
-
-  Result := Page.ID;
 end;
 
 procedure CurStepChanged(CurStep: TSetupStep);
@@ -512,14 +398,14 @@ begin
     CallSign.Add('Order Omicron 0-0');
     CallSign.Add('LSF Delta 6-9');
     CallSign.Add('Hacker Kappa 4-20');
+    CallSign.Values[0] := True;
 
     StartupRes := CreateInputOptionPage(CallSign.ID,
     'Startup Screen Resolution', 'Choose your native resolution',
     'By default, the "Freelancer" splash screen you see when you start the game has a resolution of 1280x960. This makes it appear stretched and a bit blurry on HD 16:9 resolutions.' +
-    'We recommend setting this option to your monitor''s native resolution.' +
-    'Selecting the "None" option removes the start screen.',
+    'We recommend setting this option to your monitor''s native resolution.',
     True, False);
-    StartupRes.Add('None');
+    StartupRes.Add('Remove Startup Screen');
     StartupRes.Add('720p 16:9 - 1280x720');
     StartupRes.Add('960p 4:3 - 1280x960 (Default)');
     StartupRes.Add('1080p 4:3 - 1440x1080');
@@ -528,6 +414,8 @@ begin
     StartupRes.Add('1440p 16:9 - 2560x1440');
     StartupRes.Add('4K 4:3 - 2880x2160');
     StartupRes.Add('4K 16:9 - 3840x2160');
+    StartupRes.Values[2] := True;
+
 
     LogoRes := CreateInputOptionPage(StartupRes.ID,
     'Freelancer Logo Resolution', 'In the game''s main menu',
@@ -535,7 +423,7 @@ begin
     'Setting this to a higher resolution with the correct aspect ratio makes the logo look nice and sharp and not stretched-out. Hence we recommend setting this option to your monitor''s native resolution.',
     True, False);
     LogoRes.Add('1080p 16:9 - 1920x1080');
-    LogoRes.Add('None');
+    LogoRes.Add('Remove Logo');
     LogoRes.Add('600p 4:3 - 800x600 (Default)');
     LogoRes.Add('720p 4:3 - 960x720');
     LogoRes.Add('720p 16:9 - 1280x720');
@@ -544,9 +432,225 @@ begin
     LogoRes.Add('1440p 16:9 - 2560x1440');
     LogoRes.Add('4K 4:3 - 2880x2160');
     LogoRes.Add('4K 16:9 - 3840x2160');
+    LogoRes.Values[2] := True;
 
-    frmOptions := frmOptions_CreatePage(LogoRes.ID);
-    frmOptions2 := frmOptions2_CreatePage(frmOptions);
+    // Advanced Widescreen HUD
+  PageWidescreenHud := CreateCustomPage(
+    LogoRes.ID,
+    'Advanced Widescreen HUD',
+    'Check to install'
+  );
+
+  lblWidescreenHud := TLabel.Create(PageWidescreenHud);
+  lblWidescreenHud.Parent := PageWidescreenHud.Surface;
+  lblWidescreenHud.Caption := 'Advanced Widescreen HUD for 16:9 resolutions';
+  lblWidescreenHud.Left := ScaleX(20);
+
+  descWidescreenHud := TNewStaticText.Create(PageWidescreenHud);
+  descWidescreenHud.Parent := PageWidescreenHud.Surface;
+  descWidescreenHud.WordWrap := True;
+  descWidescreenHud.Top := ScaleY(20);
+  descWidescreenHud.Width := PageWidescreenHud.SurfaceWidth;
+  descWidescreenHud.Caption := 'This option adds two new useful widgets to your HUD. Next to your contact list, you will have a wireframe representation of your selected target. Next to your weapons list, you will have a wireframe of your own ship.' + #13#10 + #13#10 +
+  'If you play in 4:3, disable this option. It only works for widescreen resolutions. If you disable this option, you will still get support for the default 16:9 HUD and corresponding resolutions.' + #13#10 + #13#10 +
+  'The Advanced Widescreen HUD makes great use of the unused space that you normally see in widescreen, hence we recommend it for all players who play in 16:9. If you choose to enable this, go to the Controls settings in-game and under “User Interface”, disable Target View (Alt + T). This key binding has become obsolete as both the target view and contact list are visible simultaneously.';
+
+  WidescreenHud := TCheckBox.Create(PageWidescreenHud);
+  WidescreenHud.Parent := PageWidescreenHud.Surface;
+  WidescreenHud.Checked := True;
+
+  // Fix clipping with 16:9 resolution planetscapes
+  PagePlanetScape := CreateCustomPage(
+    PageWidescreenHud.ID,
+    'Fix clipping with 16:9 resolution planetscapes',
+    'Check to install'
+  );
+
+  lblPlanetScape := TLabel.Create(PagePlanetScape);
+  lblPlanetScape.Parent := PagePlanetScape.Surface;
+  lblPlanetScape.Caption := 'Fix clipping with 16:9 resolution planetscapes';
+  lblPlanetScape.Left := ScaleX(20);
+
+  descPlanetScape := TNewStaticText.Create(PagePlanetScape);
+  descPlanetScape.Parent := PagePlanetScape.Surface;
+  descPlanetScape.WordWrap := True;
+  descPlanetScape.Top := ScaleY(20);
+  descPlanetScape.Width := PagePlanetScape.SurfaceWidth;
+  descPlanetScape.Caption := 'Since Freelancer was never optimized for 16:9 resolutions, there are several inconsistencies with planetscapes that occur while viewing them in 16:9, such as clipping and geometry issues.' + #13#10 + #13#10 +
+  'This mod gives you the option of fixing this, as it adjusts the camera values in the planetscapes so the issues are no longer visible in 16:9 resolutions.' + #13#10 + #13#10 +
+  'Disable this option if you play in 4:3.'
+
+  PlanetScape := TCheckBox.Create(PagePlanetScape);
+  PlanetScape.Parent := PagePlanetScape.Surface;
+  PlanetScape.Checked := True;
+
+  // Fix Small Text on 1440p/4K resolutions
+  PageSmallText := CreateCustomPage(
+    PagePlanetScape.ID,
+    'Fix small text on 1440p/4K resolutions',
+    'Check to install'
+  );
+
+  lblSmallText := TLabel.Create(PageSmallText);
+  lblSmallText.Parent := PageSmallText.Surface;
+  lblSmallText.Caption := 'Fix small text on 1440p/4K resolutions';
+  lblSmallText.Left := ScaleX(20);
+
+  descSmallText := TNewStaticText.Create(PageSmallText);
+  descSmallText.Parent := PageSmallText.Surface;
+  descSmallText.WordWrap := True;
+  descSmallText.Top := ScaleY(20);
+  descSmallText.Width := PageSmallText.SurfaceWidth;
+  descSmallText.Caption := 'Many high-resolution Freelancer players have reported missing HUD text and misaligned buttons in menus. In 4K, the nav map text is too small and there are many missing text elements in the HUD. For 1440p screens, the only apparent issue is the small nav map text.' + #13#10 + #13#10 +
+  'Select the option corresponding to the resolution you’re going to play Freelancer in. If you play in 1920x1080 or lower, the “No” option is fine as the elements are configured correctly already.';
+
+  SmallText := TCheckBox.Create(PageSmallText);
+  SmallText.Parent := PageSmallText.Surface;
+  SmallText.Checked := True;
+
+  // Fix Windows 10 compatibility issues
+  PageWin10 := CreateCustomPage(
+    PageSmallText.ID,
+    'Fix Windows 10 compatibility issues',
+    'Check to install - USE AT OWN RISK'
+  );
+
+  lblWin10 := TLabel.Create(PageWin10);
+  lblWin10.Parent := PageWin10.Surface;
+  lblWin10.Caption := 'Fix Windows 10 compatibility issues.';
+  lblWin10.Left := ScaleX(20);
+
+  descWin10 := TNewStaticText.Create(PageWin10);
+  descWin10.Parent := PageWin10.Surface;
+  descWin10.WordWrap := True;
+  descWin10.Top := ScaleY(20);
+  descWin10.Width := PageWin10.SurfaceWidth;
+  descWin10.Caption := 'Windows 10 users may experience compatibility issues while playing (vanilla) Freelancer including broken lighting in many base interiors and missing glass reflections.' + #13#10 + #13#10 +
+  'We''ve included a Legacy DirectX wrapper named dgVoodoo2 in this mod, which serves as an optional patch that fixes all of these issues.' + #13#10 + #13#10 +
+  'However, we have disabled this option by default as you may experience crashes, bugs, and stutters while using it. So please try it at your own risk.' + #13#10 + #13#10 +
+  'If you experience a refresh rate/fps lock to 60 while using this patch, please refer to the wiki for a solution: https://github.com/BC46/freelancer-hd-edition/wiki'; 
+
+  Win10 := TCheckBox.Create(PageWin10);
+  Win10.Parent := PageWin10.Surface;
+
+  // Add improved reflections
+  PageEffects := CreateCustomPage(
+    PageWin10.ID,
+    'Add improved effects',
+    'Check to install'
+  );
+
+  lblReflections := TLabel.Create(PageEffects);
+  lblReflections.Parent := PageEffects.Surface;
+  lblReflections.Caption := 'Add improved reflections';
+  lblReflections.Left := ScaleX(20);
+
+  descReflections := TNewStaticText.Create(PageEffects);
+  descReflections.Parent := PageEffects.Surface;
+  descReflections.WordWrap := True;
+  descReflections.Top := ScaleY(20);
+  descReflections.Width := PageEffects.SurfaceWidth;
+  descReflections.Caption := 'This option speaks for itself. It makes the way light reflects off ships, bases, etc, a lot nicer.';
+
+  Reflections := TCheckBox.Create(PageEffects);
+  Reflections.Parent := PageEffects.Surface;
+  Reflections.Checked := True;
+
+  // Add new missile effects
+  lblMissleEffects := TLabel.Create(PageEffects);
+  lblMissleEffects.Parent := PageEffects.Surface;
+  lblMissleEffects.Caption := 'Add new missile effects';
+  lblMissleEffects.Top := ScaleY(60);
+  lblMissleEffects.Left := ScaleX(20);
+
+  descMissileEffects := TNewStaticText.Create(PageEffects);
+  descMissileEffects.Parent := PageEffects.Surface;
+  descMissileEffects.WordWrap := True;
+  descMissileEffects.Top := ScaleY(80);
+  descMissileEffects.Width := PageEffects.SurfaceWidth;
+  descMissileEffects.Caption := 'This option replaces the existing missile effects with new ones. Enable them if you prefer these over the normal ones.';
+
+  MissileEffects := TCheckBox.Create(PageEffects);
+  MissileEffects.Parent := PageEffects.Surface;
+  MissileEffects.Top := ScaleY(60);
+  MissileEffects.Checked := True;
+
+  // Single Player Command Console
+  PageSinglePlayer := CreateCustomPage(
+    PageEffects.ID,
+    'Single Player Command Console',
+    'Check to install'
+  );
+
+  lblSinglePlayer := TLabel.Create(PageSinglePlayer);
+  lblSinglePlayer.Parent := PageSinglePlayer.Surface;
+  lblSinglePlayer.Caption := 'Single Player Command Console';
+  lblSinglePlayer.Left := ScaleX(20);
+
+  descSinglePlayer := TNewStaticText.Create(PageSinglePlayer);
+  descSinglePlayer.Parent := PageSinglePlayer.Surface;
+  descSinglePlayer.WordWrap := True;
+  descSinglePlayer.Top := ScaleY(20);
+  descSinglePlayer.Width := PageSinglePlayer.SurfaceWidth;
+  descSinglePlayer.Caption := 'This option speaks for itself. It allows players to make use of various console commands in Single Player. To use it, press Enter while in-game and type "help" for a list of available commands. This command console is very useful for testing and debugging purposes.';
+
+  SinglePlayer := TCheckBox.Create(PageSinglePlayer);
+  SinglePlayer.Parent := PageSinglePlayer.Surface;
+  SinglePlayer.Checked := True;
+
+  with PageWidescreenHud do
+  begin
+    OnActivate := @frmOptions_Activate;
+    OnShouldSkipPage := @frmOptions_ShouldSkipPage;
+    OnBackButtonClick := @frmOptions_BackButtonClick;
+    OnNextButtonClick := @frmOptions_NextButtonClick;
+    OnCancelButtonClick := @frmOptions_CancelButtonClick;
+  end;
+
+  with PagePlanetScape do
+  begin
+    OnActivate := @frmOptions_Activate;
+    OnShouldSkipPage := @frmOptions_ShouldSkipPage;
+    OnBackButtonClick := @frmOptions_BackButtonClick;
+    OnNextButtonClick := @frmOptions_NextButtonClick;
+    OnCancelButtonClick := @frmOptions_CancelButtonClick;
+  end;
+
+  with PageSmallText do
+  begin
+    OnActivate := @frmOptions_Activate;
+    OnShouldSkipPage := @frmOptions_ShouldSkipPage;
+    OnBackButtonClick := @frmOptions_BackButtonClick;
+    OnNextButtonClick := @frmOptions_NextButtonClick;
+    OnCancelButtonClick := @frmOptions_CancelButtonClick;
+  end;
+
+  with PageWin10 do
+  begin
+    OnActivate := @frmOptions_Activate;
+    OnShouldSkipPage := @frmOptions_ShouldSkipPage;
+    OnBackButtonClick := @frmOptions_BackButtonClick;
+    OnNextButtonClick := @frmOptions_NextButtonClick;
+    OnCancelButtonClick := @frmOptions_CancelButtonClick;
+  end;
+
+  with PageEffects do
+  begin
+    OnActivate := @frmOptions_Activate;
+    OnShouldSkipPage := @frmOptions_ShouldSkipPage;
+    OnBackButtonClick := @frmOptions_BackButtonClick;
+    OnNextButtonClick := @frmOptions_NextButtonClick;
+    OnCancelButtonClick := @frmOptions_CancelButtonClick;
+  end;
+
+  with PageSinglePlayer do
+  begin
+    OnActivate := @frmOptions_Activate;
+    OnShouldSkipPage := @frmOptions_ShouldSkipPage;
+    OnBackButtonClick := @frmOptions_BackButtonClick;
+    OnNextButtonClick := @frmOptions_NextButtonClick;
+    OnCancelButtonClick := @frmOptions_CancelButtonClick;
+  end;
 
  end;
 
