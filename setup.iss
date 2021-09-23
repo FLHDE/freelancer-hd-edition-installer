@@ -54,6 +54,8 @@ var
   CallSign: TInputOptionWizardPage;
   StartupRes: TInputOptionWizardPage;
   LogoRes: TInputOptionWizardPage;
+  frmOptions: Integer;
+  frmOptions2: Integer; 
 
 procedure DirectoryCopy(SourcePath, DestPath: string);
 var
@@ -359,6 +361,28 @@ begin
   SmallText.Top := ScaleY(40);
   SmallText.Checked := True;
 
+  with Page do
+  begin
+    OnActivate := @frmOptions_Activate;
+    OnShouldSkipPage := @frmOptions_ShouldSkipPage;
+    OnBackButtonClick := @frmOptions_BackButtonClick;
+    OnNextButtonClick := @frmOptions_NextButtonClick;
+    OnCancelButtonClick := @frmOptions_CancelButtonClick;
+  end;
+
+  Result := Page.ID;
+end;
+
+function frmOptions2_CreatePage(PreviousPageId: Integer): Integer;
+var
+  Page: TWizardPage;
+begin
+  Page := CreateCustomPage(
+    PreviousPageId,
+    'Other Options',
+    'Choose other options here'
+  );
+
   // Fix Windows 10 compatibility issues
   lblWin10 := TLabel.Create(Page);
   lblWin10.Parent := Page.Surface;
@@ -515,7 +539,8 @@ begin
     LogoRes.Add('4K 4:3 - 2880x2160');
     LogoRes.Add('4K 16:9 - 3840x2160');
 
-    frmOptions_CreatePage(LogoRes.ID);
+    frmOptions := frmOptions_CreatePage(LogoRes.ID);
+    frmOptions2 := frmOptions2_CreatePage(frmOptions);
 
  end;
 
