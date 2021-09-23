@@ -432,6 +432,16 @@ begin
     end;
 end;
 
+function NextButtonClick(PageId: Integer): Boolean;
+begin
+    Result := True;
+    if (PageId = DataDirPage.ID) and not FileExists(DataDirPage.Values[0] + '\EXE\Freelancer.exe') then begin
+        MsgBox('Freelancer does not seem to be installed in that folder.  Please select the correct folder.', mbError, MB_OK);
+        Result := False;
+        exit;
+    end;
+end;
+
 procedure InitializeWizard;
 begin
     { Download Mod and store in temp directory }
