@@ -333,33 +333,39 @@ begin
   lblWidescreenHud.Caption := 'Advanced Widescreen HUD for 16:9 resolutions';
   lblWidescreenHud.Left := ScaleX(20);
 
+  descWidescreenHud := TNewStaticText.Create(Page);
+  descWidescreenHud.Caption := 'This option aSdds two new useful widgets to your HUD. Next to your contact list, you will have a wireframe representation of your selected target. Next to your weapons list, you will have a wireframe of your own ship.'
+  '\n\nIf you play in 4:3, disable this option. It only works for widescreen resolutions. If you disable this option, you will still get support for the default 16:9 HUD and corresponding resolutions.
+The Advanced Widescreen HUD makes great use of the unused space that you normally see in widescreen, hence we recommend it for all players who play in 16:9. If you choose to enable this, go to the Controls settings in-game and under “User Interface”, disable Target View (Alt + T). This key binding has become obsolete as both the target view and contact list are visible simultaneously.
+'
+
   WidescreenHud := TCheckBox.Create(Page);
   WidescreenHud.Parent := Page.Surface;
   WidescreenHud.Checked := True;
 
   // Fix clipping with 16:9 resolution planetscapes
-  lblPlanetScape := TLabel.Create(Page);
-  lblPlanetScape.Parent := Page.Surface;
-  lblPlanetScape.Caption := 'Fix clipping with 16:9 resolution planetscapes';
-  lblPlanetScape.Top := ScaleY(20);
-  lblPlanetScape.Left := ScaleX(20);
+  //lblPlanetScape := TLabel.Create(Page);
+  //lblPlanetScape.Parent := Page.Surface;
+  //lblPlanetScape.Caption := 'Fix clipping with 16:9 resolution planetscapes';
+  //lblPlanetScape.Top := ScaleY(20);
+  //lblPlanetScape.Left := ScaleX(20);
 
-  PlanetScape := TCheckBox.Create(Page);
-  PlanetScape.Parent := Page.Surface;
-  PlanetScape.Top := ScaleY(20);
-  PlanetScape.Checked := True;
+  //PlanetScape := TCheckBox.Create(Page);
+  //PlanetScape.Parent := Page.Surface;
+  //PlanetScape.Top := ScaleY(20);
+  //PlanetScape.Checked := True;
 
   // Fix Small Text on 1440p/4K resolutions
-  lblSmallText := TLabel.Create(Page);
-  lblSmallText.Parent := Page.Surface;
-  lblSmallText.Caption := 'Fix small text on 1440p/4K resolutions';
-  lblSmallText.Top := ScaleY(40);
-  lblSmallText.Left := ScaleX(20);
+  //lblSmallText := TLabel.Create(Page);
+  //lblSmallText.Parent := Page.Surface;
+  //lblSmallText.Caption := 'Fix small text on 1440p/4K resolutions';
+  //lblSmallText.Top := ScaleY(40);
+  //lblSmallText.Left := ScaleX(20);
 
-  SmallText := TCheckBox.Create(Page);
-  SmallText.Parent := Page.Surface;
-  SmallText.Top := ScaleY(40);
-  SmallText.Checked := True;
+  //SmallText := TCheckBox.Create(Page);
+  //SmallText.Parent := Page.Surface;
+  //SmallText.Top := ScaleY(40);
+  //SmallText.Checked := True;
 
   with Page do
   begin
