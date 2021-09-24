@@ -1,6 +1,6 @@
 ; Inno Install Script for Freelancer HD Edition
-; GitHub:
-; Main GitHub:
+; GitHub: https://github.com/ollieraikkonen/Freelancer-hd-edition-install-script
+; Main GitHub: https://github.com/bc46/Freelancer-hd-edition
 
 #define MyAppName "Freelancer HD Edition"
 #define MyAppVersion "0.4.1"
@@ -29,6 +29,7 @@ WizardImageFile={#SourcePath}\backgroundpattern.bmp
 WizardSmallImageFile={#SourcePath}\icon.bmp
 DisableWelcomePage=False
 DisableDirPage=False
+InfoBeforeFile={#SourcePath}\installinfo.txt
 
 [Languages]
 Name: "english"; MessagesFile: "compiler:Default.isl"
@@ -39,6 +40,9 @@ Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{
 [Icons]
 Name: "{group}\{#MyAppName}"; Filename: "{app}\EXE\{#MyAppExeName}"
 Name: "{commondesktop}\{#MyAppName}"; Filename: "{app}\EXE\{#MyAppExeName}"; Tasks: desktopicon
+
+[Files]
+Source: "installinfo.txt"; DestDir: "{app}"; Flags: ignoreversion
 
 [Run]
 Filename: "{app}\EXE\{#MyAppExeName}"; Description: "{cm:LaunchProgram,{#StringChange(MyAppName, '&', '&&')}}"; Flags: nowait postinstall skipifsilent
@@ -368,7 +372,7 @@ begin
     idpDownloadAfter(wpReady);
 
     // Initialize DataDirPage and add content
-    DataDirPage := CreateInputDirPage(wpWelcome,
+    DataDirPage := CreateInputDirPage(wpInfoBefore,
     'Select Freelancer installation', 'Where is Freelancer installed?',
     'Select the folder in which a fresh copy of Freelancer is installed, then click Next. This is usually C:\Program Files (x86)\Microsoft Games\Freelancer',
     False, '');
