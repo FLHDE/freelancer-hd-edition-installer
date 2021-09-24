@@ -60,9 +60,9 @@ var
   CallSign: TInputOptionWizardPage;
   StartupRes: TInputOptionWizardPage;
   LogoRes: TInputOptionWizardPage;
+  SmallText: TInputOptionWizardPage;
   PageWidescreenHud: TWizardPage;
   PagePlanetScape: TWizardPage;
-  PageSmallText: TWizardPage;
   PageWin10: TWizardPage;
   PageReflections: TWizardPage;
   PageEffects: TWizardPage;
@@ -77,11 +77,6 @@ var
   lblPlanetScape: TLabel;
   PlanetScape: TCheckBox;
   descPlanetScape: TNewStaticText;
-
-  // Fix Small Text on 1440p/4K resolutions
-  lblSmallText: TLabel;
-  SmallText: TCheckBox;
-  descSmallText: TNewStaticText;
 
   // Fix Windows 10 compatibility issues
   lblWin10: TLabel;
@@ -445,9 +440,20 @@ begin
     LogoRes.Add('4K 16:9 - 3840x2160');
     LogoRes.Values[2] := True;
 
+    // Fix Small Text on 1440p/4K resolutions
+    SmallText := CreateInputOptionPage(LogoRes.ID,
+    'Fix small text on 1440p/4K resolutions', 'In the game''s main menu',
+    'Many high-resolution Freelancer players have reported missing HUD text and misaligned buttons in menus. In 4K, the nav map text is too small and there are many missing text elements in the HUD. For 1440p screens, the only apparent issue is the small nav map text.' + #13#10 + #13#10 +
+    'Select the option corresponding to the resolution you’re going to play Freelancer in. If you play in 1920x1080 or lower, the “No” option is fine as the elements are configured correctly already.',
+    True, False);
+    SmallText.Add('No');
+    SmallText.Add('1440p');
+    SmallText.Add('4k');
+    SmallText.Values[0] := True;
+
     // Initialize HUD page and add content
     PageWidescreenHud := CreateCustomPage(
-      LogoRes.ID,
+      SmallText.ID,
       'Advanced Widescreen HUD',
       'Check to install'
     );
@@ -495,33 +501,9 @@ begin
     PlanetScape.Parent := PagePlanetScape.Surface;
     PlanetScape.Checked := True;
   
-    // Fix Small Text on 1440p/4K resolutions
-    PageSmallText := CreateCustomPage(
-      PagePlanetScape.ID,
-      'Fix small text on 1440p/4K resolutions',
-      'Check to install'
-    );
-  
-    lblSmallText := TLabel.Create(PageSmallText);
-    lblSmallText.Parent := PageSmallText.Surface;
-    lblSmallText.Caption := 'Fix small text on 1440p/4K resolutions';
-    lblSmallText.Left := ScaleX(20);
-  
-    descSmallText := TNewStaticText.Create(PageSmallText);
-    descSmallText.Parent := PageSmallText.Surface;
-    descSmallText.WordWrap := True;
-    descSmallText.Top := ScaleY(20);
-    descSmallText.Width := PageSmallText.SurfaceWidth;
-    descSmallText.Caption := 'Many high-resolution Freelancer players have reported missing HUD text and misaligned buttons in menus. In 4K, the nav map text is too small and there are many missing text elements in the HUD. For 1440p screens, the only apparent issue is the small nav map text.' + #13#10 + #13#10 +
-    'Select the option corresponding to the resolution you’re going to play Freelancer in. If you play in 1920x1080 or lower, the “No” option is fine as the elements are configured correctly already.';
-  
-    SmallText := TCheckBox.Create(PageSmallText);
-    SmallText.Parent := PageSmallText.Surface;
-    SmallText.Checked := True;
-  
     // Fix Windows 10 compatibility issues
     PageWin10 := CreateCustomPage(
-      PageSmallText.ID,
+      PagePlanetScape.ID,
       'Fix Windows 10 compatibility issues',
       'Check to install - USE AT OWN RISK'
     );
@@ -620,15 +602,6 @@ begin
     end;
   
     with PagePlanetScape do
-    begin
-      OnActivate := @frmOptions_Activate;
-      OnShouldSkipPage := @frmOptions_ShouldSkipPage;
-      OnBackButtonClick := @frmOptions_BackButtonClick;
-      OnNextButtonClick := @frmOptions_NextButtonClick;
-      OnCancelButtonClick := @frmOptions_CancelButtonClick;
-    end;
-  
-    with PageSmallText do
     begin
       OnActivate := @frmOptions_Activate;
       OnShouldSkipPage := @frmOptions_ShouldSkipPage;
