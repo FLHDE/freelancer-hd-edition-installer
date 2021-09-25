@@ -355,9 +355,18 @@ function NextButtonClick(PageId: Integer): Boolean;
 begin
     Result := True;
     if (PageId = DataDirPage.ID) and not FileExists(DataDirPage.Values[0] + '\EXE\Freelancer.exe') then begin
-        MsgBox('Freelancer does not seem to be installed in that folder.  Please select the correct folder.', mbError, MB_OK);
+      MsgBox('Freelancer does not seem to be installed in that folder.  Please select the correct folder.', mbError, MB_OK);
+      Result := False;
+      exit;
+    end;
+    // Validate install location
+    if (PageId = 6) then begin
+      // Need needs to be in a seperate if since it tries to expand {app} even if not on PageID 6. Pascal what are you doing!
+      if(Pos(ExpandConstant('{app}'),DataDirPage.Values[0]) > 0) then begin
+        MsgBox('Freelancer: HD Edition cannot be installed to the same location as your vanilla install. Please select a new location.', mbError, MB_OK);
         Result := False;
         exit;
+      end;
     end;
 end;
 
