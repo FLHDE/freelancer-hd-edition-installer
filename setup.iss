@@ -166,7 +166,6 @@ var
   JFLP: Variant;
   CHANGELOGmd: Variant;
   FreelancerManualpdf: Variant;
-  installinfotxt: Variant;
   mod_optionsrtf: Variant;
 begin
   Shell := CreateOleObject('Shell.Application');
@@ -187,7 +186,6 @@ begin
   JFLP := ZipFile.ParseName('JFLP');
   CHANGELOGmd := ZipFile.ParseName('CHANGELOG.md');
   FreelancerManualpdf := ZipFile.ParseName('Freelancer-Manual.pdf');
-  installinfotxt := ZipFile.ParseName('installinfo.txt');
   mod_optionsrtf := ZipFile.ParseName('mod_options.rtf');
 
   if VarIsClear(DATA) or 
@@ -196,7 +194,6 @@ begin
      VarIsClear(JFLP) or
      VarIsClear(CHANGELOGmd) or
      VarIsClear(FreelancerManualpdf) or
-     VarIsClear(installinfotxt) or
      VarIsClear(mod_optionsrtf) then
       RaiseException(Format('Cannot find a file/folder in "%s" ZIP file', [ZipPath]));
 
