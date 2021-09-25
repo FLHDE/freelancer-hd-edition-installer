@@ -43,9 +43,9 @@ Name: "{commondesktop}\{#MyAppName}"; Filename: "{app}\EXE\{#MyAppExeName}"; Tas
 
 [Files]
 Source: "installinfo.txt"; DestDir: "{app}"; Flags: ignoreversion
-;Source: "AGENCYB.TTF"; DestDir: "{autofonts}"; FontInstall: "Agency FB Bold"; Flags: onlyifdoesntexist uninsneveruninstall
-;Source: "AGENCYR.TTF"; DestDir: "{autofonts}"; FontInstall: "Agency FB"; Flags: onlyifdoesntexist uninsneveruninstall
-;Source: "ARIALUNI.TTF"; DestDir: "{autofonts}"; FontInstall: "Agency Unicode MS"; Flags: onlyifdoesntexist uninsneveruninstall
+Source: "AGENCYB.TTF"; DestDir: "{autofonts}"; FontInstall: "Agency FB Bold"; Flags: onlyifdoesntexist uninsneveruninstall
+Source: "AGENCYR.TTF"; DestDir: "{autofonts}"; FontInstall: "Agency FB"; Flags: onlyifdoesntexist uninsneveruninstall
+Source: "ARIALUNI.TTF"; DestDir: "{autofonts}"; FontInstall: "Agency Unicode MS"; Flags: onlyifdoesntexist uninsneveruninstall
 
 [Run]
 Filename: "{app}\EXE\{#MyAppExeName}"; Description: "{cm:LaunchProgram,{#StringChange(MyAppName, '&', '&&')}}"; Flags: nowait postinstall skipifsilent
