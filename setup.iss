@@ -345,6 +345,47 @@ begin
   
 end;
 
+// Replaces the SmallText strings in fonts.ini
+function Process_SmallText():boolean;
+  var
+    FilePath : string;
+begin
+    FilePath := ExpandConstant('{app}\DATA\FONTS\fonts.ini');
+
+    if SmallText.Values[1] then
+      FileReplaceString(FilePath,
+      'nickname = NavMap1600' + #13#10 +
+      'font = Agency FB' + #13#10 +
+      'fixed_height = 0.025',
+      'nickname = HudSmall' + #13#10 +
+      'font = Agency FB' + #13#10 +
+      'fixed_height = 0.015');
+      
+    if SmallText.Values[2] then begin
+      FileReplaceString(FilePath,
+        'nickname = HudSmall' + #13#10 +
+        'font = Agency FB' + #13#10 +
+        'fixed_height = 0.029',
+        'nickname = HudSmall' + #13#10 +
+        'font = Agency FB' + #13#10 +
+        'fixed_height = 0.03');
+      FileReplaceString(FilePath,
+        'nickname = Normal' + #13#10 +
+        'font = Agency FB' + #13#10 +
+        'fixed_height = 0.029',
+        'nickname = Normal' + #13#10 +
+        'font = Agency FB' + #13#10 +
+        'fixed_height = 0.035');
+      FileReplaceString(FilePath,
+        'nickname = NavMap1600' + #13#10 +
+        'font = Agency FB' + #13#10 +
+        'fixed_height = 0.025',
+        'nickname = NavMap1600' + #13#10 +
+        'font = Agency FB' + #13#10 +
+        'fixed_height = 0.025');
+    end;      
+end;
+
 // Next 5 functions are for custom pages. Can possibly be removed.
 procedure PageHandler_Activate(Page: TWizardPage);
 begin
