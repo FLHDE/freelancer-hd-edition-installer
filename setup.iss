@@ -30,6 +30,7 @@ WizardSmallImageFile={#SourcePath}\icon.bmp
 DisableWelcomePage=False
 DisableDirPage=False
 InfoBeforeFile={#SourcePath}\installinfo.txt
+ExtraDiskSpaceRequired = 9631137792
 
 [Languages]
 Name: "english"; MessagesFile: "compiler:Default.isl"
