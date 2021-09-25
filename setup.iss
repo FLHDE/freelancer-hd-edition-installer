@@ -56,6 +56,9 @@ WelcomeLabel2=Freelancer: HD Edition is a mod that aims to improve every aspect 
 
 [Code]
 var
+  // Debug allows us to skip the downloading of the files and just copy it from the local PC to save time
+  Debug: Boolean;
+
   // Custom Pages
   DataDirPage: TInputDirWizardPage;
   CallSign: TInputOptionWizardPage;
@@ -366,8 +369,12 @@ procedure CurStepChanged(CurStep: TSetupStep);
 begin
     if CurStep = ssPostInstall then 
     begin
+        // Debug
+        if(Debug) then FileCopy(ExpandConstant('{userdocs}\freelancerhd.zip'),ExpandConstant('{tmp}\freelancerhd.zip'),false);
+
         // Copy Vanilla game to directory
         DirectoryCopy(DataDirPage.Values[0],ExpandConstant('{app}'));
+
         // Unzip
         UnZip(ExpandConstant('{tmp}\freelancerhd.zip'),ExpandConstant('{app}'));
         Process_CallSign();
@@ -401,9 +408,12 @@ end;
 procedure InitializeWizard;
 var dir : string;
 begin
+    // Debug
+    Debug := False;
+
     // Download Mod and store in temp directory
     idpAddFileSize('https://github.com/BC46/freelancer-hd-edition/archive/refs/tags/0.4.1.zip', ExpandConstant('{tmp}\freelancerhd.zip'),3296899072);
-    idpDownloadAfter(wpReady);
+    if(not Debug) then idpDownloadAfter(wpReady);
 
     // Initialize DataDirPage and add content
     DataDirPage := CreateInputDirPage(wpInfoBefore,
