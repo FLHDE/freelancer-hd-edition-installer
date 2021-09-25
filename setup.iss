@@ -206,7 +206,7 @@ begin
 end;
 
 // Process CallSign option. Replaces strings in freelancer.ini depending on what the user clicks
-function CallSignOption():boolean;
+function Process_CallSign():boolean;
 var
   FilePath : string;
 begin
@@ -243,7 +243,7 @@ begin
 end;
 
 // Processes the Startup Logo option. Renames files depending on what option is selected
-function StartUpLogo():boolean;
+function Process_StartUpLogo():boolean;
 var
   FolderPath : string;
   OldFile : string;
@@ -277,7 +277,7 @@ begin
 end;
 
 // Processes the Freelancer logo option. Renames files depending on what option is selected
-function FreelancerLogo():boolean;
+function Process_FreelancerLogo():boolean;
 var
   FolderPath : string;
   OldFile : string;
@@ -313,26 +313,26 @@ begin
 end;
 
 // Next 5 functions are for custom pages. Can possibly be removed.
-procedure frmOptions_Activate(Page: TWizardPage);
+procedure PageHandler_Activate(Page: TWizardPage);
 begin
 end;
 
-function frmOptions_ShouldSkipPage(Page: TWizardPage): Boolean;
+function PageHandler_ShouldSkipPage(Page: TWizardPage): Boolean;
 begin
   Result := False;
 end;
 
-function frmOptions_BackButtonClick(Page: TWizardPage): Boolean;
+function PageHandler_BackButtonClick(Page: TWizardPage): Boolean;
 begin
   Result := True;
 end;
 
-function frmOptions_NextButtonClick(Page: TWizardPage): Boolean;
+function PageHandler_NextButtonClick(Page: TWizardPage): Boolean;
 begin
   Result := True;
 end;
 
-procedure frmOptions_CancelButtonClick(Page: TWizardPage; var Cancel, Confirm: Boolean);
+procedure PageHandler_CancelButtonClick(Page: TWizardPage; var Cancel, Confirm: Boolean);
 begin
 end;
 
@@ -345,9 +345,10 @@ begin
         DirectoryCopy(DataDirPage.Values[0],ExpandConstant('{app}'));
         // Unzip
         UnZip(ExpandConstant('{tmp}\freelancerhd.zip'),ExpandConstant('{app}'));
-        CallSignOption();
-        StartUpLogo();
-        FreelancerLogo();
+        Process_CallSign();
+        Process_StartUpLogo();
+        Process_FreelancerLogo();
+        Process_SmallText()
     end;
 end;
 
@@ -604,47 +605,47 @@ begin
     // Add the functions for each button for each page
     with PageWidescreenHud do
     begin
-      OnActivate := @frmOptions_Activate;
-      OnShouldSkipPage := @frmOptions_ShouldSkipPage;
-      OnBackButtonClick := @frmOptions_BackButtonClick;
-      OnNextButtonClick := @frmOptions_NextButtonClick;
-      OnCancelButtonClick := @frmOptions_CancelButtonClick;
+      OnActivate := @PageHandler_Activate;
+      OnShouldSkipPage := @PageHandler_ShouldSkipPage;
+      OnBackButtonClick := @PageHandler_BackButtonClick;
+      OnNextButtonClick := @PageHandler_NextButtonClick;
+      OnCancelButtonClick := @PageHandler_CancelButtonClick;
     end;
   
     with PagePlanetScape do
     begin
-      OnActivate := @frmOptions_Activate;
-      OnShouldSkipPage := @frmOptions_ShouldSkipPage;
-      OnBackButtonClick := @frmOptions_BackButtonClick;
-      OnNextButtonClick := @frmOptions_NextButtonClick;
-      OnCancelButtonClick := @frmOptions_CancelButtonClick;
+      OnActivate := @PageHandler_Activate;
+      OnShouldSkipPage := @PageHandler_ShouldSkipPage;
+      OnBackButtonClick := @PageHandler_BackButtonClick;
+      OnNextButtonClick := @PageHandler_NextButtonClick;
+      OnCancelButtonClick := @PageHandler_CancelButtonClick;
     end;
   
     with PageWin10 do
     begin
-      OnActivate := @frmOptions_Activate;
-      OnShouldSkipPage := @frmOptions_ShouldSkipPage;
-      OnBackButtonClick := @frmOptions_BackButtonClick;
-      OnNextButtonClick := @frmOptions_NextButtonClick;
-      OnCancelButtonClick := @frmOptions_CancelButtonClick;
+      OnActivate := @PageHandler_Activate;
+      OnShouldSkipPage := @PageHandler_ShouldSkipPage;
+      OnBackButtonClick := @PageHandler_BackButtonClick;
+      OnNextButtonClick := @PageHandler_NextButtonClick;
+      OnCancelButtonClick := @PageHandler_CancelButtonClick;
     end;
   
     with PageEffects do
     begin
-      OnActivate := @frmOptions_Activate;
-      OnShouldSkipPage := @frmOptions_ShouldSkipPage;
-      OnBackButtonClick := @frmOptions_BackButtonClick;
-      OnNextButtonClick := @frmOptions_NextButtonClick;
-      OnCancelButtonClick := @frmOptions_CancelButtonClick;
+      OnActivate := @PageHandler_Activate;
+      OnShouldSkipPage := @PageHandler_ShouldSkipPage;
+      OnBackButtonClick := @PageHandler_BackButtonClick;
+      OnNextButtonClick := @PageHandler_NextButtonClick;
+      OnCancelButtonClick := @PageHandler_CancelButtonClick;
     end;
   
     with PageSinglePlayer do
     begin
-      OnActivate := @frmOptions_Activate;
-      OnShouldSkipPage := @frmOptions_ShouldSkipPage;
-      OnBackButtonClick := @frmOptions_BackButtonClick;
-      OnNextButtonClick := @frmOptions_NextButtonClick;
-      OnCancelButtonClick := @frmOptions_CancelButtonClick;
+      OnActivate := @PageHandler_Activate;
+      OnShouldSkipPage := @PageHandler_ShouldSkipPage;
+      OnBackButtonClick := @PageHandler_BackButtonClick;
+      OnNextButtonClick := @PageHandler_NextButtonClick;
+      OnCancelButtonClick := @PageHandler_CancelButtonClick;
     end;
  end;
 
