@@ -376,7 +376,7 @@ procedure InitializeWizard;
 var dir : string;
 begin
     // Download Mod and store in temp directory
-    idpAddFile('https://github.com/BC46/freelancer-hd-edition/archive/refs/tags/0.4.1.zip', ExpandConstant('{tmp}\freelancerhd.zip'));
+    idpAddFileSize('https://github.com/BC46/freelancer-hd-edition/archive/refs/tags/0.4.1.zip', ExpandConstant('{tmp}\freelancerhd.zip'),3296899072);
     idpDownloadAfter(wpReady);
 
     // Initialize DataDirPage and add content
