@@ -160,6 +160,14 @@ var
   Shell: Variant;
   ZipFile: Variant;
   TargetFolder: Variant;
+  DATA: Variant;
+  DLLS: Variant;
+  EXE: Variant;
+  JFLP: Variant;
+  CHANGELOGmd: Variant;
+  FreelancerManualpdf: Variant;
+  installinfotxt: Variant;
+  mod_optionsrtf: Variant;
 begin
   Shell := CreateOleObject('Shell.Application');
 
@@ -171,6 +179,26 @@ begin
   TargetFolder := Shell.NameSpace(TargetPath);
   if VarIsClear(TargetFolder) then
     RaiseException(Format('Target path "%s" does not exist', [TargetPath]));
+
+  // Need to copy the files/folders out of the zip file manually. This is so it doesn't create an extra folder
+  DATA := ZipFile.ParseName('DATA');
+  DLLS := ZipFile.ParseName('DLLS');
+  EXE := ZipFile.ParseName('EXE');
+  JFLP := ZipFile.ParseName('JFLP');
+  CHANGELOGmd := ZipFile.ParseName('CHANGELOG.md');
+  FreelancerManualpdf := ZipFile.ParseName('Freelancer-Manual.pdf');
+  installinfotxt := ZipFile.ParseName('installinfo.txt');
+  mod_optionsrtf := ZipFile.ParseName('mod_options.rtf');
+
+  if VarIsClear(DATA) or 
+     VarIsClear(DLLS) or
+     VarIsClear(EXE) or
+     VarIsClear(JFLP) or
+     VarIsClear(CHANGELOGmd) or
+     VarIsClear(FreelancerManualpdf) or
+     VarIsClear(installinfotxt) or
+     VarIsClear(mod_optionsrtf) then
+      RaiseException(Format('Cannot find a file/folder in "%s" ZIP file', [ZipPath]));
 
   TargetFolder.CopyHere(
     ZipFile.Items, SHCONTCH_NOPROGRESSBOX or SHCONTCH_RESPONDYESTOALL);
