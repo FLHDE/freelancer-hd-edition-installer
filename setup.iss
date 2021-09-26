@@ -386,6 +386,13 @@ begin
     end;      
 end;
 
+// SinglePlayer console processing logic
+function Process_Console():boolean;
+begin
+  if SinglePlayer.Checked then FileReplaceString(ExpandConstant('{app}\EXE\dacom.ini'),';console.dll','console.dll')
+end;
+
+
 // Next 5 functions are for custom pages. Can possibly be removed.
 procedure PageHandler_Activate(Page: TWizardPage);
 begin
@@ -426,7 +433,8 @@ begin
         Process_CallSign();
         Process_StartUpLogo();
         Process_FreelancerLogo();
-        Process_SmallText()
+        Process_SmallText();
+        Process_Console();
     end;
 end;
 
