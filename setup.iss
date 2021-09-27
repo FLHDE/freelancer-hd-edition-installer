@@ -457,6 +457,59 @@ begin
   else RenameFile(EXEPath + 'd3d8to9.dll2',EXEPath + 'd3d8.dll') 
 end;
 
+function Process_HUD():boolean;
+var
+  HudShiftPath: string;
+begin
+  if WidescreenHud.Checked then
+  begin
+      HudShiftPath := ExpandConstant('{app}\DATA\INTERFACE\HudShift.ini')
+
+      FileReplaceString(
+        ExpandConstant('{app}\EXE\dacom.ini')
+        ,
+        ';HudFacility.dll' + #13#10 +
+        ';HudWeaponGroups.dll' + #13#10 +
+        ';HudTarget.dll' + #13#10 +
+        ';HudStatus.dll'
+        ,
+        'HudFacility.dll' + #13#10 +
+        'HudWeaponGroups.dll' + #13#10 +
+        'HudTarget.dll' + #13#10 +
+        'HudStatus.dll'
+      )
+
+      FileReplaceString(HudShiftPath,';HudWeaponGroups = true','HudWeaponGroups = true')
+
+      FileReplaceString(
+        HudShiftPath
+        ,
+        'position = 4e0a80, -0.3630, 4e0a94, -0.3025		; wireframe' + #13#10 +
+        'position = 4e0fe7, -0.4105, 4e0fef, -0.3700		; TargetMinimizedFrame' + #13#10 +
+        'position = 4e10ff, -0.4820, 4e1107, -0.2000		; TargetShipName' + #13#10 +
+        'position = 4e1145, -0.4820, 4e1158, -0.2000' + #13#10 +
+        'position = 4e1180, -0.4820, 4e1188, -0.2180		; SubtargetName' + #13#10 +
+        'position = 4e11e2, -0.4820, 4e11f0, -0.2180' + #13#10 +
+        'position = 4e1247, -0.2605, 4e124f, -0.2695		; TargetPreviousButton' + #13#10 +
+        'position = 4e12b4, -0.2645, 4e12bc, -0.3005		; TargetNextButton' + #13#10 +
+        'position = 4e175c, -0.4940, 4e1764, -0.3610		; TargetRankText'
+        ,
+        'position = 4e0a80, -0.1270, 4e0a94, -0.3000		; wireframe' + #13#10 +
+        'position = 4e0fe7, -0.4105, 4e0fef, -0.3700		; TargetMinimizedFrame' + #13#10 +
+        'position = 4e10ff, -0.2430, 4e1107, -0.2030		; TargetShipName' + #13#10 +
+        'position = 4e1145, -0.2430, 4e1158, -0.2030' + #13#10 +
+        'position = 4e1180, -0.2430, 4e1188, -0.2210		; SubtargetName' + #13#10 +
+        'position = 4e11e2, -0.2430, 4e11f0, -0.2210' + #13#10 +
+        'position = 4e1247, -0.0545, 4e124f, -0.2770		; TargetPreviousButton' + #13#10 +
+        'position = 4e12b4, -0.0575, 4e12bc, -0.3080		; TargetNextButton' + #13#10 +
+        'position = 4e175c, -0.2550, 4e1764, -0.3610		; TargetRankText'
+      )
+
+     FileReplaceString(HudShiftPath,'position = 4da2fa,  0.4180, 4da30e, -0.2900','position = 4da2fa,  0.5165, 4da30e, -0.3030, -1.0')
+     FileReplaceString(HudShiftPath,'position = 4e14db, -0.2020, 4e14e3, -0.3700		; TargetTradeButton','position = 4e14db, -0.0180, 4e14e3, -0.3700		; TargetTradeButton')
+  end
+end;
+
 // Next 5 functions are for custom pages. Can possibly be removed.
 procedure PageHandler_Activate(Page: TWizardPage);
 begin
@@ -502,6 +555,7 @@ begin
         Process_Effects();
         Process_Planetscape();
         Process_Win10();
+        Process_HUD();
     end;
 end;
 
