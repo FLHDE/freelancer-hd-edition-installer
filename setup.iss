@@ -105,6 +105,13 @@ var
   SinglePlayer: TCheckBox;
   descSinglePlayer: TNewStaticText;
 
+// Update progress of installer bar
+procedure UpdateProgress(Position: Integer);
+begin
+  WizardForm.ProgressGauge.Position :=
+    Position * WizardForm.ProgressGauge.Max div 100;
+end;
+
 // Used to copy the vanilla install to {app}
 procedure DirectoryCopy(SourcePath, DestPath: string);
 var
@@ -122,27 +129,18 @@ begin
           DestFilePath := DestPath + '\' + FindRec.Name;
           if FindRec.Attributes and FILE_ATTRIBUTE_DIRECTORY = 0 then
           begin
-            if FileCopy(SourceFilePath, DestFilePath, False) then
+            if not FileCopy(SourceFilePath, DestFilePath, False) then
             begin
-              Log(Format('Copied %s to %s', [SourceFilePath, DestFilePath]));
-            end
-              else
-            begin
-              Log(Format('Failed to copy %s to %s', [
+              RaiseException(Format('Failed to copy %s to %s', [
                 SourceFilePath, DestFilePath]));
             end;
           end
             else
           begin
             if DirExists(DestFilePath) or CreateDir(DestFilePath) then
-            begin
-              Log(Format('Created %s', [DestFilePath]));
-              DirectoryCopy(SourceFilePath, DestFilePath);
-            end
+              DirectoryCopy(SourceFilePath, DestFilePath)
               else
-            begin
-              Log(Format('Failed to create %s', [DestFilePath]));
-            end;
+              RaiseException(Format('Failed to create %s', [DestFilePath]));
           end;
         end;
       until not FindNext(FindRec);
@@ -152,7 +150,7 @@ begin
   end
     else
   begin
-    Log(Format('Failed to list %s', [SourcePath]));
+    RaiseException(Format('Failed to list %s', [SourcePath]));
   end;
 end;
 
@@ -546,10 +544,17 @@ begin
         if(Debug) then FileCopy(ExpandConstant('{userdocs}\freelancerhd.zip'),ExpandConstant('{tmp}\freelancerhd.zip'),false);
 
         // Copy Vanilla game to directory
+        WizardForm.StatusLabel.Caption := 'Copying Vanilla Freelancer directory';
         DirectoryCopy(DataDirPage.Values[0],ExpandConstant('{app}'));
+        UpdateProgress(50);
 
         // Unzip
+        WizardForm.StatusLabel.Caption := 'Unzipping Freelancer HD Edition';
         UnZip(ExpandConstant('{tmp}\freelancerhd.zip'),ExpandConstant('{app}'));
+        UpdateProgress(95);
+
+        // Process options
+        WizardForm.StatusLabel.Caption := 'Processing your options';
         Process_CallSign();
         Process_StartUpLogo();
         Process_FreelancerLogo();
@@ -559,6 +564,7 @@ begin
         Process_Planetscape();
         Process_Win10();
         Process_HUD();
+        UpdateProgress(100);
     end;
 end;
 
