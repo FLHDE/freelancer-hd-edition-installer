@@ -245,7 +245,7 @@ var
   FilePath : string;
 begin
 
-  RenameFile(ExpandConstant('{app}\DLLS\BIN\callsign.dll2'),ExpandConstant('{app}\EXE\callsign.dll'));
+  RenameFile(ExpandConstant('{app}\DLLS\BIN\callsign.dll2'),ExpandConstant('{app}\DLLS\BIN\callsign.dll'));
 
   FilePath := ExpandConstant('{app}\EXE\freelancer.ini');
 
