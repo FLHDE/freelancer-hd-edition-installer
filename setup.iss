@@ -18,7 +18,7 @@ AppPublisher={#MyAppPublisher}
 AppPublisherURL={#MyAppURL}
 AppSupportURL={#MyAppURL}
 AppUpdatesURL={#MyAppURL}
-DefaultDirName={win}\Freelancer HD Edition
+DefaultDirName={sd}\Freelancer HD Edition
 DefaultGroupName={#MyAppName}
 AllowNoIcons=yes
 OutputBaseFilename=FreelancerHDSetup
@@ -50,6 +50,9 @@ Source: "ARIALUNI.TTF"; DestDir: "{autofonts}"; FontInstall: "Agency Unicode MS"
 
 [Run]
 Filename: "{app}\EXE\{#MyAppExeName}"; Description: "{cm:LaunchProgram,{#StringChange(MyAppName, '&', '&&')}}"; Flags: nowait postinstall skipifsilent
+
+[UninstallDelete]
+Type: filesandordirs; Name: "{app}"
 
 [Messages]
 WelcomeLabel2=Freelancer: HD Edition is a mod that aims to improve every aspect of Freelancer while keeping the look and feel as close to vanilla as possible. It also serves as an all-in-one package for players so they don't have to worry about installing countless patches and mods to create the perfect HD and bug-free install.%n%n This installer requires a clean, freshly installed Freelancer directory.
@@ -113,7 +116,7 @@ begin
   begin
     try
       repeat
-        if (FindRec.Name <> '.') and (FindRec.Name <> '..') then
+        if (FindRec.Name <> '.') and (FindRec.Name <> '..') and (FindRec.Name <> 'UNINSTAL.EXE') then
         begin
           SourceFilePath := SourcePath + '\' + FindRec.Name;
           DestFilePath := DestPath + '\' + FindRec.Name;
@@ -584,7 +587,7 @@ procedure InitializeWizard;
 var dir : string;
 begin
     // Debug
-    Debug := False;
+    Debug := True;
 
     // Download Mod and store in temp directory
     idpAddFileSize('https://github.com/BC46/freelancer-hd-edition/archive/refs/tags/0.4.1.zip', ExpandConstant('{tmp}\freelancerhd.zip'),3296899072);
