@@ -392,6 +392,35 @@ begin
   if SinglePlayer.Checked then FileReplaceString(ExpandConstant('{app}\EXE\dacom.ini'),';console.dll','console.dll')
 end;
 
+// Effects processing logic
+function Process_Effects():boolean;
+var
+  MissilePath : string;
+begin
+MissilePath := ExpandConstant('{app}\DATA\FX\WEAPONS\');
+if MissileEffects.Checked then 
+  begin
+    RenameFile(MissilePath + 'br_empmissile_new.ale',MissilePath + 'br_empmissile.ale')
+    RenameFile(MissilePath + 'br_missile01_new.ale',MissilePath + 'br_missile01.ale')
+    RenameFile(MissilePath + 'br_missile02_new.ale',MissilePath + 'br_missile02.ale')
+    RenameFile(MissilePath + 'ku_empmissile_new.ale',MissilePath + 'ku_empmissile.ale')
+    RenameFile(MissilePath + 'ku_missile01_new.ale',MissilePath + 'ku_missile01.ale')
+    RenameFile(MissilePath + 'ku_missile02_new.ale',MissilePath + 'ku_missile02.ale')
+    RenameFile(MissilePath + 'ku_torpedo01_new.ale',MissilePath + 'ku_torpedo01.ale')
+    RenameFile(MissilePath + 'li_empmissile_new.ale',MissilePath + 'li_empmissile.ale')
+    RenameFile(MissilePath + 'li_missile01_new.ale',MissilePath + 'li_missile01.ale')
+    RenameFile(MissilePath + 'li_missile02_new.ale',MissilePath + 'li_missile02.ale')
+    RenameFile(MissilePath + 'li_torpedo01_new.ale',MissilePath + 'li_torpedo01.ale')
+    RenameFile(MissilePath + 'pi_missile01_new.ale',MissilePath + 'pi_missile01.ale')
+    RenameFile(MissilePath + 'pi_missile02_new.ale',MissilePath + 'pi_missile02.ale')
+    RenameFile(MissilePath + 'rh_empmissile_new.ale',MissilePath + 'rh_empmissile.ale')
+    RenameFile(MissilePath + 'rh_missile01_new.ale',MissilePath + 'rh_missile01.ale')
+    RenameFile(MissilePath + 'rh_missile02_new.ale',MissilePath + 'rh_missile02.ale')
+  end;
+
+if Reflections.Checked then RenameFile(ExpandConstant('{app}\DATA\FX\envmapbasic_new.mat'),ExpandConstant('{app}\DATA\FX\envmapbasic.mat'));
+end;
+
 
 // Next 5 functions are for custom pages. Can possibly be removed.
 procedure PageHandler_Activate(Page: TWizardPage);
@@ -435,6 +464,7 @@ begin
         Process_FreelancerLogo();
         Process_SmallText();
         Process_Console();
+        Process_Effects();
     end;
 end;
 
