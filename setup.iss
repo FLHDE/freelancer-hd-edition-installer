@@ -448,6 +448,14 @@ begin
     end;
 end;
 
+function Process_Win10():boolean;
+var
+  EXEPath: string;
+begin
+  EXEPath := ExpandConstant('{app}\EXE\');
+  if Win10.Checked then RenameFile(EXEPath + 'D3D8_compat.dll2',EXEPath + 'd3d8.dll')
+  else RenameFile(EXEPath + 'd3d8to9.dll2',EXEPath + 'd3d8.dll') 
+end;
 
 // Next 5 functions are for custom pages. Can possibly be removed.
 procedure PageHandler_Activate(Page: TWizardPage);
@@ -493,6 +501,7 @@ begin
         Process_Console();
         Process_Effects();
         Process_Planetscape();
+        Process_Win10();
     end;
 end;
 
