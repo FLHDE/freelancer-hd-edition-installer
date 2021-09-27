@@ -567,6 +567,11 @@ begin
         Process_Planetscape();
         Process_Win10();
         Process_HUD();
+
+        // Delete restart.fl to stop crashes
+        DeleteFile(ExpandConstant('{userdocs}\My Games\Freelancer\Accts\SinglePlayer\Restart.fl'));
+
+        // Install Complete!
         UpdateProgress(100);
     end;
 end;
