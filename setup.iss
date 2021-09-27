@@ -244,6 +244,9 @@ function Process_CallSign():boolean;
 var
   FilePath : string;
 begin
+
+  RenameFile(ExpandConstant('{app}\DLLS\BIN\callsign.dll2'),ExpandConstant('{app}\EXE\callsign.dll'));
+
   FilePath := ExpandConstant('{app}\EXE\freelancer.ini');
 
   if(CallSign.Values[1]) then // Navy Beta 2-5
