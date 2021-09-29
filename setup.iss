@@ -685,8 +685,8 @@ begin
     'Select the option corresponding to the resolution you’re going to play Freelancer in. If you play in 1920x1080 or lower, the “No” option is fine as the elements are configured correctly already.',
     True, False);
     SmallText.Add('No');
-    SmallText.Add('1440p');
-    SmallText.Add('4k');
+    SmallText.Add('Yes, apply fix for 2560x1440 screens');
+    SmallText.Add('Yes, apply fix for 3840x2160 screens');
     SmallText.Values[0] := True;
 
     // Initialize HUD page and add content
