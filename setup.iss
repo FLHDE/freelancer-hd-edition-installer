@@ -224,8 +224,8 @@ begin
     try
       MyFile.LoadFromFile(FileName);
       MyText := MyFile.Text;
-
-      { Only save if text has been changed. }
+      
+      // Save the file the text has been changed
       if StringChangeEx(MyText, SearchString, ReplaceString, True) > 0 then
       begin;
         MyFile.Text := MyText;
@@ -236,6 +236,29 @@ begin
     end;
   finally
     MyFile.Free;
+  end;
+end;
+
+// Returns true if the directory is empty
+function isEmptyDir(dirName: String): Boolean;
+var
+  FindRec: TFindRec;
+  FileCount: Integer;
+begin
+  Result := True;
+  if FindFirst(dirName+'\*', FindRec) then begin
+    try
+      repeat
+        if (FindRec.Name <> '.') and (FindRec.Name <> '..') then begin
+          FileCount := 1
+          Result := False
+          break;
+        end;
+      until not FindNext(FindRec);
+    finally
+      FindClose(FindRec);
+      if FileCount = 0 then Result := True;
+    end;
   end;
 end;
 
@@ -590,6 +613,12 @@ begin
       // Need needs to be in a seperate if since it tries to expand {app} even if not on PageID 6. Pascal what are you doing!
       if(Pos(ExpandConstant('{app}'),DataDirPage.Values[0]) > 0) then begin
         MsgBox('Freelancer: HD Edition cannot be installed to the same location as your vanilla install. Please select a new location.', mbError, MB_OK);
+        Result := False;
+        exit;
+      end;
+      // Check the install directory is empty
+      if(not isEmptyDir(ExpandConstant('{app}'))) then begin
+        MsgBox('Freelancer: HD Edition cannot be installed to a directory that is not empty. Please empty this directory or choose another one.', mbError, MB_OK);
         Result := False;
         exit;
       end;
