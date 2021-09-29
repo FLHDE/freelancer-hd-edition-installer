@@ -2,7 +2,7 @@
 ; GitHub: https://github.com/ollieraikkonen/Freelancer-hd-edition-install-script
 ; Main GitHub: https://github.com/bc46/Freelancer-hd-edition
 
-#define MyAppName "Freelancer: HD Edition"
+#define MyAppName "Freelancer: HD Edition v0.4.1"
 #define MyAppVersion "0.4.1"
 #define MyAppPublisher "Freelancer: HD Edition Development Team"
 #define MyAppURL "https://github.com/BC46/freelancer-hd-edition"
