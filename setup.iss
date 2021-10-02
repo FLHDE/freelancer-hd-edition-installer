@@ -40,7 +40,7 @@ Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{
 
 [Icons]
 Name: "{group}\{#MyAppName}"; Filename: "{app}\EXE\{#MyAppExeName}"
-Name: "{commondesktop}\{#MyAppName}"; Filename: "{app}\EXE\{#MyAppExeName}"; Tasks: desktopicon
+Name: "{commondesktop}\Freelancer HD Edition"; Filename: "{app}\EXE\{#MyAppExeName}"; Tasks: desktopicon
 
 [Files]
 Source: "installinfo.txt"; DestDir: "{app}"; Flags: ignoreversion
