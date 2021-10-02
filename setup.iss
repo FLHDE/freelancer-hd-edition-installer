@@ -311,29 +311,28 @@ var
 begin
   FolderPath := ExpandConstant('{app}\DATA\INTERFACE\INTRO\IMAGES\');
   NewFile := FolderPath + 'startupscreen_1280.tga';
-
-  if(StartupRes.Values[0]) then
-    begin 
-      OldFile := NewFile
-      NewFile := FolderPath + 'startupscreen_1280_1280x960.tga'
+  // If not the default
+  if(not StartupRes.Values[2]) then begin
+    // Rename old file away 
+    RenameFile(NewFile,FolderPath + 'startupscreen_1280_vanilla.tga');
+    // Rename the correct startup res depending on option
+    if(StartupRes.Values[1]) then 
+      OldFile := FolderPath + 'startupscreen_1280_1280x720.tga'
+    else if(StartupRes.Values[3]) then 
+      OldFile := FolderPath + 'startupscreen_1280_1440x1080.tga'
+    else if(StartupRes.Values[4]) then 
+      OldFile := FolderPath + 'startupscreen_1280_1920x1080.tga'
+    else if(StartupRes.Values[5]) then 
+      OldFile := FolderPath + 'startupscreen_1280_1920x1440.tga'
+    else if(StartupRes.Values[6]) then 
+      OldFile := FolderPath + 'startupscreen_1280_2560x1440.tga'
+    else if(StartupRes.Values[7]) then 
+      OldFile := FolderPath + 'startupscreen_1280_2880x2160.tga'
+    else if(StartupRes.Values[8]) then 
+      OldFile := FolderPath + 'startupscreen_1280_3840x2160.tga';
+    // Actually rename the file
+    RenameFile(OldFile,NewFile);
     end
-  else if(StartupRes.Values[1]) then 
-    OldFile := FolderPath + 'startupscreen_1280_1280x720.tga'
-  else if(StartupRes.Values[3]) then 
-    OldFile := FolderPath + 'startupscreen_1280_1440x1080.tga'
-  else if(StartupRes.Values[4]) then 
-    OldFile := FolderPath + 'startupscreen_1280_1920x1080.tga'
-  else if(StartupRes.Values[5]) then 
-    OldFile := FolderPath + 'startupscreen_1280_1920x1440.tga'
-  else if(StartupRes.Values[6]) then 
-    OldFile := FolderPath + 'startupscreen_1280_2560x1440.tga'
-  else if(StartupRes.Values[7]) then 
-    OldFile := FolderPath + 'startupscreen_1280_2880x2160.tga'
-  else if(StartupRes.Values[8]) then 
-    OldFile := FolderPath + 'startupscreen_1280_3840x2160.tga';
-
-  RenameFile(OldFile,NewFile);
-  
 end;
 
 // Processes the Freelancer logo option. Renames files depending on what option is selected
@@ -345,31 +344,30 @@ var
 begin
   FolderPath := ExpandConstant('{app}\DATA\INTERFACE\INTRO\IMAGES\');
   NewFile := FolderPath + 'front_freelancerlogo.tga';
-
-  if(StartupRes.Values[0]) then
-    begin 
-      OldFile := NewFile
-      NewFile := FolderPath + 'front_freelancerlogo_800x600.tga'
-    end
-  else if(StartupRes.Values[2]) then 
-    OldFile := FolderPath + 'front_freelancerlogo_960x720.tga'
-  else if(StartupRes.Values[3]) then 
-    OldFile := FolderPath + 'front_freelancerlogo_1280x720.tga'
-  else if(StartupRes.Values[4]) then 
-    OldFile := FolderPath + 'front_freelancerlogo_1440x1080.tga'
-  else if(StartupRes.Values[5]) then 
-    OldFile := FolderPath + 'front_freelancerlogo_1920x1080.tga'
-  else if(StartupRes.Values[6]) then 
-    OldFile := FolderPath + 'front_freelancerlogo_1920x1440.tga'
-  else if(StartupRes.Values[7]) then 
-    OldFile := FolderPath + 'front_freelancerlogo_2560x1440.tga'
-  else if(StartupRes.Values[8]) then 
-    OldFile := FolderPath + 'front_freelancerlogo_2880x2160.tga'
-  else if(StartupRes.Values[8]) then 
-    OldFile := FolderPath + 'front_freelancerlogo_3840x2160.tga';
-
-  RenameFile(OldFile,NewFile);
-  
+  // If not the default
+  if(not LogoRes.Values[1]) then begin
+    // Rename old file away
+    RenameFile(NewFile,FolderPath + 'front_freelancerlogo_vanilla.tga')
+    // Rename correct logo res depending on option
+    if(LogoRes.Values[2]) then 
+      OldFile := FolderPath + 'front_freelancerlogo_960x720.tga'
+    else if(LogoRes.Values[3]) then 
+      OldFile := FolderPath + 'front_freelancerlogo_1280x720.tga'
+    else if(LogoRes.Values[4]) then 
+      OldFile := FolderPath + 'front_freelancerlogo_1440x1080.tga'
+    else if(LogoRes.Values[5]) then 
+      OldFile := FolderPath + 'front_freelancerlogo_1920x1080.tga'
+    else if(LogoRes.Values[6]) then 
+      OldFile := FolderPath + 'front_freelancerlogo_1920x1440.tga'
+    else if(LogoRes.Values[7]) then 
+      OldFile := FolderPath + 'front_freelancerlogo_2560x1440.tga'
+    else if(LogoRes.Values[8]) then 
+      OldFile := FolderPath + 'front_freelancerlogo_2880x2160.tga'
+    else if(LogoRes.Values[9]) then 
+      OldFile := FolderPath + 'front_freelancerlogo_3840x2160.tga';
+    // Actually rename the file
+    RenameFile(OldFile,NewFile);
+  end
 end;
 
 // Replaces the SmallText strings in fonts.ini
@@ -727,14 +725,14 @@ begin
     True, False);
     StartupRes.Add('Remove Startup Screen');
     StartupRes.Add('720p 16:9 - 1280x720');
-    StartupRes.Add('960p 4:3 - 1280x960 (Default)');
+    StartupRes.Add('960p 4:3 - 1280x960 (Vanilla)');
     StartupRes.Add('1080p 4:3 - 1440x1080');
     StartupRes.Add('1080p 16:9 - 1920x1080');
     StartupRes.Add('1440p 4:3 - 1920x1440');
     StartupRes.Add('1440p 16:9 - 2560x1440');
     StartupRes.Add('4K 4:3 - 2880x2160');
     StartupRes.Add('4K 16:9 - 3840x2160');
-    StartupRes.Values[2] := True;
+    StartupRes.Values[4] := True;
 
     // Initialize LogoRes page and add content
     LogoRes := CreateInputOptionPage(StartupRes.ID,
@@ -742,17 +740,17 @@ begin
     'This logo has a resolution of 800x600 by default, which makes it look stretched and pixelated/blurry on HD 16:9 monitors. ' +
     'Setting this to a higher resolution with the correct aspect ratio makes the logo look nice and sharp and not stretched-out. Hence we recommend setting this option to your monitor''s native resolution.',
     True, False);
-    LogoRes.Add('1080p 16:9 - 1920x1080');
     LogoRes.Add('Remove Logo');
-    LogoRes.Add('600p 4:3 - 800x600 (Default)');
+    LogoRes.Add('600p 4:3 - 800x600 (Vanilla)');
     LogoRes.Add('720p 4:3 - 960x720');
     LogoRes.Add('720p 16:9 - 1280x720');
     LogoRes.Add('1080p 4:3 - 1440x1080');
+    LogoRes.Add('1080p 16:9 - 1920x1080');
     LogoRes.Add('1440p 4:3 - 1920x1440');
     LogoRes.Add('1440p 16:9 - 2560x1440');
     LogoRes.Add('4K 4:3 - 2880x2160');
     LogoRes.Add('4K 16:9 - 3840x2160');
-    LogoRes.Values[2] := True;
+    LogoRes.Values[5] := True;
 
     // Fix Small Text on 1440p/4K resolutions
     SmallText := CreateInputOptionPage(LogoRes.ID,
@@ -903,7 +901,6 @@ begin
   
     SinglePlayer := TCheckBox.Create(PageSinglePlayer);
     SinglePlayer.Parent := PageSinglePlayer.Surface;
-    SinglePlayer.Checked := True;
   
     // Add the functions for each button for each page
     with PageWidescreenHud do
