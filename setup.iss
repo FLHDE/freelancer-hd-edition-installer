@@ -878,7 +878,6 @@ begin
     MissileEffects := TCheckBox.Create(PageEffects);
     MissileEffects.Parent := PageEffects.Surface;
     MissileEffects.Top := ScaleY(60);
-    MissileEffects.Checked := True;
   
     // Single Player Command Console
     PageSinglePlayer := CreateCustomPage(
