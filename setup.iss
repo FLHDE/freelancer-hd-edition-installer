@@ -381,30 +381,34 @@ begin
       FileReplaceString(FilePath,
       'nickname = NavMap1600' + #13#10 +
       'font = Agency FB' + #13#10 +
-      'fixed_height = 0.025',
+      'fixed_height = 0.015',
+
       'nickname = HudSmall' + #13#10 +
       'font = Agency FB' + #13#10 +
-      'fixed_height = 0.015');
+      'fixed_height = 0.025');
       
     if SmallText.Values[2] then begin
       FileReplaceString(FilePath,
         'nickname = HudSmall' + #13#10 +
         'font = Agency FB' + #13#10 +
-        'fixed_height = 0.029',
+        'fixed_height = 0.03',
+
         'nickname = HudSmall' + #13#10 +
         'font = Agency FB' + #13#10 +
-        'fixed_height = 0.03');
+        'fixed_height = 0.029');
       FileReplaceString(FilePath,
         'nickname = Normal' + #13#10 +
         'font = Agency FB' + #13#10 +
-        'fixed_height = 0.029',
+        'fixed_height = 0.035',
+
         'nickname = Normal' + #13#10 +
         'font = Agency FB' + #13#10 +
-        'fixed_height = 0.035');
+        'fixed_height = 0.029');
       FileReplaceString(FilePath,
         'nickname = NavMap1600' + #13#10 +
         'font = Agency FB' + #13#10 +
-        'fixed_height = 0.025',
+        'fixed_height = 0.015',
+
         'nickname = NavMap1600' + #13#10 +
         'font = Agency FB' + #13#10 +
         'fixed_height = 0.025');
