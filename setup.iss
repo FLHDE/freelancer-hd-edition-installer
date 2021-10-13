@@ -679,7 +679,9 @@ procedure InitializeWizard;
 var dir : string;
 begin
     // Debug
-    Debug := False;
+    if ExpandConstant('{param:debug|false}') = 'true' then
+      Debug := True
+    else Debug:= False;
 
     // Download Mod and store in temp directory
     idpAddFileSize('https://github.com/BC46/freelancer-hd-edition/archive/refs/tags/0.4.1.zip', ExpandConstant('{tmp}\freelancerhd.zip'),3296899072);
