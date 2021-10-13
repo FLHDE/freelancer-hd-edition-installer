@@ -59,8 +59,8 @@ WelcomeLabel2=Freelancer: HD Edition is a mod that aims to improve every aspect 
 
 [Code]
 var
-  // Debug allows us to skip the downloading of the files and just copy it from the local PC to save time
-  Debug: Boolean;
+  // Allows us to skip the downloading of the files and just copy it from the local PC to save time
+  OfflineInstall: String;
 
   // Custom Pages
   DataDirPage: TInputDirWizardPage;
@@ -616,7 +616,7 @@ begin
     if CurStep = ssPostInstall then 
     begin
         // Debug
-        if(Debug) then FileCopy(ExpandConstant('{userdocs}\freelancerhd.zip'),ExpandConstant('{tmp}\freelancerhd.zip'),false);
+        if(OfflineInstall <> 'false') then FileCopy(OfflineInstall,ExpandConstant('{tmp}\freelancerhd.zip'),false);
 
         // Copy Vanilla game to directory
         WizardForm.StatusLabel.Caption := 'Copying Vanilla Freelancer directory';
@@ -652,6 +652,13 @@ end;
 function NextButtonClick(PageId: Integer): Boolean;
 begin
     Result := True;
+    // If they specify an offline file in the cmd line. Check it's valid, if not don't let them continue.
+    if ((PageId = 1) and (OfflineInstall <> 'false') and (not FileExists(OfflineInstall) or (Pos('.zip',OfflineInstall) < 1))) then begin
+      MsgBox('The specified source file either doesn''t exist or is not a valid .zip file', mbError, MB_OK);
+      Result := False;
+      exit;
+    end;
+    // Check Freelancer is installed in the folder they have specified
     if (PageId = DataDirPage.ID) and not FileExists(DataDirPage.Values[0] + '\EXE\Freelancer.exe') then begin
       MsgBox('Freelancer does not seem to be installed in that folder. Please select the correct folder.', mbError, MB_OK);
       Result := False;
@@ -678,14 +685,13 @@ end;
 procedure InitializeWizard;
 var dir : string;
 begin
-    // Debug
-    if ExpandConstant('{param:debug|false}') = 'true' then
-      Debug := True
-    else Debug:= False;
+    // Offline install
+    OfflineInstall := ExpandConstant('{param:sourcefile|false}')
 
     // Download Mod and store in temp directory
     idpAddFileSize('https://github.com/BC46/freelancer-hd-edition/archive/refs/tags/0.4.1.zip', ExpandConstant('{tmp}\freelancerhd.zip'),3296899072);
-    if(not Debug) then idpDownloadAfter(wpReady);
+    if(OfflineInstall = 'false') then idpDownloadAfter(wpReady);
+ 
 
     // Initialize DataDirPage and add content
     DataDirPage := CreateInputDirPage(wpInfoBefore,
