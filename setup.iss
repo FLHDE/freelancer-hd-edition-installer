@@ -383,7 +383,7 @@ begin
       'font = Agency FB' + #13#10 +
       'fixed_height = 0.015',
 
-      'nickname = HudSmall' + #13#10 +
+      'nickname = NavMap1600' + #13#10 +
       'font = Agency FB' + #13#10 +
       'fixed_height = 0.025');
       
