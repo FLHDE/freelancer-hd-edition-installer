@@ -89,6 +89,7 @@ var
   lblWin10: TLabel;
   Win10: TCheckBox;
   descWin10: TNewStaticText;
+  linkWin10: TLabel;
 
   // Add improved reflections
   lblReflections: TLabel;
@@ -681,6 +682,19 @@ begin
     end;
 end;
 
+// The below 2 procedures are used to open a link in the browser on the Windows 10 compatibility page
+procedure OpenBrowser(Url: string);
+var
+  ErrorCode: Integer;
+begin
+  ShellExec('open', Url, '', '', SW_SHOWNORMAL, ewNoWait, ErrorCode);
+end;
+
+procedure LinkClick(Sender: TObject);
+begin
+  OpenBrowser('https://github.com/BC46/freelancer-hd-edition/wiki/Windows-10-compatibility-patch-locks-FPS-or-refresh-rate-to-60');
+end;
+
 // Run when the wizard is opened.
 procedure InitializeWizard;
 var dir : string;
@@ -845,7 +859,17 @@ begin
     descWin10.Caption := 'Windows 10 users may experience compatibility issues while playing (vanilla) Freelancer including broken lighting in many base interiors and missing glass reflections.' + #13#10 + #13#10 +
     'We''ve included a Legacy DirectX wrapper named dgVoodoo2 in this mod, which serves as an optional patch that fixes all of these issues.' + #13#10 + #13#10 +
     'However, we have disabled this option by default as you may experience crashes, bugs, and stutters while using it. So please try it at your own risk.' + #13#10 + #13#10 +
-    'If you experience a refresh rate/fps lock to 60 while using this patch, please refer to the wiki for a solution: https://github.com/BC46/freelancer-hd-edition/wiki'; 
+    'If you experience a refresh rate/fps lock to 60 while using this patch, please refer to the wiki for a solution:';
+    
+    linkWin10 := TLabel.Create(PageWin10);
+    linkWin10.Top := descWin10.Height + ScaleY(20);
+    linkWin10.Parent := PageWin10.Surface;
+    linkWin10.Caption := 'https://github.com/BC46/freelancer-hd-edition/wiki';
+    linkWin10.OnClick := @LinkClick;
+    linkWin10.ParentFont := True;
+    linkWin10.Font.Style := linkWin10.Font.Style + [fsUnderline, fsBold];
+    linkWin10.Font.Color := clBlue;
+    linkWin10.Cursor := crHand;
   
     Win10 := TCheckBox.Create(PageWin10);
     Win10.Parent := PageWin10.Surface;
