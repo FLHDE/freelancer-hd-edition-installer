@@ -747,7 +747,8 @@ begin
     StartupRes := CreateInputOptionPage(CallSign.ID,
     'Startup Screen Resolution', 'Choose your native resolution',
     'By default, the "Freelancer" splash screen you see when you start the game has a resolution of 1280x960. This makes it appear stretched and a bit blurry on HD 16:9 resolutions. ' +
-    'We recommend setting this option to your monitor''s native resolution.',
+    'We recommend setting this option to your monitor''s native resolution. ' +
+    'A higher resolution option may negatively impact the game''s start-up speed.',
     True, False);
     StartupRes.Add('Remove Startup Screen');
     StartupRes.Add('720p 16:9 - 1280x720');
@@ -764,7 +765,8 @@ begin
     LogoRes := CreateInputOptionPage(StartupRes.ID,
     'Freelancer Logo Resolution', 'In the game''s main menu',
     'This logo has a resolution of 800x600 by default, which makes it look stretched and pixelated/blurry on HD 16:9 monitors. ' +
-    'Setting this to a higher resolution with the correct aspect ratio makes the logo look nice and sharp and not stretched-out. Hence we recommend setting this option to your monitor''s native resolution.',
+    'Setting this to a higher resolution with the correct aspect ratio makes the logo look nice and sharp and not stretched-out. Hence we recommend setting this option to your monitor''s native resolution. ' +
+    'A higher resolution option may negatively impact the game''s start-up speed.',
     True, False);
     LogoRes.Add('Remove Logo');
     LogoRes.Add('600p 4:3 - 800x600 (Vanilla)');
