@@ -8,8 +8,6 @@
 #define MyAppURL "https://github.com/BC46/freelancer-hd-edition"
 #define MyAppExeName "Freelancer.exe"
 
-#include ReadReg(HKLM, 'Software\WOW6432Node\Mitrich Software\Inno Download Plugin', 'InstallDir') + '\idp.iss'
-
 [Setup]
 AppId={{F40FDCDA-3A45-4CC3-9FDA-167EE480A1E0}
 AppName={#MyAppName}
@@ -74,6 +72,7 @@ var
   PageReflections: TWizardPage;
   PageEffects: TWizardPage;
   PageSinglePlayer: TWizardPage;
+  DownloadPage: TDownloadWizardPage;
 
   // Advanced Widescreen HUD
   lblWidescreenHud: TLabel;
@@ -104,6 +103,16 @@ var
   lblSinglePlayer: TLabel;
   SinglePlayer: TCheckBox;
   descSinglePlayer: TNewStaticText;
+
+// Report on download progress
+function OnDownloadProgress(const Url, FileName: String; const Progress, ProgressMax: Int64): Boolean; 
+begin
+  DownloadPage.SetText('Downloading mod',(IntToStr(Progress/1048576) + 'MB / 3296MB'))
+  if Progress = ProgressMax then
+    Log(Format('Successfully downloaded file to {tmp}: %s', [FileName]));
+  DownloadPage.SetProgress(Progress, ProgressMax)
+  Result := True;
+end;
 
 // Update progress of installer bar
 procedure UpdateProgress(Position: Integer);
@@ -679,6 +688,24 @@ begin
         exit;
       end;
     end;
+    if ((PageId = 10) and (OfflineInstall = 'false')) then begin
+      DownloadPage.Clear;
+      DownloadPage.Add('https://github.com/BC46/freelancer-hd-edition/archive/refs/tags/0.4.1.zip', 'freelancerhd.zip', '');
+      DownloadPage.SetText('Downloading mod','');
+      DownloadPage.Show;
+      DownloadPage.ProgressBar.Style := npbstNormal;
+      try
+        try
+          DownloadPage.Download;
+          Result := True;
+        except
+          SuppressibleMsgBox(AddPeriod(GetExceptionMessage), mbCriticalError, MB_OK, IDOK);
+          Result := False;
+        end;
+      finally
+        DownloadPage.Hide;
+      end;
+    end;
 end;
 
 // Run when the wizard is opened.
@@ -688,10 +715,7 @@ begin
     // Offline install
     OfflineInstall := ExpandConstant('{param:sourcefile|false}')
 
-    // Download Mod and store in temp directory
-    idpAddFileSize('https://github.com/BC46/freelancer-hd-edition/archive/refs/tags/0.4.1.zip', ExpandConstant('{tmp}\freelancerhd.zip'),3296899072);
-    if(OfflineInstall = 'false') then idpDownloadAfter(wpReady);
- 
+    DownloadPage := CreateDownloadPage(SetupMessage(msgWizardPreparing), SetupMessage(msgPreparingDesc), @OnDownloadProgress);
 
     // Initialize DataDirPage and add content
     DataDirPage := CreateInputDirPage(wpInfoBefore,
