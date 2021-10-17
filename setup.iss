@@ -110,7 +110,8 @@ begin
   DownloadPage.SetText('Downloading mod',(IntToStr(Progress/1048576) + 'MB / 3296MB'))
   if Progress = ProgressMax then
     Log(Format('Successfully downloaded file to {tmp}: %s', [FileName]));
-  DownloadPage.SetProgress(Progress, ProgressMax)
+  if(Progress < ProgressMax) then
+    DownloadPage.SetProgress(Progress, ProgressMax);
   Result := True;
 end;
 
