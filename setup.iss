@@ -73,6 +73,7 @@ var
   PageEffects: TWizardPage;
   PageSinglePlayer: TWizardPage;
   DownloadPage: TDownloadWizardPage;
+  DownloadPageMirror: TDownloadWizardPage;
 
   // Advanced Widescreen HUD
   lblWidescreenHud: TLabel;
@@ -110,8 +111,15 @@ begin
   DownloadPage.SetText('Downloading mod',(IntToStr(Progress/1048576) + 'MB / 3296MB'))
   if Progress = ProgressMax then
     Log(Format('Successfully downloaded file to {tmp}: %s', [FileName]));
-  if(Progress < ProgressMax) then
-    DownloadPage.SetProgress(Progress, ProgressMax);
+  Result := True;
+end;
+
+// Report on download mirror progress
+function OnDownloadProgressMirror(const Url, FileName: String; const Progress, ProgressMax: Int64): Boolean; 
+begin
+  DownloadPageMirror.SetText('Downloading mod',(IntToStr(Progress/1048576) + 'MB / 3296MB'))
+  if Progress = ProgressMax then
+    Log(Format('Successfully downloaded file to {tmp}: %s', [FileName]));
   Result := True;
 end;
 
@@ -700,8 +708,25 @@ begin
           DownloadPage.Download;
           Result := True;
         except
-          SuppressibleMsgBox(AddPeriod(GetExceptionMessage), mbCriticalError, MB_OK, IDOK);
+          SuppressibleMsgBox('Download failed. Attempting download with alternate mirror.', mbError, MB_OK, IDOK);
           Result := False;
+          DownloadPage.Hide;    
+          DownloadPageMirror.Clear;
+          DownloadPageMirror.Add('https://pechey.net/files/freelancer-hd-edition-0.4.1.zip', 'freelancerhd.zip', '');
+          DownloadPageMirror.SetText('Downloading mod','');
+          DownloadPageMirror.Show;
+          DownloadPageMirror.ProgressBar.Style := npbstNormal;
+          try
+            try
+              DownloadPageMirror.Download;
+              Result := True;
+            except
+              Result := False;
+              SuppressibleMsgBox('Unable to download from alternate mirror. Please use the FLMM version.', mbCriticalError, MB_OK, IDOK);
+            end;
+            finally
+            DownloadPageMirror.Hide;
+          end;
         end;
       finally
         DownloadPage.Hide;
@@ -717,6 +742,7 @@ begin
     OfflineInstall := ExpandConstant('{param:sourcefile|false}')
 
     DownloadPage := CreateDownloadPage(SetupMessage(msgWizardPreparing), SetupMessage(msgPreparingDesc), @OnDownloadProgress);
+    DownloadPageMirror := CreateDownloadPage(SetupMessage(msgWizardPreparing), SetupMessage(msgPreparingDesc), @OnDownloadProgressMirror);
 
     // Initialize DataDirPage and add content
     DataDirPage := CreateInputDirPage(wpInfoBefore,
