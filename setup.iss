@@ -74,6 +74,7 @@ var
   PageSinglePlayer: TWizardPage;
   DownloadPage: TDownloadWizardPage;
   DownloadPageMirror: TDownloadWizardPage;
+  DownloadPageMirror2: TDownloadWizardPage;
 
   // Advanced Widescreen HUD
   lblWidescreenHud: TLabel;
@@ -118,6 +119,15 @@ end;
 function OnDownloadProgressMirror(const Url, FileName: String; const Progress, ProgressMax: Int64): Boolean; 
 begin
   DownloadPageMirror.SetText('Downloading mod',(IntToStr(Progress/1048576) + 'MB / 3296MB'))
+  if Progress = ProgressMax then
+    Log(Format('Successfully downloaded file to {tmp}: %s', [FileName]));
+  Result := True;
+end;
+
+// Report on download mirror 2 progress
+function OnDownloadProgressMirror2(const Url, FileName: String; const Progress, ProgressMax: Int64): Boolean; 
+begin
+  DownloadPageMirror2.SetText('Downloading mod',(IntToStr(Progress/1048576) + 'MB / 3296MB'))
   if Progress = ProgressMax then
     Log(Format('Successfully downloaded file to {tmp}: %s', [FileName]));
   Result := True;
@@ -697,7 +707,9 @@ begin
         exit;
       end;
     end;
+    // Start downloading the mod
     if ((PageId = 10) and (OfflineInstall = 'false')) then begin
+    // 1st Attempt
       DownloadPage.Clear;
       DownloadPage.Add('https://github.com/BC46/freelancer-hd-edition/archive/refs/tags/0.4.1.zip', 'freelancerhd.zip', '');
       DownloadPage.SetText('Downloading mod','');
@@ -708,6 +720,7 @@ begin
           DownloadPage.Download;
           Result := True;
         except
+          // 2nd Attempt
           SuppressibleMsgBox('Download failed. Attempting download with alternate mirror.', mbError, MB_OK, IDOK);
           Result := False;
           DownloadPage.Hide;    
@@ -721,18 +734,37 @@ begin
               DownloadPageMirror.Download;
               Result := True;
             except
+              // 3rd Attempt
               Result := False;
-              SuppressibleMsgBox('Unable to download from alternate mirror. Please use the FLMM version.', mbCriticalError, MB_OK, IDOK);
-            end;
-            finally
+              SuppressibleMsgBox('Download failed. Attempting download with another alternate mirror.', mbError, MB_OK, IDOK);
+              DownloadPageMirror.Hide;    
+              DownloadPageMirror2.Clear;
+              DownloadPageMirror2.Add('https://onedrive.live.com/download?cid=F03BDD831B77D1AD&resid=F03BDD831B77D1AD%2193133&authkey=AKy-2b1cuS-YMhU', 'freelancerhd.zip', '');
+              DownloadPageMirror2.SetText('Downloading mod','');
+              DownloadPageMirror2.Show;
+              DownloadPageMirror2.ProgressBar.Style := npbstNormal;
+              try
+                try
+                  DownloadPageMirror2.Download;
+                  Result := True;
+                except
+                  // All attempts failed
+                  Result := False;
+                  SuppressibleMsgBox('Unable to download from alternate mirror. Please use the FLMM version.', mbCriticalError, MB_OK, IDOK);
+                end;
+              finally
+                DownloadPageMirror2.Hide;
+              end;
+          end;
+          finally
             DownloadPageMirror.Hide;
           end;
         end;
-      finally
+        finally
         DownloadPage.Hide;
-      end;
+        end;
     end;
-end;
+  end;
 
 // Run when the wizard is opened.
 procedure InitializeWizard;
@@ -741,8 +773,10 @@ begin
     // Offline install
     OfflineInstall := ExpandConstant('{param:sourcefile|false}')
 
+    // Initialise download page and mirrors
     DownloadPage := CreateDownloadPage(SetupMessage(msgWizardPreparing), SetupMessage(msgPreparingDesc), @OnDownloadProgress);
     DownloadPageMirror := CreateDownloadPage(SetupMessage(msgWizardPreparing), SetupMessage(msgPreparingDesc), @OnDownloadProgressMirror);
+    DownloadPageMirror2 := CreateDownloadPage(SetupMessage(msgWizardPreparing), SetupMessage(msgPreparingDesc), @OnDownloadProgressMirror2);
 
     // Initialize DataDirPage and add content
     DataDirPage := CreateInputDirPage(wpInfoBefore,
