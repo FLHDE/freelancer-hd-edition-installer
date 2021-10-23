@@ -75,6 +75,7 @@ var
   DownloadPage: TDownloadWizardPage;
   DownloadPageMirror: TDownloadWizardPage;
   DownloadPageMirror2: TDownloadWizardPage;
+  DownloadPageMirror3: TDownloadWizardPage;
 
   // Advanced Widescreen HUD
   lblWidescreenHud: TLabel;
@@ -128,6 +129,15 @@ end;
 function OnDownloadProgressMirror2(const Url, FileName: String; const Progress, ProgressMax: Int64): Boolean; 
 begin
   DownloadPageMirror2.SetText('Downloading mod',(IntToStr(Progress/1048576) + 'MB / 3296MB'))
+  if Progress = ProgressMax then
+    Log(Format('Successfully downloaded file to {tmp}: %s', [FileName]));
+  Result := True;
+end;
+
+// Report on download mirror 3 progress
+function OnDownloadProgressMirror3(const Url, FileName: String; const Progress, ProgressMax: Int64): Boolean; 
+begin
+  DownloadPageMirror3.SetText('Downloading mod',(IntToStr(Progress/1048576) + 'MB / 3296MB'))
   if Progress = ProgressMax then
     Log(Format('Successfully downloaded file to {tmp}: %s', [FileName]));
   Result := True;
@@ -739,7 +749,7 @@ begin
               SuppressibleMsgBox('Download failed. Attempting download with another alternate mirror.', mbError, MB_OK, IDOK);
               DownloadPageMirror.Hide;    
               DownloadPageMirror2.Clear;
-              DownloadPageMirror2.Add('https://onedrive.live.com/download?cid=F03BDD831B77D1AD&resid=F03BDD831B77D1AD%2193133&authkey=AKy-2b1cuS-YMhU', 'freelancerhd.zip', '');
+              DownloadPageMirror2.Add('https://onedrive.live.com/download?cid=F03BDD831B77D1AD&resid=F03BDD831B77D1AD%2193136&authkey=AB-33u2fKjr1-V8', 'freelancerhd.zip', '');
               DownloadPageMirror2.SetText('Downloading mod','');
               DownloadPageMirror2.Show;
               DownloadPageMirror2.ProgressBar.Style := npbstNormal;
@@ -748,22 +758,40 @@ begin
                   DownloadPageMirror2.Download;
                   Result := True;
                 except
-                  // All attempts failed
+                  // 4th Attempt
                   Result := False;
-                  SuppressibleMsgBox('Unable to download from alternate mirror. Please use the FLMM version.', mbCriticalError, MB_OK, IDOK);
+                  SuppressibleMsgBox('Download failed. Attempting download with another alternate mirror.', mbError, MB_OK, IDOK);
+                  DownloadPageMirror2.Hide;    
+                  DownloadPageMirror3.Clear;
+                  DownloadPageMirror3.Add('https://archive.org/download/freelancer-hd-edition-0.4.1/freelancer-hd-edition-0.4.1.zip', 'freelancerhd.zip', '');
+                  DownloadPageMirror3.SetText('Downloading mod','');
+                  DownloadPageMirror3.Show;
+                  DownloadPageMirror3.ProgressBar.Style := npbstNormal;
+                  try
+                    try
+                      DownloadPageMirror3.Download;
+                      Result := True;
+                    except
+                      // All attempts failed
+                      Result := False;
+                      SuppressibleMsgBox('Unable to download from alternate mirror. Please use the FLMM version.', mbCriticalError, MB_OK, IDOK);
+                    end;
+                  finally
+                    DownloadPageMirror3.Hide;
+                  end;
                 end;
               finally
                 DownloadPageMirror2.Hide;
               end;
           end;
-          finally
+         finally
             DownloadPageMirror.Hide;
-          end;
-        end;
-        finally
+         end;
+       end;
+     finally
         DownloadPage.Hide;
-        end;
-    end;
+     end;
+   end;
   end;
 
 // Run when the wizard is opened.
@@ -777,6 +805,7 @@ begin
     DownloadPage := CreateDownloadPage(SetupMessage(msgWizardPreparing), SetupMessage(msgPreparingDesc), @OnDownloadProgress);
     DownloadPageMirror := CreateDownloadPage(SetupMessage(msgWizardPreparing), SetupMessage(msgPreparingDesc), @OnDownloadProgressMirror);
     DownloadPageMirror2 := CreateDownloadPage(SetupMessage(msgWizardPreparing), SetupMessage(msgPreparingDesc), @OnDownloadProgressMirror2);
+    DownloadPageMirror3 := CreateDownloadPage(SetupMessage(msgWizardPreparing), SetupMessage(msgPreparingDesc), @OnDownloadProgressMirror3);
 
     // Initialize DataDirPage and add content
     DataDirPage := CreateInputDirPage(wpInfoBefore,
