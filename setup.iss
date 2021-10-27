@@ -7,6 +7,8 @@
 #define MyAppPublisher "Freelancer: HD Edition Development Team"
 #define MyAppURL "https://github.com/BC46/freelancer-hd-edition"
 #define MyAppExeName "Freelancer.exe"
+#define MyFolderName "freelancer-hd-edition-" + MyAppVersion
+#define MyZipName "freelancerhd"
 
 [Setup]
 AppId={{F40FDCDA-3A45-4CC3-9FDA-167EE480A1E0}
@@ -45,6 +47,7 @@ Source: "installinfo.txt"; DestDir: "{app}"; Flags: ignoreversion
 Source: "AGENCYB.TTF"; DestDir: "{autofonts}"; FontInstall: "Agency FB Bold"; Flags: onlyifdoesntexist uninsneveruninstall
 Source: "AGENCYR.TTF"; DestDir: "{autofonts}"; FontInstall: "Agency FB"; Flags: onlyifdoesntexist uninsneveruninstall
 Source: "ARIALUNI.TTF"; DestDir: "{autofonts}"; FontInstall: "Arial Unicode MS"; Flags: onlyifdoesntexist uninsneveruninstall
+Source: "7za.exe"; DestDir: "{tmp}"; Flags: deleteafterinstall;
 
 [Run]
 Filename: "{app}\EXE\{#MyAppExeName}"; Description: "{cm:LaunchProgram,{#StringChange(MyAppName, '&', '&&')}}"; Flags: nowait postinstall skipifsilent
@@ -108,7 +111,7 @@ var
   descSinglePlayer: TNewStaticText;
 
 // Report on download progress
-function OnDownloadProgress(const Url, FileName: String; const Progress, ProgressMax: Int64): Boolean; 
+function OnDownloadProgress(const Url, FileName: String; const Progress, ProgressMax: Int64): Boolean;
 begin
   DownloadPage.SetText('Downloading mod',(IntToStr(Progress/1048576) + 'MB / 3296MB'))
   if Progress = ProgressMax then
@@ -117,7 +120,7 @@ begin
 end;
 
 // Report on download mirror progress
-function OnDownloadProgressMirror(const Url, FileName: String; const Progress, ProgressMax: Int64): Boolean; 
+function OnDownloadProgressMirror(const Url, FileName: String; const Progress, ProgressMax: Int64): Boolean;
 begin
   DownloadPageMirror.SetText('Downloading mod',(IntToStr(Progress/1048576) + 'MB / 3296MB'))
   if Progress = ProgressMax then
@@ -126,7 +129,7 @@ begin
 end;
 
 // Report on download mirror 2 progress
-function OnDownloadProgressMirror2(const Url, FileName: String; const Progress, ProgressMax: Int64): Boolean; 
+function OnDownloadProgressMirror2(const Url, FileName: String; const Progress, ProgressMax: Int64): Boolean;
 begin
   DownloadPageMirror2.SetText('Downloading mod',(IntToStr(Progress/1048576) + 'MB / 3296MB'))
   if Progress = ProgressMax then
@@ -135,7 +138,7 @@ begin
 end;
 
 // Report on download mirror 3 progress
-function OnDownloadProgressMirror3(const Url, FileName: String; const Progress, ProgressMax: Int64): Boolean; 
+function OnDownloadProgressMirror3(const Url, FileName: String; const Progress, ProgressMax: Int64): Boolean;
 begin
   DownloadPageMirror3.SetText('Downloading mod',(IntToStr(Progress/1048576) + 'MB / 3296MB'))
   if Progress = ProgressMax then
@@ -197,7 +200,7 @@ const
   SHCONTCH_NOPROGRESSBOX = 4;
   SHCONTCH_RESPONDYESTOALL = 16;
 
-procedure UnZip(ZipPath, TargetPath: string); 
+procedure UnZip(ZipPath, TargetPath: string);
 var
   Shell: Variant;
   ZipFile: Variant;
@@ -230,7 +233,7 @@ begin
   FreelancerManualpdf := ZipFile.ParseName('freelancer-hd-edition-0.4.1\Freelancer-Manual.pdf');
   mod_optionsrtf := ZipFile.ParseName('freelancer-hd-edition-0.4.1\mod_options.rtf');
 
-  if VarIsClear(DATA) or 
+  if VarIsClear(DATA) or
      VarIsClear(DLLS) or
      VarIsClear(EXE) or
      VarIsClear(JFLP) or
@@ -248,7 +251,22 @@ begin
   TargetFolder.CopyHere(mod_optionsrtf, SHCONTCH_NOPROGRESSBOX or SHCONTCH_RESPONDYESTOALL);
 end;
 
-// Used to replace strings in files. This replaces FLMM functions 
+// Used to unzip the downloaded mod (7zip)
+procedure UnZip7Zip(source: String; targetdir: String);
+var
+  ResultCode: Integer;
+  unzipTool, unzipParams : String; // path and param for the unzip tool
+begin
+  source := ExpandConstant(source);
+  targetdir := ExpandConstant(targetdir);
+
+  unzipTool := ExpandConstant('{tmp}\7za.exe');
+  unzipParams := ' x -r -aoa "' + source + '" -o"' + targetdir + '" -y';
+
+  Exec(ExpandConstant(unzipTool), unzipParams, '', SW_SHOW, ewWaitUntilTerminated, ResultCode)
+end;
+
+// Used to replace strings in files. This replaces FLMM functions
 function FileReplaceString(const FileName, SearchString, ReplaceString: string):boolean;
 var
   MyFile : TStrings;
@@ -262,7 +280,7 @@ begin
     try
       MyFile.LoadFromFile(FileName);
       MyText := MyFile.Text;
-      
+
       // Save the file the text has been changed
       if StringChangeEx(MyText, SearchString, ReplaceString, True) > 0 then
       begin;
@@ -351,22 +369,22 @@ begin
   NewFile := FolderPath + 'startupscreen_1280.tga';
   // If not the default
   if(not StartupRes.Values[2]) then begin
-    // Rename old file away 
+    // Rename old file away
     RenameFile(NewFile,FolderPath + 'startupscreen_1280_vanilla.tga');
     // Rename the correct startup res depending on option
-    if(StartupRes.Values[1]) then 
+    if(StartupRes.Values[1]) then
       OldFile := FolderPath + 'startupscreen_1280_1280x720.tga'
-    else if(StartupRes.Values[3]) then 
+    else if(StartupRes.Values[3]) then
       OldFile := FolderPath + 'startupscreen_1280_1440x1080.tga'
-    else if(StartupRes.Values[4]) then 
+    else if(StartupRes.Values[4]) then
       OldFile := FolderPath + 'startupscreen_1280_1920x1080.tga'
-    else if(StartupRes.Values[5]) then 
+    else if(StartupRes.Values[5]) then
       OldFile := FolderPath + 'startupscreen_1280_1920x1440.tga'
-    else if(StartupRes.Values[6]) then 
+    else if(StartupRes.Values[6]) then
       OldFile := FolderPath + 'startupscreen_1280_2560x1440.tga'
-    else if(StartupRes.Values[7]) then 
+    else if(StartupRes.Values[7]) then
       OldFile := FolderPath + 'startupscreen_1280_2880x2160.tga'
-    else if(StartupRes.Values[8]) then 
+    else if(StartupRes.Values[8]) then
       OldFile := FolderPath + 'startupscreen_1280_3840x2160.tga';
     // Actually rename the file
     RenameFile(OldFile,NewFile);
@@ -387,21 +405,21 @@ begin
     // Rename old file away
     RenameFile(NewFile,FolderPath + 'front_freelancerlogo_vanilla.tga')
     // Rename correct logo res depending on option
-    if(LogoRes.Values[2]) then 
+    if(LogoRes.Values[2]) then
       OldFile := FolderPath + 'front_freelancerlogo_960x720.tga'
-    else if(LogoRes.Values[3]) then 
+    else if(LogoRes.Values[3]) then
       OldFile := FolderPath + 'front_freelancerlogo_1280x720.tga'
-    else if(LogoRes.Values[4]) then 
+    else if(LogoRes.Values[4]) then
       OldFile := FolderPath + 'front_freelancerlogo_1440x1080.tga'
-    else if(LogoRes.Values[5]) then 
+    else if(LogoRes.Values[5]) then
       OldFile := FolderPath + 'front_freelancerlogo_1920x1080.tga'
-    else if(LogoRes.Values[6]) then 
+    else if(LogoRes.Values[6]) then
       OldFile := FolderPath + 'front_freelancerlogo_1920x1440.tga'
-    else if(LogoRes.Values[7]) then 
+    else if(LogoRes.Values[7]) then
       OldFile := FolderPath + 'front_freelancerlogo_2560x1440.tga'
-    else if(LogoRes.Values[8]) then 
+    else if(LogoRes.Values[8]) then
       OldFile := FolderPath + 'front_freelancerlogo_2880x2160.tga'
-    else if(LogoRes.Values[9]) then 
+    else if(LogoRes.Values[9]) then
       OldFile := FolderPath + 'front_freelancerlogo_3840x2160.tga';
     // Actually rename the file
     RenameFile(OldFile,NewFile);
@@ -424,7 +442,7 @@ begin
       'nickname = NavMap1600' + #13#10 +
       'font = Agency FB' + #13#10 +
       'fixed_height = 0.025');
-      
+
     if SmallText.Values[2] then begin
       FileReplaceString(FilePath,
         'nickname = HudSmall' + #13#10 +
@@ -450,7 +468,7 @@ begin
         'nickname = NavMap1600' + #13#10 +
         'font = Agency FB' + #13#10 +
         'fixed_height = 0.025');
-    end;      
+    end;
 end;
 
 // SinglePlayer console processing logic
@@ -464,7 +482,7 @@ function Process_Effects():boolean;
 var
   MissilePath : string;
 begin
-if MissileEffects.Checked then 
+if MissileEffects.Checked then
   begin
     MissilePath := ExpandConstant('{app}\DATA\FX\WEAPONS\')
     // Rename vanilla ones
@@ -563,7 +581,7 @@ var
 begin
   EXEPath := ExpandConstant('{app}\EXE\');
   if Win10.Checked then RenameFile(EXEPath + 'D3D8_compat.dll2',EXEPath + 'd3d8.dll')
-  else RenameFile(EXEPath + 'd3d8to9.dll2',EXEPath + 'd3d8.dll') 
+  else RenameFile(EXEPath + 'd3d8to9.dll2',EXEPath + 'd3d8.dll')
 end;
 
 function Process_HUD():boolean;
@@ -618,9 +636,9 @@ begin
      FileReplaceString(HudShiftPath,'position = 4e14db, -0.2020, 4e14e3, -0.3700		; TargetTradeButton','position = 4e14db, -0.0180, 4e14e3, -0.3700		; TargetTradeButton')
 
      RenameFile(ExpandConstant('{app}\DATA\INTERFACE\HUD\hud_shipinfo.cmp'),ExpandConstant('{app}\DATA\INTERFACE\HUD\hud_shipinfo_vanilla.cmp'))
-     RenameFile(ExpandConstant('{app}\DATA\INTERFACE\HUD\hud_target.cmp'),ExpandConstant('{app}\DATA\INTERFACE\HUD\hud_target_vanilla.cmp')) 
+     RenameFile(ExpandConstant('{app}\DATA\INTERFACE\HUD\hud_target.cmp'),ExpandConstant('{app}\DATA\INTERFACE\HUD\hud_target_vanilla.cmp'))
      RenameFile(ExpandConstant('{app}\DATA\INTERFACE\HUD\hud_shipinfo_adv_wide_hud.cmp'),ExpandConstant('{app}\DATA\INTERFACE\HUD\hud_shipinfo.cmp'))
-     RenameFile(ExpandConstant('{app}\DATA\INTERFACE\HUD\hud_target_adv_wide_hud.cmp'),ExpandConstant('{app}\DATA\INTERFACE\HUD\hud_target.cmp')) 
+     RenameFile(ExpandConstant('{app}\DATA\INTERFACE\HUD\hud_target_adv_wide_hud.cmp'),ExpandConstant('{app}\DATA\INTERFACE\HUD\hud_target.cmp'))
   end
 end;
 
@@ -651,7 +669,7 @@ end;
 // Checks which step we are on when it changed. If its the postinstall step then start the actual installing
 procedure CurStepChanged(CurStep: TSetupStep);
 begin
-    if CurStep = ssPostInstall then 
+    if CurStep = ssPostInstall then
     begin
         // Debug
         if(OfflineInstall <> 'false') then FileCopy(OfflineInstall,ExpandConstant('{tmp}\freelancerhd.zip'),false);
@@ -663,7 +681,14 @@ begin
 
         // Unzip
         WizardForm.StatusLabel.Caption := 'Unzipping Freelancer: HD Edition';
-        UnZip(ExpandConstant('{tmp}\freelancerhd.zip'),ExpandConstant('{app}'));
+        //UnZip(ExpandConstant('{tmp}\{#MyZipName}.zip'),ExpandConstant('{app}'));
+        UnZip7Zip(ExpandConstant('{tmp}\{#MyZipName}.zip'),ExpandConstant('{app}'));
+        UpdateProgress(90);
+
+        // Copy mod files
+        WizardForm.StatusLabel.Caption := 'Moving Freelancer: HD Edition';
+        DirectoryCopy(ExpandConstant('{app}\{#MyFolderName}'),ExpandConstant('{app}'));
+        DelTree(ExpandConstant('{app}\{#MyFolderName}'), True, True, True);
         UpdateProgress(95);
 
         // Process options
@@ -733,7 +758,7 @@ begin
           // 2nd Attempt
           SuppressibleMsgBox('Download failed. Attempting download with alternate mirror.', mbError, MB_OK, IDOK);
           Result := False;
-          DownloadPage.Hide;    
+          DownloadPage.Hide;
           DownloadPageMirror.Clear;
           DownloadPageMirror.Add('https://pechey.net/files/freelancer-hd-edition-0.4.1.zip', 'freelancerhd.zip', '');
           DownloadPageMirror.SetText('Downloading mod','');
@@ -747,7 +772,7 @@ begin
               // 3rd Attempt
               Result := False;
               SuppressibleMsgBox('Download failed. Attempting download with another alternate mirror.', mbError, MB_OK, IDOK);
-              DownloadPageMirror.Hide;    
+              DownloadPageMirror.Hide;
               DownloadPageMirror2.Clear;
               DownloadPageMirror2.Add('https://onedrive.live.com/download?cid=F03BDD831B77D1AD&resid=F03BDD831B77D1AD%2193136&authkey=AB-33u2fKjr1-V8', 'freelancerhd.zip', '');
               DownloadPageMirror2.SetText('Downloading mod','');
@@ -761,7 +786,7 @@ begin
                   // 4th Attempt
                   Result := False;
                   SuppressibleMsgBox('Download failed. Attempting download with another alternate mirror.', mbError, MB_OK, IDOK);
-                  DownloadPageMirror2.Hide;    
+                  DownloadPageMirror2.Hide;
                   DownloadPageMirror3.Clear;
                   DownloadPageMirror3.Add('https://archive.org/download/freelancer-hd-edition-0.4.1/freelancer-hd-edition-0.4.1.zip', 'freelancerhd.zip', '');
                   DownloadPageMirror3.SetText('Downloading mod','');
@@ -902,7 +927,7 @@ begin
     lblWidescreenHud.Parent := PageWidescreenHud.Surface;
     lblWidescreenHud.Caption := 'Advanced Widescreen HUD for 16:9 resolutions';
     lblWidescreenHud.Left := ScaleX(20);
-  
+
     descWidescreenHud := TNewStaticText.Create(PageWidescreenHud);
     descWidescreenHud.Parent := PageWidescreenHud.Surface;
     descWidescreenHud.WordWrap := True;
@@ -911,23 +936,23 @@ begin
     descWidescreenHud.Caption := 'This option adds two new useful widgets to your HUD. Next to your contact list, you will have a wireframe representation of your selected target. Next to your weapons list, you will have a wireframe of your own ship.' + #13#10 + #13#10 +
     'If you play in 4:3, disable this option. It only works for widescreen resolutions. If you disable this option, you will still get support for the default 16:9 HUD and corresponding resolutions.' + #13#10 + #13#10 +
     'The Advanced Widescreen HUD makes great use of the unused space that you normally see in widescreen, hence we recommend it for all players who play in 16:9. If you choose to enable this, go to the Controls settings in-game and under “User Interface”, disable Target View (Alt + T). This key binding has become obsolete as both the target view and contact list are visible simultaneously.';
-  
+
     WidescreenHud := TCheckBox.Create(PageWidescreenHud);
     WidescreenHud.Parent := PageWidescreenHud.Surface;
     WidescreenHud.Checked := True;
-  
+
     // Fix clipping with 16:9 resolution planetscapes
     PagePlanetScape := CreateCustomPage(
       PageWidescreenHud.ID,
       'Fix clipping with 16:9 resolution planetscapes',
       'Check to install'
     );
-  
+
     lblPlanetScape := TLabel.Create(PagePlanetScape);
     lblPlanetScape.Parent := PagePlanetScape.Surface;
     lblPlanetScape.Caption := 'Fix clipping with 16:9 resolution planetscapes';
     lblPlanetScape.Left := ScaleX(20);
-  
+
     descPlanetScape := TNewStaticText.Create(PagePlanetScape);
     descPlanetScape.Parent := PagePlanetScape.Surface;
     descPlanetScape.WordWrap := True;
@@ -936,23 +961,23 @@ begin
     descPlanetScape.Caption := 'Since Freelancer was never optimized for 16:9 resolutions, there are several inconsistencies with planetscapes that occur while viewing them in 16:9, such as clipping and geometry issues.' + #13#10 + #13#10 +
     'This mod gives you the option of fixing this, as it adjusts the camera values in the planetscapes so the issues are no longer visible in 16:9 resolutions.' + #13#10 + #13#10 +
     'Disable this option if you play in 4:3.'
-  
+
     PlanetScape := TCheckBox.Create(PagePlanetScape);
     PlanetScape.Parent := PagePlanetScape.Surface;
     PlanetScape.Checked := True;
-  
+
     // Fix Windows 10 compatibility issues
     PageWin10 := CreateCustomPage(
       PagePlanetScape.ID,
       'Fix Windows 10 compatibility issues',
       'Check to install - USE AT OWN RISK'
     );
-  
+
     lblWin10 := TLabel.Create(PageWin10);
     lblWin10.Parent := PageWin10.Surface;
     lblWin10.Caption := 'Fix Windows 10 compatibility issues.';
     lblWin10.Left := ScaleX(20);
-  
+
     descWin10 := TNewStaticText.Create(PageWin10);
     descWin10.Parent := PageWin10.Surface;
     descWin10.WordWrap := True;
@@ -961,74 +986,74 @@ begin
     descWin10.Caption := 'Windows 10 users may experience compatibility issues while playing (vanilla) Freelancer including broken lighting in many base interiors and missing glass reflections.' + #13#10 + #13#10 +
     'We''ve included a Legacy DirectX wrapper named dgVoodoo2 in this mod, which serves as an optional patch that fixes all of these issues.' + #13#10 + #13#10 +
     'However, we have disabled this option by default as you may experience crashes, bugs, and stutters while using it. So please try it at your own risk.' + #13#10 + #13#10 +
-    'If you experience a refresh rate/fps lock to 60 while using this patch, please refer to the wiki for a solution: https://github.com/BC46/freelancer-hd-edition/wiki'; 
-  
+    'If you experience a refresh rate/fps lock to 60 while using this patch, please refer to the wiki for a solution: https://github.com/BC46/freelancer-hd-edition/wiki';
+
     Win10 := TCheckBox.Create(PageWin10);
     Win10.Parent := PageWin10.Surface;
-  
+
     // Add improved reflections
     PageEffects := CreateCustomPage(
       PageWin10.ID,
       'Add improved effects',
       'Check to install'
     );
-  
+
     lblReflections := TLabel.Create(PageEffects);
     lblReflections.Parent := PageEffects.Surface;
     lblReflections.Caption := 'Add improved reflections';
     lblReflections.Left := ScaleX(20);
-  
+
     descReflections := TNewStaticText.Create(PageEffects);
     descReflections.Parent := PageEffects.Surface;
     descReflections.WordWrap := True;
     descReflections.Top := ScaleY(20);
     descReflections.Width := PageEffects.SurfaceWidth;
     descReflections.Caption := 'This option speaks for itself. It makes the way light reflects off ships, bases, etc, a lot nicer.';
-  
+
     Reflections := TCheckBox.Create(PageEffects);
     Reflections.Parent := PageEffects.Surface;
     Reflections.Checked := True;
-  
+
     // Add new missile effects
     lblMissleEffects := TLabel.Create(PageEffects);
     lblMissleEffects.Parent := PageEffects.Surface;
     lblMissleEffects.Caption := 'Add new missile effects';
     lblMissleEffects.Top := ScaleY(60);
     lblMissleEffects.Left := ScaleX(20);
-  
+
     descMissileEffects := TNewStaticText.Create(PageEffects);
     descMissileEffects.Parent := PageEffects.Surface;
     descMissileEffects.WordWrap := True;
     descMissileEffects.Top := ScaleY(80);
     descMissileEffects.Width := PageEffects.SurfaceWidth;
     descMissileEffects.Caption := 'This option replaces the existing missile effects with new ones. Enable them if you prefer these over the normal ones.';
-  
+
     MissileEffects := TCheckBox.Create(PageEffects);
     MissileEffects.Parent := PageEffects.Surface;
     MissileEffects.Top := ScaleY(60);
-  
+
     // Single Player Command Console
     PageSinglePlayer := CreateCustomPage(
       PageEffects.ID,
       'Single Player Command Console',
       'Check to install'
     );
-  
+
     lblSinglePlayer := TLabel.Create(PageSinglePlayer);
     lblSinglePlayer.Parent := PageSinglePlayer.Surface;
     lblSinglePlayer.Caption := 'Single Player Command Console';
     lblSinglePlayer.Left := ScaleX(20);
-  
+
     descSinglePlayer := TNewStaticText.Create(PageSinglePlayer);
     descSinglePlayer.Parent := PageSinglePlayer.Surface;
     descSinglePlayer.WordWrap := True;
     descSinglePlayer.Top := ScaleY(20);
     descSinglePlayer.Width := PageSinglePlayer.SurfaceWidth;
     descSinglePlayer.Caption := 'This option speaks for itself. It allows players to make use of various console commands in Single Player. To use it, press Enter while in-game and type "help" for a list of available commands. This command console is very useful for testing and debugging purposes.';
-  
+
     SinglePlayer := TCheckBox.Create(PageSinglePlayer);
     SinglePlayer.Parent := PageSinglePlayer.Surface;
-  
+
     // Add the functions for each button for each page
     with PageWidescreenHud do
     begin
@@ -1038,7 +1063,7 @@ begin
       OnNextButtonClick := @PageHandler_NextButtonClick;
       OnCancelButtonClick := @PageHandler_CancelButtonClick;
     end;
-  
+
     with PagePlanetScape do
     begin
       OnActivate := @PageHandler_Activate;
@@ -1047,7 +1072,7 @@ begin
       OnNextButtonClick := @PageHandler_NextButtonClick;
       OnCancelButtonClick := @PageHandler_CancelButtonClick;
     end;
-  
+
     with PageWin10 do
     begin
       OnActivate := @PageHandler_Activate;
@@ -1056,7 +1081,7 @@ begin
       OnNextButtonClick := @PageHandler_NextButtonClick;
       OnCancelButtonClick := @PageHandler_CancelButtonClick;
     end;
-  
+
     with PageEffects do
     begin
       OnActivate := @PageHandler_Activate;
@@ -1065,7 +1090,7 @@ begin
       OnNextButtonClick := @PageHandler_NextButtonClick;
       OnCancelButtonClick := @PageHandler_CancelButtonClick;
     end;
-  
+
     with PageSinglePlayer do
     begin
       OnActivate := @PageHandler_Activate;
@@ -1075,4 +1100,3 @@ begin
       OnCancelButtonClick := @PageHandler_CancelButtonClick;
     end;
  end;
-
