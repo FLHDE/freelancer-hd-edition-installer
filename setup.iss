@@ -44,7 +44,7 @@ Name: "{commondesktop}\Freelancer HD Edition"; Filename: "{app}\EXE\{#MyAppExeNa
 Source: "installinfo.txt"; DestDir: "{app}"; Flags: ignoreversion
 Source: "AGENCYB.TTF"; DestDir: "{autofonts}"; FontInstall: "Agency FB Bold"; Flags: onlyifdoesntexist uninsneveruninstall
 Source: "AGENCYR.TTF"; DestDir: "{autofonts}"; FontInstall: "Agency FB"; Flags: onlyifdoesntexist uninsneveruninstall
-Source: "ARIALUNI.TTF"; DestDir: "{autofonts}"; FontInstall: "Agency Unicode MS"; Flags: onlyifdoesntexist uninsneveruninstall
+Source: "ARIALUNI.TTF"; DestDir: "{autofonts}"; FontInstall: "Arial Unicode MS"; Flags: onlyifdoesntexist uninsneveruninstall
 
 [Run]
 Filename: "{app}\EXE\{#MyAppExeName}"; Description: "{cm:LaunchProgram,{#StringChange(MyAppName, '&', '&&')}}"; Flags: nowait postinstall skipifsilent
