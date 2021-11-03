@@ -2,8 +2,8 @@
 ; GitHub: https://github.com/ollieraikkonen/Freelancer-hd-edition-install-script
 ; Main GitHub: https://github.com/bc46/Freelancer-hd-edition
 
-#define MyAppName "Freelancer: HD Edition v0.4.1"
-#define MyAppVersion "0.4.1"
+#define MyAppName "Freelancer: HD Edition v0.5"
+#define MyAppVersion "0.5"
 #define MyAppPublisher "Freelancer: HD Edition Development Team"
 #define MyAppURL "https://github.com/BC46/freelancer-hd-edition"
 #define MyAppExeName "Freelancer.exe"
@@ -305,9 +305,6 @@ function Process_CallSign():boolean;
 var
   FilePath : string;
 begin
-
-  RenameFile(ExpandConstant('{app}\DLLS\BIN\callsign.dll2'),ExpandConstant('{app}\DLLS\BIN\callsign.dll'));
-
   FilePath := ExpandConstant('{app}\EXE\freelancer.ini');
 
   if(CallSign.Values[1]) then // Navy Beta 2-5
@@ -562,8 +559,8 @@ var
   EXEPath: string;
 begin
   EXEPath := ExpandConstant('{app}\EXE\');
-  if Win10.Checked then RenameFile(EXEPath + 'D3D8_compat.dll2',EXEPath + 'd3d8.dll')
-  else RenameFile(EXEPath + 'd3d8to9.dll2',EXEPath + 'd3d8.dll') 
+  if Win10.Checked then RenameFile(EXEPath + 'D3D8_compat.dll',EXEPath + 'd3d8.dll')
+  else RenameFile(EXEPath + 'd3d8to9.dll',EXEPath + 'd3d8.dll')
 end;
 
 function Process_HUD():boolean;
@@ -721,7 +718,7 @@ begin
     if ((PageId = 10) and (OfflineInstall = 'false')) then begin
     // 1st Attempt
       DownloadPage.Clear;
-      DownloadPage.Add('https://github.com/BC46/freelancer-hd-edition/archive/refs/tags/0.4.1.zip', 'freelancerhd.zip', '');
+      DownloadPage.Add('https://github.com/BC46/freelancer-hd-edition/archive/refs/heads/v05.zip', 'freelancerhd.zip', '');
       DownloadPage.SetText('Downloading mod','');
       DownloadPage.Show;
       DownloadPage.ProgressBar.Style := npbstNormal;
