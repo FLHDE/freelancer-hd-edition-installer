@@ -705,7 +705,7 @@ begin
     // Validate install location
     if (PageId = 6) then begin
       // Need needs to be in a seperate if since it tries to expand {app} even if not on PageID 6. Pascal what are you doing!
-      if(Pos(ExpandConstant('{app}'),DataDirPage.Values[0]) > 0) then begin
+      if(Pos(DataDirPage.Values[0],ExpandConstant('{app}')) > 0) then begin
         MsgBox('Freelancer: HD Edition cannot be installed to the same location as your vanilla install. Please select a new location.', mbError, MB_OK);
         Result := False;
         exit;
