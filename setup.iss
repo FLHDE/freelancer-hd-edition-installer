@@ -195,62 +195,6 @@ begin
   end;
 end;
 
-// Used to unzip the downloaded mod
-const
-  SHCONTCH_NOPROGRESSBOX = 4;
-  SHCONTCH_RESPONDYESTOALL = 16;
-
-procedure UnZip(ZipPath, TargetPath: string);
-var
-  Shell: Variant;
-  ZipFile: Variant;
-  TargetFolder: Variant;
-  DATA: Variant;
-  DLLS: Variant;
-  EXE: Variant;
-  JFLP: Variant;
-  CHANGELOGmd: Variant;
-  FreelancerManualpdf: Variant;
-  mod_optionsrtf: Variant;
-begin
-  Shell := CreateOleObject('Shell.Application');
-
-  ZipFile := Shell.NameSpace(ZipPath);
-  if VarIsClear(ZipFile) then
-    RaiseException(
-      Format('ZIP file "%s" does not exist or cannot be opened', [ZipPath]));
-
-  TargetFolder := Shell.NameSpace(TargetPath);
-  if VarIsClear(TargetFolder) then
-    RaiseException(Format('Target path "%s" does not exist', [TargetPath]));
-
-  // Need to copy the files/folders out of the zip file manually. This is so it doesn't create an extra folder
-  DATA := ZipFile.ParseName('freelancer-hd-edition-0.4.1\DATA');
-  DLLS := ZipFile.ParseName('freelancer-hd-edition-0.4.1\DLLS');
-  EXE := ZipFile.ParseName('freelancer-hd-edition-0.4.1\EXE');
-  JFLP := ZipFile.ParseName('freelancer-hd-edition-0.4.1\JFLP');
-  CHANGELOGmd := ZipFile.ParseName('freelancer-hd-edition-0.4.1\CHANGELOG.md');
-  FreelancerManualpdf := ZipFile.ParseName('freelancer-hd-edition-0.4.1\Freelancer-Manual.pdf');
-  mod_optionsrtf := ZipFile.ParseName('freelancer-hd-edition-0.4.1\mod_options.rtf');
-
-  if VarIsClear(DATA) or
-     VarIsClear(DLLS) or
-     VarIsClear(EXE) or
-     VarIsClear(JFLP) or
-     VarIsClear(CHANGELOGmd) or
-     VarIsClear(FreelancerManualpdf) or
-     VarIsClear(mod_optionsrtf) then
-      RaiseException(Format('Cannot find a file/folder in "%s" ZIP file', [ZipPath]));
-
-  TargetFolder.CopyHere(DATA, SHCONTCH_NOPROGRESSBOX or SHCONTCH_RESPONDYESTOALL);
-  TargetFolder.CopyHere(DLLS, SHCONTCH_NOPROGRESSBOX or SHCONTCH_RESPONDYESTOALL);
-  TargetFolder.CopyHere(EXE, SHCONTCH_NOPROGRESSBOX or SHCONTCH_RESPONDYESTOALL);
-  TargetFolder.CopyHere(JFLP, SHCONTCH_NOPROGRESSBOX or SHCONTCH_RESPONDYESTOALL);
-  TargetFolder.CopyHere(CHANGELOGmd, SHCONTCH_NOPROGRESSBOX or SHCONTCH_RESPONDYESTOALL);
-  TargetFolder.CopyHere(FreelancerManualpdf, SHCONTCH_NOPROGRESSBOX or SHCONTCH_RESPONDYESTOALL);
-  TargetFolder.CopyHere(mod_optionsrtf, SHCONTCH_NOPROGRESSBOX or SHCONTCH_RESPONDYESTOALL);
-end;
-
 // Used to unzip the downloaded mod (7zip)
 procedure UnZip7Zip(source: String; targetdir: String);
 var
@@ -681,7 +625,6 @@ begin
 
         // Unzip
         WizardForm.StatusLabel.Caption := 'Unzipping Freelancer: HD Edition';
-        //UnZip(ExpandConstant('{tmp}\{#MyZipName}.zip'),ExpandConstant('{app}'));
         UnZip7Zip(ExpandConstant('{tmp}\{#MyZipName}.zip'),ExpandConstant('{app}'));
         UpdateProgress(90);
 
