@@ -2,8 +2,8 @@
 ; GitHub: https://github.com/ollieraikkonen/Freelancer-hd-edition-install-script
 ; Main GitHub: https://github.com/bc46/Freelancer-hd-edition
 
-#define MyAppName "Freelancer: HD Edition v0.4.1"
-#define MyAppVersion "0.4.1"
+#define MyAppName "Freelancer: HD Edition v0.5"
+#define MyAppVersion "0.5"
 #define MyAppPublisher "Freelancer: HD Edition Development Team"
 #define MyAppURL "https://github.com/BC46/freelancer-hd-edition"
 #define MyAppExeName "Freelancer.exe"
@@ -30,6 +30,7 @@ WizardSmallImageFile={#SourcePath}\icon.bmp
 DisableWelcomePage=False
 DisableDirPage=False
 InfoBeforeFile={#SourcePath}\installinfo.txt
+// TODO: Recalculate before release
 ExtraDiskSpaceRequired = 9149000000
 
 [Languages]
@@ -253,9 +254,6 @@ function Process_CallSign():boolean;
 var
   FilePath : string;
 begin
-
-  RenameFile(ExpandConstant('{app}\DLLS\BIN\callsign.dll2'),ExpandConstant('{app}\DLLS\BIN\callsign.dll'));
-
   FilePath := ExpandConstant('{app}\EXE\freelancer.ini');
 
   if(CallSign.Values[1]) then // Navy Beta 2-5
@@ -510,8 +508,8 @@ var
   EXEPath: string;
 begin
   EXEPath := ExpandConstant('{app}\EXE\');
-  if Win10.Checked then RenameFile(EXEPath + 'D3D8_compat.dll2',EXEPath + 'd3d8.dll')
-  else RenameFile(EXEPath + 'd3d8to9.dll2',EXEPath + 'd3d8.dll')
+  if Win10.Checked then RenameFile(EXEPath + 'd3d8_dgvoodoo.dll',EXEPath + 'd3d8.dll')
+  else RenameFile(EXEPath + 'd3d8to9.dll',EXEPath + 'd3d8.dll')
 end;
 
 function Process_HUD():boolean;
@@ -551,7 +549,7 @@ begin
         'position = 4e12b4, -0.2645, 4e12bc, -0.3005		; TargetNextButton' + #13#10 +
         'position = 4e175c, -0.4940, 4e1764, -0.3610		; TargetRankText'
         ,
-        'position = 4e0a80, -0.1270, 4e0a94, -0.3000		; wireframe' + #13#10 +
+        'position = 4e0a80, -0.1245, 4e0a94, -0.2935		; wireframe' + #13#10 +
         'position = 4e0fe7, -0.4105, 4e0fef, -0.3700		; TargetMinimizedFrame' + #13#10 +
         'position = 4e10ff, -0.2430, 4e1107, -0.2030		; TargetShipName' + #13#10 +
         'position = 4e1145, -0.2430, 4e1158, -0.2030' + #13#10 +
@@ -562,7 +560,7 @@ begin
         'position = 4e175c, -0.2550, 4e1764, -0.3610		; TargetRankText'
       )
 
-     FileReplaceString(HudShiftPath,'position = 4da2fa,  0.4180, 4da30e, -0.2900','position = 4da2fa,  0.5165, 4da30e, -0.3030, -1.0')
+     FileReplaceString(HudShiftPath,'position = 4da2fa,  0.4180, 4da30e, -0.2900','position = 4da2fa,  0.1765, 4da30e, -0.3025')
      FileReplaceString(HudShiftPath,'position = 4e14db, -0.2020, 4e14e3, -0.3700		; TargetTradeButton','position = 4e14db, -0.0180, 4e14e3, -0.3700		; TargetTradeButton')
 
      RenameFile(ExpandConstant('{app}\DATA\INTERFACE\HUD\hud_shipinfo.cmp'),ExpandConstant('{app}\DATA\INTERFACE\HUD\hud_shipinfo_vanilla.cmp'))
@@ -681,7 +679,8 @@ begin
     if ((PageId = 10) and (OfflineInstall = 'false')) then begin
     // 1st Attempt
       DownloadPage.Clear;
-      DownloadPage.Add('https://github.com/BC46/freelancer-hd-edition/archive/refs/tags/0.4.1.zip', 'freelancerhd.zip', '');
+      // TODO: Update
+      DownloadPage.Add('https://github.com/BC46/freelancer-hd-edition/archive/refs/tags/0.5.zip', 'freelancerhd.zip', '');
       DownloadPage.SetText('Downloading mod','');
       DownloadPage.Show;
       DownloadPage.ProgressBar.Style := npbstNormal;
@@ -695,6 +694,7 @@ begin
           Result := False;
           DownloadPage.Hide;
           DownloadPageMirror.Clear;
+          // TODO: Update
           DownloadPageMirror.Add('https://pechey.net/files/freelancer-hd-edition-0.4.1.zip', 'freelancerhd.zip', '');
           DownloadPageMirror.SetText('Downloading mod','');
           DownloadPageMirror.Show;
@@ -709,6 +709,7 @@ begin
               SuppressibleMsgBox('Download failed. Attempting download with another alternate mirror.', mbError, MB_OK, IDOK);
               DownloadPageMirror.Hide;
               DownloadPageMirror2.Clear;
+              // TODO: Update
               DownloadPageMirror2.Add('https://onedrive.live.com/download?cid=F03BDD831B77D1AD&resid=F03BDD831B77D1AD%2193136&authkey=AB-33u2fKjr1-V8', 'freelancerhd.zip', '');
               DownloadPageMirror2.SetText('Downloading mod','');
               DownloadPageMirror2.Show;
@@ -723,6 +724,7 @@ begin
                   SuppressibleMsgBox('Download failed. Attempting download with another alternate mirror.', mbError, MB_OK, IDOK);
                   DownloadPageMirror2.Hide;
                   DownloadPageMirror3.Clear;
+                  // TODO: Update
                   DownloadPageMirror3.Add('https://archive.org/download/freelancer-hd-edition-0.4.1/freelancer-hd-edition-0.4.1.zip', 'freelancerhd.zip', '');
                   DownloadPageMirror3.SetText('Downloading mod','');
                   DownloadPageMirror3.Show;
@@ -734,7 +736,7 @@ begin
                     except
                       // All attempts failed
                       Result := False;
-                      SuppressibleMsgBox('Unable to download from alternate mirror. Please use the FLMM version.', mbCriticalError, MB_OK, IDOK);
+                      SuppressibleMsgBox('Unable to download from alternate mirror. Please contact us on our Discord server.', mbCriticalError, MB_OK, IDOK);
                     end;
                   finally
                     DownloadPageMirror3.Hide;
