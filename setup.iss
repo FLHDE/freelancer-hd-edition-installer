@@ -30,7 +30,7 @@ WizardSmallImageFile={#SourcePath}\icon.bmp
 DisableWelcomePage=False
 DisableDirPage=False
 InfoBeforeFile={#SourcePath}\installinfo.txt
-ExtraDiskSpaceRequired = 9631137792
+ExtraDiskSpaceRequired = 9149000000
 
 [Languages]
 Name: "english"; MessagesFile: "compiler:Default.isl"
@@ -154,7 +154,7 @@ begin
 end;
 
 // Used to copy the vanilla install to {app}
-procedure DirectoryCopy(SourcePath, DestPath: string);
+procedure DirectoryCopy(SourcePath, DestPath: string; Move: Boolean);
 var
   FindRec: TFindRec;
   SourceFilePath: string;
@@ -175,11 +175,12 @@ begin
               RaiseException(Format('Failed to copy %s to %s', [
                 SourceFilePath, DestFilePath]));
             end;
+            if(Move) then DeleteFile(SourceFilePath)
           end
             else
           begin
             if DirExists(DestFilePath) or CreateDir(DestFilePath) then
-              DirectoryCopy(SourceFilePath, DestFilePath)
+              DirectoryCopy(SourceFilePath, DestFilePath, Move)
               else
               RaiseException(Format('Failed to create %s', [DestFilePath]));
           end;
@@ -193,21 +194,6 @@ begin
   begin
     RaiseException(Format('Failed to list %s', [SourcePath]));
   end;
-end;
-
-// Used to unzip the downloaded mod (7zip)
-procedure UnZip7Zip(source: String; targetdir: String);
-var
-  ResultCode: Integer;
-  unzipTool, unzipParams : String; // path and param for the unzip tool
-begin
-  source := ExpandConstant(source);
-  targetdir := ExpandConstant(targetdir);
-
-  unzipTool := ExpandConstant('{tmp}\7za.exe');
-  unzipParams := ' x -r -aoa "' + source + '" -o"' + targetdir + '" -y';
-
-  Exec(ExpandConstant(unzipTool), unzipParams, '', SW_SHOW, ewWaitUntilTerminated, ResultCode)
 end;
 
 // Used to replace strings in files. This replaces FLMM functions
@@ -612,6 +598,8 @@ end;
 
 // Checks which step we are on when it changed. If its the postinstall step then start the actual installing
 procedure CurStepChanged(CurStep: TSetupStep);
+var
+  ResultCode: Integer;
 begin
     if CurStep = ssPostInstall then
     begin
@@ -619,18 +607,22 @@ begin
         if(OfflineInstall <> 'false') then FileCopy(OfflineInstall,ExpandConstant('{tmp}\freelancerhd.zip'),false);
 
         // Copy Vanilla game to directory
+        UpdateProgress(0);
         WizardForm.StatusLabel.Caption := 'Copying Vanilla Freelancer directory';
-        DirectoryCopy(DataDirPage.Values[0],ExpandConstant('{app}'));
+        DirectoryCopy(DataDirPage.Values[0],ExpandConstant('{app}'),False);
         UpdateProgress(50);
 
         // Unzip
         WizardForm.StatusLabel.Caption := 'Unzipping Freelancer: HD Edition';
-        UnZip7Zip(ExpandConstant('{tmp}\{#MyZipName}.zip'),ExpandConstant('{app}'));
+        Exec(ExpandConstant('{tmp}\7za.exe'), ExpandConstant(' x -y -aoa "{tmp}\{#MyZipName}.zip"  -o"{app}"'), '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
+        // -aoa Overwrite All existing files without prompt
+        // -o Set output directory
+        // -y Assume "Yes" on all Queries
         UpdateProgress(90);
 
         // Copy mod files
         WizardForm.StatusLabel.Caption := 'Moving Freelancer: HD Edition';
-        DirectoryCopy(ExpandConstant('{app}\{#MyFolderName}'),ExpandConstant('{app}'));
+        DirectoryCopy(ExpandConstant('{app}\{#MyFolderName}'),ExpandConstant('{app}'),True);
         DelTree(ExpandConstant('{app}\{#MyFolderName}'), True, True, True);
         UpdateProgress(95);
 
