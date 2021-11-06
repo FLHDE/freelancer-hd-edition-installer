@@ -30,6 +30,7 @@ WizardSmallImageFile={#SourcePath}\icon.bmp
 DisableWelcomePage=False
 DisableDirPage=False
 InfoBeforeFile={#SourcePath}\installinfo.txt
+// TODO: Recalculate before release
 ExtraDiskSpaceRequired = 9149000000
 
 [Languages]
@@ -678,6 +679,7 @@ begin
     if ((PageId = 10) and (OfflineInstall = 'false')) then begin
     // 1st Attempt
       DownloadPage.Clear;
+      // TODO: Update
       DownloadPage.Add('https://github.com/BC46/freelancer-hd-edition/archive/refs/heads/v05.zip', 'freelancerhd.zip', '');
       DownloadPage.SetText('Downloading mod','');
       DownloadPage.Show;
@@ -692,6 +694,7 @@ begin
           Result := False;
           DownloadPage.Hide;
           DownloadPageMirror.Clear;
+          // TODO: Update
           DownloadPageMirror.Add('https://pechey.net/files/freelancer-hd-edition-0.4.1.zip', 'freelancerhd.zip', '');
           DownloadPageMirror.SetText('Downloading mod','');
           DownloadPageMirror.Show;
@@ -706,6 +709,7 @@ begin
               SuppressibleMsgBox('Download failed. Attempting download with another alternate mirror.', mbError, MB_OK, IDOK);
               DownloadPageMirror.Hide;
               DownloadPageMirror2.Clear;
+              // TODO: Update
               DownloadPageMirror2.Add('https://onedrive.live.com/download?cid=F03BDD831B77D1AD&resid=F03BDD831B77D1AD%2193136&authkey=AB-33u2fKjr1-V8', 'freelancerhd.zip', '');
               DownloadPageMirror2.SetText('Downloading mod','');
               DownloadPageMirror2.Show;
@@ -720,6 +724,7 @@ begin
                   SuppressibleMsgBox('Download failed. Attempting download with another alternate mirror.', mbError, MB_OK, IDOK);
                   DownloadPageMirror2.Hide;
                   DownloadPageMirror3.Clear;
+                  // TODO: Update
                   DownloadPageMirror3.Add('https://archive.org/download/freelancer-hd-edition-0.4.1/freelancer-hd-edition-0.4.1.zip', 'freelancerhd.zip', '');
                   DownloadPageMirror3.SetText('Downloading mod','');
                   DownloadPageMirror3.Show;
@@ -731,7 +736,7 @@ begin
                     except
                       // All attempts failed
                       Result := False;
-                      SuppressibleMsgBox('Unable to download from alternate mirror. Please use the FLMM version.', mbCriticalError, MB_OK, IDOK);
+                      SuppressibleMsgBox('Unable to download from alternate mirror. Please contact us on our Discord server.', mbCriticalError, MB_OK, IDOK);
                     end;
                   finally
                     DownloadPageMirror3.Hide;
