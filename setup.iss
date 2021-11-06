@@ -680,7 +680,7 @@ begin
     // 1st Attempt
       DownloadPage.Clear;
       // TODO: Update
-      DownloadPage.Add('https://github.com/BC46/freelancer-hd-edition/archive/refs/heads/v05.zip', 'freelancerhd.zip', '');
+      DownloadPage.Add('https://github.com/BC46/freelancer-hd-edition/archive/refs/tags/0.5.zip', 'freelancerhd.zip', '');
       DownloadPage.SetText('Downloading mod','');
       DownloadPage.Show;
       DownloadPage.ProgressBar.Style := npbstNormal;
