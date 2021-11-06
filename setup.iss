@@ -508,7 +508,7 @@ var
   EXEPath: string;
 begin
   EXEPath := ExpandConstant('{app}\EXE\');
-  if Win10.Checked then RenameFile(EXEPath + 'D3D8_compat.dll',EXEPath + 'd3d8.dll')
+  if Win10.Checked then RenameFile(EXEPath + 'd3d8_dgvoodoo.dll',EXEPath + 'd3d8.dll')
   else RenameFile(EXEPath + 'd3d8to9.dll',EXEPath + 'd3d8.dll')
 end;
 
