@@ -549,7 +549,7 @@ begin
         'position = 4e12b4, -0.2645, 4e12bc, -0.3005		; TargetNextButton' + #13#10 +
         'position = 4e175c, -0.4940, 4e1764, -0.3610		; TargetRankText'
         ,
-        'position = 4e0a80, -0.1270, 4e0a94, -0.3000		; wireframe' + #13#10 +
+        'position = 4e0a80, -0.1245, 4e0a94, -0.2935		; wireframe' + #13#10 +
         'position = 4e0fe7, -0.4105, 4e0fef, -0.3700		; TargetMinimizedFrame' + #13#10 +
         'position = 4e10ff, -0.2430, 4e1107, -0.2030		; TargetShipName' + #13#10 +
         'position = 4e1145, -0.2430, 4e1158, -0.2030' + #13#10 +
@@ -560,7 +560,7 @@ begin
         'position = 4e175c, -0.2550, 4e1764, -0.3610		; TargetRankText'
       )
 
-     FileReplaceString(HudShiftPath,'position = 4da2fa,  0.4180, 4da30e, -0.2900','position = 4da2fa,  0.5165, 4da30e, -0.3030, -1.0')
+     FileReplaceString(HudShiftPath,'position = 4da2fa,  0.4180, 4da30e, -0.2900','position = 4da2fa,  0.1765, 4da30e, -0.3025')
      FileReplaceString(HudShiftPath,'position = 4e14db, -0.2020, 4e14e3, -0.3700		; TargetTradeButton','position = 4e14db, -0.0180, 4e14e3, -0.3700		; TargetTradeButton')
 
      RenameFile(ExpandConstant('{app}\DATA\INTERFACE\HUD\hud_shipinfo.cmp'),ExpandConstant('{app}\DATA\INTERFACE\HUD\hud_shipinfo_vanilla.cmp'))
