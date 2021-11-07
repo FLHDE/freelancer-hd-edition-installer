@@ -427,7 +427,7 @@ if MissileEffects.Checked then
 
   if Reflections.Checked then begin
     RenameFile(ExpandConstant('{app}\DATA\FX\envmapbasic.mat'),ExpandConstant('{app}\DATA\FX\envmapbasic_vanilla.mat'))
-    RenameFile(ExpandConstant('{app}\DATA\FX\envmapbasic_new.mat'),ExpandConstant('{app}\DATA\FX\envmapbasic.mat'))
+    RenameFile(ExpandConstant('{app}\DATA\FX\envmapbasic_shiny.mat'),ExpandConstant('{app}\DATA\FX\envmapbasic.mat'))
   end
 end;
 
