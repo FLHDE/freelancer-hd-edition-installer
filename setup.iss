@@ -762,7 +762,7 @@ begin
     'Freelancer Logo Resolution', 'In the game''s main menu',
     'This logo has a resolution of 800x600 by default, which makes it look stretched and pixelated/blurry on HD 16:9 monitors. ' +
     'Setting this to a higher resolution with the correct aspect ratio makes the logo look nice and sharp and not stretched-out. Hence we recommend setting this option to your monitor''s native resolution. ' +
-    'Please not that a higher resolution option may negatively impact the game''s start-up speed.',
+    'Please note that a higher resolution option may negatively impact the game''s start-up speed.',
     True, False);
     LogoRes.Add('Remove Logo');
     LogoRes.Add('600p 4:3 - 800x600 (Vanilla)');
