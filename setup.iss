@@ -95,8 +95,12 @@ var
   descWin10: TNewStaticText;
 
   // Add improved reflections
-  lblReflections: TLabel;
-  Reflections: TCheckBox;
+  lblVanillaReflections: TLabel;
+  lblShinyReflections: TLabel;
+  lblShiniestReflections: TLabel;
+  VanillaReflections: TRadioButton;
+  ShinyReflections: TRadioButton;
+  ShiniestReflections: TRadioButton;
   descReflections: TNewStaticText;
 
   // Add new missile effects
@@ -424,10 +428,14 @@ if MissileEffects.Checked then
     RenameFile(MissilePath + 'rh_missile02_new.ale',MissilePath + 'rh_missile02.ale')
   end;
 
-  if Reflections.Checked then begin
+  if ShinyReflections.Checked then begin
     RenameFile(ExpandConstant('{app}\DATA\FX\envmapbasic.mat'),ExpandConstant('{app}\DATA\FX\envmapbasic_vanilla.mat'))
     RenameFile(ExpandConstant('{app}\DATA\FX\envmapbasic_shiny.mat'),ExpandConstant('{app}\DATA\FX\envmapbasic.mat'))
-  end
+  end;
+  else if ShiniestReflections.Checked then begin
+    RenameFile(ExpandConstant('{app}\DATA\FX\envmapbasic.mat'),ExpandConstant('{app}\DATA\FX\envmapbasic_vanilla.mat'))
+    RenameFile(ExpandConstant('{app}\DATA\FX\envmapbasic_shinier.mat'),ExpandConstant('{app}\DATA\FX\envmapbasic.mat'))
+  end;
 end;
 
 function Process_Planetscape():boolean;
@@ -861,39 +869,60 @@ begin
       'Check to install'
     );
 
-    lblReflections := TLabel.Create(PageEffects);
-    lblReflections.Parent := PageEffects.Surface;
-    lblReflections.Caption := 'Add improved reflections';
-    lblReflections.Left := ScaleX(20);
+    lblVanillaReflections := TLabel.Create(PageEffects);
+    lblVanillaReflections.Parent := PageEffects.Surface;
+    lblVanillaReflections.Caption := 'Use vanilla reflections';
+    lblVanillaReflections.Left := ScaleX(20);
+
+    VanillaReflections := TRadioButton.Create(PageEffects);
+    VanillaReflections.Parent := PageEffects.Surface;
+    VanillaReflections.Checked := True;
+
+    lblShinyReflections := TLabel.Create(PageEffects);
+    lblShinyReflections.Parent := PageEffects.Surface;
+    lblShinyReflections.Caption := 'Use shiny reflections (recommended)';
+    lblShinyReflections.Left := ScaleX(20);
+    lblShinyReflections.Top := ScaleY(20);
+
+    ShinyReflections := TRadioButton.Create(PageEffects);
+    ShinyReflections.Parent := PageEffects.Surface;
+    ShinyReflections.Top := ScaleY(20);
+    ShinyReflections.Checked := True;
+
+    lblShiniestReflections := TLabel.Create(PageEffects);
+    lblShiniestReflections.Parent := PageEffects.Surface;
+    lblShiniestReflections.Caption := 'Use shiniest reflections';
+    lblShiniestReflections.Left := ScaleX(20);
+    lblShiniestReflections.Top := ScaleY(40);
+
+    ShiniestReflections := TRadioButton.Create(PageEffects);
+    ShiniestReflections.Parent := PageEffects.Surface;
+    ShiniestReflections.Top := ScaleY(40);
 
     descReflections := TNewStaticText.Create(PageEffects);
     descReflections.Parent := PageEffects.Surface;
     descReflections.WordWrap := True;
-    descReflections.Top := ScaleY(20);
     descReflections.Width := PageEffects.SurfaceWidth;
-    descReflections.Caption := 'This option speaks for itself. It makes the way light reflects off ships, bases, etc, a lot nicer.';
-
-    Reflections := TCheckBox.Create(PageEffects);
-    Reflections.Parent := PageEffects.Surface;
-    Reflections.Checked := True;
+    descReflections.Caption := 'This option changes the way light reflects off ships, bases, etc. The shiny option is recommended since vanilla looks quite dull. Shiniest on the other hand makes all surfaces very reflective, which most users may not like.';
+    descReflections.Top := ScaleY(60);
 
     // Add new missile effects
     lblMissleEffects := TLabel.Create(PageEffects);
     lblMissleEffects.Parent := PageEffects.Surface;
     lblMissleEffects.Caption := 'Add new missile effects';
-    lblMissleEffects.Top := ScaleY(60);
+    lblMissleEffects.Top := ScaleY(120);
     lblMissleEffects.Left := ScaleX(20);
 
     descMissileEffects := TNewStaticText.Create(PageEffects);
     descMissileEffects.Parent := PageEffects.Surface;
     descMissileEffects.WordWrap := True;
-    descMissileEffects.Top := ScaleY(80);
+    descMissileEffects.Top := ScaleY(140);
     descMissileEffects.Width := PageEffects.SurfaceWidth;
     descMissileEffects.Caption := 'This option replaces the existing missile effects with new ones. Enable them if you prefer these over the normal ones.';
 
     MissileEffects := TCheckBox.Create(PageEffects);
     MissileEffects.Parent := PageEffects.Surface;
-    MissileEffects.Top := ScaleY(60);
+    MissileEffects.Top := ScaleY(120);
 
     // Single Player Command Console
     PageSinglePlayer := CreateCustomPage(
