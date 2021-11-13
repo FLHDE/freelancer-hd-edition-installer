@@ -75,7 +75,6 @@ var
   PageWidescreenHud: TWizardPage;
   PagePlanetScape: TWizardPage;
   PageWin10: TWizardPage;
-  PageReflections: TWizardPage;
   PageEffects: TWizardPage;
   PageSinglePlayer: TWizardPage;
   DownloadPage: TDownloadWizardPage;
