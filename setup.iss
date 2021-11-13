@@ -785,7 +785,7 @@ begin
     // Initialize CallSign page and add content
     CallSign := CreateInputOptionPage(DataDirPage.ID,
     'Simgle Player ID Code', 'Tired of being called Freelancer Alpha 1-1?',
-    'You know when each time an NPC talks to you in-game, they call you Freelancer Alpha 1-1? This is your ID Code. Well, this mod gives you the ability to change your ID Code in Single Player! Just select any option you like and the NPCs will call you by that.',
+    'You know when each time an NPC talks to you in-game, they call you Freelancer Alpha 1-1? This mod gives you the ability to change that ID code in Single Player! Just select any option you like and the NPCs will call you by that.',
     True, False);
     CallSign.Add('Freelancer Alpha 1-1 (Default)');
     CallSign.Add('Navy Beta 2-5');
@@ -809,7 +809,7 @@ begin
     'Startup Screen Resolution', 'Choose your native resolution',
     'By default, the "Freelancer" splash screen you see when you start the game has a resolution of 1280x960. This makes it appear stretched and a bit blurry on HD 16:9 resolutions. ' +
     'We recommend setting this option to your monitor''s native resolution. ' +
-    'A higher resolution option may negatively impact the game''s start-up speed.',
+    'Please note that a higher resolution option may negatively impact the game''s start-up speed.',
     True, False);
     StartupRes.Add('Remove Startup Screen');
     StartupRes.Add('720p 16:9 - 1280x720');
@@ -827,7 +827,7 @@ begin
     'Freelancer Logo Resolution', 'In the game''s main menu',
     'This logo has a resolution of 800x600 by default, which makes it look stretched and pixelated/blurry on HD 16:9 monitors. ' +
     'Setting this to a higher resolution with the correct aspect ratio makes the logo look nice and sharp and not stretched-out. Hence we recommend setting this option to your monitor''s native resolution. ' +
-    'A higher resolution option may negatively impact the game''s start-up speed.',
+    'Please not that a higher resolution option may negatively impact the game''s start-up speed.',
     True, False);
     LogoRes.Add('Remove Logo');
     LogoRes.Add('600p 4:3 - 800x600 (Vanilla)');
@@ -861,7 +861,7 @@ begin
 
     lblWidescreenHud := TLabel.Create(PageWidescreenHud);
     lblWidescreenHud.Parent := PageWidescreenHud.Surface;
-    lblWidescreenHud.Caption := 'Advanced Widescreen HUD for 16:9 resolutions';
+    lblWidescreenHud.Caption := 'Advanced Widescreen HUD for widescreen resolutions';
     lblWidescreenHud.Left := ScaleX(20);
 
     descWidescreenHud := TNewStaticText.Create(PageWidescreenHud);
@@ -870,8 +870,8 @@ begin
     descWidescreenHud.Top := ScaleY(20);
     descWidescreenHud.Width := PageWidescreenHud.SurfaceWidth;
     descWidescreenHud.Caption := 'This option adds two new useful widgets to your HUD. Next to your contact list, you will have a wireframe representation of your selected target. Next to your weapons list, you will have a wireframe of your own ship.' + #13#10 + #13#10 +
-    'If you play in 4:3, disable this option. It only works for widescreen resolutions. If you disable this option, you will still get support for the default 16:9 HUD and corresponding resolutions.' + #13#10 + #13#10 +
-    'The Advanced Widescreen HUD makes great use of the unused space that you normally see in widescreen, hence we recommend it for all players who play in 16:9. If you choose to enable this, go to the Controls settings in-game and under “User Interface”, disable Target View (Alt + T). This key binding has become obsolete as both the target view and contact list are visible simultaneously.';
+    'The Advanced Widescreen HUD makes great use of the unused space that you normally see in widescreen, hence we recommend it for all players who play in a widescreen aspect ratio. If you choose to enable this, go to the Controls settings in-game and under “User Interface”, disable Target View (Alt + T). This key binding has become obsolete as both the target view and contact list are visible simultaneously.' + #13#10 + #13#10 +
+    'Disable this option if you play in 4:3. Please note that you will still get support for the default 16:9 HUD and corresponding resolutions if you choose to disable this option.';
 
     WidescreenHud := TCheckBox.Create(PageWidescreenHud);
     WidescreenHud.Parent := PageWidescreenHud.Surface;
@@ -896,7 +896,7 @@ begin
     descPlanetScape.Width := PagePlanetScape.SurfaceWidth;
     descPlanetScape.Caption := 'Since Freelancer was never optimized for 16:9 resolutions, there are several inconsistencies with planetscapes that occur while viewing them in 16:9, such as clipping and geometry issues.' + #13#10 + #13#10 +
     'This mod gives you the option of fixing this, as it adjusts the camera values in the planetscapes so the issues are no longer visible in 16:9 resolutions.' + #13#10 + #13#10 +
-    'Disable this option if you play in 4:3.'
+    'Disable this option if you play in 4:3. Also please note that this option may yield strange results when using it with an ultrawide resolution.'
 
     PlanetScape := TCheckBox.Create(PagePlanetScape);
     PlanetScape.Parent := PagePlanetScape.Surface;
