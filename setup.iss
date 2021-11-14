@@ -108,6 +108,11 @@ var
   MissileEffects: TCheckBox;
   descMissileEffects: TNewStaticText;
 
+  // Add player ship engine trails
+  lblEngineTrails: TLabel;
+  EngineTrails: TCheckBox;
+  descEngineTrails: TNewStaticText;
+
   // Single Player Command Console
   lblSinglePlayer: TLabel;
   SinglePlayer: TCheckBox;
@@ -431,11 +436,16 @@ if MissileEffects.Checked then
   if ShinyReflections.Checked then begin
     RenameFile(ExpandConstant('{app}\DATA\FX\envmapbasic.mat'),ExpandConstant('{app}\DATA\FX\envmapbasic_vanilla.mat'))
     RenameFile(ExpandConstant('{app}\DATA\FX\envmapbasic_shiny.mat'),ExpandConstant('{app}\DATA\FX\envmapbasic.mat'))
-  end
+  end 
   else if ShiniestReflections.Checked then begin
     RenameFile(ExpandConstant('{app}\DATA\FX\envmapbasic.mat'),ExpandConstant('{app}\DATA\FX\envmapbasic_vanilla.mat'))
     RenameFile(ExpandConstant('{app}\DATA\FX\envmapbasic_shinier.mat'),ExpandConstant('{app}\DATA\FX\envmapbasic.mat'))
-  end 
+  end;
+  
+  if EngineTrails.Checked then begin
+    RenameFile(ExpandConstant('{app}\DATA\EQUIPMENT\engine_equip.ini'),ExpandConstant('{app}\DATA\EQUIPMENT\engine_equip_vanilla.ini'))
+    RenameFile(ExpandConstant('{app}\DATA\EQUIPMENT\engine_equip_player_trails.ini'),ExpandConstant('{app}\DATA\EQUIPMENT\engine_equip.ini'))
+  end;
 end;
 
 function Process_Planetscape():boolean;
@@ -923,6 +933,25 @@ begin
     MissileEffects := TCheckBox.Create(PageEffects);
     MissileEffects.Parent := PageEffects.Surface;
     MissileEffects.Top := ScaleY(120);
+
+    // Add player ship engine trails
+    lblEngineTrails := TLabel.Create(PageEffects);
+    lblEngineTrails.Parent := PageEffects.Surface;
+    lblEngineTrails.Caption := 'Add player ship engine trails';
+    lblEngineTrails.Top := ScaleY(180);
+    lblEngineTrails.Left := ScaleX(20);
+
+    descEngineTrails := TNewStaticText.Create(PageEffects);
+    descEngineTrails.Parent := PageEffects.Surface;
+    descEngineTrails.WordWrap := True;
+    descEngineTrails.Top := ScaleY(200);
+    descEngineTrails.Width := PageEffects.SurfaceWidth;
+    descEngineTrails.Caption := 'In vanilla Freelancer, NPC ships have engine trials while player ships don''t. This option adds engine trails to all player ships.';
+
+    EngineTrails := TCheckBox.Create(PageEffects);
+    EngineTrails.Parent := PageEffects.Surface;
+    EngineTrails.Top := ScaleY(180);
+    EngineTrails.Checked := True;
 
     // Single Player Command Console
     PageSinglePlayer := CreateCustomPage(
