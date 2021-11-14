@@ -789,7 +789,7 @@ begin
     // Initialize DataDirPage and add content
     DataDirPage := CreateInputDirPage(wpInfoBefore,
     'Select Freelancer installation', 'Where is Freelancer installed?',
-    'Select the folder in which a fresh copy of Freelancer is installed, then click Next. This is usually C:\Program Files (x86)\Microsoft Games\Freelancer',
+    'Select the folder in which a fresh and completely unmodded copy of Freelancer is installed, then click Next. This is usually C:\Program Files (x86)\Microsoft Games\Freelancer',
     False, '');
     DataDirPage.Add('');
 
