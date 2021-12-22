@@ -705,12 +705,15 @@ begin
     OfflineInstall := ExpandConstant('{param:sourcefile|false}')
 
     // Initialise download page and mirrors
+    // TODO: Update all mirrors to 0.5
+    // TODO: Swap GitHub and OneDrive
     mirrors := TStringList.Create;
-    mirrors.Add('https://onedrive.live.com/download?cid=F03BDD831B77D1AD&resid=F03BDD831B77D1AD%2193136&authkey=AB-33u2fKjr1-V8');
+    mirrors.Add('https://github.com/BC46/freelancer-hd-edition/archive/refs/tags/0.5.zip');
     mirrors.Add('https://pechey.net/files/freelancer-hd-edition-0.4.1.zip');
     mirrors.Add('http://luyten.viewdns.net:8080/freelancer-hd-edition-0.4.1.zip');
+    mirrors.Add('https://onedrive.live.com/download?cid=F03BDD831B77D1AD&resid=F03BDD831B77D1AD%2193136&authkey=AB-33u2fKjr1-V8');
     mirrors.Add('https://archive.org/download/freelancer-hd-edition-0.4.1/freelancer-hd-edition-0.4.1.zip');
-    mirrors.Add('https://github.com/BC46/freelancer-hd-edition/archive/refs/tags/0.5.zip');
+
     DownloadPage := CreateDownloadPage(SetupMessage(msgWizardPreparing), SetupMessage(msgPreparingDesc), @OnDownloadProgress);
 
     // Initialize DataDirPage and add content
