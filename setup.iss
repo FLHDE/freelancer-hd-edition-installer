@@ -667,7 +667,8 @@ begin
           if(i = mirrors.Count - 1) then
             SuppressibleMsgBox('All downloads failed. Please contact us on Discord: https://discord.gg/ScqgYuFqmU', mbError, MB_OK, IDOK)
           else
-            SuppressibleMsgBox('Download failed. Attempting download with alternate mirror.', mbError, MB_OK, IDOK);
+            if SuppressibleMsgBox('Download failed. Do you want to try downloading with an alternate mirror?', mbError, MB_RETRYCANCEL, IDRETRY) = IDCANCEL then
+              i := mirrors.Count - 1; 
           Result := False;
           DownloadPage.Hide;
         finally
