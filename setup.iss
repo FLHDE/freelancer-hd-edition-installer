@@ -682,6 +682,7 @@ begin
         try
           DownloadPage.Download;
           Result := True;
+          i := mirrors.Count - 1;
         except
           if(i = mirrors.Count - 1) then
             SuppressibleMsgBox('All downloads failed. Please contact us on Discord: https://discord.gg/ScqgYuFqmU', mbError, MB_OK, IDOK)
