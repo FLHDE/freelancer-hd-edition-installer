@@ -23,6 +23,7 @@ DefaultGroupName=Freelancer HD Edition
 AllowNoIcons=yes
 OutputBaseFilename=FreelancerHDSetup
 SetupIconFile={#SourcePath}\icon.ico
+UninstallDisplayIcon={#SourcePath}\icon.ico
 Compression=lzma
 SolidCompression=yes
 WizardImageFile={#SourcePath}\backgroundpattern.bmp
