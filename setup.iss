@@ -24,6 +24,7 @@ AllowNoIcons=yes
 OutputBaseFilename=FreelancerHDSetup
 SetupIconFile={#SourcePath}\icon.ico
 UninstallDisplayIcon={#SourcePath}\icon.ico
+UninstallDisplayName={#MyAppName}
 Compression=lzma
 SolidCompression=yes
 WizardImageFile={#SourcePath}\backgroundpattern.bmp
