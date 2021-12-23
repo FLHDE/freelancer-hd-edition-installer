@@ -22,16 +22,16 @@ DefaultDirName={localappdata}\Freelancer HD Edition
 DefaultGroupName=Freelancer HD Edition
 AllowNoIcons=yes
 OutputBaseFilename=FreelancerHDSetup
-SetupIconFile={#SourcePath}\icon.ico
-UninstallDisplayIcon={#SourcePath}\icon.ico
+SetupIconFile={#SourcePath}\Images\icon.ico
+UninstallDisplayIcon={#SourcePath}\Images\icon.ico
 UninstallDisplayName={#MyAppName}
 Compression=lzma
 SolidCompression=yes
-WizardImageFile={#SourcePath}\backgroundpattern.bmp
-WizardSmallImageFile={#SourcePath}\icon.bmp
+WizardImageFile={#SourcePath}\Images\backgroundpattern.bmp
+WizardSmallImageFile={#SourcePath}\Images\icon.bmp
 DisableWelcomePage=False
 DisableDirPage=False
-InfoBeforeFile={#SourcePath}\installinfo.txt
+InfoBeforeFile={#SourcePath}\Text\installinfo.txt
 // TODO: Recalculate before release
 ExtraDiskSpaceRequired = 9149000000
 
@@ -46,11 +46,11 @@ Name: "{group}\{#MyAppName}"; Filename: "{app}\EXE\{#MyAppExeName}"
 Name: "{commondesktop}\Freelancer HD Edition"; Filename: "{app}\EXE\{#MyAppExeName}"; Tasks: desktopicon
 
 [Files]
-Source: "installinfo.txt"; DestDir: "{app}"; Flags: ignoreversion
-Source: "AGENCYB.TTF"; DestDir: "{autofonts}"; FontInstall: "Agency FB Bold"; Flags: onlyifdoesntexist uninsneveruninstall
-Source: "AGENCYR.TTF"; DestDir: "{autofonts}"; FontInstall: "Agency FB"; Flags: onlyifdoesntexist uninsneveruninstall
-Source: "ARIALUNI.TTF"; DestDir: "{autofonts}"; FontInstall: "Arial Unicode MS"; Flags: onlyifdoesntexist uninsneveruninstall
-Source: "7za.exe"; DestDir: "{tmp}"; Flags: deleteafterinstall;
+Source: "Text\installinfo.txt"; DestDir: "{app}"; Flags: ignoreversion
+Source: "Fonts\AGENCYB.TTF"; DestDir: "{autofonts}"; FontInstall: "Agency FB Bold"; Flags: onlyifdoesntexist uninsneveruninstall
+Source: "Fonts\AGENCYR.TTF"; DestDir: "{autofonts}"; FontInstall: "Agency FB"; Flags: onlyifdoesntexist uninsneveruninstall
+Source: "Fonts\ARIALUNI.TTF"; DestDir: "{autofonts}"; FontInstall: "Arial Unicode MS"; Flags: onlyifdoesntexist uninsneveruninstall
+Source: "External\7za.exe"; DestDir: "{tmp}"; Flags: deleteafterinstall;
 
 [Run]
 Filename: "{app}\EXE\{#MyAppExeName}"; Description: "{cm:LaunchProgram,{#StringChange(MyAppName, '&', '&&')}}"; Flags: nowait postinstall skipifsilent
