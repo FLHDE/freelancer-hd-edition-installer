@@ -210,6 +210,21 @@ begin
   end;
 end;
 
+// Used to remove unwanted byte order marks in a file. 
+// It effectively converts the file content in AnsiString-format to Unicode, replaces the BOM header with nothing, and writes everything back to the same file.
+function RemoveBOM(const FileName: String):boolean;
+var
+  FileData: AnsiString;
+  UnicodeStr: string;
+begin
+  LoadStringFromFile(FileName, FileData);
+
+  UnicodeStr := FileData;
+  StringChangeEx(UnicodeStr, '﻿', '', True);
+
+  SaveStringToFile(FileName, UnicodeStr, False);
+end;
+
 // Returns true if the directory is empty
 function isEmptyDir(dirName: String): Boolean;
 var
@@ -628,6 +643,12 @@ begin
         Process_Planetscape();
         Process_Win10();
         Process_HUD();
+
+        // Delete potential UTF-8 BOM headers in all edited ini files
+        RemoveBOM(ExpandConstant('{app}\EXE\dacom.ini'));
+        RemoveBOM(ExpandConstant('{app}\EXE\freelancer.ini'));
+        RemoveBOM(ExpandConstant('{app}\DATA\FONTS\fonts.ini'));
+        RemoveBOM(ExpandConstant('{app}\DATA\INTERFACE\HudShift.ini'));
 
         // Delete restart.fl to stop crashes
         DeleteFile(ExpandConstant('{userdocs}\My Games\Freelancer\Accts\SinglePlayer\Restart.fl'));
