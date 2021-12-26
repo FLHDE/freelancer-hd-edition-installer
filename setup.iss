@@ -220,9 +220,11 @@ begin
   LoadStringFromFile(FileName, FileData);
 
   UnicodeStr := FileData;
-  StringChangeEx(UnicodeStr, '﻿', '', True);
 
-  SaveStringToFile(FileName, UnicodeStr, False);
+  if StringChangeEx(UnicodeStr, '﻿', '', True) > 0 then
+  begin;
+    SaveStringToFile(FileName, UnicodeStr, False);
+  end;
 end;
 
 // Returns true if the directory is empty
