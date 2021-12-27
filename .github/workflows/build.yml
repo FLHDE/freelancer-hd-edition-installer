@@ -12,12 +12,12 @@ jobs:
         - name: Install Inno
           run: |
             choco install innosetup
-	  
+            
         - name: Compile script
           run: |
             "%programfiles(x86)%\Inno Setup 6\iscc.exe" "setup.iss"
           shell: cmd
-	  
+          
         - name: Upload the installer as an artifact
           uses: actions/upload-artifact@v2
           if: ${{ github.event_name != 'pull_request' }}
