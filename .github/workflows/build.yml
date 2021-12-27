@@ -1,0 +1,26 @@
+name: Build
+on: push
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+        - name: Check out repository code
+          uses: actions/checkout@v2
+          with:
+            fetch-depth: 0
+        
+        - name: Install Inno
+          run: |
+            choco install innosetup
+	  
+        - name: Compile script
+          run: |
+            "%programfiles(x86)%\Inno Setup 6\iscc.exe" "setup.iss"
+          shell: cmd
+	  
+        - name: Upload the installer as an artifact
+          uses: actions/upload-artifact@v2
+          if: ${{ github.event_name != 'pull_request' }}
+          with:
+            path: "Output/FreelancerHDSetup.exe"
+            name: FreelancerHDSetup
