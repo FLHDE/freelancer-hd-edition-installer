@@ -1,4 +1,4 @@
-﻿; Inno Install Script for Freelancer: HD Edition
+ï»¿; Inno Install Script for Freelancer: HD Edition
 ; GitHub: https://github.com/ollieraikkonen/Freelancer-hd-edition-install-script
 ; Main GitHub: https://github.com/bc46/Freelancer-hd-edition
 
@@ -224,7 +224,7 @@ begin
 
   // It seems like we are replacing an empty string with an empty string,
   // but the first string is actually a UTF-8 byte order mark. You can only see it when viewing the Ansi or byte representation of this file.
-  if StringChangeEx(UnicodeStr, '﻿', '', True) > 0 then
+  if StringChangeEx(UnicodeStr, 'ï»¿', '', True) > 0 then
   begin;
     SaveStringToFile(FileName, UnicodeStr, False);
   end;
