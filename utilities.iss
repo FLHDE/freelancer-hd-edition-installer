@@ -93,3 +93,13 @@ begin
     end;
   end;
 end;
+
+// Used to remove an unwanted byte order mark in a file. 
+// Calls an external program to take care of that.
+function RemoveBOM(const FileName: String): Integer;
+var
+  ResultCode: Integer;
+begin
+  Exec(ExpandConstant('{tmp}\utf-8-bom-remover.exe'), ExpandConstant('"' + FileName + '"'), '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
+  result := ResultCode;
+end;

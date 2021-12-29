@@ -55,6 +55,7 @@ Source: "Assets\Fonts\AGENCYB.TTF"; DestDir: "{autofonts}"; FontInstall: "Agency
 Source: "Assets\Fonts\AGENCYR.TTF"; DestDir: "{autofonts}"; FontInstall: "Agency FB"; Flags: onlyifdoesntexist uninsneveruninstall
 Source: "Assets\Fonts\ARIALUNI.TTF"; DestDir: "{autofonts}"; FontInstall: "Arial Unicode MS"; Flags: onlyifdoesntexist uninsneveruninstall
 Source: "Assets\External\7za.exe"; DestDir: "{tmp}"; Flags: deleteafterinstall;
+Source: "Assets\External\utf-8-bom-remover.exe"; DestDir: "{tmp}"; Flags: deleteafterinstall;
 
 [Run]
 Filename: "{app}\EXE\{#MyAppExeName}"; Description: "{cm:LaunchProgram,{#StringChange(MyAppName, '&', '&&')}}"; Flags: nowait postinstall skipifsilent
@@ -119,6 +120,12 @@ begin
         Process_Planetscape();
         Process_Win10();
         Process_HUD();
+
+        // Delete potential UTF-8 BOM headers in all edited ini files
+        RemoveBOM(ExpandConstant('{app}\EXE\dacom.ini'));
+        RemoveBOM(ExpandConstant('{app}\EXE\freelancer.ini'));
+        RemoveBOM(ExpandConstant('{app}\DATA\FONTS\fonts.ini'));
+        RemoveBOM(ExpandConstant('{app}\DATA\INTERFACE\HudShift.ini'));
 
         // Delete restart.fl to stop crashes
         DeleteFile(ExpandConstant('{userdocs}\My Games\Freelancer\Accts\SinglePlayer\Restart.fl'));
