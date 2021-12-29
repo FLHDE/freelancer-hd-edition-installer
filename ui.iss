@@ -174,7 +174,7 @@ begin
   SmallText := CreateInputOptionPage(LogoRes.ID,
   'Fix small text on 1440p/4K resolutions', 'In the game''s main menu',
   'Many high-resolution Freelancer players have reported missing HUD text and misaligned buttons in menus. In 4K, the nav map text is too small and there are many missing text elements in the HUD. For 1440p screens, the only apparent issue is the small nav map text.' + #13#10 + #13#10 +
-  'Select the option corresponding to the resolution you’re going to play Freelancer in. If you play in 1920x1080 or lower, the “No” option is fine as the elements are configured correctly already.',
+  'Select the option corresponding to the resolution you’re going to play Freelancer in. If you play in 1920x1080 or lower, the "No" option is fine as the elements are configured correctly already.',
   True, False);
   SmallText.Add('No');
   SmallText.Add('Yes, apply fix for 2560x1440 screens');
@@ -199,7 +199,7 @@ begin
   descWidescreenHud.Top := ScaleY(20);
   descWidescreenHud.Width := PageWidescreenHud.SurfaceWidth;
   descWidescreenHud.Caption := 'This option adds two new useful widgets to your HUD. Next to your contact list, you will have a wireframe representation of your selected target. Next to your weapons list, you will have a wireframe of your own ship.' + #13#10 + #13#10 +
-  'The Advanced Widescreen HUD makes great use of the unused space that you normally see in widescreen, hence we recommend it for all players who play in a widescreen aspect ratio. If you choose to enable this, go to the Controls settings in-game and under “User Interface”, disable Target View (Alt + T). This key binding has become obsolete as both the target view and contact list are visible simultaneously.' + #13#10 + #13#10 +
+  'The Advanced Widescreen HUD makes great use of the unused space that you normally see in widescreen, hence we recommend it for all players who play in a widescreen aspect ratio. If you choose to enable this, go to the Controls settings in-game and under "User Interface", disable Target View (Alt + T). This key binding has become obsolete as both the target view and contact list are visible simultaneously.' + #13#10 + #13#10 +
   'Disable this option if you play in 4:3. Please note that you will still get support for the default 16:9 HUD and corresponding resolutions if you choose to disable this option.';
   
   WidescreenHud := TCheckBox.Create(PageWidescreenHud);
@@ -250,7 +250,7 @@ begin
   descWin10.Width := PageWin10.SurfaceWidth;
   descWin10.Caption := 'Windows 10 users may experience compatibility issues while playing (vanilla) Freelancer including broken lighting in many base interiors and missing glass reflections.' + #13#10 + #13#10 +
   'We''ve included a Legacy DirectX wrapper named dgVoodoo2 in this mod, which serves as an optional patch that fixes all of these issues.' + #13#10 + #13#10 +
-  'However, we have disabled this option by default as you may experience crashes, bugs, and stutters while using it. So please try it at your own risk.' + #13#10 + #13#10 +
+  'However, we have disabled this option by default as you may experience crashes, bugs, and stutters while using it. TRY IT AT YOUR OWN RISK.' + #13#10 + #13#10 +
   'If you experience a refresh rate/fps lock to 60 while using this patch, please refer to the wiki for a solution: https://github.com/BC46/freelancer-hd-edition/wiki';
   
   Win10 := TCheckBox.Create(PageWin10);
