@@ -9,6 +9,9 @@
 #define MyAppExeName "Freelancer.exe"
 #define MyFolderName "freelancer-hd-edition-" + MyAppVersion
 #define MyZipName "freelancerhd"
+; Remember to change the mirror locations for each release
+#dim Mirrors[5] {"https://github.com/BC46/freelancer-hd-edition/archive/refs/tags/0.5.zip", "https://pechey.net/files/freelancer-hd-edition-0.4.1.zip", "http://luyten.viewdns.net:8080/freelancer-hd-edition-0.4.1.zip","https://onedrive.live.com/download?cid=F03BDD831B77D1AD&resid=F03BDD831B77D1AD%2193136&authkey=AB-33u2fKjr1-V8","https://archive.org/download/freelancer-hd-edition-0.4.1/freelancer-hd-edition-0.4.1.zip"}
+#define i 
 
 [Setup]
 AllowNoIcons=yes
@@ -191,16 +194,15 @@ begin
     // Offline install
     OfflineInstall := ExpandConstant('{param:sourcefile|false}')
 
-    // Initialise download page and mirrors
-    // TODO: Update all mirrors to 0.5
-    // TODO: Swap GitHub and OneDrive
+    // Copy mirrors from our preprocessor to our string array. This allows us to define the array at the top of the file for easy editing
     mirrors := TStringList.Create;
-    mirrors.Add('https://github.com/BC46/freelancer-hd-edition/archive/refs/tags/0.5.zip');
-    mirrors.Add('https://pechey.net/files/freelancer-hd-edition-0.4.1.zip');
-    mirrors.Add('http://luyten.viewdns.net:8080/freelancer-hd-edition-0.4.1.zip');
-    mirrors.Add('https://onedrive.live.com/download?cid=F03BDD831B77D1AD&resid=F03BDD831B77D1AD%2193136&authkey=AB-33u2fKjr1-V8');
-    mirrors.Add('https://archive.org/download/freelancer-hd-edition-0.4.1/freelancer-hd-edition-0.4.1.zip');
+ 
+    #sub PopMirrors
+      mirrors.add('{#Mirrors[i]}');
+    #endsub
 
+    #for {i = 0; i < DimOf(Mirrors); i++} PopMirrors
+
+    // Initialize UI. This populates all our ui elements with text, size and other properties
     InitializeUi();
-
  end;
