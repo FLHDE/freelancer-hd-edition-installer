@@ -1,4 +1,4 @@
-ï»¿; Inno Install Script for Freelancer: HD Edition
+; Inno Install Script for Freelancer: HD Edition
 ; GitHub: https://github.com/ollieraikkonen/Freelancer-hd-edition-install-script
 ; Main GitHub: https://github.com/bc46/Freelancer-hd-edition
 
@@ -51,6 +51,7 @@ Source: "Assets\Fonts\AGENCYB.TTF"; DestDir: "{autofonts}"; FontInstall: "Agency
 Source: "Assets\Fonts\AGENCYR.TTF"; DestDir: "{autofonts}"; FontInstall: "Agency FB"; Flags: onlyifdoesntexist uninsneveruninstall
 Source: "Assets\Fonts\ARIALUNI.TTF"; DestDir: "{autofonts}"; FontInstall: "Arial Unicode MS"; Flags: onlyifdoesntexist uninsneveruninstall
 Source: "Assets\External\7za.exe"; DestDir: "{tmp}"; Flags: deleteafterinstall;
+Source: "Assets\External\utf-8-bom-remover.exe"; DestDir: "{tmp}"; Flags: deleteafterinstall;
 
 [Run]
 Filename: "{app}\EXE\{#MyAppExeName}"; Description: "{cm:LaunchProgram,{#StringChange(MyAppName, '&', '&&')}}"; Flags: nowait postinstall skipifsilent
@@ -211,23 +212,14 @@ begin
   end;
 end;
 
-// Used to remove unwanted byte order marks in a file. 
-// It effectively converts the file content in AnsiString-format to Unicode, replaces the BOM header with nothing, and writes everything back to the same file.
-function RemoveBOM(const FileName: String):boolean;
+// Used to remove an unwanted byte order mark in a file. 
+// Calls an external program to take care of that.
+function RemoveBOM(const FileName: String): Integer;
 var
-  FileData: AnsiString;
-  UnicodeStr: string;
+  ResultCode: Integer;
 begin
-  LoadStringFromFile(FileName, FileData);
-
-  UnicodeStr := FileData;
-
-  // It seems like we are replacing an empty string with an empty string,
-  // but the first string is actually a UTF-8 byte order mark. You can only see it when viewing the Ansi or byte representation of this file.
-  if StringChangeEx(UnicodeStr, 'ï»¿', '', True) > 0 then
-  begin;
-    SaveStringToFile(FileName, UnicodeStr, False);
-  end;
+  Exec(ExpandConstant('{tmp}\utf-8-bom-remover.exe'), ExpandConstant('"' + FileName + '"'), '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
+  result := ResultCode;
 end;
 
 // Returns true if the directory is empty
