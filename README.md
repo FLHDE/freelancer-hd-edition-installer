@@ -1,6 +1,6 @@
 # Freelancer: HD Edition Inno Installer Script
 [![Discord](https://badgen.net/badge/icon/discord?icon=discord&label)](https://discord.gg/ScqgYuFqmU)
-[![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://GitHub.com/Naereen/StrapDown.js/graphs/commit-activity)
+[![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://GitHub.com/ollieraikkonen/Freelancer-hd-edition-install-script/graphs/commit-activity)
 
 This is a setup script for https://github.com/BC46/freelancer-hd-edition.
 
