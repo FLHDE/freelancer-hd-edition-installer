@@ -55,7 +55,7 @@ var
 // Report on download progress
 function OnDownloadProgress(const Url, FileName: String; const Progress, ProgressMax: Int64): Boolean;
 begin
-  DownloadPage.SetText('Downloading mod',(IntToStr(Progress/1048576) + 'MB / 3296MB'))
+  DownloadPage.SetText('Downloading mod',(IntToStr(Progress/1048576)) + 'MB / ' + IntToStr(StrToInt(ExpandConstant('{#SizeZip}'))/1000000) + 'MB');
   if Progress = ProgressMax then
     Log(Format('Successfully downloaded file to {tmp}: %s', [FileName]));
   Result := True;

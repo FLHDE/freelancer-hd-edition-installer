@@ -13,6 +13,11 @@
 ; TODO: Order needs changing when we release v0.5. Onedrive is to start.
 #dim Mirrors[5] {"https://github.com/BC46/freelancer-hd-edition/archive/refs/tags/0.5.zip", "https://pechey.net/files/freelancer-hd-edition-0.4.1.zip", "http://luyten.viewdns.net:8080/freelancer-hd-edition-0.4.1.zip","https://onedrive.live.com/download?cid=F03BDD831B77D1AD&resid=F03BDD831B77D1AD%2193136&authkey=AB-33u2fKjr1-V8","https://archive.org/download/freelancer-hd-edition-0.4.1/freelancer-hd-edition-0.4.1.zip"}
 #define i 
+; TODO: Update size in bytes on disk
+#define SizeZip 3296899072 
+#define SizeExtracted 5520166912 
+#define SizeVanilla 985624576
+#define SizeAll SizeZip + SizeExtracted + SizeVanilla
 
 [Setup]
 AllowNoIcons=yes
@@ -29,7 +34,7 @@ DefaultGroupName=Freelancer HD Edition
 DisableWelcomePage=False
 DisableDirPage=False
 // TODO: Recalculate before each release
-ExtraDiskSpaceRequired = 9149000000
+ExtraDiskSpaceRequired = {#SizeAll}
 InfoBeforeFile={#SourcePath}\Assets\Text\installinfo.txt
 OutputBaseFilename=FreelancerHDSetup
 SetupIconFile={#SourcePath}\Assets\Images\icon.ico
