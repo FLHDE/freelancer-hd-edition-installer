@@ -122,10 +122,13 @@ begin
         Process_HUD();
 
         // Delete potential UTF-8 BOM headers in all edited ini files
-        RemoveBOM(ExpandConstant('{app}\EXE\dacom.ini'));
-        RemoveBOM(ExpandConstant('{app}\EXE\freelancer.ini'));
-        RemoveBOM(ExpandConstant('{app}\DATA\FONTS\fonts.ini'));
-        RemoveBOM(ExpandConstant('{app}\DATA\INTERFACE\HudShift.ini'));
+        if not IsWine then 
+        begin
+          RemoveBOM(ExpandConstant('{app}\EXE\dacom.ini'));
+          RemoveBOM(ExpandConstant('{app}\EXE\freelancer.ini'));
+          RemoveBOM(ExpandConstant('{app}\DATA\FONTS\fonts.ini'));
+          RemoveBOM(ExpandConstant('{app}\DATA\INTERFACE\HudShift.ini'));
+        end;
 
         // Delete restart.fl to stop crashes
         DeleteFile(ExpandConstant('{userdocs}\My Games\Freelancer\Accts\SinglePlayer\Restart.fl'));

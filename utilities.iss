@@ -103,3 +103,16 @@ begin
   Exec(ExpandConstant('{tmp}\utf-8-bom-remover.exe'), ExpandConstant('"' + FileName + '"'), '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
   result := ResultCode;
 end;
+
+// Used to detect if the user is using WINE or not
+function LoadLibraryA(lpLibFileName: PAnsiChar): THandle;
+external 'LoadLibraryA@kernel32.dll stdcall';
+function GetProcAddress(Module: THandle; ProcName: PAnsiChar): Longword;
+external 'GetProcAddress@kernel32.dll stdcall';
+
+function IsWine: boolean;
+var  LibHandle  : THandle;
+begin
+  LibHandle := LoadLibraryA('ntdll.dll');
+  Result:= GetProcAddress(LibHandle, 'wine_get_version')<> 0;
+end;
