@@ -222,5 +222,4 @@ begin
 
     // Initialize UI. This populates all our ui elements with text, size and other properties
     InitializeUi();
-    DownloadPage := CreateDownloadPage(SetupMessage(msgWizardPreparing), SetupMessage(msgPreparingDesc), @OnDownloadProgress);
  end;

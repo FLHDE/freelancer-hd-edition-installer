@@ -98,6 +98,9 @@ begin
   // Read download size
   DownloadSize := IntToStr(StrToInt64(ExpandConstant('{#SizeZip}'))/1048576);
 
+  // Initialize DownloadPage
+  DownloadPage := CreateDownloadPage(SetupMessage(msgWizardPreparing), SetupMessage(msgPreparingDesc), @OnDownloadProgress);
+
   // Initialize DataDirPage and add content
   DataDirPage := CreateInputDirPage(wpInfoBefore,
   'Select Freelancer installation', 'Where is Freelancer installed?',
