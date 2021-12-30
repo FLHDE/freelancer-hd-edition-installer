@@ -52,15 +52,6 @@ var
   SinglePlayer: TCheckBox;
   descSinglePlayer: TNewStaticText;
 
-// Report on download progress
-function OnDownloadProgress(const Url, FileName: String; const Progress, ProgressMax: Int64): Boolean;
-begin
-  DownloadPage.SetText('Downloading mod',(IntToStr(Progress/1048576)) + 'MB / ' + IntToStr(StrToInt(ExpandConstant('{#SizeZip}'))/1000000) + 'MB');
-  if Progress = ProgressMax then
-    Log(Format('Successfully downloaded file to {tmp}: %s', [FileName]));
-  Result := True;
-end;
-
 // Update progress of installer bar
 procedure UpdateProgress(Position: Integer);
 begin
@@ -95,7 +86,7 @@ end;
 function InitializeUi(): Boolean;
 var dir : string;
 begin
-  DownloadPage := CreateDownloadPage(SetupMessage(msgWizardPreparing), SetupMessage(msgPreparingDesc), @OnDownloadProgress);
+  
   
   // Initialize DataDirPage and add content
   DataDirPage := CreateInputDirPage(wpInfoBefore,

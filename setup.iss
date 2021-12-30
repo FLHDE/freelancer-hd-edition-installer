@@ -84,6 +84,27 @@ var
   // String list of mirrors that we can potentially download the mod from. This is populated in InitializeWizard()
   mirrors : TStringList;
 
+// Report on download progress
+function OnDownloadProgress(const Url, FileName: String; const Progress, ProgressMax: Int64): Boolean;
+var one : string;
+var two : Int64;
+var three : Int64;
+begin
+  one :=  ExpandConstant('{#SizeZip}');
+  Log(Format('One: %s',[one]));
+
+  two :=  StrToInt64(one);
+  Log(Format('Two: %d',[two]));
+
+  three := two/1000000;
+  Log(Format('Three: %d',[three]));
+
+  DownloadPage.SetText('Downloading mod',(IntToStr(Progress/1048576)) + 'MB / ' + IntToStr(three) + 'MB');
+  if Progress = ProgressMax then
+    Log(Format('Successfully downloaded file to {tmp}: %s', [FileName]));
+  Result := True;
+end;
+
 // Checks which step we are on when it changed. If its the postinstall step then start the actual installing
 procedure CurStepChanged(CurStep: TSetupStep);
 var
@@ -221,4 +242,5 @@ begin
 
     // Initialize UI. This populates all our ui elements with text, size and other properties
     InitializeUi();
+    DownloadPage := CreateDownloadPage(SetupMessage(msgWizardPreparing), SetupMessage(msgPreparingDesc), @OnDownloadProgress);
  end;
