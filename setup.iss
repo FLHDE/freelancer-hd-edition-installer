@@ -33,7 +33,6 @@ DefaultDirName={localappdata}\Freelancer HD Edition
 DefaultGroupName=Freelancer HD Edition
 DisableWelcomePage=False
 DisableDirPage=False
-// TODO: Recalculate before each release
 ExtraDiskSpaceRequired = {#SizeAll}
 InfoBeforeFile={#SourcePath}\Assets\Text\installinfo.txt
 OutputBaseFilename=FreelancerHDSetup
