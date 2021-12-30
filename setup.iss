@@ -72,38 +72,19 @@ Type: filesandordirs; Name: "{app}"
 WelcomeLabel2=Freelancer: HD Edition is a mod that aims to improve every aspect of Freelancer while keeping the look and feel as close to vanilla as possible. It also serves as an all-in-one package for players so they do not have to worry about installing countless patches and mods to create the perfect HD and bug-free install.%n%nThis installer requires a clean, freshly installed Freelancer directory.
 
 [Code]
-// Imports from other .iss files
-#include "utilities.iss"
-#include "ui.iss"
-#include "mod_options.iss"
-
 // Declaration of global variables
 var
   // Allows us to skip the downloading of the files and just copy it from the local PC to save time
   OfflineInstall: String;
   // String list of mirrors that we can potentially download the mod from. This is populated in InitializeWizard()
   mirrors : TStringList;
+  // Size of Download in MB
+  DownloadSize : String;
 
-// Report on download progress
-function OnDownloadProgress(const Url, FileName: String; const Progress, ProgressMax: Int64): Boolean;
-var one : string;
-var two : Int64;
-var three : Int64;
-begin
-  one :=  ExpandConstant('{#SizeZip}');
-  Log(Format('One: %s',[one]));
-
-  two :=  StrToInt64(one);
-  Log(Format('Two: %d',[two]));
-
-  three := two/1000000;
-  Log(Format('Three: %d',[three]));
-
-  DownloadPage.SetText('Downloading mod',(IntToStr(Progress/1048576)) + 'MB / ' + IntToStr(three) + 'MB');
-  if Progress = ProgressMax then
-    Log(Format('Successfully downloaded file to {tmp}: %s', [FileName]));
-  Result := True;
-end;
+// Imports from other .iss files
+#include "utilities.iss"
+#include "ui.iss"
+#include "mod_options.iss"
 
 // Checks which step we are on when it changed. If its the postinstall step then start the actual installing
 procedure CurStepChanged(CurStep: TSetupStep);

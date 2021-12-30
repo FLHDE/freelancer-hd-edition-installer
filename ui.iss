@@ -52,6 +52,15 @@ var
   SinglePlayer: TCheckBox;
   descSinglePlayer: TNewStaticText;
 
+// Report on download progress
+function OnDownloadProgress(const Url, FileName: String; const Progress, ProgressMax: Int64): Boolean;
+begin
+  DownloadPage.SetText('Downloading mod',(IntToStr(Progress/1048576)) + 'MB / ' + DownloadSize + 'MB');
+  if Progress = ProgressMax then
+    Log(Format('Successfully downloaded file to {tmp}: %s', [FileName]));
+  Result := True;
+end;
+
 // Update progress of installer bar
 procedure UpdateProgress(Position: Integer);
 begin
@@ -86,8 +95,9 @@ end;
 function InitializeUi(): Boolean;
 var dir : string;
 begin
-  
-  
+  // Read download size
+  DownloadSize := IntToStr(StrToInt64(ExpandConstant('{#SizeZip}'))/1048576);
+
   // Initialize DataDirPage and add content
   DataDirPage := CreateInputDirPage(wpInfoBefore,
   'Select Freelancer installation', 'Where is Freelancer installed?',
