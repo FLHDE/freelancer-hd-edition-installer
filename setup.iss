@@ -13,6 +13,11 @@
 ; TODO: Order needs changing when we release v0.5. Onedrive is to start.
 #dim Mirrors[5] {"https://github.com/BC46/freelancer-hd-edition/archive/refs/tags/0.5.zip", "https://pechey.net/files/freelancer-hd-edition-0.4.1.zip", "http://luyten.viewdns.net:8080/freelancer-hd-edition-0.4.1.zip","https://onedrive.live.com/download?cid=F03BDD831B77D1AD&resid=F03BDD831B77D1AD%2193136&authkey=AB-33u2fKjr1-V8","https://archive.org/download/freelancer-hd-edition-0.4.1/freelancer-hd-edition-0.4.1.zip"}
 #define i 
+; TODO: Update size in bytes on disk
+#define SizeZip 3296899072 
+#define SizeExtracted 5520166912 
+#define SizeVanilla 985624576
+#define SizeAll SizeZip + SizeExtracted + SizeVanilla
 
 [Setup]
 AllowNoIcons=yes
@@ -28,8 +33,7 @@ DefaultDirName={localappdata}\Freelancer HD Edition
 DefaultGroupName=Freelancer HD Edition
 DisableWelcomePage=False
 DisableDirPage=False
-// TODO: Recalculate before each release
-ExtraDiskSpaceRequired = 9149000000
+ExtraDiskSpaceRequired = {#SizeAll}
 InfoBeforeFile={#SourcePath}\Assets\Text\installinfo.txt
 OutputBaseFilename=FreelancerHDSetup
 SetupIconFile={#SourcePath}\Assets\Images\icon.ico
@@ -55,6 +59,7 @@ Source: "Assets\Fonts\AGENCYB.TTF"; DestDir: "{autofonts}"; FontInstall: "Agency
 Source: "Assets\Fonts\AGENCYR.TTF"; DestDir: "{autofonts}"; FontInstall: "Agency FB"; Flags: onlyifdoesntexist uninsneveruninstall
 Source: "Assets\Fonts\ARIALUNI.TTF"; DestDir: "{autofonts}"; FontInstall: "Arial Unicode MS"; Flags: onlyifdoesntexist uninsneveruninstall
 Source: "Assets\External\7za.exe"; DestDir: "{tmp}"; Flags: deleteafterinstall;
+Source: "Assets\External\utf-8-bom-remover.exe"; DestDir: "{tmp}"; Flags: deleteafterinstall;
 
 [Run]
 Filename: "{app}\EXE\{#MyAppExeName}"; Description: "{cm:LaunchProgram,{#StringChange(MyAppName, '&', '&&')}}"; Flags: nowait postinstall skipifsilent
@@ -66,17 +71,19 @@ Type: filesandordirs; Name: "{app}"
 WelcomeLabel2=Freelancer: HD Edition is a mod that aims to improve every aspect of Freelancer while keeping the look and feel as close to vanilla as possible. It also serves as an all-in-one package for players so they do not have to worry about installing countless patches and mods to create the perfect HD and bug-free install.%n%nThis installer requires a clean, freshly installed Freelancer directory.
 
 [Code]
-// Imports from other .iss files
-#include "utilities.iss"
-#include "ui.iss"
-#include "mod_options.iss"
-
 // Declaration of global variables
 var
   // Allows us to skip the downloading of the files and just copy it from the local PC to save time
   OfflineInstall: String;
   // String list of mirrors that we can potentially download the mod from. This is populated in InitializeWizard()
   mirrors : TStringList;
+  // Size of Download in MB
+  DownloadSize : String;
+
+// Imports from other .iss files
+#include "utilities.iss"
+#include "ui.iss"
+#include "mod_options.iss"
 
 // Checks which step we are on when it changed. If its the postinstall step then start the actual installing
 procedure CurStepChanged(CurStep: TSetupStep);
@@ -119,6 +126,15 @@ begin
         Process_Planetscape();
         Process_Win10();
         Process_HUD();
+
+        // Delete potential UTF-8 BOM headers in all edited ini files
+        if not IsWine then 
+        begin
+          RemoveBOM(ExpandConstant('{app}\EXE\dacom.ini'));
+          RemoveBOM(ExpandConstant('{app}\EXE\freelancer.ini'));
+          RemoveBOM(ExpandConstant('{app}\DATA\FONTS\fonts.ini'));
+          RemoveBOM(ExpandConstant('{app}\DATA\INTERFACE\HudShift.ini'));
+        end;
 
         // Delete restart.fl to stop crashes
         DeleteFile(ExpandConstant('{userdocs}\My Games\Freelancer\Accts\SinglePlayer\Restart.fl'));
@@ -206,4 +222,5 @@ begin
 
     // Initialize UI. This populates all our ui elements with text, size and other properties
     InitializeUi();
+    DownloadPage := CreateDownloadPage(SetupMessage(msgWizardPreparing), SetupMessage(msgPreparingDesc), @OnDownloadProgress);
  end;
