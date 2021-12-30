@@ -48,6 +48,7 @@ Source: "AGENCYB.TTF"; DestDir: "{autofonts}"; FontInstall: "Agency FB Bold"; Fl
 Source: "AGENCYR.TTF"; DestDir: "{autofonts}"; FontInstall: "Agency FB"; Flags: onlyifdoesntexist uninsneveruninstall
 Source: "ARIALUNI.TTF"; DestDir: "{autofonts}"; FontInstall: "Arial Unicode MS"; Flags: onlyifdoesntexist uninsneveruninstall
 Source: "7za.exe"; DestDir: "{tmp}"; Flags: deleteafterinstall;
+Source: "utf-8-bom-remover.exe"; DestDir: "{tmp}"; Flags: deleteafterinstall;
 
 [Run]
 Filename: "{app}\EXE\{#MyAppExeName}"; Description: "{cm:LaunchProgram,{#StringChange(MyAppName, '&', '&&')}}"; Flags: nowait postinstall skipifsilent
@@ -256,6 +257,28 @@ begin
       if FileCount = 0 then Result := True;
     end;
   end;
+end;
+
+// Used to remove an unwanted byte order mark in a file. 
+// Calls an external program to take care of that.
+function RemoveBOM(const FileName: String): Integer;
+var
+  ResultCode: Integer;
+begin
+  Exec(ExpandConstant('{tmp}\utf-8-bom-remover.exe'), ExpandConstant('"' + FileName + '"'), '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
+  result := ResultCode;
+end;
+
+// Used to detect if the user is using WINE or not
+function LoadLibraryA(lpLibFileName: PAnsiChar): THandle;
+external 'LoadLibraryA@kernel32.dll stdcall';
+function GetProcAddress(Module: THandle; ProcName: PAnsiChar): Longword;
+external 'GetProcAddress@kernel32.dll stdcall';
+function IsWine: boolean;
+var  LibHandle  : THandle;
+begin
+  LibHandle := LoadLibraryA('ntdll.dll');
+  Result:= GetProcAddress(LibHandle, 'wine_get_version')<> 0;
 end;
 
 // Process CallSign option. Replaces strings in freelancer.ini depending on what the user clicks
@@ -648,6 +671,15 @@ begin
         Process_Win10();
         Process_HUD();
 
+        // Delete potential UTF-8 BOM headers in all edited ini files
+        if not IsWine then 
+        begin
+          RemoveBOM(ExpandConstant('{app}\EXE\dacom.ini'));
+          RemoveBOM(ExpandConstant('{app}\EXE\freelancer.ini'));
+          RemoveBOM(ExpandConstant('{app}\DATA\FONTS\fonts.ini'));
+          RemoveBOM(ExpandConstant('{app}\DATA\INTERFACE\HudShift.ini'));
+        end;
+
         // Delete restart.fl to stop crashes
         DeleteFile(ExpandConstant('{userdocs}\My Games\Freelancer\Accts\SinglePlayer\Restart.fl'));
 
@@ -949,7 +981,7 @@ begin
     descWin10.Width := PageWin10.SurfaceWidth;
     descWin10.Caption := 'Windows 10 users may experience compatibility issues while playing (vanilla) Freelancer including broken lighting in many base interiors and missing glass reflections.' + #13#10 + #13#10 +
     'We''ve included a Legacy DirectX wrapper named dgVoodoo2 in this mod, which serves as an optional patch that fixes all of these issues.' + #13#10 + #13#10 +
-    'However, we have disabled this option by default as you may experience crashes, bugs, and stutters while using it. So please try it at your own risk.' + #13#10 + #13#10 +
+    'However, we have disabled this option by default as you may experience crashes, bugs, and stutters while using it. TRY IT AT YOUR OWN RISK.' + #13#10 + #13#10 +
     'If you experience a refresh rate/fps lock to 60 while using this patch, please refer to the wiki for a solution: https://github.com/BC46/freelancer-hd-edition/wiki';
 
     Win10 := TCheckBox.Create(PageWin10);
