@@ -6,29 +6,28 @@ var
   StartupRes: TInputOptionWizardPage;
   LogoRes: TInputOptionWizardPage;
   SmallText: TInputOptionWizardPage;
-  PageWidescreenHud: TWizardPage;
-  PagePlanetScape: TWizardPage;
-  PageWin10: TWizardPage;
-  PageEffects: TWizardPage;
-  PageSinglePlayer: TWizardPage;
   DownloadPage: TDownloadWizardPage;
 
   // Advanced Widescreen HUD
+  PageWidescreenHud: TWizardPage;
   lblWidescreenHud: TLabel;
   WidescreenHud: TCheckBox;
   descWidescreenHud: TNewStaticText;
 
   // Fix clipping with 16:9 resolution planetscapes
+  PagePlanetScape: TWizardPage;
   lblPlanetScape: TLabel;
   PlanetScape: TCheckBox;
   descPlanetScape: TNewStaticText;
 
   // Fix Windows 10 compatibility issues
+  PageWin10: TWizardPage;
   lblWin10: TLabel;
   Win10: TCheckBox;
   descWin10: TNewStaticText;
 
   // Add improved reflections
+  PageEffects: TWizardPage;
   lblVanillaReflections: TLabel;
   lblShinyReflections: TLabel;
   lblShiniestReflections: TLabel;
@@ -48,9 +47,16 @@ var
   descEngineTrails: TNewStaticText;
 
   // Single Player Command Console
+  PageSinglePlayer: TWizardPage;
   lblSinglePlayer: TLabel;
   SinglePlayer: TCheckBox;
   descSinglePlayer: TNewStaticText;
+
+  // Offline Install
+  PageOfflineInstall: TWizardPage;
+  OfflineInstallButton: TButton;
+  descOfflineInstall: TNewStaticText;
+  descOfflineInstall2: TNewStaticText; 
 
 // Report on download progress
 function OnDownloadProgress(const Url, FileName: String; const Progress, ProgressMax: Int64): Boolean;
@@ -92,8 +98,17 @@ procedure PageHandler_CancelButtonClick(Page: TWizardPage; var Cancel, Confirm: 
 begin
 end;
 
+procedure OfflineInstall_Handler(Sender: TObject);
+begin
+  if GetOpenFileName('Prompt', FileName, 'C:\',
+    'Zip files (*.zip)|*.zip', '.zip')
+  then
+    descOfflineInstall2.Caption := Format('Selected: %s', [FileName]);
+end;
+
 function InitializeUi(): Boolean;
-var dir : string;
+var 
+  dir : string;
 begin
   // Read download size
   DownloadSize := IntToStr(StrToInt64(ExpandConstant('{#SizeZip}'))/1048576);
@@ -362,7 +377,32 @@ begin
   
   SinglePlayer := TCheckBox.Create(PageSinglePlayer);
   SinglePlayer.Parent := PageSinglePlayer.Surface;
-  
+
+  PageOfflineInstall := CreateCustomPage(
+    PageSinglePlayer.ID,
+    'Offline Install',
+    'Do you want to do an offline install? (Optional)'
+  );
+
+  OfflineInstallButton := TNewButton.Create(PageOfflineInstall);
+  OfflineInstallButton.Parent := PageOfflineInstall.Surface;
+  OfflineInstallButton.OnClick := @OfflineInstall_Handler;
+  OfflineInstallButton.Caption := 'Browse';
+
+  descOfflineInstall := TNewStaticText.Create(PageOfflineInstall);
+  descOfflineInstall.Parent := PageOfflineInstall.Surface;
+  descOfflineInstall.WordWrap := True;
+  descOfflineInstall.Top := ScaleY(40);
+  descOfflineInstall.Width := PageOfflineInstall.SurfaceWidth;
+  descOfflineInstall.Caption := 'Click the above button if you have already downloaded the .zip file of the mod from GitHub. This will allow you to select this file.' + #13#10 + #13#10 +
+  'This is completely optional, if you skip this then we will download the mod further on in the installer.';
+
+  descOfflineInstall2 := TNewStaticText.Create(PageOfflineInstall);
+  descOfflineInstall2.Parent := PageOfflineInstall.Surface;
+  descOfflineInstall2.WordWrap := True;
+  descOfflineInstall2.Top := ScaleY(120);
+  descOfflineInstall2.Width := PageOfflineInstall.SurfaceWidth;
+
   // Add the functions for each button for each page
   with PageWidescreenHud do
   begin

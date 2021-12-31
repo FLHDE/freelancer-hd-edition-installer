@@ -79,6 +79,8 @@ var
   mirrors : TStringList;
   // Size of Download in MB
   DownloadSize : String;
+  // File name for the Offline Install .zip
+  FileName: string;
 
 // Imports from other .iss files
 #include "utilities.iss"
