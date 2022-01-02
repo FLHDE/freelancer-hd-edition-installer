@@ -307,7 +307,7 @@ begin
   // Add new missile effects
   lblMissleEffects := TLabel.Create(PageEffects);
   lblMissleEffects.Parent := PageEffects.Surface;
-  lblMissleEffects.Caption := 'Add new missile effects';
+  lblMissleEffects.Caption := 'Add alternative missile and torpedo effects';
   lblMissleEffects.Top := ScaleY(120);
   lblMissleEffects.Left := ScaleX(20);
   
@@ -316,7 +316,7 @@ begin
   descMissileEffects.WordWrap := True;
   descMissileEffects.Top := ScaleY(140);
   descMissileEffects.Width := PageEffects.SurfaceWidth;
-  descMissileEffects.Caption := 'This option replaces the existing missile effects with new ones. Enable them if you prefer these over the normal ones.';
+  descMissileEffects.Caption := 'This option adds custom missile and torpedo effects. They''re not necessarily higher quality, just alternatives. It''ll also make torpedoes look massive.';
   
   MissileEffects := TCheckBox.Create(PageEffects);
   MissileEffects.Parent := PageEffects.Surface;
