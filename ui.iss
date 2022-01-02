@@ -358,7 +358,7 @@ begin
   descSinglePlayer.WordWrap := True;
   descSinglePlayer.Top := ScaleY(20);
   descSinglePlayer.Width := PageSinglePlayer.SurfaceWidth;
-  descSinglePlayer.Caption := 'This option speaks for itself. It allows players to make use of various console commands in Single Player. To use it, press Enter while in-game and type "help" for a list of available commands. This command console is very useful for testing and debugging purposes.';
+  descSinglePlayer.Caption := 'This option provides various console commands in Single Player to directly manipulate their environment. It also allows players to own more than one ship. To use it, press Enter while in-game and type "help" for a list of available commands.';
   
   SinglePlayer := TCheckBox.Create(PageSinglePlayer);
   SinglePlayer.Parent := PageSinglePlayer.Surface;
