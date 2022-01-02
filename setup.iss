@@ -126,6 +126,7 @@ begin
         Process_Planetscape();
         Process_Win10();
         Process_HUD();
+        Process_WeaponGroups();
 
         // Delete potential UTF-8 BOM headers in all edited ini files
         if not IsWine then 

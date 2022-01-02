@@ -7,6 +7,7 @@ var
   LogoRes: TInputOptionWizardPage;
   SmallText: TInputOptionWizardPage;
   PageWidescreenHud: TWizardPage;
+  PageWeaponGroups: TWizardPage;
   PagePlanetScape: TWizardPage;
   PageWin10: TWizardPage;
   PageEffects: TWizardPage;
@@ -17,6 +18,11 @@ var
   lblWidescreenHud: TLabel;
   WidescreenHud: TCheckBox;
   descWidescreenHud: TNewStaticText;
+
+  // Weapon Groups
+  lblWeaponGroups: TLabel;
+  WeaponGroups: TCheckBox;
+  descWeaponGroups: TNewStaticText;
 
   // Fix clipping with 16:9 resolution planetscapes
   lblPlanetScape: TLabel;
@@ -203,13 +209,30 @@ begin
   descWidescreenHud.WordWrap := True;
   descWidescreenHud.Top := ScaleY(20);
   descWidescreenHud.Width := PageWidescreenHud.SurfaceWidth;
-  descWidescreenHud.Caption := 'This option adds two new useful widgets to your HUD. Next to your contact list, you will have a wireframe representation of your selected target. Next to your weapons list, you will have a wireframe of your own ship.' + #13#10 + #13#10 +
-  'If you choose to enable this option, go to the Controls settings in-game and under "User Interface", disable Target View (Alt + T). This key binding has become obsolete as both the target view and contact list are visible simultaneously.' + #13#10 + #13#10 +
-  'Disable this option if you play in 4:3. Please note that you will still get support for the default 16:9 HUD and corresponding resolutions if you choose to disable this option.';
+  descWidescreenHud.Caption := 'This option adds two new useful widgets to your HUD. Next to your contact list, you will have a wireframe representation of your selected target. Next to your weapons list, you will have a wireframe of your own ship. Disable this option if you play in 4:3.' + #13#10 + #13#10 +
+  'If you choose to enable this option, go to the Controls settings in-game and under "User Interface", disable Target View (Alt + T). This key binding has become obsolete as both the target view and contact list are visible simultaneously.';
   
   WidescreenHud := TCheckBox.Create(PageWidescreenHud);
   WidescreenHud.Parent := PageWidescreenHud.Surface;
   WidescreenHud.Checked := True;
+
+  lblWeaponGroups := TLabel.Create(PageWidescreenHud);
+  lblWeaponGroups.Parent := PageWidescreenHud.Surface;
+  lblWeaponGroups.Caption := 'Add Weapon Group buttons';
+  lblWeaponGroups.Left := ScaleX(20);
+  lblWeaponGroups.Top := ScaleY(130);
+  
+  descWeaponGroups := TNewStaticText.Create(PageWidescreenHud);
+  descWeaponGroups.Parent := PageWidescreenHud.Surface;
+  descWeaponGroups.WordWrap := True;
+  descWeaponGroups.Top := ScaleY(150);
+  descWeaponGroups.Width := PageWidescreenHud.SurfaceWidth;
+  descWeaponGroups.Caption := 'This option adds buttons for selecting 3 different weapon groups in your ship info panel. NOTE: These buttons may not be positioned correctly on aspect ratios other than 16:9.';
+  
+  WeaponGroups := TCheckBox.Create(PageWidescreenHud);
+  WeaponGroups.Parent := PageWidescreenHud.Surface;
+  WeaponGroups.Checked := True;
+  WeaponGroups.Top := ScaleY(130);
   
   // Fix clipping with 16:9 resolution planetscapes
   PagePlanetScape := CreateCustomPage(
