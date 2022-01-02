@@ -104,7 +104,8 @@ begin
   // Initialize DataDirPage and add content
   DataDirPage := CreateInputDirPage(wpInfoBefore,
   'Select Freelancer installation', 'Where is Freelancer installed?',
-  'Select the folder in which a fresh and completely unmodded copy of Freelancer is installed, then click Next. This is usually C:\Program Files (x86)\Microsoft Games\Freelancer',
+  'Select the folder in which a fresh and completely unmodded copy of Freelancer is installed. This is usually C:\Program Files (x86)\Microsoft Games\Freelancer.'  + #13#10 +
+  'The folder you select here will be copied without modification.',
   False, '');
   DataDirPage.Add('');
   
@@ -194,7 +195,7 @@ begin
   
   lblWidescreenHud := TLabel.Create(PageWidescreenHud);
   lblWidescreenHud.Parent := PageWidescreenHud.Surface;
-  lblWidescreenHud.Caption := 'Advanced Widescreen HUD for widescreen resolutions';
+  lblWidescreenHud.Caption := 'Enable Advanced Widescreen HUD';
   lblWidescreenHud.Left := ScaleX(20);
   
   descWidescreenHud := TNewStaticText.Create(PageWidescreenHud);
@@ -203,7 +204,7 @@ begin
   descWidescreenHud.Top := ScaleY(20);
   descWidescreenHud.Width := PageWidescreenHud.SurfaceWidth;
   descWidescreenHud.Caption := 'This option adds two new useful widgets to your HUD. Next to your contact list, you will have a wireframe representation of your selected target. Next to your weapons list, you will have a wireframe of your own ship.' + #13#10 + #13#10 +
-  'The Advanced Widescreen HUD makes great use of the unused space that you normally see in widescreen, hence we recommend it for all players who play in a widescreen aspect ratio. If you choose to enable this, go to the Controls settings in-game and under "User Interface", disable Target View (Alt + T). This key binding has become obsolete as both the target view and contact list are visible simultaneously.' + #13#10 + #13#10 +
+  'If you choose to enable this option, go to the Controls settings in-game and under "User Interface", disable Target View (Alt + T). This key binding has become obsolete as both the target view and contact list are visible simultaneously.' + #13#10 + #13#10 +
   'Disable this option if you play in 4:3. Please note that you will still get support for the default 16:9 HUD and corresponding resolutions if you choose to disable this option.';
   
   WidescreenHud := TCheckBox.Create(PageWidescreenHud);
