@@ -362,6 +362,7 @@ begin
   
   SinglePlayer := TCheckBox.Create(PageSinglePlayer);
   SinglePlayer.Parent := PageSinglePlayer.Surface;
+  SinglePlayer.Checked := True;
   
   // Add the functions for each button for each page
   with PageWidescreenHud do
