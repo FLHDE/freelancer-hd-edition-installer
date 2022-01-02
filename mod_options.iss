@@ -288,12 +288,10 @@ begin
         ';HudStatus.dll'
         ,
         'HudFacility.dll' + #13#10 +
-        'HudWeaponGroups.dll' + #13#10 +
+        ';HudWeaponGroups.dll' + #13#10 +
         'HudTarget.dll' + #13#10 +
         'HudStatus.dll'
       )
-
-      FileReplaceString(HudShiftPath,';HudWeaponGroups = true','HudWeaponGroups = true')
 
       FileReplaceString(
         HudShiftPath
@@ -326,5 +324,25 @@ begin
      RenameFile(ExpandConstant('{app}\DATA\INTERFACE\HUD\hud_target.cmp'),ExpandConstant('{app}\DATA\INTERFACE\HUD\hud_target_vanilla.cmp'))
      RenameFile(ExpandConstant('{app}\DATA\INTERFACE\HUD\hud_shipinfo_adv_wide_hud.cmp'),ExpandConstant('{app}\DATA\INTERFACE\HUD\hud_shipinfo.cmp'))
      RenameFile(ExpandConstant('{app}\DATA\INTERFACE\HUD\hud_target_adv_wide_hud.cmp'),ExpandConstant('{app}\DATA\INTERFACE\HUD\hud_target.cmp'))
+  end
+end;
+
+function Process_WeaponGroups():boolean;
+var
+  HudShiftPath: string;
+begin
+  if WeaponGroups.Checked then
+  begin
+      HudShiftPath := ExpandConstant('{app}\DATA\INTERFACE\HudShift.ini')
+
+      FileReplaceString(HudShiftPath,';HudWeaponGroups = true','HudWeaponGroups = true')
+
+      FileReplaceString(
+        ExpandConstant('{app}\EXE\dacom.ini')
+        ,
+        ';HudWeaponGroups.dll' + #13#10
+        ,
+        'HudWeaponGroups.dll' + #13#10
+      )
   end
 end;
