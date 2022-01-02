@@ -314,8 +314,8 @@ begin
         'position = 4e1145, -0.2430, 4e1158, -0.2030' + #13#10 +
         'position = 4e1180, -0.2430, 4e1188, -0.2210		; SubtargetName' + #13#10 +
         'position = 4e11e2, -0.2430, 4e11f0, -0.2210' + #13#10 +
-        'position = 4e1247, -0.0545, 4e124f, -0.2770		; TargetPreviousButton' + #13#10 +
-        'position = 4e12b4, -0.0575, 4e12bc, -0.3080		; TargetNextButton' + #13#10 +
+        'position = 4e1247, -0.0595, 4e124f, -0.2780		; TargetPreviousButton' + #13#10 +
+        'position = 4e12b4, -0.0595, 4e12bc, -0.3090		; TargetNextButton' + #13#10 +
         'position = 4e175c, -0.2550, 4e1764, -0.3610		; TargetRankText'
       )
 
