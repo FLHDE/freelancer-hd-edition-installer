@@ -36,6 +36,50 @@ begin
     FileReplaceString(FilePath,'DLL = callsign.dll, player 1 1-1','DLL = callsign.dll, fc_lh 9 4-20')
 end;
 
+function Process_HdFreelancerIntro() : boolean;
+var
+  FreelancerIntroPath: string;
+begin
+  if HdFreelancerIntro.Checked then
+    begin
+    FreelancerIntroPath := ExpandConstant('{app}\DATA\MOVIES\')
+
+    // Rename vanilla intro
+    RenameFile(FreelancerIntroPath + 'fl_intro.wmv', FreelancerIntroPath + 'fl_intro_vanilla.wmv')
+
+    // Rename new HD intro
+    RenameFile(FreelancerIntroPath + 'fl_intro_en_hd.wmv', FreelancerIntroPath + 'fl_intro.wmv')
+    end;
+end;
+
+function Process_TextStringRevision() : boolean;
+var
+  TextStringsPath: string;
+begin
+  if TextStringRevision.Checked then
+    begin
+    TextStringsPath := ExpandConstant('{app}\EXE\')
+
+    // Rename vanilla ones
+    RenameFile(TextStringsPath + 'resources.dll', TextStringsPath + 'resources_vanilla.dll')
+    RenameFile(TextStringsPath + 'offerbriberesources.dll', TextStringsPath + 'offerbriberesources_vanilla.dll')
+    RenameFile(TextStringsPath + 'nameresources.dll', TextStringsPath + 'nameresources_vanilla.dll')
+    RenameFile(TextStringsPath + 'misctextinfo2.dll', TextStringsPath + 'misctextinfo2_vanilla.dll')
+    RenameFile(TextStringsPath + 'misctext.dll', TextStringsPath + 'misctext_vanilla.dll')
+    RenameFile(TextStringsPath + 'infocards.dll', TextStringsPath + 'infocards_vanilla.dll')
+    RenameFile(TextStringsPath + 'equipresources.dll', TextStringsPath + 'equipresources_vanilla.dll')
+
+    // Rename new text string files
+    RenameFile(TextStringsPath + 'resources_tsr.dll', TextStringsPath + 'resources.dll')
+    RenameFile(TextStringsPath + 'offerbriberesources_tsr.dll', TextStringsPath + 'offerbriberesources.dll')
+    RenameFile(TextStringsPath + 'nameresources_tsr.dll', TextStringsPath + 'nameresources.dll')
+    RenameFile(TextStringsPath + 'misctextinfo2_tsr.dll', TextStringsPath + 'misctextinfo2.dll')
+    RenameFile(TextStringsPath + 'misctext_tsr.dll', TextStringsPath + 'misctext.dll')
+    RenameFile(TextStringsPath + 'infocards_tsr.dll', TextStringsPath + 'infocards.dll')
+    RenameFile(TextStringsPath + 'equipresources_tsr.dll', TextStringsPath + 'equipresources.dll')
+    end;
+end;
+
 // Processes the Startup Logo option. Renames files depending on what option is selected
 function Process_StartUpLogo():boolean;
 var

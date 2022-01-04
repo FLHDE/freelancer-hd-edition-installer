@@ -3,6 +3,7 @@ var
   // Custom Pages
   DataDirPage: TInputDirWizardPage;
   CallSign: TInputOptionWizardPage;
+  PageHdFreelancerIntro: TWizardPage;
   StartupRes: TInputOptionWizardPage;
   LogoRes: TInputOptionWizardPage;
   SmallText: TInputOptionWizardPage;
@@ -13,6 +14,14 @@ var
   PageEffects: TWizardPage;
   PageSinglePlayer: TWizardPage;
   DownloadPage: TDownloadWizardPage;
+
+  // HD Freelancer Intro
+  lblHdFreelancerIntro: TLabel;
+  HdFreelancerIntro: TCheckBox;
+  descHdFreelancerIntro: TNewStaticText;
+  lblTextStringRevision: TLabel;
+  TextStringRevision: TCheckBox;
+  descTextStringRevision: TNewStaticText;
 
   // Advanced Widescreen HUD
   lblWidescreenHud: TLabel;
@@ -124,7 +133,7 @@ begin
   
   // Initialize CallSign page and add content
   CallSign := CreateInputOptionPage(DataDirPage.ID,
-  'Simgle Player ID Code', 'Tired of being called Freelancer Alpha 1-1?',
+  'Single Player ID Code', 'Tired of being called Freelancer Alpha 1-1?',
   'You know when each time an NPC talks to you in-game, they call you Freelancer Alpha 1-1? This mod gives you the ability to change that ID code in Single Player! Just select any option you like and the NPCs will call you by that.',
   True, False);
   CallSign.Add('Freelancer Alpha 1-1 (Default)');
@@ -143,9 +152,48 @@ begin
   CallSign.Add('LSF Delta 6-9');
   CallSign.Add('Hacker Kappa 4-20');
   CallSign.Values[0] := True;
+
+  // Initialize HdFreelancerIntro page and add content
+  PageHdFreelancerIntro := CreateCustomPage(CallSign.ID,
+  'Localization', 'Customize these options to your liking');
+
+  lblHdFreelancerIntro := TLabel.Create(PageHdFreelancerIntro);
+  lblHdFreelancerIntro.Parent := PageHdFreelancerIntro.Surface;
+  lblHdFreelancerIntro.Caption := 'Add English HD Freelancer Intro';
+  lblHdFreelancerIntro.Left := ScaleX(20);
   
+  descHdFreelancerIntro := TNewStaticText.Create(PageHdFreelancerIntro);
+  descHdFreelancerIntro.Parent := PageHdFreelancerIntro.Surface;
+  descHdFreelancerIntro.WordWrap := True;
+  descHdFreelancerIntro.Top := ScaleY(20);
+  descHdFreelancerIntro.Width := PageHdFreelancerIntro.SurfaceWidth;
+  descHdFreelancerIntro.Caption := 'The default Freelancer startup movie only has a resolution of 720x480. This option adds a higher quality version of this intro with a resolution if 1440x960. However, this HD intro is only available in English. If you''d like to view the Freelancer intro your game''s original language other than English, disable this option.';
+
+  HdFreelancerIntro := TCheckBox.Create(PageHdFreelancerIntro);
+  HdFreelancerIntro.Parent := PageHdFreelancerIntro.Surface;
+  HdFreelancerIntro.Checked := True;
+
+  lblTextStringRevision := TLabel.Create(PageHdFreelancerIntro);
+  lblTextStringRevision.Parent := PageHdFreelancerIntro.Surface;
+  lblTextStringRevision.Caption := 'Apply English Text String Revision patch';
+  lblTextStringRevision.Left := ScaleX(20);
+  lblTextStringRevision.Top := ScaleY(90);
+  
+  descTextStringRevision := TNewStaticText.Create(PageHdFreelancerIntro);
+  descTextStringRevision.Parent := PageHdFreelancerIntro.Surface;
+  descTextStringRevision.WordWrap := True;
+  descTextStringRevision.Top := ScaleY(110);
+  descTextStringRevision.Width := PageHdFreelancerIntro.SurfaceWidth;
+  descTextStringRevision.Caption := 'This option fixes many typos, grammar mistakes, inconsistencies, and more, in the English Freelancer text resources. NOTE: This option will set all of Freelancer''s text to English. Disable this option if your intention is to play Freelancer in a different language like German, French, or Russian.';
+
+  TextStringRevision := TCheckBox.Create(PageHdFreelancerIntro);
+  TextStringRevision.Parent := PageHdFreelancerIntro.Surface;
+  TextStringRevision.Checked := True;
+  TextStringRevision.Top := ScaleY(90);
+
+
   // Initialize StartupRes page and add content
-  StartupRes := CreateInputOptionPage(CallSign.ID,
+  StartupRes := CreateInputOptionPage(PageHdFreelancerIntro.ID,
   'Startup Screen Resolution', 'Choose your native resolution',
   'By default, the "Freelancer" splash screen you see when you start the game has a resolution of 1280x960. This makes it appear stretched and a bit blurry on HD 16:9 resolutions. ' +
   'We recommend setting this option to your monitor''s native resolution. ' +
@@ -382,7 +430,7 @@ begin
   descSinglePlayer.WordWrap := True;
   descSinglePlayer.Top := ScaleY(20);
   descSinglePlayer.Width := PageSinglePlayer.SurfaceWidth;
-  descSinglePlayer.Caption := 'This option provides various console commands in Single Player to directly manipulate their environment. It also allows players to own more than one ship. To use it, press Enter while in-game and type "help" for a list of available commands.';
+  descSinglePlayer.Caption := 'This option provides various console commands in Single Player to directly manipulate the environment. It also allows players to own more than one ship. To use it, press Enter while in-game and type "help" for a list of available commands.';
   
   SinglePlayer := TCheckBox.Create(PageSinglePlayer);
   SinglePlayer.Parent := PageSinglePlayer.Surface;
