@@ -118,6 +118,8 @@ begin
         // Process options
         WizardForm.StatusLabel.Caption := 'Processing your options';
         Process_CallSign();
+        Process_HdFreelancerIntro();
+        Process_TextStringRevision();
         Process_StartUpLogo();
         Process_FreelancerLogo();
         Process_SmallText();
@@ -133,6 +135,7 @@ begin
         begin
           RemoveBOM(ExpandConstant('{app}\EXE\dacom.ini'));
           RemoveBOM(ExpandConstant('{app}\EXE\freelancer.ini'));
+          RemoveBOM(ExpandConstant('{app}\EXE\flplusplus.ini'));
           RemoveBOM(ExpandConstant('{app}\DATA\FONTS\fonts.ini'));
           RemoveBOM(ExpandConstant('{app}\DATA\INTERFACE\HudShift.ini'));
         end;
