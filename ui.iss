@@ -4,6 +4,7 @@ var
   DataDirPage: TInputDirWizardPage;
   CallSign: TInputOptionWizardPage;
   PageHdFreelancerIntro: TWizardPage;
+  PageSinglePlayer: TWizardPage;
   StartupRes: TInputOptionWizardPage;
   LogoRes: TInputOptionWizardPage;
   SmallText: TInputOptionWizardPage;
@@ -12,7 +13,7 @@ var
   PagePlanetScape: TWizardPage;
   PageWin10: TWizardPage;
   PageEffects: TWizardPage;
-  PageSinglePlayer: TWizardPage;
+  PageSinglePlayerConsole: TWizardPage;
   DownloadPage: TDownloadWizardPage;
 
   // HD Freelancer Intro
@@ -22,6 +23,20 @@ var
   lblTextStringRevision: TLabel;
   TextStringRevision: TCheckBox;
   descTextStringRevision: TNewStaticText;
+
+  // Single Player mode
+  lblStoryMode: TLabel;
+  lblOspNormal: TLabel;
+  lblOspPirate: TLabel;
+  StoryMode: TRadioButton;
+  OspNormal: TRadioButton;
+  OspPirate: TRadioButton;
+  descSinglePlayerMode: TNewStaticText;
+
+  // New save folder
+  lblNewSaveFolder: TLabel;
+  NewSaveFolder: TCheckBox;
+  descNewSaveFolder: TNewStaticText;
 
   // Advanced Widescreen HUD
   lblWidescreenHud: TLabel;
@@ -192,8 +207,67 @@ begin
   TextStringRevision.Top := ScaleY(90);
 
 
+  // Initialize Single Player page and add content
+  PageSinglePlayer := CreateCustomPage(PageHdFreelancerIntro.ID, 
+  'Single Player options', 'Choose how you''d like to play Single Player');
+
+  lblStoryMode := TLabel.Create(PageSinglePlayer);
+  lblStoryMode.Parent := PageSinglePlayer.Surface;
+  lblStoryMode.Caption := 'Story Mode (default)';
+  lblStoryMode.Left := ScaleX(20);
+  
+  StoryMode := TRadioButton.Create(PageSinglePlayer);
+  StoryMode.Parent := PageSinglePlayer.Surface;
+  StoryMode.Checked := True;
+  
+  lblOspNormal := TLabel.Create(PageSinglePlayer);
+  lblOspNormal.Parent := PageSinglePlayer.Surface;
+  lblOspNormal.Caption := 'Open Single Player (Normal)';
+  lblOspNormal.Left := ScaleX(20);
+  lblOspNormal.Top := ScaleY(20);
+  
+  OspNormal := TRadioButton.Create(PageSinglePlayer);
+  OspNormal.Parent := PageSinglePlayer.Surface;
+  OspNormal.Top := ScaleY(20);
+  
+  lblOspPirate := TLabel.Create(PageSinglePlayer);
+  lblOspPirate.Parent := PageSinglePlayer.Surface;
+  lblOspPirate.Caption := 'Open Single Player (Pirate)';
+  lblOspPirate.Left := ScaleX(20);
+  lblOspPirate.Top := ScaleY(40);
+  
+  OspPirate := TRadioButton.Create(PageSinglePlayer);
+  OspPirate.Parent := PageSinglePlayer.Surface;
+  OspPirate.Top := ScaleY(40);
+  
+  descSinglePlayerMode := TNewStaticText.Create(PageSinglePlayer);
+  descSinglePlayerMode.Parent := PageSinglePlayer.Surface;
+  descSinglePlayerMode.WordWrap := True;
+  descSinglePlayerMode.Width := PageSinglePlayer.SurfaceWidth;
+  descSinglePlayerMode.Caption := 'This option allows you to choose the Single Player mode. Story Mode simply lets you play through the entire storyline, as usual. Both Open Single Player options skip the entire storyline and allow you to freely roam the universe right away. With OSP (Normal), you start in Manhattan with a basic loadout and a default reputation. The OSP (Pirate) option on the other hand, spawns you at Rochester with a similar loadout and an inverted reputation. NOTE: Both OSP options may cause existing storyline saves to not work correctly.';
+  descSinglePlayerMode.Top := ScaleY(60);
+  
+  // Add new missile effects
+  lblNewSaveFolder := TLabel.Create(PageSinglePlayer);
+  lblNewSaveFolder.Parent := PageSinglePlayer.Surface;
+  lblNewSaveFolder.Caption := 'Store save game files in a different folder';
+  lblNewSaveFolder.Top := ScaleY(160);
+  lblNewSaveFolder.Left := ScaleX(20);
+  
+  descNewSaveFolder := TNewStaticText.Create(PageSinglePlayer);
+  descNewSaveFolder.Parent := PageSinglePlayer.Surface;
+  descNewSaveFolder.WordWrap := True;
+  descNewSaveFolder.Top := ScaleY(180);
+  descNewSaveFolder.Width := PageSinglePlayer.SurfaceWidth;
+  descNewSaveFolder.Caption := 'Normally Freelancer save games are stored in "Documents/My Games/Freelancer". This option ensures save games will be stored in "Documents/My Games/FreelancerHD" instead, which may help avoid conflicts when having multiple mods installed simultaneously.';
+  
+  NewSaveFolder := TCheckBox.Create(PageSinglePlayer);
+  NewSaveFolder.Parent := PageSinglePlayer.Surface;
+  NewSaveFolder.Top := ScaleY(160);
+
+
   // Initialize StartupRes page and add content
-  StartupRes := CreateInputOptionPage(PageHdFreelancerIntro.ID,
+  StartupRes := CreateInputOptionPage(PageSinglePlayer.ID,
   'Startup Screen Resolution', 'Choose your native resolution',
   'By default, the "Freelancer" splash screen you see when you start the game has a resolution of 1280x960. This makes it appear stretched and a bit blurry on HD 16:9 resolutions. ' +
   'We recommend setting this option to your monitor''s native resolution. ' +
@@ -346,7 +420,6 @@ begin
   
   VanillaReflections := TRadioButton.Create(PageEffects);
   VanillaReflections.Parent := PageEffects.Surface;
-  VanillaReflections.Checked := True;
   
   lblShinyReflections := TLabel.Create(PageEffects);
   lblShinyReflections.Parent := PageEffects.Surface;
@@ -388,7 +461,7 @@ begin
   descMissileEffects.WordWrap := True;
   descMissileEffects.Top := ScaleY(140);
   descMissileEffects.Width := PageEffects.SurfaceWidth;
-  descMissileEffects.Caption := 'This option adds custom missile and torpedo effects. They''re not necessarily higher quality, just alternatives. It''ll also make torpedoes look massive.';
+  descMissileEffects.Caption := 'This option adds custom missile and torpedo effects. They''re not necessarily higher quality, just alternatives. This option also make torpedoes look massive.';
   
   MissileEffects := TCheckBox.Create(PageEffects);
   MissileEffects.Parent := PageEffects.Surface;
@@ -414,26 +487,26 @@ begin
   EngineTrails.Checked := True;
   
   // Single Player Command Console
-  PageSinglePlayer := CreateCustomPage(
+  PageSinglePlayerConsole := CreateCustomPage(
     PageEffects.ID,
     'Single Player Command Console',
     'Check to install'
   );
   
-  lblSinglePlayer := TLabel.Create(PageSinglePlayer);
-  lblSinglePlayer.Parent := PageSinglePlayer.Surface;
+  lblSinglePlayer := TLabel.Create(PageSinglePlayerConsole);
+  lblSinglePlayer.Parent := PageSinglePlayerConsole.Surface;
   lblSinglePlayer.Caption := 'Single Player Command Console';
   lblSinglePlayer.Left := ScaleX(20);
   
-  descSinglePlayer := TNewStaticText.Create(PageSinglePlayer);
-  descSinglePlayer.Parent := PageSinglePlayer.Surface;
+  descSinglePlayer := TNewStaticText.Create(PageSinglePlayerConsole);
+  descSinglePlayer.Parent := PageSinglePlayerConsole.Surface;
   descSinglePlayer.WordWrap := True;
   descSinglePlayer.Top := ScaleY(20);
-  descSinglePlayer.Width := PageSinglePlayer.SurfaceWidth;
+  descSinglePlayer.Width := PageSinglePlayerConsole.SurfaceWidth;
   descSinglePlayer.Caption := 'This option provides various console commands in Single Player to directly manipulate the environment. It also allows players to own more than one ship. To use it, press Enter while in-game and type "help" for a list of available commands.';
   
-  SinglePlayer := TCheckBox.Create(PageSinglePlayer);
-  SinglePlayer.Parent := PageSinglePlayer.Surface;
+  SinglePlayer := TCheckBox.Create(PageSinglePlayerConsole);
+  SinglePlayer.Parent := PageSinglePlayerConsole.Surface;
   SinglePlayer.Checked := True;
   
   // Add the functions for each button for each page
@@ -473,7 +546,7 @@ begin
     OnCancelButtonClick := @PageHandler_CancelButtonClick;
   end;
   
-  with PageSinglePlayer do
+  with PageSinglePlayerConsole do
   begin
     OnActivate := @PageHandler_Activate;
     OnShouldSkipPage := @PageHandler_ShouldSkipPage;

@@ -80,6 +80,48 @@ begin
     end;
 end;
 
+function Process_SinglePlayerMode() : boolean;
+var
+  NewPlayerPath: string;
+  Mission13Path: string;
+begin
+  NewPlayerPath := ExpandConstant('{app}\EXE\newplayer.fl')
+  Mission13Path := ExpandConstant('{app}\DATA\MISSIONS\M13\')
+
+  if OspNormal.Checked then
+    begin
+    FileReplaceString(NewPlayerPath, 'Mission = Mission_01a', 'Mission = Mission_13')
+
+    // Rename vanilla mission 13 file
+    RenameFile(Mission13Path + 'm13.ini', Mission13Path + 'm13_vanilla.ini')
+    
+    // Rename new open sp normal file
+    RenameFile(Mission13Path + 'm13_opensp_normal.ini', Mission13Path + 'm13.ini')
+    end
+  else if OspPirate.Checked then
+    begin
+    FileReplaceString(NewPlayerPath, 'Mission = Mission_01a', 'Mission = Mission_13')
+
+    // Rename vanilla mission 13 file
+    RenameFile(Mission13Path + 'm13.ini', Mission13Path + 'm13_vanilla.ini')
+    
+    // Rename new open sp pirate file
+    RenameFile(Mission13Path + 'm13_opensp_pirate.ini', Mission13Path + 'm13.ini')
+    end;
+end;
+
+function Process_NewSaveFolder() : boolean;
+var
+  FlPlusPlusPath: string;
+begin
+  FlPlusPlusPath := ExpandConstant('{app}\EXE\flplusplus.ini')
+
+  if NewSaveFolder.Checked then
+    begin
+    FileReplaceString(FlPlusPlusPath, 'save_folder_name = Freelancer', 'save_folder_name = FreelancerHD')
+    end;
+end;
+
 // Processes the Startup Logo option. Renames files depending on what option is selected
 function Process_StartUpLogo():boolean;
 var
