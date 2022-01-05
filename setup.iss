@@ -120,6 +120,8 @@ begin
         Process_CallSign();
         Process_HdFreelancerIntro();
         Process_TextStringRevision();
+        Process_SinglePlayerMode();
+        Process_NewSaveFolder();
         Process_StartUpLogo();
         Process_FreelancerLogo();
         Process_SmallText();
@@ -142,6 +144,7 @@ begin
 
         // Delete restart.fl to stop crashes
         DeleteFile(ExpandConstant('{userdocs}\My Games\Freelancer\Accts\SinglePlayer\Restart.fl'));
+        DeleteFile(ExpandConstant('{userdocs}\My Games\FreelancerHD\Accts\SinglePlayer\Restart.fl'));
 
         // Install Complete!
         UpdateProgress(100);
