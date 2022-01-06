@@ -412,10 +412,10 @@ function Process_DarkHud():boolean;
 var
   HudPath: string;
 begin
+  HudPath := ExpandConstant('{app}\DATA\INTERFACE\')
+
   if DarkHud.Checked then
     begin
-    HudPath := ExpandConstant('{app}\DATA\INTERFACE\')
-
     // Rename vanilla ones
     RenameFile(HudPath + 'BASESIDE\city_maneuvertab1.cmp', HudPath + 'BASESIDE\city_maneuvertab1_vanilla.cmp')
     RenameFile(HudPath + 'BASESIDE\city_maneuvertab2.cmp', HudPath + 'BASESIDE\city_maneuvertab2_vanilla.cmp')

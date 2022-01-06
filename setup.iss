@@ -69,6 +69,7 @@ Type: filesandordirs; Name: "{app}"
 
 [Messages]
 WelcomeLabel2=Freelancer: HD Edition is a mod that aims to improve every aspect of Freelancer while keeping the look and feel as close to vanilla as possible. It also serves as an all-in-one package for players so they do not have to worry about installing countless patches and mods to create the perfect HD and bug-free install.%n%nThis installer requires a clean, freshly installed Freelancer directory.
+FinishedLabel=Setup has finished installing [name] on your computer.The application may be launched by selecting the installed shortcut.%n%nPlease note that Freelancer runs at a very low resolution by default. You may change this in the game's display settings. You may also need to restart the game in order for the widescreen patch to apply.
 
 [Code]
 // Declaration of global variables
