@@ -388,8 +388,8 @@ begin
         'position = 4e1145, -0.4820, 4e1158, -0.2000' + #13#10 +
         'position = 4e1180, -0.4820, 4e1188, -0.2180		; SubtargetName' + #13#10 +
         'position = 4e11e2, -0.4820, 4e11f0, -0.2180' + #13#10 +
-        'position = 4e1247, -0.2605, 4e124f, -0.2695		; TargetPreviousButton' + #13#10 +
-        'position = 4e12b4, -0.2645, 4e12bc, -0.3005		; TargetNextButton' + #13#10 +
+        'position = 4e1247, -0.2650, 4e124f, -0.2695		; TargetPreviousButton' + #13#10 +
+        'position = 4e12b4, -0.2650, 4e12bc, -0.3005		; TargetNextButton' + #13#10 +
         'position = 4e175c, -0.4940, 4e1764, -0.3610		; TargetRankText'
         ,
         'position = 4e0a80, -0.1245, 4e0a94, -0.2935		; wireframe' + #13#10 +
@@ -405,11 +405,6 @@ begin
 
      FileReplaceString(HudShiftPath,'position = 4da2fa,  0.4180, 4da30e, -0.2900','position = 4da2fa,  0.1765, 4da30e, -0.3025')
      FileReplaceString(HudShiftPath,'position = 4e14db, -0.2020, 4e14e3, -0.3700		; TargetTradeButton','position = 4e14db, -0.0180, 4e14e3, -0.3700		; TargetTradeButton')
-
-     RenameFile(ExpandConstant('{app}\DATA\INTERFACE\HUD\hud_shipinfo.cmp'),ExpandConstant('{app}\DATA\INTERFACE\HUD\hud_shipinfo_vanilla.cmp'))
-     RenameFile(ExpandConstant('{app}\DATA\INTERFACE\HUD\hud_target.cmp'),ExpandConstant('{app}\DATA\INTERFACE\HUD\hud_target_vanilla.cmp'))
-     RenameFile(ExpandConstant('{app}\DATA\INTERFACE\HUD\hud_shipinfo_adv_wide_hud.cmp'),ExpandConstant('{app}\DATA\INTERFACE\HUD\hud_shipinfo.cmp'))
-     RenameFile(ExpandConstant('{app}\DATA\INTERFACE\HUD\hud_target_adv_wide_hud.cmp'),ExpandConstant('{app}\DATA\INTERFACE\HUD\hud_target.cmp'))
   end
 end;
 
@@ -422,11 +417,154 @@ begin
     HudPath := ExpandConstant('{app}\DATA\INTERFACE\')
 
     // Rename vanilla ones
-    RenameFile(HudPath + 'MULTIPLAYER_darkhud', HudPath + 'MULTIPLAYER_darkhudBIER')
+    RenameFile(HudPath + 'BASESIDE\city_maneuvertab1.cmp', HudPath + 'BASESIDE\city_maneuvertab1_vanilla.cmp')
+    RenameFile(HudPath + 'BASESIDE\city_maneuvertab2.cmp', HudPath + 'BASESIDE\city_maneuvertab2_vanilla.cmp')
+    RenameFile(HudPath + 'BASESIDE\city_maneuvertab3.cmp', HudPath + 'BASESIDE\city_maneuvertab3_vanilla.cmp')
+    RenameFile(HudPath + 'HUD\hud_guagewindow.cmp', HudPath + 'HUD\hud_guagewindow_vanilla.cmp')
+    RenameFile(HudPath + 'HUD\hud_maneuverbox1.cmp', HudPath + 'HUD\hud_maneuverbox1_vanilla.cmp')
+    RenameFile(HudPath + 'HUD\hud_maneuverbox2.cmp', HudPath + 'HUD\hud_maneuverbox2_vanilla.cmp')
+    RenameFile(HudPath + 'HUD\hud_maneuverbox3.cmp', HudPath + 'HUD\hud_maneuverbox3_vanilla.cmp')
+    RenameFile(HudPath + 'HUD\hud_maneuverbox4.cmp', HudPath + 'HUD\hud_maneuverbox4_vanilla.cmp')
+    RenameFile(HudPath + 'HUD\hud_maneuverbox5.cmp', HudPath + 'HUD\hud_maneuverbox5_vanilla.cmp')
+    RenameFile(HudPath + 'HUD\hud_maneuverbox6.cmp', HudPath + 'HUD\hud_maneuverbox6_vanilla.cmp')
+    RenameFile(HudPath + 'HUD\hud_maneuverbox7.cmp', HudPath + 'HUD\hud_maneuverbox7_vanilla.cmp')
+    RenameFile(HudPath + 'HUD\hud_maneuverbox8.cmp', HudPath + 'HUD\hud_maneuverbox8_vanilla.cmp')
+    RenameFile(HudPath + 'HUD\hud_maneuverbox9.cmp', HudPath + 'HUD\hud_maneuverbox9_vanilla.cmp')
+    RenameFile(HudPath + 'HUD\hud_nnbox4.cmp', HudPath + 'HUD\hud_nnbox4_vanilla.cmp')
+    RenameFile(HudPath + 'HUD\hud_nnbox5.cmp', HudPath + 'HUD\hud_nnbox5_vanilla.cmp')
+    RenameFile(HudPath + 'HUD\hud_nnbox6.cmp', HudPath + 'HUD\hud_nnbox6_vanilla.cmp')
+    RenameFile(HudPath + 'HUD\hud_nnbox7.cmp', HudPath + 'HUD\hud_nnbox7_vanilla.cmp')
+    RenameFile(HudPath + 'HUD\hud_numberboxes.cmp', HudPath + 'HUD\hud_numberboxes_vanilla.cmp')
+    RenameFile(HudPath + 'HUD\hud_shipinfo_min.cmp', HudPath + 'HUD\hud_shipinfo_min_vanilla.cmp')
+    RenameFile(HudPath + 'HUD\hud_shipinfo_min.3db', HudPath + 'HUD\hud_shipinfo_min_vanilla.3db')
+    RenameFile(HudPath + 'HUD\hud_steeringarrow.3db', HudPath + 'HUD\hud_steeringarrow_vanilla.3db')
+    RenameFile(HudPath + 'HUD\hud_target_min.cmp', HudPath + 'HUD\hud_target_min_vanilla.cmp')
+    RenameFile(HudPath + 'INTRO\OBJECTS', HudPath + 'INTRO\OBJECTS_vanilla')
+    RenameFile(HudPath + 'LOADSAVE\front_button.cmp', HudPath + 'LOADSAVE\front_button_vanilla.cmp')
+    RenameFile(HudPath + 'LOADSAVE\front_infowindow.cmp', HudPath + 'LOADSAVE\front_infowindow_vanilla.cmp')
+    RenameFile(HudPath + 'LOADSAVE\ls_background.cmp', HudPath + 'LOADSAVE\ls_background_vanilla.cmp')
+    RenameFile(HudPath + 'MULTIPLAYER\CHAT\chat_chat_textbox.cmp', HudPath + 'MULTIPLAYER\CHAT\chat_chat_textbox_vanilla.cmp')
+    RenameFile(HudPath + 'MULTIPLAYER\TRADE\trade_background.cmp', HudPath + 'MULTIPLAYER\TRADE\trade_background_vanilla.cmp')
+    RenameFile(HudPath + 'MULTIPLAYER\TRADE\trade_backgroundold.cmp', HudPath + 'MULTIPLAYER\TRADE\trade_backgroundold_vanilla.cmp')
+    RenameFile(HudPath + 'NEURONET\CHAT\chat_background.cmp', HudPath + 'NEURONET\CHAT\chat_background_vanilla.cmp')
+    RenameFile(HudPath + 'NEURONET\INVENTORY\char_infowindow.cmp', HudPath + 'NEURONET\INVENTORY\char_infowindow_vanilla.cmp')
+    RenameFile(HudPath + 'NEURONET\INVENTORY\front_button.cmp', HudPath + 'NEURONET\INVENTORY\front_button_vanilla.cmp')
+    RenameFile(HudPath + 'NEURONET\INVENTORY\front_options_box.cmp', HudPath + 'NEURONET\INVENTORY\front_options_box_vanilla.cmp')
+    RenameFile(HudPath + 'NEURONET\INVENTORY\front_options_box2.cmp', HudPath + 'NEURONET\INVENTORY\front_options_box2_vanilla.cmp')
+    RenameFile(HudPath + 'NEURONET\INVENTORY\front_shortoptions_box.cmp', HudPath + 'NEURONET\INVENTORY\front_shortoptions_box_vanilla.cmp')
+    RenameFile(HudPath + 'NEURONET\INVENTORY\front_shortoptions_box2.cmp', HudPath + 'NEURONET\INVENTORY\front_shortoptions_box2_vanilla.cmp')
+    RenameFile(HudPath + 'NEURONET\INVENTORY\hlp_window.cmp', HudPath + 'NEURONET\INVENTORY\hlp_window_vanilla.cmp')
+    RenameFile(HudPath + 'NEURONET\INVENTORY\inv_biginforcard.cmp', HudPath + 'NEURONET\INVENTORY\inv_biginforcard_vanilla.cmp')
+    RenameFile(HudPath + 'NEURONET\INVENTORY\inv_biginforcard_center.cmp', HudPath + 'NEURONET\INVENTORY\inv_biginforcard_center_vanilla.cmp')
+    RenameFile(HudPath + 'NEURONET\INVENTORY\partitionline.3db', HudPath + 'NEURONET\INVENTORY\partitionline_vanilla.3db')
+    RenameFile(HudPath + 'NEURONET\INVENTORY\repair_bakgrnd.cmp', HudPath + 'NEURONET\INVENTORY\repair_bakgrnd_vanilla.cmp')
+    RenameFile(HudPath + 'NEURONET\NAVMAP\NEWNAVMAP\navmap_background.cmp', HudPath + 'NEURONET\NAVMAP\NEWNAVMAP\navmap_background_vanilla.cmp')
+    RenameFile(HudPath + 'NEURONET\NAVMAP\NEWNAVMAP\nav_navmap_left.cmp', HudPath + 'NEURONET\NAVMAP\NEWNAVMAP\nav_navmap_left_vanilla.cmp')
+    RenameFile(HudPath + 'NEURONET\NAVMAP\NEWNAVMAP\nav_navmap_right.cmp', HudPath + 'NEURONET\NAVMAP\NEWNAVMAP\nav_navmap_right_vanilla.cmp')
+    RenameFile(HudPath + 'NEURONET\NAVMAP\NEWNAVMAP\nav_selector.3db', HudPath + 'NEURONET\NAVMAP\NEWNAVMAP\nav_selector_vanilla.3db')
+    RenameFile(HudPath + 'NEURONET\NAVMAP\NEWNAVMAP\nav_selectorhand.cmp', HudPath + 'NEURONET\NAVMAP\NEWNAVMAP\nav_selectorhand_vanilla.cmp')
+    RenameFile(HudPath + 'NEURONET\NAVMAP\NEWNAVMAP\nav_zoomin.cmp', HudPath + 'NEURONET\NAVMAP\NEWNAVMAP\nav_zoomin_vanilla.cmp')
+    RenameFile(HudPath + 'NEURONET\NAVMAP\NEWNAVMAP\nav_zoomout.cmp', HudPath + 'NEURONET\NAVMAP\NEWNAVMAP\nav_zoomout_vanilla.cmp')
+    RenameFile(HudPath + 'NEURONET\NEWSVENDOR\news_background.cmp', HudPath + 'NEURONET\NEWSVENDOR\news_background_vanilla.cmp')
+    RenameFile(HudPath + 'NEURONET\NEWSVENDOR\news_headlineframe.3db', HudPath + 'NEURONET\NEWSVENDOR\news_headlineframe_vanilla.3db')
+    RenameFile(HudPath + 'NEURONET\NEWSVENDOR\news_headlineicon.3db', HudPath + 'NEURONET\NEWSVENDOR\news_headlineicon_vanilla.3db')
+    RenameFile(HudPath + 'NEURONET\NEWSVENDOR\news_textframe.3db', HudPath + 'NEURONET\NEWSVENDOR\news_textframe_vanilla.3db')
+    RenameFile(HudPath + 'NEURONET\NEWSVENDOR\news_videowindow.3db', HudPath + 'NEURONET\NEWSVENDOR\news_videowindow_vanilla.3db')
+    RenameFile(HudPath + 'NEURONET\OPTIONS\alt-f4window.cmp', HudPath + 'NEURONET\NEWSVENDOR\alt-f4window_vanilla.cmp')
+    RenameFile(HudPath + 'NEURONET\OPTIONS\escapewindow.3db', HudPath + 'NEURONET\NEWSVENDOR\escapewindow_vanilla.3db')
+    RenameFile(HudPath + 'NEURONET\OPTIONS\escapewindow2.cmp', HudPath + 'NEURONET\NEWSVENDOR\escapewindow2_vanilla.cmp')
+    RenameFile(HudPath + 'NEURONET\OPTIONS\gameoverwindow.cmp', HudPath + 'NEURONET\NEWSVENDOR\gameoverwindow_vanilla.cmp')
+    RenameFile(HudPath + 'NEURONET\OPTIONS\missionfailed.cmp', HudPath + 'NEURONET\NEWSVENDOR\missionfailed_vanilla.cmp')
+    RenameFile(HudPath + 'NEURONET\errorexplanation.cmp', HudPath + 'NEURONET\errorexplanation_vanilla.cmp')
+    RenameFile(HudPath + 'TEXTOFFER\conversationoffer.cmp', HudPath + 'TEXTOFFER\conversationoffer_vanilla.cmp')
 
     // Rename new HUD files
+    RenameFile(HudPath + 'BASESIDE\city_maneuvertab1_darkhud.cmp', HudPath + 'BASESIDE\city_maneuvertab1.cmp')
+    RenameFile(HudPath + 'BASESIDE\city_maneuvertab2_darkhud.cmp', HudPath + 'BASESIDE\city_maneuvertab2.cmp')
+    RenameFile(HudPath + 'BASESIDE\city_maneuvertab3_darkhud.cmp', HudPath + 'BASESIDE\city_maneuvertab3.cmp')
+    RenameFile(HudPath + 'HUD\hud_guagewindow_darkhud.cmp', HudPath + 'HUD\hud_guagewindow.cmp')
+    RenameFile(HudPath + 'HUD\hud_maneuverbox1_darkhud.cmp', HudPath + 'HUD\hud_maneuverbox1.cmp')
+    RenameFile(HudPath + 'HUD\hud_maneuverbox2_darkhud.cmp', HudPath + 'HUD\hud_maneuverbox2.cmp')
+    RenameFile(HudPath + 'HUD\hud_maneuverbox3_darkhud.cmp', HudPath + 'HUD\hud_maneuverbox3.cmp')
+    RenameFile(HudPath + 'HUD\hud_maneuverbox4_darkhud.cmp', HudPath + 'HUD\hud_maneuverbox4.cmp')
+    RenameFile(HudPath + 'HUD\hud_maneuverbox5_darkhud.cmp', HudPath + 'HUD\hud_maneuverbox5.cmp')
+    RenameFile(HudPath + 'HUD\hud_maneuverbox6_darkhud.cmp', HudPath + 'HUD\hud_maneuverbox6.cmp')
+    RenameFile(HudPath + 'HUD\hud_maneuverbox7_darkhud.cmp', HudPath + 'HUD\hud_maneuverbox7.cmp')
+    RenameFile(HudPath + 'HUD\hud_maneuverbox8_darkhud.cmp', HudPath + 'HUD\hud_maneuverbox8.cmp')
+    RenameFile(HudPath + 'HUD\hud_maneuverbox9_darkhud.cmp', HudPath + 'HUD\hud_maneuverbox9.cmp')
+    RenameFile(HudPath + 'HUD\hud_nnbox4_darkhud.cmp', HudPath + 'HUD\hud_nnbox4.cmp')
+    RenameFile(HudPath + 'HUD\hud_nnbox5_darkhud.cmp', HudPath + 'HUD\hud_nnbox5.cmp')
+    RenameFile(HudPath + 'HUD\hud_nnbox6_darkhud.cmp', HudPath + 'HUD\hud_nnbox6.cmp')
+    RenameFile(HudPath + 'HUD\hud_nnbox7_darkhud.cmp', HudPath + 'HUD\hud_nnbox7.cmp')
+    RenameFile(HudPath + 'HUD\hud_numberboxes_darkhud.cmp', HudPath + 'HUD\hud_numberboxes.cmp')
+    RenameFile(HudPath + 'HUD\hud_shipinfo_min_darkhud.cmp', HudPath + 'HUD\hud_shipinfo_min.cmp')
+    RenameFile(HudPath + 'HUD\hud_shipinfo_min_darkhud.3db', HudPath + 'HUD\hud_shipinfo_min.3db')
+    RenameFile(HudPath + 'HUD\hud_steeringarrow_darkhud.3db', HudPath + 'HUD\hud_steeringarrow.3db')
+    RenameFile(HudPath + 'HUD\hud_target_min_darkhud.cmp', HudPath + 'HUD\hud_target_min.cmp')
+    RenameFile(HudPath + 'INTRO\OBJECTS_darkhud', HudPath + 'INTRO\OBJECTS')
+    RenameFile(HudPath + 'LOADSAVE\front_button_darkhud.cmp', HudPath + 'LOADSAVE\front_button.cmp')
+    RenameFile(HudPath + 'LOADSAVE\front_infowindow_darkhud.cmp', HudPath + 'LOADSAVE\front_infowindow.cmp')
+    RenameFile(HudPath + 'LOADSAVE\ls_background_darkhud.cmp', HudPath + 'LOADSAVE\ls_background.cmp')
+    RenameFile(HudPath + 'MULTIPLAYER\CHAT\chat_chat_textbox_darkhud.cmp', HudPath + 'MULTIPLAYER\CHAT\chat_chat_textbox.cmp')
+    RenameFile(HudPath + 'MULTIPLAYER\TRADE\trade_background_darkhud.cmp', HudPath + 'MULTIPLAYER\TRADE\trade_background.cmp')
+    RenameFile(HudPath + 'MULTIPLAYER\TRADE\trade_backgroundold_darkhud.cmp', HudPath + 'MULTIPLAYER\TRADE\trade_backgroundold.cmp')
+    RenameFile(HudPath + 'NEURONET\CHAT\chat_background_darkhud.cmp', HudPath + 'NEURONET\CHAT\chat_background.cmp')
+    RenameFile(HudPath + 'NEURONET\INVENTORY\char_infowindow_darkhud.cmp', HudPath + 'NEURONET\INVENTORY\char_infowindow.cmp')
+    RenameFile(HudPath + 'NEURONET\INVENTORY\front_button_darkhud.cmp', HudPath + 'NEURONET\INVENTORY\front_button.cmp')
+    RenameFile(HudPath + 'NEURONET\INVENTORY\front_options_box_darkhud.cmp', HudPath + 'NEURONET\INVENTORY\front_options_box.cmp')
+    RenameFile(HudPath + 'NEURONET\INVENTORY\front_options_box2_darkhud.cmp', HudPath + 'NEURONET\INVENTORY\front_options_box2.cmp')
+    RenameFile(HudPath + 'NEURONET\INVENTORY\front_shortoptions_box_darkhud.cmp', HudPath + 'NEURONET\INVENTORY\front_shortoptions_box.cmp')
+    RenameFile(HudPath + 'NEURONET\INVENTORY\front_shortoptions_box2_darkhud.cmp', HudPath + 'NEURONET\INVENTORY\front_shortoptions_box2.cmp')
+    RenameFile(HudPath + 'NEURONET\INVENTORY\hlp_window_darkhud.cmp', HudPath + 'NEURONET\INVENTORY\hlp_window.cmp')
+    RenameFile(HudPath + 'NEURONET\INVENTORY\inv_biginforcard_darkhud.cmp', HudPath + 'NEURONET\INVENTORY\inv_biginforcard.cmp')
+    RenameFile(HudPath + 'NEURONET\INVENTORY\inv_biginforcard_center_darkhud.cmp', HudPath + 'NEURONET\INVENTORY\inv_biginforcard_center.cmp')
+    RenameFile(HudPath + 'NEURONET\INVENTORY\partitionline_darkhud.3db', HudPath + 'NEURONET\INVENTORY\partitionline.3db')
+    RenameFile(HudPath + 'NEURONET\INVENTORY\repair_bakgrnd_darkhud.cmp', HudPath + 'NEURONET\INVENTORY\repair_bakgrnd.cmp')
+    RenameFile(HudPath + 'NEURONET\NAVMAP\NEWNAVMAP\navmap_background_darkhud.cmp', HudPath + 'NEURONET\NAVMAP\NEWNAVMAP\navmap_background.cmp')
+    RenameFile(HudPath + 'NEURONET\NAVMAP\NEWNAVMAP\nav_navmap_left_darkhud.cmp', HudPath + 'NEURONET\NAVMAP\NEWNAVMAP\nav_navmap_left.cmp')
+    RenameFile(HudPath + 'NEURONET\NAVMAP\NEWNAVMAP\nav_navmap_right_darkhud.cmp', HudPath + 'NEURONET\NAVMAP\NEWNAVMAP\nav_navmap_right.cmp')
+    RenameFile(HudPath + 'NEURONET\NAVMAP\NEWNAVMAP\nav_selector_darkhud.3db', HudPath + 'NEURONET\NAVMAP\NEWNAVMAP\nav_selector.3db')
+    RenameFile(HudPath + 'NEURONET\NAVMAP\NEWNAVMAP\nav_selectorhand_darkhud.cmp', HudPath + 'NEURONET\NAVMAP\NEWNAVMAP\nav_selectorhand.cmp')
+    RenameFile(HudPath + 'NEURONET\NAVMAP\NEWNAVMAP\nav_zoomin_darkhud.cmp', HudPath + 'NEURONET\NAVMAP\NEWNAVMAP\nav_zoomin.cmp')
+    RenameFile(HudPath + 'NEURONET\NAVMAP\NEWNAVMAP\nav_zoomout_darkhud.cmp', HudPath + 'NEURONET\NAVMAP\NEWNAVMAP\nav_zoomout.cmp')
+    RenameFile(HudPath + 'NEURONET\NEWSVENDOR\news_background_darkhud.cmp', HudPath + 'NEURONET\NEWSVENDOR\news_background.cmp')
+    RenameFile(HudPath + 'NEURONET\NEWSVENDOR\news_headlineframe_darkhud.3db', HudPath + 'NEURONET\NEWSVENDOR\news_headlineframe.3db')
+    RenameFile(HudPath + 'NEURONET\NEWSVENDOR\news_headlineicon_darkhud.3db', HudPath + 'NEURONET\NEWSVENDOR\news_headlineicon.3db')
+    RenameFile(HudPath + 'NEURONET\NEWSVENDOR\news_textframe_darkhud.3db', HudPath + 'NEURONET\NEWSVENDOR\news_textframe.3db')
+    RenameFile(HudPath + 'NEURONET\NEWSVENDOR\news_videowindow_darkhud.3db', HudPath + 'NEURONET\NEWSVENDOR\news_videowindow.3db')
+    RenameFile(HudPath + 'NEURONET\OPTIONS\alt-f4window_darkhud.cmp', HudPath + 'NEURONET\NEWSVENDOR\alt-f4window.cmp')
+    RenameFile(HudPath + 'NEURONET\OPTIONS\escapewindow_darkhud.3db', HudPath + 'NEURONET\NEWSVENDOR\escapewindow.3db')
+    RenameFile(HudPath + 'NEURONET\OPTIONS\escapewindow2_darkhud.cmp', HudPath + 'NEURONET\NEWSVENDOR\escapewindow2.cmp')
+    RenameFile(HudPath + 'NEURONET\OPTIONS\gameoverwindow_darkhud.cmp', HudPath + 'NEURONET\NEWSVENDOR\gameoverwindow.cmp')
+    RenameFile(HudPath + 'NEURONET\OPTIONS\missionfailed_darkhud.cmp', HudPath + 'NEURONET\NEWSVENDOR\missionfailed.cmp')
+    RenameFile(HudPath + 'NEURONET\errorexplanation_darkhud.cmp', HudPath + 'NEURONET\errorexplanation.cmp')
+    RenameFile(HudPath + 'TEXTOFFER\conversationoffer_darkhud.cmp', HudPath + 'TEXTOFFER\conversationoffer.cmp')
+
+    RenameFile(HudPath + 'HUD\hud_shipinfo.cmp', HudPath + 'HUD\hud_shipinfo_vanilla.cmp')
+    RenameFile(HudPath + 'HUD\hud_target.cmp', HudPath + 'HUD\hud_target_vanilla.cmp')
     
-    end;
+    if WidescreenHud.Checked then
+      begin
+        // If both the wide and dark hud have been enabled, use a merged version
+        RenameFile(HudPath + 'HUD\hud_shipinfo_adv_wide_hud_darkhud.cmp', HudPath + 'HUD\hud_shipinfo.cmp')
+        RenameFile(HudPath + 'HUD\hud_target_adv_wide_hud_darkhud.cmp', HudPath + 'HUD\hud_target.cmp')
+      end
+    else
+      begin
+        // If only the dark hud has been enabled, just use that
+        RenameFile(HudPath + 'HUD\hud_shipinfo_darkhud.cmp', HudPath + 'HUD\hud_shipinfo.cmp')
+        RenameFile(HudPath + 'HUD\hud_target_darkhud.cmp', HudPath + 'HUD\hud_target.cmp')
+      end;
+  end
+  else if WidescreenHud.Checked then
+    begin
+      // If only the adv wide hud has been enabled, just use that
+      RenameFile(HudPath + 'HUD\hud_shipinfo.cmp', HudPath + 'HUD\hud_shipinfo_vanilla.cmp')
+      RenameFile(HudPath + 'HUD\hud_target.cmp', HudPath + 'HUD\hud_target_vanilla.cmp')
+
+      RenameFile(HudPath + 'HUD\hud_shipinfo_adv_wide_hud.cmp', HudPath + 'HUD\hud_shipinfo.cmp')
+      RenameFile(HudPath + 'HUD\hud_target_adv_wide_hud.cmp', HudPath + 'HUD\hud_target.cmp')
+    end
 end;
 
 function Process_FlatIcons():boolean;
