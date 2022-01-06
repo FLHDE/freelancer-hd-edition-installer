@@ -470,11 +470,11 @@ begin
     RenameFile(HudPath + 'NEURONET\NEWSVENDOR\news_headlineicon.3db', HudPath + 'NEURONET\NEWSVENDOR\news_headlineicon_vanilla.3db')
     RenameFile(HudPath + 'NEURONET\NEWSVENDOR\news_textframe.3db', HudPath + 'NEURONET\NEWSVENDOR\news_textframe_vanilla.3db')
     RenameFile(HudPath + 'NEURONET\NEWSVENDOR\news_videowindow.3db', HudPath + 'NEURONET\NEWSVENDOR\news_videowindow_vanilla.3db')
-    RenameFile(HudPath + 'NEURONET\OPTIONS\alt-f4window.cmp', HudPath + 'NEURONET\NEWSVENDOR\alt-f4window_vanilla.cmp')
-    RenameFile(HudPath + 'NEURONET\OPTIONS\escapewindow.3db', HudPath + 'NEURONET\NEWSVENDOR\escapewindow_vanilla.3db')
-    RenameFile(HudPath + 'NEURONET\OPTIONS\escapewindow2.cmp', HudPath + 'NEURONET\NEWSVENDOR\escapewindow2_vanilla.cmp')
-    RenameFile(HudPath + 'NEURONET\OPTIONS\gameoverwindow.cmp', HudPath + 'NEURONET\NEWSVENDOR\gameoverwindow_vanilla.cmp')
-    RenameFile(HudPath + 'NEURONET\OPTIONS\missionfailed.cmp', HudPath + 'NEURONET\NEWSVENDOR\missionfailed_vanilla.cmp')
+    RenameFile(HudPath + 'NEURONET\OPTIONS\alt-f4window.cmp', HudPath + 'NEURONET\OPTIONS\alt-f4window_vanilla.cmp')
+    RenameFile(HudPath + 'NEURONET\OPTIONS\escapewindow.3db', HudPath + 'NEURONET\OPTIONS\escapewindow_vanilla.3db')
+    RenameFile(HudPath + 'NEURONET\OPTIONS\escapewindow2.cmp', HudPath + 'NEURONET\OPTIONS\escapewindow2_vanilla.cmp')
+    RenameFile(HudPath + 'NEURONET\OPTIONS\gameoverwindow.cmp', HudPath + 'NEURONET\OPTIONS\gameoverwindow_vanilla.cmp')
+    RenameFile(HudPath + 'NEURONET\OPTIONS\missionfailed.cmp', HudPath + 'NEURONET\OPTIONS\missionfailed_vanilla.cmp')
     RenameFile(HudPath + 'NEURONET\errorexplanation.cmp', HudPath + 'NEURONET\errorexplanation_vanilla.cmp')
     RenameFile(HudPath + 'TEXTOFFER\conversationoffer.cmp', HudPath + 'TEXTOFFER\conversationoffer_vanilla.cmp')
 
@@ -532,11 +532,11 @@ begin
     RenameFile(HudPath + 'NEURONET\NEWSVENDOR\news_headlineicon_darkhud.3db', HudPath + 'NEURONET\NEWSVENDOR\news_headlineicon.3db')
     RenameFile(HudPath + 'NEURONET\NEWSVENDOR\news_textframe_darkhud.3db', HudPath + 'NEURONET\NEWSVENDOR\news_textframe.3db')
     RenameFile(HudPath + 'NEURONET\NEWSVENDOR\news_videowindow_darkhud.3db', HudPath + 'NEURONET\NEWSVENDOR\news_videowindow.3db')
-    RenameFile(HudPath + 'NEURONET\OPTIONS\alt-f4window_darkhud.cmp', HudPath + 'NEURONET\NEWSVENDOR\alt-f4window.cmp')
-    RenameFile(HudPath + 'NEURONET\OPTIONS\escapewindow_darkhud.3db', HudPath + 'NEURONET\NEWSVENDOR\escapewindow.3db')
-    RenameFile(HudPath + 'NEURONET\OPTIONS\escapewindow2_darkhud.cmp', HudPath + 'NEURONET\NEWSVENDOR\escapewindow2.cmp')
-    RenameFile(HudPath + 'NEURONET\OPTIONS\gameoverwindow_darkhud.cmp', HudPath + 'NEURONET\NEWSVENDOR\gameoverwindow.cmp')
-    RenameFile(HudPath + 'NEURONET\OPTIONS\missionfailed_darkhud.cmp', HudPath + 'NEURONET\NEWSVENDOR\missionfailed.cmp')
+    RenameFile(HudPath + 'NEURONET\OPTIONS\alt-f4window_darkhud.cmp', HudPath + 'NEURONET\OPTIONS\alt-f4window.cmp')
+    RenameFile(HudPath + 'NEURONET\OPTIONS\escapewindow_darkhud.3db', HudPath + 'NEURONET\OPTIONS\escapewindow.3db')
+    RenameFile(HudPath + 'NEURONET\OPTIONS\escapewindow2_darkhud.cmp', HudPath + 'NEURONET\OPTIONS\escapewindow2.cmp')
+    RenameFile(HudPath + 'NEURONET\OPTIONS\gameoverwindow_darkhud.cmp', HudPath + 'NEURONET\OPTIONS\gameoverwindow.cmp')
+    RenameFile(HudPath + 'NEURONET\OPTIONS\missionfailed_darkhud.cmp', HudPath + 'NEURONET\OPTIONS\missionfailed.cmp')
     RenameFile(HudPath + 'NEURONET\errorexplanation_darkhud.cmp', HudPath + 'NEURONET\errorexplanation.cmp')
     RenameFile(HudPath + 'TEXTOFFER\conversationoffer_darkhud.cmp', HudPath + 'TEXTOFFER\conversationoffer.cmp')
 
@@ -571,11 +571,13 @@ function Process_FlatIcons():boolean;
 var
   FlatIconsPath: string;
   CursorPath: string;
+  HudShiftPath: string;
 begin
   if FlatIcons.Checked then
     begin
     FlatIconsPath := ExpandConstant('{app}\DATA\INTERFACE\')
     CursorPath := ExpandConstant('{app}\DATA\SCREENS\')
+    HudShiftPath := ExpandConstant('{app}\DATA\INTERFACE\HudShift.ini')
 
     // Rename vanilla ones
     RenameFile(CursorPath + 'cursor.txm', CursorPath + 'cursor_vanilla.txm')
@@ -648,7 +650,19 @@ begin
     RenameFile(FlatIconsPath + 'NEURONET\INVENTORY\question_flaticons.3db', FlatIconsPath + 'NEURONET\INVENTORY\question.3db')
     RenameFile(FlatIconsPath + 'NEURONET\INVENTORY\weaponsicon_flaticons.3db', FlatIconsPath + 'NEURONET\INVENTORY\weaponsicon.3db')
     RenameFile(FlatIconsPath + 'NEURONET\NAVMAP\NEWNAVMAP\nav_universebutton_flaticons.3db', FlatIconsPath + 'NEURONET\NAVMAP\NEWNAVMAP\nav_universebutton.3db')
-    end;
+
+    // Adjust next and previous target buttons slightly to position them correctly
+    if WidescreenHud.Checked then
+      begin
+        FileReplaceString(HudShiftPath, 'position = 4e1247, -0.0595, 4e124f, -0.2780		; TargetPreviousButton', 'position = 4e1247, -0.0545, 4e124f, -0.2770		; TargetPreviousButton')
+        FileReplaceString(HudShiftPath, 'position = 4e12b4, -0.0595, 4e12bc, -0.3090		; TargetNextButton', 'position = 4e12b4, -0.0580, 4e12bc, -0.3080		; TargetNextButton')
+      end
+    else
+      begin
+        FileReplaceString(HudShiftPath, 'position = 4e1247, -0.2650, 4e124f, -0.2695		; TargetPreviousButton', 'position = 4e1247, -0.2605, 4e124f, -0.2695		; TargetPreviousButton')
+        FileReplaceString(HudShiftPath, 'position = 4e12b4, -0.2650, 4e12bc, -0.3005		; TargetNextButton', 'position = 4e12b4, -0.2640, 4e12bc, -0.3005		; TargetNextButton')
+      end
+  end;
 end;
 
 function Process_WeaponGroups():boolean;
