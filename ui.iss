@@ -9,7 +9,7 @@ var
   LogoRes: TInputOptionWizardPage;
   SmallText: TInputOptionWizardPage;
   PageWidescreenHud: TWizardPage;
-  PageWeaponGroups: TWizardPage;
+  PageDarkHUD: TWizardPage;
   PagePlanetScape: TWizardPage;
   PageWin10: TWizardPage;
   PageEffects: TWizardPage;
@@ -47,6 +47,16 @@ var
   lblWeaponGroups: TLabel;
   WeaponGroups: TCheckBox;
   descWeaponGroups: TNewStaticText;
+
+  // Dark HUD
+  lblDarkHud: TLabel;
+  DarkHud: TCheckBox;
+  descDarkHud: TNewStaticText;
+
+  // Flat Icons
+  lblFlatIcons: TLabel;
+  FlatIcons: TCheckBox;
+  descFlatIcons: TNewStaticText;
 
   // Fix clipping with 16:9 resolution planetscapes
   lblPlanetScape: TLabel;
@@ -355,10 +365,50 @@ begin
   WeaponGroups.Parent := PageWidescreenHud.Surface;
   WeaponGroups.Checked := True;
   WeaponGroups.Top := ScaleY(130);
+
+  // Initialize Dark HUD page and add content
+  PageDarkHud := CreateCustomPage(
+    PageWidescreenHud.ID,
+    'Custom HUD and icons',
+    'Check to install'
+  );
+  
+  lblDarkHud := TLabel.Create(PageDarkHud);
+  lblDarkHud.Parent := PageDarkHud.Surface;
+  lblDarkHud.Caption := 'Enable Dark HUD';
+  lblDarkHud.Left := ScaleX(20);
+  
+  descDarkHud := TNewStaticText.Create(PageDarkHud);
+  descDarkHud.Parent := PageDarkHud.Surface;
+  descDarkHud.WordWrap := True;
+  descDarkHud.Top := ScaleY(20);
+  descDarkHud.Width := PageDarkHud.SurfaceWidth;
+  descDarkHud.Caption := 'This option replaces the default Freelancer HUD with a more darker-themed HUD. If this option is disabled, you''ll get the HD default HUD instead.';
+  
+  DarkHud := TCheckBox.Create(PageDarkHud);
+  DarkHud.Parent := PageDarkHud.Surface;
+
+  lblFlatIcons := TLabel.Create(PageDarkHud);
+  lblFlatIcons.Parent := PageDarkHud.Surface;
+  lblFlatIcons.Caption := 'Enable Custom Flat Icons';
+  lblFlatIcons.Left := ScaleX(20);
+  lblFlatIcons.Top := ScaleY(70);
+  
+  descFlatIcons := TNewStaticText.Create(PageDarkHud);
+  descFlatIcons.Parent := PageDarkHud.Surface;
+  descFlatIcons.WordWrap := True;
+  descFlatIcons.Top := ScaleY(90);
+  descFlatIcons.Width := PageWidescreenHud.SurfaceWidth;
+  descFlatIcons.Caption := 'This option replaces Freelancer''s default icon set with new simpler flat-looking icons. If this option is disabled, you''ll get the HD vanilla icons instead.';
+  
+  FlatIcons := TCheckBox.Create(PageDarkHud);
+  FlatIcons.Parent := PageDarkHud.Surface;
+  FlatIcons.Top := ScaleY(70);
+
   
   // Fix clipping with 16:9 resolution planetscapes
   PagePlanetScape := CreateCustomPage(
-    PageWidescreenHud.ID,
+    PageDarkHud.ID,
     'Fix clipping with 16:9 resolution planetscapes',
     'Check to install'
   );
