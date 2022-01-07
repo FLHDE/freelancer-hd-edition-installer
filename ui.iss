@@ -13,6 +13,8 @@ var
   PagePlanetScape: TWizardPage;
   PageWin10: TWizardPage;
   PageEffects: TWizardPage;
+  PageDrawDistances: TInputOptionWizardPage;
+  PageSkips: TWizardPage;
   PageSinglePlayerConsole: TWizardPage;
   DownloadPage: TDownloadWizardPage;
 
@@ -435,7 +437,7 @@ begin
   PageWin10 := CreateCustomPage(
     PagePlanetScape.ID,
     'Fix Windows 10 compatibility issues',
-    'Check to install - USE AT OWN RISK'
+    'Check to install'
   );
   
   lblWin10 := TLabel.Create(PageWin10);
@@ -535,10 +537,34 @@ begin
   EngineTrails.Parent := PageEffects.Surface;
   EngineTrails.Top := ScaleY(180);
   EngineTrails.Checked := True;
+
+  // Draw distances
+  PageDrawDistances := CreateInputOptionPage(PageEffects.ID,
+  'Set Draw Distances', 'Check to install',
+  'This option sets the draw distances scale; changing it to a higher value allows you to see things in space from further away. 1x will give you the same draw distances as vanilla Freelancer. Every option after that scales the vanilla values by a multiplier (2x, 3x, etc). The Maximized option sets all draw distances to the highest possible values, which includes the jump hole visibility distances.',
+  True, False);
+  PageDrawDistances.Add('1x (Vanilla)');
+  PageDrawDistances.Add('2x');
+  PageDrawDistances.Add('3x');
+  PageDrawDistances.Add('4x');
+  PageDrawDistances.Add('5x');
+  PageDrawDistances.Add('6x');
+  PageDrawDistances.Add('7x');
+  PageDrawDistances.Add('8x');
+  PageDrawDistances.Add('9x');
+  PageDrawDistances.Add('Maximized (recommended)');
+  PageDrawDistances.Values[9] := True;
+
+  // Skips
+  PageSkips := CreateCustomPage(
+    PageDrawDistances.ID,
+    'Skippable options',
+    'Want to save time?'
+  );
   
   // Single Player Command Console
   PageSinglePlayerConsole := CreateCustomPage(
-    PageEffects.ID,
+    PageSkips.ID,
     'Single Player Command Console',
     'Check to install'
   );

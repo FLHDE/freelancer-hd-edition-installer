@@ -25,7 +25,7 @@ begin
   else if(CallSign.Values[9]) then // Spa and Cruise Omega 8-0
     FileReplaceString(FilePath,'DLL = callsign.dll, player 1 1-1','DLL = callsign.dll, co_os 13 8-0')
   else if(CallSign.Values[10]) then // Daumann Zeta 11-17
-  FileReplaceString(FilePath,'DLL = callsign.dll, player 1 1-1','DLL = callsign.dll, co_khc 6 11-17')
+    FileReplaceString(FilePath,'DLL = callsign.dll, player 1 1-1','DLL = callsign.dll, co_khc 6 11-17')
   else if(CallSign.Values[11]) then // Bowex Gamma 5-7
     FileReplaceString(FilePath,'DLL = callsign.dll, player 1 1-1','DLL = callsign.dll, co_be 3 5-7')
   else if(CallSign.Values[12]) then // Order Omicron 0-0
@@ -346,6 +346,30 @@ begin
     RenameFile(PlanetscapePath + 'rh_02_cityscape_hardpoint_01_169.thn',PlanetscapePath + 'rh_02_cityscape_hardpoint_01.thn')
     RenameFile(PlanetscapePath + 'rh_03_cityscape_hardpoint_01_169.thn',PlanetscapePath + 'rh_03_cityscape_hardpoint_01.thn')
     end;
+end;
+
+function Process_DrawDistances():boolean;
+var
+  FilePath : string;
+begin
+  FilePath := ExpandConstant('{app}\EXE\flplusplus.ini');
+
+  if(PageDrawDistances.Values[0]) then
+    FileReplaceString(FilePath, 'lod_scale = 9', 'lod_scale = 0')
+  else if(PageDrawDistances.Values[1]) then
+    FileReplaceString(FilePath, 'lod_scale = 9', 'lod_scale = 2')
+  else if(PageDrawDistances.Values[2]) then
+    FileReplaceString(FilePath, 'lod_scale = 9', 'lod_scale = 3')
+  else if(PageDrawDistances.Values[3]) then
+    FileReplaceString(FilePath, 'lod_scale = 9', 'lod_scale = 4')
+  else if(PageDrawDistances.Values[4]) then
+    FileReplaceString(FilePath, 'lod_scale = 9', 'lod_scale = 5')
+  else if(PageDrawDistances.Values[5]) then
+    FileReplaceString(FilePath, 'lod_scale = 9', 'lod_scale = 6')
+  else if(PageDrawDistances.Values[6]) then
+    FileReplaceString(FilePath, 'lod_scale = 9', 'lod_scale = 7')
+  else if(PageDrawDistances.Values[7]) then
+    FileReplaceString(FilePath, 'lod_scale = 9', 'lod_scale = 8')
 end;
 
 function Process_Win10():boolean;
