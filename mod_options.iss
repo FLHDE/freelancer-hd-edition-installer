@@ -689,6 +689,74 @@ begin
   end;
 end;
 
+function Process_JumpTunnelDurations():boolean;
+var
+  FilePath : string;
+begin
+  FilePath := ExpandConstant('{app}\DATA\FX\jumpeffect.ini');
+
+  if(JumpTunnel5Sec.Checked) then 
+    begin 
+      FileReplaceString(FilePath, 'jump_out_tunnel_time = 7' + #13#10
+                                  'jump_in_tunnel_time = 3'  + #13#10,
+                                   
+                                  'jump_out_tunnel_time = 3.5' + #13#10
+                                  'jump_in_tunnel_time = 1.5'  + #13#10)
+
+      FileReplaceString(FilePath, 'jump_out_tunnel_time = 7' + #13#10
+                                  'jump_in_tunnel_time = 3'  + #13#10,
+                                   
+                                  'jump_out_tunnel_time = 3.5' + #13#10
+                                  'jump_in_tunnel_time = 1.5'  + #13#10)
+  end
+  else if(JumpTunnel2Sec.Checked) then
+    begin
+      FileReplaceString(FilePath, 'jump_out_tunnel_time = 7' + #13#10
+                                  'jump_in_tunnel_time = 3'  + #13#10,
+                                   
+                                  'jump_out_tunnel_time = 1.75' + #13#10
+                                  'jump_in_tunnel_time = 0.75'  + #13#10)
+
+      FileReplaceString(FilePath, 'jump_out_tunnel_time = 7' + #13#10
+                                  'jump_in_tunnel_time = 3'  + #13#10,
+                                   
+                                  'jump_out_tunnel_time = 1.75' + #13#10
+                                  'jump_in_tunnel_time = 0.75'  + #13#10)
+    end
+  else if(JumpTunnelSkip.Checked) then 
+    begin
+      FileReplaceString(FilePath, 'jump_out_tunnel_time = 7' + #13#10
+                                  'jump_in_tunnel_time = 3'  + #13#10,
+                                   
+                                  'jump_out_tunnel_time = 0' + #13#10
+                                  'jump_in_tunnel_time = 0'  + #13#10)
+
+      FileReplaceString(FilePath, 'jump_out_tunnel_time = 7' + #13#10
+                                  'jump_in_tunnel_time = 3'  + #13#10,
+                                   
+                                  'jump_out_tunnel_time = 0' + #13#10
+                                  'jump_in_tunnel_time = 0'  + #13#10)
+    end
+end;
+
+function Process_SkipIntros():boolean;
+var
+  FilePath : string;
+begin
+  FilePath := ExpandConstant('{app}\EXE\freelancer.ini');
+
+  if(SkipIntros.Checked) then 
+    begin 
+      FileReplaceString(FilePath, 'movie_file = movies\MGS_Logo_Final.wmv' + #13#10
+                                  'movie_file = movies\DA_Logo_Final.wmv'  + #13#10
+                                  'movie_file = movies\FL_Intro.wmv'  + #13#10,
+
+                                  ';movie_file = movies\MGS_Logo_Final.wmv' + #13#10
+                                  ';movie_file = movies\DA_Logo_Final.wmv'  + #13#10
+                                  ';movie_file = movies\FL_Intro.wmv'  + #13#10)
+  end
+end;
+
 function Process_WeaponGroups():boolean;
 var
   HudShiftPath: string;

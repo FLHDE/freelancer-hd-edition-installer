@@ -128,6 +128,8 @@ begin
         Process_SmallText();
         Process_Console();
         Process_Effects();
+        Process_SkipIntros();
+        Process_JumpTunnelDurations();
         Process_DrawDistances();
         Process_Planetscape();
         Process_Win10();
@@ -144,6 +146,7 @@ begin
           RemoveBOM(ExpandConstant('{app}\EXE\flplusplus.ini'));
           RemoveBOM(ExpandConstant('{app}\DATA\FONTS\fonts.ini'));
           RemoveBOM(ExpandConstant('{app}\DATA\INTERFACE\HudShift.ini'));
+          RemoveBOM(ExpandConstant('{app}\DATA\FX\jumpeffect.ini'));
         end;
 
         // Delete restart.fl to stop crashes

@@ -89,6 +89,25 @@ var
   EngineTrails: TCheckBox;
   descEngineTrails: TNewStaticText;
 
+  // Skip intros
+  lblSkipIntros: TLabel;
+  SkipIntros: TCheckBox;
+  descSkipIntros: TNewStaticText;
+
+  // Jump tunnel duration
+  lblJumpTunnel10Sec: TLabel;
+  lblJumpTunnel5Sec: TLabel;
+  lblJumpTunnel2Sec: TLabel;
+  lblJumpTunnelSkip: TLabel;
+  JumpTunnel10Sec: TRadioButton;
+  JumpTunnel5Sec: TRadioButton;
+  JumpTunnel2Sec: TRadioButton;
+  JumpTunnelSkip: TRadioButton;
+  descJumpTunnelDuration: TNewStaticText;
+  lblJumpTunnelDuration: TLabel;
+  JumpTunnelDuration: TCheckBox;
+  
+
   // Single Player Command Console
   lblSinglePlayer: TLabel;
   SinglePlayer: TCheckBox;
@@ -560,6 +579,72 @@ begin
     'Skippable options',
     'Want to save time?'
   );
+
+  // Skip intros
+  lblJumpTunnel10Sec := TLabel.Create(PageSkips);
+  lblJumpTunnel10Sec.Parent := PageSkips.Surface;
+  lblJumpTunnel10Sec.Caption := '10 second jump tunnels (Vanilla)';
+  lblJumpTunnel10Sec.Left := ScaleX(20);
+  
+  JumpTunnel10Sec := TRadioButton.Create(PageSkips);
+  JumpTunnel10Sec.Parent := PageSkips.Surface;
+  
+  lblJumpTunnel5Sec := TLabel.Create(PageSkips);
+  lblJumpTunnel5Sec.Parent := PageSkips.Surface;
+  lblJumpTunnel5Sec.Caption := '5 second jump tunnels';
+  lblJumpTunnel5Sec.Left := ScaleX(20);
+  lblJumpTunnel5Sec.Top := ScaleY(20);
+  
+  JumpTunnel5Sec := TRadioButton.Create(PageSkips);
+  JumpTunnel5Sec.Parent := PageSkips.Surface;
+  JumpTunnel5Sec.Top := ScaleY(20);
+  JumpTunnel5Sec.Checked := True;
+  
+  lblJumpTunnel2Sec := TLabel.Create(PageSkips);
+  lblJumpTunnel2Sec.Parent := PageSkips.Surface;
+  lblJumpTunnel2Sec.Caption := '2.5 second jump tunnels';
+  lblJumpTunnel2Sec.Left := ScaleX(20);
+  lblJumpTunnel2Sec.Top := ScaleY(40);
+  
+  JumpTunnel2Sec := TRadioButton.Create(PageSkips);
+  JumpTunnel2Sec.Parent := PageSkips.Surface;
+  JumpTunnel2Sec.Top := ScaleY(40);
+
+  lblJumpTunnelSkip := TLabel.Create(PageSkips);
+  lblJumpTunnelSkip.Parent := PageSkips.Surface;
+  lblJumpTunnelSkip.Caption := '0 second jump tunnels (skip them entirely)';
+  lblJumpTunnelSkip.Left := ScaleX(20);
+  lblJumpTunnelSkip.Top := ScaleY(60);
+  
+  JumpTunnelSkip := TRadioButton.Create(PageSkips);
+  JumpTunnelSkip.Parent := PageSkips.Surface;
+  JumpTunnelSkip.Top := ScaleY(60)
+  
+  descJumpTunnelDuration := TNewStaticText.Create(PageSkips);
+  descJumpTunnelDuration.Parent := PageSkips.Surface;
+  descJumpTunnelDuration.WordWrap := True;
+  descJumpTunnelDuration.Width := PageSkips.SurfaceWidth;
+  descJumpTunnelDuration.Caption := 'This option allows you to change the duration of the jump tunnels which you go through when using any jump hole or jump gate.';
+  descJumpTunnelDuration.Top := ScaleY(80);
+  
+  // Jump tunnel duration
+  lblSkipIntros := TLabel.Create(PageSkips);
+  lblSkipIntros.Parent := PageSkips.Surface;
+  lblSkipIntros.Caption := 'Skip startup intros';
+  lblSkipIntros.Top := ScaleY(160);
+  lblSkipIntros.Left := ScaleX(20);
+  
+  descSkipIntros := TNewStaticText.Create(PageSkips);
+  descSkipIntros.Parent := PageSkips.Surface;
+  descSkipIntros.WordWrap := True;
+  descSkipIntros.Top := ScaleY(180);
+  descSkipIntros.Width := PageSkips.SurfaceWidth;
+  descSkipIntros.Caption := 'This option skips the 3 movies that play when the game starts, which include the Microsoft logo, Digital Anvil logo, and Freelancer intro.';
+  
+  SkipIntros := TCheckBox.Create(PageSkips);
+  SkipIntros.Parent := PageSkips.Surface;
+  SkipIntros.Top := ScaleY(160);
+  SkipIntros.Checked := True;
   
   // Single Player Command Console
   PageSinglePlayerConsole := CreateCustomPage(
