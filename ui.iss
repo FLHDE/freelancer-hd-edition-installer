@@ -551,9 +551,8 @@ begin
   PageDrawDistances.Add('6x');
   PageDrawDistances.Add('7x');
   PageDrawDistances.Add('8x');
-  PageDrawDistances.Add('9x');
   PageDrawDistances.Add('Maximized (recommended)');
-  PageDrawDistances.Values[9] := True;
+  PageDrawDistances.Values[8] := True;
 
   // Skips
   PageSkips := CreateCustomPage(
