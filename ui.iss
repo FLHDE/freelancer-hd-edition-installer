@@ -104,9 +104,6 @@ var
   JumpTunnel2Sec: TRadioButton;
   JumpTunnelSkip: TRadioButton;
   descJumpTunnelDuration: TNewStaticText;
-  lblJumpTunnelDuration: TLabel;
-  JumpTunnelDuration: TCheckBox;
-  
 
   // Single Player Command Console
   lblSinglePlayer: TLabel;
@@ -153,7 +150,7 @@ procedure PageHandler_CancelButtonClick(Page: TWizardPage; var Cancel, Confirm: 
 begin
 end;
 
-function InitializeUi(): Boolean;
+procedure InitializeUi();
 var dir : string;
 begin
   // Read download size

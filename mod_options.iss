@@ -1,6 +1,6 @@
 [Code]
 // Process CallSign option. Replaces strings in freelancer.ini depending on what the user clicks
-function Process_CallSign():boolean;
+procedure Process_CallSign();
 var
   FilePath : string;
 begin
@@ -36,7 +36,7 @@ begin
     FileReplaceString(FilePath,'DLL = callsign.dll, player 1 1-1','DLL = callsign.dll, fc_lh 9 4-20')
 end;
 
-function Process_HdFreelancerIntro() : boolean;
+procedure Process_HdFreelancerIntro();
 var
   FreelancerIntroPath: string;
 begin
@@ -52,7 +52,7 @@ begin
     end;
 end;
 
-function Process_TextStringRevision() : boolean;
+procedure Process_TextStringRevision();
 var
   TextStringsPath: string;
 begin
@@ -80,7 +80,7 @@ begin
     end;
 end;
 
-function Process_SinglePlayerMode() : boolean;
+procedure Process_SinglePlayerMode();
 var
   NewPlayerPath: string;
   Mission13Path: string;
@@ -110,7 +110,7 @@ begin
     end;
 end;
 
-function Process_NewSaveFolder() : boolean;
+procedure Process_NewSaveFolder();
 var
   FlPlusPlusPath: string;
 begin
@@ -123,7 +123,7 @@ begin
 end;
 
 // Processes the Startup Logo option. Renames files depending on what option is selected
-function Process_StartUpLogo():boolean;
+procedure Process_StartUpLogo();
 var
   FolderPath : string;
   OldFile : string;
@@ -156,7 +156,7 @@ begin
 end;
 
 // Processes the Freelancer logo option. Renames files depending on what option is selected
-function Process_FreelancerLogo():boolean;
+procedure Process_FreelancerLogo();
 var
   FolderPath : string;
   OldFile : string;
@@ -191,7 +191,7 @@ begin
 end;
 
 // Replaces the SmallText strings in fonts.ini
-function Process_SmallText():boolean;
+procedure Process_SmallText();
   var
     FilePath : string;
 begin
@@ -236,13 +236,13 @@ begin
 end;
 
 // SinglePlayer console processing logic
-function Process_Console():boolean;
+procedure Process_Console();
 begin
   if SinglePlayer.Checked then FileReplaceString(ExpandConstant('{app}\EXE\dacom.ini'),';console.dll','console.dll')
 end;
 
 // Effects processing logic
-function Process_Effects():boolean;
+procedure Process_Effects();
 var
   MissilePath : string;
 begin
@@ -301,7 +301,7 @@ if MissileEffects.Checked then
   end;
 end;
 
-function Process_Planetscape():boolean;
+procedure Process_Planetscape();
 var
   PlanetscapePath: string;
 begin
@@ -348,7 +348,7 @@ begin
     end;
 end;
 
-function Process_DrawDistances():boolean;
+procedure Process_DrawDistances();
 var
   FilePath : string;
 begin
@@ -372,7 +372,7 @@ begin
     FileReplaceString(FilePath, 'lod_scale = 9', 'lod_scale = 8')
 end;
 
-function Process_Win10():boolean;
+procedure Process_Win10();
 var
   EXEPath: string;
 begin
@@ -381,7 +381,7 @@ begin
   else RenameFile(EXEPath + 'd3d8_dxwrapper.dll',EXEPath + 'd3d8.dll')
 end;
 
-function Process_HUD():boolean;
+procedure Process_HUD();
 var
   HudShiftPath: string;
 begin
@@ -432,7 +432,7 @@ begin
   end
 end;
 
-function Process_DarkHud():boolean;
+procedure Process_DarkHud();
 var
   HudPath: string;
 begin
@@ -591,7 +591,7 @@ begin
     end
 end;
 
-function Process_FlatIcons():boolean;
+procedure Process_FlatIcons();
 var
   FlatIconsPath: string;
   CursorPath: string;
@@ -689,7 +689,7 @@ begin
   end;
 end;
 
-function Process_JumpTunnelDurations():boolean;
+procedure Process_JumpTunnelDurations();
 var
   FilePath : string;
 begin
@@ -739,7 +739,7 @@ begin
     end
 end;
 
-function Process_SkipIntros():boolean;
+procedure Process_SkipIntros();
 var
   FilePath : string;
 begin
@@ -757,7 +757,7 @@ begin
   end
 end;
 
-function Process_WeaponGroups():boolean;
+procedure Process_WeaponGroups();
 var
   HudShiftPath: string;
 begin

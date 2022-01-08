@@ -147,6 +147,7 @@ begin
           RemoveBOM(ExpandConstant('{app}\DATA\FONTS\fonts.ini'));
           RemoveBOM(ExpandConstant('{app}\DATA\INTERFACE\HudShift.ini'));
           RemoveBOM(ExpandConstant('{app}\DATA\FX\jumpeffect.ini'));
+          RemoveBOM(ExpandConstant('{app}\EXE\newplayer.fl'));
         end;
 
         // Delete restart.fl to stop crashes
