@@ -42,6 +42,7 @@ UninstallDisplayIcon={#SourcePath}\Assets\Images\icon.ico
 UninstallDisplayName={#MyAppName}
 WizardImageFile={#SourcePath}\Assets\Images\backgroundpattern.bmp
 WizardSmallImageFile={#SourcePath}\Assets\Images\icon.bmp
+VersionInfoVersion=1.0.0.0
 
 [Languages]
 Name: "english"; MessagesFile: "compiler:Default.isl"
