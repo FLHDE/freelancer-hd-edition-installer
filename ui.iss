@@ -465,20 +465,28 @@ begin
     'Graphics API',
     'Choose the one that suits your needs'
   );
+
+  descGraphicsApi := TNewStaticText.Create(PageGraphicsApi);
+  descGraphicsApi.Parent := PageGraphicsApi.Surface;
+  descGraphicsApi.WordWrap := True;
+  descGraphicsApi.Width := PageGraphicsApi.SurfaceWidth;
+  descGraphicsApi.Caption := 'This page allows you to choose the graphics API. If you have no idea what this means, just go with either the first or second option, since those offer additional graphics enhancements. If they are causing issues for you, go with the 3rd or 4th option.';
   
   lblDxWrapperGraphicsApi := TLabel.Create(PageGraphicsApi);
   lblDxWrapperGraphicsApi.Parent := PageGraphicsApi.Surface;
   lblDxWrapperGraphicsApi.Caption := 'DxWrapper + d3d8to9 (DirectX 9, recommended)';
   lblDxWrapperGraphicsApi.Left := ScaleX(20);
+  lblDxWrapperGraphicsApi.Top := ScaleY(50);
 
   DxWrapperGraphicsApi := TRadioButton.Create(PageGraphicsApi);
   DxWrapperGraphicsApi.Parent := PageGraphicsApi.Surface;
   DxWrapperGraphicsApi.Checked := True;
+  DxWrapperGraphicsApi.Top := ScaleY(50);
 
   descDxWrapperGraphicsApi := TNewStaticText.Create(PageGraphicsApi);
   descDxWrapperGraphicsApi.Parent := PageGraphicsApi.Surface;
   descDxWrapperGraphicsApi.WordWrap := True;
-  descDxWrapperGraphicsApi.Top := ScaleY(15);
+  descDxWrapperGraphicsApi.Top := ScaleY(65);
   descDxWrapperGraphicsApi.Width := PageGraphicsApi.SurfaceWidth;
   descDxWrapperGraphicsApi.Caption := 'Supports native Anti-Aliasing, Anisotropic Filtering, and ReShade.';
 
@@ -486,16 +494,16 @@ begin
   lblDgVoodooGraphicsApi.Parent := PageGraphicsApi.Surface;
   lblDgVoodooGraphicsApi.Caption := 'dgVoodoo (DirectX 11, recommended)';
   lblDgVoodooGraphicsApi.Left := ScaleX(20);
-  lblDgVoodooGraphicsApi.Top := ScaleY(50);
+  lblDgVoodooGraphicsApi.Top := ScaleY(90);
 
   DgVoodooGraphicsApi := TRadioButton.Create(PageGraphicsApi);
   DgVoodooGraphicsApi.Parent := PageGraphicsApi.Surface;
-  DgVoodooGraphicsApi.Top := ScaleY(50);
+  DgVoodooGraphicsApi.Top := ScaleY(90);
 
   descDgVoodooGraphicsApi := TNewStaticText.Create(PageGraphicsApi);
   descDgVoodooGraphicsApi.Parent := PageGraphicsApi.Surface;
   descDgVoodooGraphicsApi.WordWrap := True;
-  descDgVoodooGraphicsApi.Top := ScaleY(65);
+  descDgVoodooGraphicsApi.Top := ScaleY(105);
   descDgVoodooGraphicsApi.Width := PageGraphicsApi.SurfaceWidth;
   descDgVoodooGraphicsApi.Caption := 'Fixes both lighting bugs on Win 10 and 11. Supports native Anti-Aliasing, Anisotropic Filtering, and ReShade. Not 100% stable, and requires manual refresh rate input.';
 
@@ -503,16 +511,16 @@ begin
   lblVanillaGraphicsApi.Parent := PageGraphicsApi.Surface;
   lblVanillaGraphicsApi.Caption := 'Vanilla Freelancer (DirectX 8)';
   lblVanillaGraphicsApi.Left := ScaleX(20);
-  lblVanillaGraphicsApi.Top := ScaleY(100);
+  lblVanillaGraphicsApi.Top := ScaleY(140);
 
   VanillaGraphicsApi := TRadioButton.Create(PageGraphicsApi);
   VanillaGraphicsApi.Parent := PageGraphicsApi.Surface;
-  VanillaGraphicsApi.Top := ScaleY(100);
+  VanillaGraphicsApi.Top := ScaleY(140);
 
   descVanillaGraphicsApi := TNewStaticText.Create(PageGraphicsApi);
   descVanillaGraphicsApi.Parent := PageGraphicsApi.Surface;
   descVanillaGraphicsApi.WordWrap := True;
-  descVanillaGraphicsApi.Top := ScaleY(115);
+  descVanillaGraphicsApi.Top := ScaleY(155);
   descVanillaGraphicsApi.Width := PageGraphicsApi.SurfaceWidth;
   descVanillaGraphicsApi.Caption := 'Uses your PC''s default DirectX 8 API for Freelancer. You may experience compatibility issues (lighting bugs, micro stutters) when using it.';
 
@@ -520,26 +528,19 @@ begin
   lblLightingFixGraphicsApi.Parent := PageGraphicsApi.Surface;
   lblLightingFixGraphicsApi.Caption := 'Vanilla Freelancer + Lighting Bug Fix (DirectX 8)';
   lblLightingFixGraphicsApi.Left := ScaleX(20);
-  lblLightingFixGraphicsApi.Top := ScaleY(150);
+  lblLightingFixGraphicsApi.Top := ScaleY(190);
 
   LightingFixGraphicsApi := TRadioButton.Create(PageGraphicsApi);
   LightingFixGraphicsApi.Parent := PageGraphicsApi.Surface;
-  LightingFixGraphicsApi.Top := ScaleY(150);
+  LightingFixGraphicsApi.Top := ScaleY(190);
 
   descLightingFixGraphicsApi := TNewStaticText.Create(PageGraphicsApi);
   descLightingFixGraphicsApi.Parent := PageGraphicsApi.Surface;
   descLightingFixGraphicsApi.WordWrap := True;
-  descLightingFixGraphicsApi.Top := ScaleY(165);
+  descLightingFixGraphicsApi.Top := ScaleY(205);
   descLightingFixGraphicsApi.Width := PageGraphicsApi.SurfaceWidth;
   descLightingFixGraphicsApi.Caption := 'About the same as the Vanilla Freelancer option but fixes the known major lighting bug. NOTE: This option only works on Windows 10 and 11!';
   
-  descGraphicsApi := TNewStaticText.Create(PageGraphicsApi);
-  descGraphicsApi.Parent := PageGraphicsApi.Surface;
-  descGraphicsApi.WordWrap := True;
-  descGraphicsApi.Top := ScaleY(200);
-  descGraphicsApi.Width := PageGraphicsApi.SurfaceWidth;
-  descGraphicsApi.Caption := 'This page allows you to choose the graphics API for Freelancer: HD Edition. If you have no idea what this means, just go with either the first or second option, since those offer additional graphics enhancements. If they are causing issues for you, go with the 3rd or 4th option.';
-
   // Add improved reflections
   PageEffects := CreateCustomPage(
     PageGraphicsApi.ID,
