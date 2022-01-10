@@ -18,6 +18,10 @@ var
   PageSinglePlayerConsole: TWizardPage;
   DownloadPage: TDownloadWizardPage;
 
+  // Optional pages
+  DxWrapperPage: TWizardPage;
+  DgVoodooPage: TWizardPage;
+
   // HD Freelancer Intro
   lblHdFreelancerIntro: TLabel;
   HdFreelancerIntro: TCheckBox;
@@ -144,6 +148,12 @@ end;
 function PageHandler_ShouldSkipPage(Page: TWizardPage): Boolean;
 begin
   Result := False;
+
+  // Skips the DxWrapper or dgVoodoo page if they haven't been checked in the Graphics API menu
+  if Page.Id = DxWrapperPage.Id then
+    Result := not DxWrapperGraphicsApi.Checked
+  else if Page.Id = DgVoodooPage.Id then
+    Result := not DgVoodooGraphicsApi.Checked
 end;
 
 function PageHandler_BackButtonClick(Page: TWizardPage): Boolean;
@@ -541,9 +551,23 @@ begin
   descLightingFixGraphicsApi.Width := PageGraphicsApi.SurfaceWidth;
   descLightingFixGraphicsApi.Caption := 'About the same as the Vanilla Freelancer option but fixes the known major lighting bug. NOTE: This option only works on Windows 10 and 11!';
   
+  // DxWrapper options
+  DxWrapperPage := CreateCustomPage(
+    PageGraphicsApi.ID,
+    'DxWrapper options',
+    'Choose additional graphics enhancements'
+  );
+
+  // dgVoodoo options
+  DgVoodooPage := CreateCustomPage(
+    DxWrapperPage.ID,
+    'dgVoodoo options',
+    'Choose additional graphics enhancements'
+  );
+
   // Add improved reflections
   PageEffects := CreateCustomPage(
-    PageGraphicsApi.ID,
+    DgVoodooPage.ID,
     'Add improved effects',
     'Check to install'
   );
@@ -777,5 +801,15 @@ begin
     OnBackButtonClick := @PageHandler_BackButtonClick;
     OnNextButtonClick := @PageHandler_NextButtonClick;
     OnCancelButtonClick := @PageHandler_CancelButtonClick;
+  end;
+
+  with DxWrapperPage do
+  begin
+    OnShouldSkipPage := @PageHandler_ShouldSkipPage;
+  end;
+
+  with DgVoodooPage do
+  begin
+    OnShouldSkipPage := @PageHandler_ShouldSkipPage;
   end;
 end;
