@@ -377,8 +377,12 @@ var
   EXEPath: string;
 begin
   EXEPath := ExpandConstant('{app}\EXE\');
-  if Win10.Checked then RenameFile(EXEPath + 'd3d8_dgvoodoo.dll',EXEPath + 'd3d8.dll')
-  else RenameFile(EXEPath + 'd3d8_dxwrapper.dll',EXEPath + 'd3d8.dll')
+  if DxWrapperGraphicsApi.Checked then 
+    RenameFile(EXEPath + 'd3d8_dxwrapper.dll', EXEPath + 'd3d8.dll')
+  else if dgVoodooGraphicsApi.Checked then
+    RenameFile(EXEPath + 'd3d8_dgvoodoo.dll', EXEPath + 'd3d8.dll')
+  else if LightingFixGraphicsApi.Checked then
+    RenameFile(EXEPath + 'd3d8_legacy.dll', EXEPath + 'd3d8.dll')
 end;
 
 procedure Process_HUD();

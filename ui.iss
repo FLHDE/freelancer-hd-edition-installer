@@ -11,7 +11,7 @@ var
   PageWidescreenHud: TWizardPage;
   PageDarkHUD: TWizardPage;
   PagePlanetScape: TWizardPage;
-  PageWin10: TWizardPage;
+  PageGraphicsApi: TWizardPage;
   PageEffects: TWizardPage;
   PageDrawDistances: TInputOptionWizardPage;
   PageSkips: TWizardPage;
@@ -65,10 +65,20 @@ var
   PlanetScape: TCheckBox;
   descPlanetScape: TNewStaticText;
 
-  // Fix Windows 10 compatibility issues
-  lblWin10: TLabel;
-  Win10: TCheckBox;
-  descWin10: TNewStaticText;
+  // Graphics API
+  lblDxWrapperGraphicsApi: TLabel;
+  lblDgVoodooGraphicsApi: TLabel;
+  lblVanillaGraphicsApi: TLabel;
+  lblLightingFixGraphicsApi: TLabel;
+  DxWrapperGraphicsApi: TRadioButton;
+  DgVoodooGraphicsApi: TRadioButton;
+  VanillaGraphicsApi: TRadioButton;
+  LightingFixGraphicsApi: TRadioButton;
+  descDxWrapperGraphicsApi: TNewStaticText;
+  descDgVoodooGraphicsApi: TNewStaticText;
+  descVanillaGraphicsApi: TNewStaticText;
+  descLightingFixGraphicsApi: TNewStaticText;
+  descGraphicsApi: TNewStaticText;
 
   // Add improved reflections
   lblVanillaReflections: TLabel;
@@ -449,34 +459,90 @@ begin
   PlanetScape.Parent := PagePlanetScape.Surface;
   PlanetScape.Checked := True;
   
-  // Fix Windows 10 compatibility issues
-  PageWin10 := CreateCustomPage(
+  // Choose Graphics API
+  PageGraphicsApi := CreateCustomPage(
     PagePlanetScape.ID,
-    'Fix Windows 10 compatibility issues',
-    'Check to install'
+    'Graphics API',
+    'Choose the one that suits your needs'
   );
   
-  lblWin10 := TLabel.Create(PageWin10);
-  lblWin10.Parent := PageWin10.Surface;
-  lblWin10.Caption := 'Fix Windows 10 compatibility issues.';
-  lblWin10.Left := ScaleX(20);
+  lblDxWrapperGraphicsApi := TLabel.Create(PageGraphicsApi);
+  lblDxWrapperGraphicsApi.Parent := PageGraphicsApi.Surface;
+  lblDxWrapperGraphicsApi.Caption := 'DxWrapper + d3d8to9 (DirectX 9, recommended)';
+  lblDxWrapperGraphicsApi.Left := ScaleX(20);
+
+  DxWrapperGraphicsApi := TRadioButton.Create(PageGraphicsApi);
+  DxWrapperGraphicsApi.Parent := PageGraphicsApi.Surface;
+  DxWrapperGraphicsApi.Checked := True;
+
+  descDxWrapperGraphicsApi := TNewStaticText.Create(PageGraphicsApi);
+  descDxWrapperGraphicsApi.Parent := PageGraphicsApi.Surface;
+  descDxWrapperGraphicsApi.WordWrap := True;
+  descDxWrapperGraphicsApi.Top := ScaleY(15);
+  descDxWrapperGraphicsApi.Width := PageGraphicsApi.SurfaceWidth;
+  descDxWrapperGraphicsApi.Caption := 'Supports native Anti-Aliasing, Anisotropic Filtering, and ReShade.';
+
+  lblDgVoodooGraphicsApi := TLabel.Create(PageGraphicsApi);
+  lblDgVoodooGraphicsApi.Parent := PageGraphicsApi.Surface;
+  lblDgVoodooGraphicsApi.Caption := 'dgVoodoo (DirectX 11, recommended)';
+  lblDgVoodooGraphicsApi.Left := ScaleX(20);
+  lblDgVoodooGraphicsApi.Top := ScaleY(50);
+
+  DgVoodooGraphicsApi := TRadioButton.Create(PageGraphicsApi);
+  DgVoodooGraphicsApi.Parent := PageGraphicsApi.Surface;
+  DgVoodooGraphicsApi.Top := ScaleY(50);
+
+  descDgVoodooGraphicsApi := TNewStaticText.Create(PageGraphicsApi);
+  descDgVoodooGraphicsApi.Parent := PageGraphicsApi.Surface;
+  descDgVoodooGraphicsApi.WordWrap := True;
+  descDgVoodooGraphicsApi.Top := ScaleY(65);
+  descDgVoodooGraphicsApi.Width := PageGraphicsApi.SurfaceWidth;
+  descDgVoodooGraphicsApi.Caption := 'Fixes both lighting bugs on Win 10 and 11. Supports native Anti-Aliasing, Anisotropic Filtering, and ReShade. Not 100% stable, and requires manual refresh rate input.';
+
+  lblVanillaGraphicsApi := TLabel.Create(PageGraphicsApi);
+  lblVanillaGraphicsApi.Parent := PageGraphicsApi.Surface;
+  lblVanillaGraphicsApi.Caption := 'Vanilla Freelancer (DirectX 8)';
+  lblVanillaGraphicsApi.Left := ScaleX(20);
+  lblVanillaGraphicsApi.Top := ScaleY(100);
+
+  VanillaGraphicsApi := TRadioButton.Create(PageGraphicsApi);
+  VanillaGraphicsApi.Parent := PageGraphicsApi.Surface;
+  VanillaGraphicsApi.Top := ScaleY(100);
+
+  descVanillaGraphicsApi := TNewStaticText.Create(PageGraphicsApi);
+  descVanillaGraphicsApi.Parent := PageGraphicsApi.Surface;
+  descVanillaGraphicsApi.WordWrap := True;
+  descVanillaGraphicsApi.Top := ScaleY(115);
+  descVanillaGraphicsApi.Width := PageGraphicsApi.SurfaceWidth;
+  descVanillaGraphicsApi.Caption := 'Uses your PC''s default DirectX 8 API for Freelancer. You may experience compatibility issues (lighting bugs, micro stutters) when using it.';
+
+  lblLightingFixGraphicsApi := TLabel.Create(PageGraphicsApi);
+  lblLightingFixGraphicsApi.Parent := PageGraphicsApi.Surface;
+  lblLightingFixGraphicsApi.Caption := 'Vanilla Freelancer + Lighting Bug Fix (DirectX 8)';
+  lblLightingFixGraphicsApi.Left := ScaleX(20);
+  lblLightingFixGraphicsApi.Top := ScaleY(150);
+
+  LightingFixGraphicsApi := TRadioButton.Create(PageGraphicsApi);
+  LightingFixGraphicsApi.Parent := PageGraphicsApi.Surface;
+  LightingFixGraphicsApi.Top := ScaleY(150);
+
+  descLightingFixGraphicsApi := TNewStaticText.Create(PageGraphicsApi);
+  descLightingFixGraphicsApi.Parent := PageGraphicsApi.Surface;
+  descLightingFixGraphicsApi.WordWrap := True;
+  descLightingFixGraphicsApi.Top := ScaleY(165);
+  descLightingFixGraphicsApi.Width := PageGraphicsApi.SurfaceWidth;
+  descLightingFixGraphicsApi.Caption := 'About the same as the Vanilla Freelancer option but fixes the known major lighting bug. NOTE: This option only works on Windows 10 and 11!';
   
-  descWin10 := TNewStaticText.Create(PageWin10);
-  descWin10.Parent := PageWin10.Surface;
-  descWin10.WordWrap := True;
-  descWin10.Top := ScaleY(20);
-  descWin10.Width := PageWin10.SurfaceWidth;
-  descWin10.Caption := 'Windows 10 users may experience compatibility issues while playing (vanilla) Freelancer including broken lighting in many base interiors and missing glass reflections.' + #13#10 + #13#10 +
-  'We''ve included a Legacy DirectX wrapper named dgVoodoo2 in this mod, which serves as an optional patch that fixes all of these issues.' + #13#10 + #13#10 +
-  'However, we have disabled this option by default as you may experience crashes, bugs, and stutters while using it. TRY IT AT YOUR OWN RISK.' + #13#10 + #13#10 +
-  'If you experience a refresh rate/fps lock to 60 while using this patch, please refer to the wiki for a solution: https://github.com/BC46/freelancer-hd-edition/wiki';
-  
-  Win10 := TCheckBox.Create(PageWin10);
-  Win10.Parent := PageWin10.Surface;
-  
+  descGraphicsApi := TNewStaticText.Create(PageGraphicsApi);
+  descGraphicsApi.Parent := PageGraphicsApi.Surface;
+  descGraphicsApi.WordWrap := True;
+  descGraphicsApi.Top := ScaleY(200);
+  descGraphicsApi.Width := PageGraphicsApi.SurfaceWidth;
+  descGraphicsApi.Caption := 'This page allows you to choose the graphics API for Freelancer: HD Edition. If you have no idea what this means, just go with either the first or second option, since those offer additional graphics enhancements. If they are causing issues for you, go with the 3rd or 4th option.';
+
   // Add improved reflections
   PageEffects := CreateCustomPage(
-    PageWin10.ID,
+    PageGraphicsApi.ID,
     'Add improved effects',
     'Check to install'
   );
@@ -685,7 +751,7 @@ begin
     OnCancelButtonClick := @PageHandler_CancelButtonClick;
   end;
   
-  with PageWin10 do
+  with PageGraphicsApi do
   begin
     OnActivate := @PageHandler_Activate;
     OnShouldSkipPage := @PageHandler_ShouldSkipPage;
