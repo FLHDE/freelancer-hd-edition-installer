@@ -140,34 +140,15 @@ begin
     Position * WizardForm.ProgressGauge.Max div 100;
 end;         
 
-// Next 5 functions are for custom pages. Can possibly be removed.
-procedure PageHandler_Activate(Page: TWizardPage);
-begin
-end;
-
+// Ensures the DxWrapper or dgVoodoo pages are skipped if they haven't been checked in the Graphics API menu
 function PageHandler_ShouldSkipPage(Page: TWizardPage): Boolean;
 begin
   Result := False;
-
-  // Skips the DxWrapper or dgVoodoo page if they haven't been checked in the Graphics API menu
+   
   if Page.Id = DxWrapperPage.Id then
     Result := not DxWrapperGraphicsApi.Checked
   else if Page.Id = DgVoodooPage.Id then
     Result := not DgVoodooGraphicsApi.Checked
-end;
-
-function PageHandler_BackButtonClick(Page: TWizardPage): Boolean;
-begin
-  Result := True;
-end;
-
-function PageHandler_NextButtonClick(Page: TWizardPage): Boolean;
-begin
-  Result := True;
-end;
-
-procedure PageHandler_CancelButtonClick(Page: TWizardPage; var Cancel, Confirm: Boolean);
-begin
 end;
 
 procedure InitializeUi();
@@ -756,52 +737,6 @@ begin
   SinglePlayer := TCheckBox.Create(PageSinglePlayerConsole);
   SinglePlayer.Parent := PageSinglePlayerConsole.Surface;
   SinglePlayer.Checked := True;
-  
-  // Add the functions for each button for each page
-  with PageWidescreenHud do
-  begin
-    OnActivate := @PageHandler_Activate;
-    OnShouldSkipPage := @PageHandler_ShouldSkipPage;
-    OnBackButtonClick := @PageHandler_BackButtonClick;
-    OnNextButtonClick := @PageHandler_NextButtonClick;
-    OnCancelButtonClick := @PageHandler_CancelButtonClick;
-  end;
-  
-  with PagePlanetScape do
-  begin
-    OnActivate := @PageHandler_Activate;
-    OnShouldSkipPage := @PageHandler_ShouldSkipPage;
-    OnBackButtonClick := @PageHandler_BackButtonClick;
-    OnNextButtonClick := @PageHandler_NextButtonClick;
-    OnCancelButtonClick := @PageHandler_CancelButtonClick;
-  end;
-  
-  with PageGraphicsApi do
-  begin
-    OnActivate := @PageHandler_Activate;
-    OnShouldSkipPage := @PageHandler_ShouldSkipPage;
-    OnBackButtonClick := @PageHandler_BackButtonClick;
-    OnNextButtonClick := @PageHandler_NextButtonClick;
-    OnCancelButtonClick := @PageHandler_CancelButtonClick;
-  end;
-  
-  with PageEffects do
-  begin
-    OnActivate := @PageHandler_Activate;
-    OnShouldSkipPage := @PageHandler_ShouldSkipPage;
-    OnBackButtonClick := @PageHandler_BackButtonClick;
-    OnNextButtonClick := @PageHandler_NextButtonClick;
-    OnCancelButtonClick := @PageHandler_CancelButtonClick;
-  end;
-  
-  with PageSinglePlayerConsole do
-  begin
-    OnActivate := @PageHandler_Activate;
-    OnShouldSkipPage := @PageHandler_ShouldSkipPage;
-    OnBackButtonClick := @PageHandler_BackButtonClick;
-    OnNextButtonClick := @PageHandler_NextButtonClick;
-    OnCancelButtonClick := @PageHandler_CancelButtonClick;
-  end;
 
   with DxWrapperPage do
   begin
