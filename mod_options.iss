@@ -778,3 +778,57 @@ begin
       )
   end
 end;
+
+procedure Process_DxWrapper();
+var
+  DxWrapperPath: string;
+begin
+  if not DxWrapperGraphicsApi.Checked then
+    exit;
+
+  DxWrapperPath := ExpandConstant('{app}\EXE\dxwrapper.ini');
+
+  if DxWrapperAa.ItemIndex = 1 then
+    // Enable AA
+    FileReplaceString(DxWrapperPath, 'AntiAliasing               = 0', 'AntiAliasing               = 1');
+
+  if DxWrapperAf.ItemIndex = 1 then
+    // 2x AF
+    FileReplaceString(DxWrapperPath, 'AnisotropicFiltering       = 0', 'AnisotropicFiltering       = 2');
+  if DxWrapperAf.ItemIndex = 2 then
+    // 4x AF
+    FileReplaceString(DxWrapperPath, 'AnisotropicFiltering       = 0', 'AnisotropicFiltering       = 4');
+  if DxWrapperAf.ItemIndex = 3 then
+    // 8x AF
+    FileReplaceString(DxWrapperPath, 'AnisotropicFiltering       = 0', 'AnisotropicFiltering       = 8');
+  if DxWrapperAf.ItemIndex = 4 then
+    // 16x AF
+    FileReplaceString(DxWrapperPath, 'AnisotropicFiltering       = 0', 'AnisotropicFiltering       = 16');
+  if DxWrapperAf.ItemIndex = 5 then
+    // Auto AF
+    FileReplaceString(DxWrapperPath, 'AnisotropicFiltering       = 0', 'AnisotropicFiltering       = 1');
+end;
+
+procedure Process_DxWrapperReShade();
+var
+  ReShadePath: string;
+  Techniques: string;
+begin
+  if (not DxWrapperGraphicsApi.Checked) or (not DxWrapperReShade.Checked) then
+    exit;
+
+  ReShadePath := ExpandConstant('{app}\EXE\');
+  RenameFile(ReShadePath + 'd3d9_reshade.dll', ReShadePath + 'd3d9.dll')
+
+  if (DxWrapperBloom.Checked) then
+    Techniques := Techniques + 'MagicBloom@MagicBloom.fx,';
+  if (DxWrapperHdr.Checked) then
+    Techniques := Techniques + 'HDR@FakeHDR.fx,';
+  if (DxWrapperSaturation.Checked) then
+    Techniques := Techniques + 'Colourfulness@Colourfulness.fx';
+
+  if (Techniques[LENGTH(Techniques)] = ',') then
+    SetLength(Techniques, LENGTH(Techniques) - 1);
+
+  FileReplaceString(ReShadePath + 'ReShadePreset.ini', 'Techniques=', 'Techniques=' + Techniques);
+end;

@@ -175,6 +175,13 @@ begin
     Result := not DgVoodooGraphicsApi.Checked
 end;
 
+procedure DxWrapperReShadeCheckBoxClick(Sender: TObject);
+begin
+  DxWrapperSaturation.Enabled := DxWrapperReShade.Checked;
+  DxWrapperHdr.Enabled := DxWrapperReShade.Checked;
+  DxWrapperBloom.Enabled := DxWrapperReShade.Checked;
+end;
+
 procedure InitializeUi();
 var dir : string;
 begin
@@ -582,10 +589,10 @@ begin
   descDxWrapperAa.Caption := 'Anti-Aliasing removes jagged edges in-game, effectively making them appear smoother at a performance cost.';
   descDxWrapperAa.Top := ScaleY(45);
 
-  lblDxWrapperAa := TLabel.Create(DxWrapperPage);
-  lblDxWrapperAa.Parent := DxWrapperPage.Surface;
-  lblDxWrapperAa.Caption := 'Anisotropic Filtering';
-  lblDxWrapperAa.Top := ScaleY(95);
+  lblDxWrapperAf := TLabel.Create(DxWrapperPage);
+  lblDxWrapperAf.Parent := DxWrapperPage.Surface;
+  lblDxWrapperAf.Caption := 'Anisotropic Filtering';
+  lblDxWrapperAf.Top := ScaleY(95);
   
   DxWrapperAf := TComboBox.Create(DxWrapperPage);
   DxWrapperAf.Parent := DxWrapperPage.Surface;
@@ -630,7 +637,7 @@ begin
   descDxWrapperReShade.WordWrap := True;
   descDxWrapperReShade.Top := ScaleY(20);
   descDxWrapperReShade.Width := DxWrapperPage2.SurfaceWidth;
-  descDxWrapperReShade.Caption := 'This option enables ReShade, which allows for the use of various post-processing effects to improve the game''s appearance.'
+  descDxWrapperReShade.Caption := 'This option enables ReShade, which allows for the use of various post-processing effects to improve the game''s appearance. If it has been enabled, the configuration below can always be adjusted by pressing the ''Home'' key in-game.'
   
   DxWrapperReShade := TCheckBox.Create(DxWrapperPage2);
   DxWrapperReShade.Parent := DxWrapperPage2.Surface;
@@ -905,5 +912,10 @@ begin
   with DgVoodooPage2 do
   begin
     OnShouldSkipPage := @PageHandler_ShouldSkipPage;
+  end;
+
+  with DxWrapperReShade do
+  begin
+    OnClick := @DxWrapperReShadeCheckBoxClick;
   end;
 end;

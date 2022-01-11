@@ -138,6 +138,8 @@ begin
         Process_DarkHUD(); // Must be called after Process_HUD();
         Process_FlatIcons();
         Process_WeaponGroups();
+        Process_DxWrapper();
+        Process_DxWrapperReShade();
 
         // Delete potential UTF-8 BOM headers in all edited ini files
         if not IsWine then 
@@ -149,6 +151,8 @@ begin
           RemoveBOM(ExpandConstant('{app}\DATA\INTERFACE\HudShift.ini'));
           RemoveBOM(ExpandConstant('{app}\DATA\FX\jumpeffect.ini'));
           RemoveBOM(ExpandConstant('{app}\EXE\newplayer.fl'));
+          RemoveBOM(ExpandConstant('{app}\EXE\dxwrapper.ini'));
+          RemoveBOM(ExpandConstant('{app}\EXE\ReShadePreset.ini'));
         end;
 
         // Delete restart.fl to stop crashes
