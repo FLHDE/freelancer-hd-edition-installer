@@ -20,7 +20,9 @@ var
 
   // Optional pages
   DxWrapperPage: TWizardPage;
+  DxWrapperPage2: TWizardPage;
   DgVoodooPage: TWizardPage;
+  DgVoodooPage2: TWizardPage;
 
   // HD Freelancer Intro
   lblHdFreelancerIntro: TLabel;
@@ -84,6 +86,28 @@ var
   descLightingFixGraphicsApi: TNewStaticText;
   descGraphicsApi: TNewStaticText;
 
+  // DxWrapper
+  lblDxWrapperAf: TLabel;
+  lblDxWrapperAa: TLabel;
+  DxWrapperAf: TComboBox;
+  DxWrapperAa: TComboBox;
+  descDxWrapperAf: TNewStaticText;
+  descDxWrapperAa: TNewStaticText;
+
+  // DxWrapper #2
+  lblDxWrapperReShade: TLabel;
+  lblDxWrapperSaturation: TLabel;
+  lblDxWrapperHdr: TLabel;
+  lblDxWrapperBloom: TLabel;
+  DxWrapperReShade: TCheckBox;
+  DxWrapperSaturation: TCheckBox;
+  DxWrapperHdr: TCheckBox;
+  DxWrapperBloom: TCheckBox;
+  descDxWrapperReShade: TNewStaticText;
+  descDxWrapperSaturation: TNewStaticText;
+  descDxWrapperHdr: TNewStaticText;
+  descDxWrapperBloom: TNewStaticText;
+
   // Add improved reflections
   lblVanillaReflections: TLabel;
   lblShinyReflections: TLabel;
@@ -145,9 +169,9 @@ function PageHandler_ShouldSkipPage(Page: TWizardPage): Boolean;
 begin
   Result := False;
    
-  if Page.Id = DxWrapperPage.Id then
+  if (Page.Id = DxWrapperPage.Id) or (Page.Id = DxWrapperPage2.Id) then
     Result := not DxWrapperGraphicsApi.Checked
-  else if Page.Id = DgVoodooPage.Id then
+  else if (Page.Id = DgVoodooPage.Id) or (Page.Id = DgVoodooPage2.Id) then
     Result := not DgVoodooGraphicsApi.Checked
 end;
 
@@ -539,6 +563,49 @@ begin
     'Choose additional graphics enhancements'
   );
 
+  lblDxWrapperAa := TLabel.Create(DxWrapperPage);
+  lblDxWrapperAa.Parent := DxWrapperPage.Surface;
+  lblDxWrapperAa.Caption := 'Anti-Aliasing';
+  
+  DxWrapperAa := TComboBox.Create(DxWrapperPage);
+  DxWrapperAa.Parent := DxWrapperPage.Surface;
+  DxWrapperAa.Style := csDropDownList;
+  DxWrapperAa.Items.Add('Off');
+  DxWrapperAa.Items.Add('On (recommended)');
+  DxWrapperAa.ItemIndex := 1;
+  DxWrapperAa.Top := ScaleY(20);
+
+  descDxWrapperAa := TNewStaticText.Create(DxWrapperPage);
+  descDxWrapperAa.Parent := DxWrapperPage.Surface;
+  descDxWrapperAa.WordWrap := True;
+  descDxWrapperAa.Width := DxWrapperPage.SurfaceWidth;
+  descDxWrapperAa.Caption := 'Anti-Aliasing removes jagged edges in-game, effectively making them appear smoother at a performance cost.';
+  descDxWrapperAa.Top := ScaleY(45);
+
+  lblDxWrapperAa := TLabel.Create(DxWrapperPage);
+  lblDxWrapperAa.Parent := DxWrapperPage.Surface;
+  lblDxWrapperAa.Caption := 'Anisotropic Filtering';
+  lblDxWrapperAa.Top := ScaleY(95);
+  
+  DxWrapperAf := TComboBox.Create(DxWrapperPage);
+  DxWrapperAf.Parent := DxWrapperPage.Surface;
+  DxWrapperAf.Style := csDropDownList;
+  DxWrapperAf.Items.Add('Off');
+  DxWrapperAf.Items.Add('2x');
+  DxWrapperAf.Items.Add('4x');
+  DxWrapperAf.Items.Add('8x');
+  DxWrapperAf.Items.Add('16x');
+  DxWrapperAf.Items.Add('Auto (recommended)');
+  DxWrapperAf.ItemIndex := 5;
+  DxWrapperAf.Top := ScaleY(115);
+
+  descDxWrapperAf := TNewStaticText.Create(DxWrapperPage);
+  descDxWrapperAf.Parent := DxWrapperPage.Surface;
+  descDxWrapperAf.WordWrap := True;
+  descDxWrapperAf.Width := DxWrapperPage.SurfaceWidth;
+  descDxWrapperAf.Caption := 'Anisotropic Filtering improves the quality of textures when viewing them from the side, with minimal performance overhead. "Auto" will automatically use the highest option your graphics card supports.';
+  descDxWrapperAf.Top := ScaleY(140);
+
   // dgVoodoo options
   DgVoodooPage := CreateCustomPage(
     DxWrapperPage.ID,
@@ -546,9 +613,91 @@ begin
     'Choose additional graphics enhancements'
   );
 
+  // DxWrapper options #2
+  DxWrapperPage2 := CreateCustomPage(
+    DgVoodooPage.ID,
+    'DxWrapper options #2',
+    'Choose additional graphics enhancements'
+  );
+
+  lblDxWrapperReShade := TLabel.Create(DxWrapperPage2);
+  lblDxWrapperReShade.Parent := DxWrapperPage2.Surface;
+  lblDxWrapperReShade.Caption := 'Enable ReShade';
+  lblDxWrapperReShade.Left := ScaleX(20);
+  
+  descDxWrapperReShade := TNewStaticText.Create(DxWrapperPage2);
+  descDxWrapperReShade.Parent := DxWrapperPage2.Surface;
+  descDxWrapperReShade.WordWrap := True;
+  descDxWrapperReShade.Top := ScaleY(20);
+  descDxWrapperReShade.Width := DxWrapperPage2.SurfaceWidth;
+  descDxWrapperReShade.Caption := 'This option enables ReShade, which allows for the use of various post-processing effects to improve the game''s appearance.'
+  
+  DxWrapperReShade := TCheckBox.Create(DxWrapperPage2);
+  DxWrapperReShade.Parent := DxWrapperPage2.Surface;
+  DxWrapperReShade.Checked := True;
+
+  lblDxWrapperSaturation := TLabel.Create(DxWrapperPage2);
+  lblDxWrapperSaturation.Parent := DxWrapperPage2.Surface;
+  lblDxWrapperSaturation.Caption := 'Add increased saturation';
+  lblDxWrapperSaturation.Left := ScaleX(20);
+  lblDxWrapperSaturation.Top := ScaleY(90);
+  
+  descDxWrapperSaturation := TNewStaticText.Create(DxWrapperPage2);
+  descDxWrapperSaturation.Parent := DxWrapperPage2.Surface;
+  descDxWrapperSaturation.WordWrap := True;
+  descDxWrapperSaturation.Top := ScaleY(110);
+  descDxWrapperSaturation.Width := DxWrapperPage2.SurfaceWidth;
+  descDxWrapperSaturation.Caption := 'Simply gives Freelancer a slightly more-saturated look.'
+  
+  DxWrapperSaturation := TCheckBox.Create(DxWrapperPage2);
+  DxWrapperSaturation.Parent := DxWrapperPage2.Surface;
+  DxWrapperSaturation.Checked := True;
+  DxWrapperSaturation.Top := ScaleY(90);
+
+  lblDxWrapperHdr := TLabel.Create(DxWrapperPage2);
+  lblDxWrapperHdr.Parent := DxWrapperPage2.Surface;
+  lblDxWrapperHdr.Caption := 'Add Fake HDR (High Dynamic Range)';
+  lblDxWrapperHdr.Left := ScaleX(20);
+  lblDxWrapperHdr.Top := ScaleY(140);
+  
+  descDxWrapperHdr := TNewStaticText.Create(DxWrapperPage2);
+  descDxWrapperHdr.Parent := DxWrapperPage2.Surface;
+  descDxWrapperHdr.WordWrap := True;
+  descDxWrapperHdr.Top := ScaleY(160);
+  descDxWrapperHdr.Width := DxWrapperPage2.SurfaceWidth;
+  descDxWrapperHdr.Caption := 'Makes darker areas a bit darker, and brighter areas a bit brighter.'
+  
+  DxWrapperHdr := TCheckBox.Create(DxWrapperPage2);
+  DxWrapperHdr.Parent := DxWrapperPage2.Surface;
+  DxWrapperHdr.Top := ScaleY(140);
+
+  lblDxWrapperBloom := TLabel.Create(DxWrapperPage2);
+  lblDxWrapperBloom.Parent := DxWrapperPage2.Surface;
+  lblDxWrapperBloom.Caption := 'Add Bloom';
+  lblDxWrapperBloom.Left := ScaleX(20);
+  lblDxWrapperBloom.Top := ScaleY(190);
+  
+  descDxWrapperBloom := TNewStaticText.Create(DxWrapperPage2);
+  descDxWrapperBloom.Parent := DxWrapperPage2.Surface;
+  descDxWrapperBloom.WordWrap := True;
+  descDxWrapperBloom.Top := ScaleY(210);
+  descDxWrapperBloom.Width := DxWrapperPage2.SurfaceWidth;
+  descDxWrapperBloom.Caption := 'Adds glow to brighter areas. May reduce detail.'
+  
+  DxWrapperBloom := TCheckBox.Create(DxWrapperPage2);
+  DxWrapperBloom.Parent := DxWrapperPage2.Surface;
+  DxWrapperBloom.Top := ScaleY(190);
+
+  // dgVoodoo options #2
+  DgVoodooPage2 := CreateCustomPage(
+    DxWrapperPage2.ID,
+    'dgVoodoo options #2',
+    'Choose additional graphics enhancements'
+  );
+
   // Add improved reflections
   PageEffects := CreateCustomPage(
-    DgVoodooPage.ID,
+    DgVoodooPage2.ID,
     'Add improved effects',
     'Check to install'
   );
@@ -744,6 +893,16 @@ begin
   end;
 
   with DgVoodooPage do
+  begin
+    OnShouldSkipPage := @PageHandler_ShouldSkipPage;
+  end;
+
+  with DxWrapperPage2 do
+  begin
+    OnShouldSkipPage := @PageHandler_ShouldSkipPage;
+  end;
+
+  with DgVoodooPage2 do
   begin
     OnShouldSkipPage := @PageHandler_ShouldSkipPage;
   end;
