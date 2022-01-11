@@ -108,6 +108,32 @@ var
   descDxWrapperHdr: TNewStaticText;
   descDxWrapperBloom: TNewStaticText;
 
+  // dgVoodoo
+  lblDgVoodooAf: TLabel;
+  lblDgVoodooAa: TLabel;
+  lblDgVoodooRefreshRate: TLabel;
+  lblDgVoodooRefreshRateHz: TLabel;
+  DgVoodooAf: TComboBox;
+  DgVoodooAa: TComboBox;
+  DgVoodooRefreshRate: TNewEdit;
+  descDgVoodooAf: TNewStaticText;
+  descDgVoodooAa: TNewStaticText;
+  descDgVoodooRefreshRate: TNewStaticText;
+
+  // dgVoodoo #2
+  lblDgVoodooReShade: TLabel;
+  lblDgVoodooSaturation: TLabel;
+  lblDgVoodooHdr: TLabel;
+  lblDgVoodooBloom: TLabel;
+  DgVoodooReShade: TCheckBox;
+  DgVoodooSaturation: TCheckBox;
+  DgVoodooHdr: TCheckBox;
+  DgVoodooBloom: TCheckBox;
+  descDgVoodooReShade: TNewStaticText;
+  descDgVoodooSaturation: TNewStaticText;
+  descDgVoodooHdr: TNewStaticText;
+  descDgVoodooBloom: TNewStaticText;
+
   // Add improved reflections
   lblVanillaReflections: TLabel;
   lblShinyReflections: TLabel;
@@ -180,6 +206,13 @@ begin
   DxWrapperSaturation.Enabled := DxWrapperReShade.Checked;
   DxWrapperHdr.Enabled := DxWrapperReShade.Checked;
   DxWrapperBloom.Enabled := DxWrapperReShade.Checked;
+end;
+
+procedure DgVoodooReShadeCheckBoxClick(Sender: TObject);
+begin
+  DgVoodooSaturation.Enabled := DgVoodooReShade.Checked;
+  DgVoodooHdr.Enabled := DgVoodooReShade.Checked;
+  DgVoodooBloom.Enabled := DgVoodooReShade.Checked;
 end;
 
 procedure InitializeUi();
@@ -620,6 +653,72 @@ begin
     'Choose additional graphics enhancements'
   );
 
+  lblDgVoodooAa := TLabel.Create(DgVoodooPage);
+  lblDgVoodooAa.Parent := DgVoodooPage.Surface;
+  lblDgVoodooAa.Caption := 'Anti-Aliasing';
+  
+  DgVoodooAa := TComboBox.Create(DgVoodooPage);
+  DgVoodooAa.Parent := DgVoodooPage.Surface;
+  DgVoodooAa.Style := csDropDownList;
+  DgVoodooAa.Items.Add('Off');
+  DgVoodooAa.Items.Add('2x');
+  DgVoodooAa.Items.Add('4x');
+  DgVoodooAa.Items.Add('8x (recommended)');;
+  DgVoodooAa.ItemIndex := 3;
+  DgVoodooAa.Top := ScaleY(20);
+
+  descDgVoodooAa := TNewStaticText.Create(DgVoodooPage);
+  descDgVoodooAa.Parent := DgVoodooPage.Surface;
+  descDgVoodooAa.WordWrap := True;
+  descDgVoodooAa.Width := DgVoodooPage.SurfaceWidth;
+  descDgVoodooAa.Caption := 'Anti-Aliasing removes jagged edges in-game, effectively making them appear smoother at a performance cost.';
+  descDgVoodooAa.Top := ScaleY(45);
+
+  lblDgVoodooAf := TLabel.Create(DgVoodooPage);
+  lblDgVoodooAf.Parent := DgVoodooPage.Surface;
+  lblDgVoodooAf.Caption := 'Anisotropic Filtering';
+  lblDgVoodooAf.Top := ScaleY(85);
+  
+  DgVoodooAf := TComboBox.Create(DgVoodooPage);
+  DgVoodooAf.Parent := DgVoodooPage.Surface;
+  DgVoodooAf.Style := csDropDownList;
+  DgVoodooAf.Items.Add('Off');
+  DgVoodooAf.Items.Add('2x');
+  DgVoodooAf.Items.Add('4x');
+  DgVoodooAf.Items.Add('8x');
+  DgVoodooAf.Items.Add('16x (recommended)');
+  DgVoodooAf.ItemIndex := 4;
+  DgVoodooAf.Top := ScaleY(105);
+
+  descDgVoodooAf := TNewStaticText.Create(DgVoodooPage);
+  descDgVoodooAf.Parent := DgVoodooPage.Surface;
+  descDgVoodooAf.WordWrap := True;
+  descDgVoodooAf.Width := DgVoodooPage.SurfaceWidth;
+  descDgVoodooAf.Caption := 'Anisotropic Filtering improves the quality of textures when viewing them from the side, with minimal performance overhead.';
+  descDgVoodooAf.Top := ScaleY(130);
+
+  lblDgVoodooRefreshRate := TLabel.Create(DgVoodooPage);
+  lblDgVoodooRefreshRate.Parent := DgVoodooPage.Surface;
+  lblDgVoodooRefreshRate.Caption := 'Refresh Rate';
+  lblDgVoodooRefreshRate.Top := ScaleY(170);
+
+  lblDgVoodooRefreshRateHz := TLabel.Create(DgVoodooPage);
+  lblDgVoodooRefreshRateHz.Parent := DgVoodooPage.Surface;
+  lblDgVoodooRefreshRateHz.Caption := 'Hz';
+  lblDgVoodooRefreshRateHz.Top := ScaleY(193);
+  lblDgVoodooRefreshRateHz.Left := ScaleX(125);
+  
+  DgVoodooRefreshRate := TNewEdit.Create(DgVoodooPage);
+  DgVoodooRefreshRate.Parent := DgVoodooPage.Surface;;
+  DgVoodooRefreshRate.Top := ScaleY(190);
+
+  descDgVoodooRefreshRate := TNewStaticText.Create(DgVoodooPage);
+  descDgVoodooRefreshRate.Parent := DgVoodooPage.Surface;
+  descDgVoodooRefreshRate.WordWrap := True;
+  descDgVoodooRefreshRate.Width := DgVoodooPage.SurfaceWidth;
+  descDgVoodooRefreshRate.Caption := 'Enter your monitor''s refresh rate here. Freelancer will run at this refresh rate.';
+  descDgVoodooRefreshRate.Top := ScaleY(215);
+
   // DxWrapper options #2
   DxWrapperPage2 := CreateCustomPage(
     DgVoodooPage.ID,
@@ -701,6 +800,74 @@ begin
     'dgVoodoo options #2',
     'Choose additional graphics enhancements'
   );
+
+  lblDgVoodooReShade := TLabel.Create(DgVoodooPage2);
+  lblDgVoodooReShade.Parent := DgVoodooPage2.Surface;
+  lblDgVoodooReShade.Caption := 'Enable ReShade';
+  lblDgVoodooReShade.Left := ScaleX(20);
+  
+  descDgVoodooReShade := TNewStaticText.Create(DgVoodooPage2);
+  descDgVoodooReShade.Parent := DgVoodooPage2.Surface;
+  descDgVoodooReShade.WordWrap := True;
+  descDgVoodooReShade.Top := ScaleY(20);
+  descDgVoodooReShade.Width := DxWrapperPage2.SurfaceWidth;
+  descDgVoodooReShade.Caption := 'This option enables ReShade, which allows for the use of various post-processing effects to improve the game''s appearance. If it has been enabled, the configuration below can always be adjusted by pressing the ''Home'' key in-game.'
+  
+  DgVoodooReShade := TCheckBox.Create(DgVoodooPage2);
+  DgVoodooReShade.Parent := DgVoodooPage2.Surface;
+  DgVoodooReShade.Checked := True;
+
+  lblDgVoodooSaturation := TLabel.Create(DgVoodooPage2);
+  lblDgVoodooSaturation.Parent := DgVoodooPage2.Surface;
+  lblDgVoodooSaturation.Caption := 'Add increased saturation';
+  lblDgVoodooSaturation.Left := ScaleX(20);
+  lblDgVoodooSaturation.Top := ScaleY(90);
+  
+  descDgVoodooSaturation := TNewStaticText.Create(DgVoodooPage2);
+  descDgVoodooSaturation.Parent := DgVoodooPage2.Surface;
+  descDgVoodooSaturation.WordWrap := True;
+  descDgVoodooSaturation.Top := ScaleY(110);
+  descDgVoodooSaturation.Width := DgVoodooPage2.SurfaceWidth;
+  descDgVoodooSaturation.Caption := 'Simply gives Freelancer a slightly more-saturated look.'
+  
+  DgVoodooSaturation := TCheckBox.Create(DgVoodooPage2);
+  DgVoodooSaturation.Parent := DgVoodooPage2.Surface;
+  DgVoodooSaturation.Checked := True;
+  DgVoodooSaturation.Top := ScaleY(90);
+
+  lblDgVoodooHdr := TLabel.Create(DgVoodooPage2);
+  lblDgVoodooHdr.Parent := DgVoodooPage2.Surface;
+  lblDgVoodooHdr.Caption := 'Add Fake HDR (High Dynamic Range)';
+  lblDgVoodooHdr.Left := ScaleX(20);
+  lblDgVoodooHdr.Top := ScaleY(140);
+  
+  descDgVoodooHdr := TNewStaticText.Create(DgVoodooPage2);
+  descDgVoodooHdr.Parent := DgVoodooPage2.Surface;
+  descDgVoodooHdr.WordWrap := True;
+  descDgVoodooHdr.Top := ScaleY(160);
+  descDgVoodooHdr.Width := DgVoodooPage2.SurfaceWidth;
+  descDgVoodooHdr.Caption := 'Makes darker areas a bit darker, and brighter areas a bit brighter.'
+  
+  DgVoodooHdr := TCheckBox.Create(DgVoodooPage2);
+  DgVoodooHdr.Parent := DgVoodooPage2.Surface;
+  DgVoodooHdr.Top := ScaleY(140);
+
+  lblDgVoodooBloom := TLabel.Create(DgVoodooPage2);
+  lblDgVoodooBloom.Parent := DgVoodooPage2.Surface;
+  lblDgVoodooBloom.Caption := 'Add Bloom';
+  lblDgVoodooBloom.Left := ScaleX(20);
+  lblDgVoodooBloom.Top := ScaleY(190);
+  
+  descDgVoodooBloom := TNewStaticText.Create(DgVoodooPage2);
+  descDgVoodooBloom.Parent := DgVoodooPage2.Surface;
+  descDgVoodooBloom.WordWrap := True;
+  descDgVoodooBloom.Top := ScaleY(210);
+  descDgVoodooBloom.Width := DxWrapperPage2.SurfaceWidth;
+  descDgVoodooBloom.Caption := 'Adds glow to brighter areas. May reduce detail.'
+  
+  DgVoodooBloom := TCheckBox.Create(DgVoodooPage2);
+  DgVoodooBloom.Parent := DgVoodooPage2.Surface;
+  DgVoodooBloom.Top := ScaleY(190);
 
   // Add improved reflections
   PageEffects := CreateCustomPage(
@@ -917,5 +1084,10 @@ begin
   with DxWrapperReShade do
   begin
     OnClick := @DxWrapperReShadeCheckBoxClick;
+  end;
+
+  with DgVoodooReShade do
+  begin
+    OnClick := @DgVoodooReShadeCheckBoxClick;
   end;
 end;
