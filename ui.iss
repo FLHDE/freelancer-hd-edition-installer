@@ -188,7 +188,18 @@ procedure UpdateProgress(Position: Integer);
 begin
   WizardForm.ProgressGauge.Position :=
     Position * WizardForm.ProgressGauge.Max div 100;
-end;         
+end;
+
+// Handles key presses for an integer field
+procedure DigitFieldKeyPress(Sender: TObject; var Key: Char);
+begin
+  if not ((Key = #8) or { Tab key }
+          (Key = #3) or (Key = #22) or (Key = #24) or { Ctrl+C, Ctrl+V, Ctrl+X }
+          IsDigit(Key)) then
+  begin
+    Key := #0;
+  end;
+end;        
 
 // Ensures the DxWrapper or dgVoodoo pages are skipped if they haven't been checked in the Graphics API menu
 function PageHandler_ShouldSkipPage(Page: TWizardPage): Boolean;
@@ -711,6 +722,8 @@ begin
   DgVoodooRefreshRate := TNewEdit.Create(DgVoodooPage);
   DgVoodooRefreshRate.Parent := DgVoodooPage.Surface;;
   DgVoodooRefreshRate.Top := ScaleY(190);
+  DgVoodooRefreshRate.Text := '60'; // TODO: Get user refresh rate automatically through Win api
+  DgVoodooRefreshRate.OnKeyPress := @DigitFieldKeyPress;
 
   descDgVoodooRefreshRate := TNewStaticText.Create(DgVoodooPage);
   descDgVoodooRefreshRate.Parent := DgVoodooPage.Surface;

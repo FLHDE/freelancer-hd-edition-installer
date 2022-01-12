@@ -116,3 +116,9 @@ begin
   LibHandle := LoadLibraryA('ntdll.dll');
   Result:= GetProcAddress(LibHandle, 'wine_get_version')<> 0;
 end;
+
+// Whether the given char is a digit
+function IsDigit(C: Char): Boolean;
+begin
+  Result := (C >= '0') and (C <= '9')
+end;
