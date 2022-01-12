@@ -170,6 +170,27 @@ var
   i : Integer;
 begin
     Result := True;
+
+    if PageId = DgVoodooPage.ID then
+    begin
+      if (StrToInt(DgVoodooRefreshRate.Text) < 30) or (StrToInt(DgVoodooRefreshRate.Text) > 1000) then
+        begin
+          MsgBox('Refresh rate must be a valid number between 30 and 1000. If you don''t know how to find your monitor''s refresh rate, look it up on the internet.', mbError, MB_OK);
+          Result := False;
+          Exit;
+        end;
+
+      for i := 1 to Length(DgVoodooRefreshRate.Text) do
+      begin
+        if not IsDigit(DgVoodooRefreshRate.Text[i]) then
+        begin
+          MsgBox('Refresh rate must be a valid number between 30 and 1000. If you don''t know how to find your monitor''s refresh rate, look it up on the internet.', mbError, MB_OK);
+          Result := False;
+          Exit;
+        end;
+      end;
+    end;
+
     // If they specify an offline file in the cmd line. Check it's valid, if not don't let them continue.
     if ((PageId = 1) and (OfflineInstall <> 'false') and (not FileExists(OfflineInstall) or (Pos('.zip',OfflineInstall) < 1))) then begin
       MsgBox('The specified source file either doesn''t exist or is not a valid .zip file', mbError, MB_OK);
