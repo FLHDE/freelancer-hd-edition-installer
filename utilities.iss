@@ -71,6 +71,43 @@ begin
   end;
 end;
 
+function IntToHex(Value: Integer; Digits: Integer): string;
+begin
+  Result := Format('%.*x', [Digits, Value])
+end;
+
+// Used to convert a binary expression in string format to an actual binary stream
+function CryptStringToBinary(
+  sz: string; cch: LongWord; flags: LongWord; binary: string; var size: LongWord;
+  skip: LongWord; flagsused: LongWord): Integer;
+  external 'CryptStringToBinaryW@crypt32.dll stdcall';
+
+// Used to perform a hex edit in a file at a specific location
+procedure WriteHexToFile(FileName: string; Offset: longint; Hex: string);
+var
+  Stream: TFileStream;
+  Buffer: string;
+  Size: LongWord;
+begin
+  Stream := TFileStream.Create(FileName, fmOpenReadWrite);
+
+  try
+    SetLength(Buffer, (Length(Hex) div 4) + 1);
+    Size := Length(Hex) div 2;
+    if (CryptStringToBinary(
+          Hex, Length(Hex), $04, Buffer, Size, 0, 0) = 0) or
+       (Size <> Length(Hex) div 2) then
+    begin
+      RaiseException('Could not convert string to binary stream.');
+    end;
+
+    Stream.Seek(Offset, soFromBeginning);
+    Stream.WriteBuffer(Buffer, Size);
+  finally
+    Stream.Free;
+  end;
+end;
+
 // Returns true if the directory is empty
 function isEmptyDir(dirName: String): Boolean;
 var
