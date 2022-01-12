@@ -809,6 +809,45 @@ begin
     FileReplaceString(DxWrapperPath, 'AnisotropicFiltering       = 0', 'AnisotropicFiltering       = 1');
 end;
 
+procedure Process_DgVoodoo();
+var
+  DgVoodooPath: string;
+  RefreshRateBinary: string;
+begin
+  if not DgVoodooGraphicsApi.Checked then
+    exit;
+
+  DgVoodooPath := ExpandConstant('{app}\EXE\dgVoodoo.conf');
+  RefreshRateBinary := IntToHex(StrToInt(DgVoodooRefreshRate.Text), 4);
+
+  if DgVoodooAa.ItemIndex = 1 then
+    // Enable AA 2x
+    WriteHexToFile(DgVoodooPath, $6A, '02');
+  if DgVoodooAa.ItemIndex = 2 then
+    // Enable AA 4x
+    WriteHexToFile(DgVoodooPath, $6A, '04');
+  if DgVoodooAa.ItemIndex = 3 then
+    // Enable AA 8x
+    WriteHexToFile(DgVoodooPath, $6A, '08');
+
+  if DgVoodooAf.ItemIndex = 1 then
+    // Enable AF 2x
+    WriteHexToFile(DgVoodooPath, $86, '02');
+  if DgVoodooAf.ItemIndex = 2 then
+    // Enable AF 4x
+    WriteHexToFile(DgVoodooPath, $86, '04');
+  if DgVoodooAf.ItemIndex = 3 then
+    // Enable AF 8x
+    WriteHexToFile(DgVoodooPath, $86, '08');
+  if DgVoodooAf.ItemIndex = 4 then
+    // Enable AF 16x
+    WriteHexToFile(DgVoodooPath, $86, '10');
+
+  MsgBox(DgVoodooRefreshRate.Text, mbError, MB_OK);
+  MsgBox(RefreshRateBinary, mbError, MB_OK);
+  WriteHexToFile(DgVoodooPath, $6D, RefreshRateBinary);
+end;
+
 procedure Process_DxWrapperReShade();
 var
   ReShadePath: string;
@@ -825,6 +864,30 @@ begin
   if (DxWrapperHdr.Checked) then
     Techniques := Techniques + 'HDR@FakeHDR.fx,';
   if (DxWrapperSaturation.Checked) then
+    Techniques := Techniques + 'Colourfulness@Colourfulness.fx';
+
+  if (Techniques[LENGTH(Techniques)] = ',') then
+    SetLength(Techniques, LENGTH(Techniques) - 1);
+
+  FileReplaceString(ReShadePath + 'ReShadePreset.ini', 'Techniques=', 'Techniques=' + Techniques);
+end;
+
+procedure Process_DgVoodooReShade();
+var
+  ReShadePath: string;
+  Techniques: string;
+begin
+  if (not DgVoodooGraphicsApi.Checked) or (not DgVoodooReShade.Checked) then
+    exit;
+
+  ReShadePath := ExpandConstant('{app}\EXE\');
+  RenameFile(ReShadePath + 'dxgi_reshade.dll', ReShadePath + 'dxgi.dll')
+
+  if (DgVoodooBloom.Checked) then
+    Techniques := Techniques + 'MagicBloom@MagicBloom.fx,';
+  if (DgVoodooHdr.Checked) then
+    Techniques := Techniques + 'HDR@FakeHDR.fx,';
+  if (DgVoodooSaturation.Checked) then
     Techniques := Techniques + 'Colourfulness@Colourfulness.fx';
 
   if (Techniques[LENGTH(Techniques)] = ',') then

@@ -140,6 +140,8 @@ begin
         Process_WeaponGroups();
         Process_DxWrapper();
         Process_DxWrapperReShade();
+        Process_DgVoodoo();
+        Process_DgVoodooReShade();
 
         // Delete potential UTF-8 BOM headers in all edited ini files
         if not IsWine then 
@@ -168,14 +170,17 @@ end;
 function NextButtonClick(PageId: Integer): Boolean;
 var
   i : Integer;
+  RefreshRateError: String;
 begin
     Result := True;
+
+    RefreshRateError := 'Refresh rate must be a valid number between 30 and 1000. If you don''t know how to find your monitor''s refresh rate, look it up on the internet.' + #13#10#13#10 + 'Keep in mind that the DxWrapper option does not require you to set a refresh rate manually.'
 
     if PageId = DgVoodooPage.ID then
     begin
       if (StrToInt(DgVoodooRefreshRate.Text) < 30) or (StrToInt(DgVoodooRefreshRate.Text) > 1000) then
         begin
-          MsgBox('Refresh rate must be a valid number between 30 and 1000. If you don''t know how to find your monitor''s refresh rate, look it up on the internet.', mbError, MB_OK);
+          MsgBox(RefreshRateError, mbError, MB_OK);
           Result := False;
           Exit;
         end;
@@ -184,7 +189,7 @@ begin
       begin
         if not IsDigit(DgVoodooRefreshRate.Text[i]) then
         begin
-          MsgBox('Refresh rate must be a valid number between 30 and 1000. If you don''t know how to find your monitor''s refresh rate, look it up on the internet.', mbError, MB_OK);
+          MsgBox(RefreshRateError, mbError, MB_OK);
           Result := False;
           Exit;
         end;
