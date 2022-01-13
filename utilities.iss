@@ -71,6 +71,27 @@ begin
   end;
 end;
 
+// Gets the device contextt
+function GetDC(HWND: DWord): DWord; external 'GetDC@user32.dll stdcall';
+
+// Retrieve information about a device
+function GetDeviceCaps (hDC, nIndex: Integer): Integer;
+ external 'GetDeviceCaps@GDI32 stdcall';
+
+// Gets the user's main monitor refresh rate
+function RefreshRate(): Integer;
+var 
+  DC: DWord;
+begin
+  try
+    DC := GetDC(0);
+    Result := GetDeviceCaps(DC, 116); // 116 = VREFRESH
+  except
+    Result := 60
+  end;
+end;
+
+// Converts an int to hex
 function IntToHex(Value: Integer; Digits: Integer): string;
 begin
   Result := Format('%.*x', [Digits, Value])
@@ -95,6 +116,7 @@ begin
     SetLength(Buffer, (Length(Hex) div 4) + 1);
     Size := Length(Hex) div 2;
     if (CryptStringToBinary(
+          // 04 = CRYPT_STRING_HEX
           Hex, Length(Hex), $04, Buffer, Size, 0, 0) = 0) or
        (Size <> Length(Hex) div 2) then
     begin
