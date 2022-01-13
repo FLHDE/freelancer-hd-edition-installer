@@ -722,7 +722,7 @@ begin
   DgVoodooRefreshRate := TNewEdit.Create(DgVoodooPage);
   DgVoodooRefreshRate.Parent := DgVoodooPage.Surface;;
   DgVoodooRefreshRate.Top := ScaleY(190);
-  DgVoodooRefreshRate.Text := '60'; // TODO: Get user refresh rate automatically through Win api
+  DgVoodooRefreshRate.Text := IntToStr(RefreshRate());
   DgVoodooRefreshRate.OnKeyPress := @DigitFieldKeyPress;
 
   descDgVoodooRefreshRate := TNewStaticText.Create(DgVoodooPage);
