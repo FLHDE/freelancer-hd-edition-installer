@@ -209,7 +209,14 @@ begin
   if (Page.Id = DxWrapperPage.Id) or (Page.Id = DxWrapperPage2.Id) then
     Result := not DxWrapperGraphicsApi.Checked
   else if (Page.Id = DgVoodooPage.Id) or (Page.Id = DgVoodooPage2.Id) then
+  begin
     Result := not DgVoodooGraphicsApi.Checked
+
+    if (DgVoodooGraphicsApi.Checked) and (IsWine) then
+      MsgBox('It seems you are using Wine. The dgVoodoo options you see on the next page won''t be applied because Wine is currently missing the implementation of a Win32 API function that this options page uses.' + #13#10#13#10 + 
+      'You can still apply the options manually if you wish by opening EXE/dgVoodooCpl.exe after the mod has finished installing.' + #13#10#13#10 + 
+      'Alternatively, you could configure similar options with the DxWrapper Graphics API, which will apply correctly.', mbError, MB_OK)
+  end;
 end;
 
 procedure DxWrapperReShadeCheckBoxClick(Sender: TObject);

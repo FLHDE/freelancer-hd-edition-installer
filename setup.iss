@@ -140,12 +140,14 @@ begin
         Process_WeaponGroups();
         Process_DxWrapper();
         Process_DxWrapperReShade();
-        Process_DgVoodoo();
         Process_DgVoodooReShade();
 
-        // Delete potential UTF-8 BOM headers in all edited ini files
+        // Perform operations that (potentially) do not work on Wine
         if not IsWine then 
         begin
+          Process_DgVoodoo();
+
+          // Delete potential UTF-8 BOM headers in all edited ini files
           RemoveBOM(ExpandConstant('{app}\EXE\dacom.ini'));
           RemoveBOM(ExpandConstant('{app}\EXE\freelancer.ini'));
           RemoveBOM(ExpandConstant('{app}\EXE\flplusplus.ini'));
