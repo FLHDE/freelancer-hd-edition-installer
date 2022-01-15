@@ -71,7 +71,7 @@ begin
   end;
 end;
 
-// Gets the device contextt
+// Gets the device context
 function GetDC(HWND: DWord): DWord; external 'GetDC@user32.dll stdcall';
 
 // Retrieve information about a device
