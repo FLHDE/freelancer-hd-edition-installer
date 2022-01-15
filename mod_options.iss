@@ -843,8 +843,6 @@ begin
     // Enable AF 16x
     WriteHexToFile(DgVoodooPath, $86, '10');
 
-  MsgBox(DgVoodooRefreshRate.Text, mbError, MB_OK);
-  MsgBox(RefreshRateBinary, mbError, MB_OK);
   WriteHexToFile(DgVoodooPath, $6D, RefreshRateBinary);
 end;
 
