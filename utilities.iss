@@ -116,8 +116,8 @@ begin
     SetLength(Buffer, (Length(Hex) div 4) + 1);
     Size := Length(Hex) div 2;
     if (CryptStringToBinary(
-          // 04 = CRYPT_STRING_HEX
-          Hex, Length(Hex), $04, Buffer, Size, 0, 0) = 0) or
+          // 0C = CRYPT_STRING_HEXRAW
+          Hex, Length(Hex), $0C, Buffer, Size, 0, 0) = 0) or
        (Size <> Length(Hex) div 2) then
     begin
       RaiseException('Could not convert string to binary stream.');
