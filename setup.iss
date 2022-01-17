@@ -9,9 +9,7 @@
 #define MyAppExeName "Freelancer.exe"
 #define MyFolderName "freelancer-hd-edition-" + MyAppVersion
 #define MyZipName "freelancerhd"
-; TODO: Remember to change the mirror locations for each release
-; TODO: Order needs changing when we release v0.5. Onedrive is to start.
-#dim Mirrors[5] {"https://github.com/BC46/freelancer-hd-edition/archive/refs/tags/0.5.zip", "https://pechey.net/files/freelancer-hd-edition-0.4.1.zip", "http://luyten.viewdns.net:8080/freelancer-hd-edition-0.4.1.zip","https://onedrive.live.com/download?cid=F03BDD831B77D1AD&resid=F03BDD831B77D1AD%2193136&authkey=AB-33u2fKjr1-V8","https://archive.org/download/freelancer-hd-edition-0.4.1/freelancer-hd-edition-0.4.1.zip"}
+#dim Mirrors[6] {"https://onedrive.live.com/download?cid=F03BDD831B77D1AD&resid=F03BDD831B77D1AD%2193138&authkey=AN1qT9jEN5eUIUo", "https://pechey.net/files/freelancer-hd-edition-0.5.zip", "http://luyten.viewdns.net:8080/freelancer-hd-edition-0.5.0.zip", "https://bolte.io/freelancer-hd-edition-0.5.zip", "https://github.com/BC46/freelancer-hd-edition/archive/refs/tags/0.5.zip", "https://archive.org/download/freelancer-hd-edition-0.5/freelancer-hd-edition-0.5.zip"}
 #define i 
 ; TODO: Update size in bytes on disk
 #define SizeZip 3296899072 
