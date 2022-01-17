@@ -174,8 +174,6 @@ var
 begin
     Result := True;
 
-    RefreshRateError := 'Refresh rate must be a valid number between 30 and 1000. If you don''t know how to find your monitor''s refresh rate, look it up on the internet.' + #13#10#13#10 + 'Keep in mind that the DxWrapper option does not require you to set a refresh rate manually.'
-
     if (PageId = PageGraphicsApi.ID) and (DgVoodooGraphicsApi.Checked) and (IsWine) then
       MsgBox('It seems you are using Wine. The dgVoodoo options you see on the next page won''t be applied because Wine is currently missing the implementation of a Win32 API function that this options page uses.' + #13#10#13#10 + 
       'You can still apply the options manually if you wish by opening EXE/dgVoodooCpl.exe after the mod has finished installing.' + #13#10#13#10 + 
@@ -183,7 +181,9 @@ begin
 
     if PageId = DgVoodooPage.ID then
     begin
-      if (StrToInt(DgVoodooRefreshRate.Text) < 30) or (StrToInt(DgVoodooRefreshRate.Text) > 1000) then
+      RefreshRateError := 'Refresh rate must be a valid number between 30 and 3840. If you don''t know how to find your monitor''s refresh rate, look it up on the internet.' + #13#10#13#10 + 'Keep in mind that the DxWrapper option does not require you to set a refresh rate manually.'
+
+      if (StrToInt(DgVoodooRefreshRate.Text) < 30) or (StrToInt(DgVoodooRefreshRate.Text) > 3840) then
         begin
           MsgBox(RefreshRateError, mbError, MB_OK);
           Result := False;

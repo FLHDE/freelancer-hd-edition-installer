@@ -813,12 +813,18 @@ procedure Process_DgVoodoo();
 var
   DgVoodooPath: string;
   RefreshRateBinary: string;
+  RefreshRateInt: Integer;
 begin
   if not DgVoodooGraphicsApi.Checked then
     exit;
 
   DgVoodooPath := ExpandConstant('{app}\EXE\dgVoodoo.conf');
-  RefreshRateBinary := IntToHex(StrToInt(DgVoodooRefreshRate.Text), 4);
+  RefreshRateInt := StrToInt(DgVoodooRefreshRate.Text)
+
+  if RefreshRateInt <= 255 then
+    RefreshRateBinary := IntToHex(RefreshRateInt, 2)
+  else
+    RefreshRateBinary := SwapBytes(IntToHex(RefreshRateInt, 4));
 
   if DgVoodooAa.ItemIndex = 1 then
     // Enable AA 2x
@@ -843,7 +849,7 @@ begin
     // Enable AF 16x
     WriteHexToFile(DgVoodooPath, $86, '10');
 
-  WriteHexToFile(DgVoodooPath, $6D, RefreshRateBinary);
+  WriteHexToFile(DgVoodooPath, $6E, RefreshRateBinary);
 end;
 
 procedure Process_DxWrapperReShade();

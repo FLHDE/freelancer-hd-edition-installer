@@ -97,6 +97,12 @@ begin
   Result := Format('%.*x', [Digits, Value])
 end;
 
+// Swaps 2 bytes in a binary string (4 total bytes assumed)
+function SwapBytes(BinaryString: string): string;
+begin
+  Result := BinaryString[3] + BinaryString[4] + BinaryString[1] + BinaryString[2] 
+end;
+
 // Used to convert a binary expression in string format to an actual binary stream
 function CryptStringToBinary(
   sz: string; cch: LongWord; flags: LongWord; binary: string; var size: LongWord;
