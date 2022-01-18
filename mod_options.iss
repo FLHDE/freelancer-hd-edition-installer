@@ -870,7 +870,7 @@ begin
   if (DxWrapperSaturation.Checked) then
     Techniques := Techniques + 'Colourfulness@Colourfulness.fx';
 
-  if (Techniques[LENGTH(Techniques)] = ',') then
+  if (LENGTH(Techniques) > 0) and (Techniques[LENGTH(Techniques)] = ',') then
     SetLength(Techniques, LENGTH(Techniques) - 1);
 
   FileReplaceString(ReShadePath + 'ReShadePreset.ini', 'Techniques=', 'Techniques=' + Techniques);
@@ -894,7 +894,7 @@ begin
   if (DgVoodooSaturation.Checked) then
     Techniques := Techniques + 'Colourfulness@Colourfulness.fx';
 
-  if (Techniques[LENGTH(Techniques)] = ',') then
+  if (LENGTH(Techniques) > 0) and (Techniques[LENGTH(Techniques)] = ',') then
     SetLength(Techniques, LENGTH(Techniques) - 1);
 
   FileReplaceString(ReShadePath + 'ReShadePreset.ini', 'Techniques=', 'Techniques=' + Techniques);
