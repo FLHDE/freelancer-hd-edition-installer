@@ -1103,4 +1103,9 @@ begin
   begin
     OnClick := @DgVoodooReShadeCheckBoxClick;
   end;
+
+  // TODO: Remove when the Wine label issue has been fixed
+  if (IsWine) then
+    MsgBox('It seems you are using Wine. The installer will still work as intended. The only minor issue is that many option labels won''t be displayed correctly, presumably because of an incorrect API translation.'  + #13#10#13#10 +
+    'We''ve uploaded screenshots of all installer pages on https://freelancerhd.com/install . Hopefully this will help.', mbError, MB_OK);
 end;

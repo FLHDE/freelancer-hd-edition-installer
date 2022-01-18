@@ -143,6 +143,7 @@ begin
         // Perform operations that (potentially) do not work on Wine
         if not IsWine then 
         begin
+          // TODO: Place outside of if statement when the Wine crypt_string issue has been fixed
           Process_DgVoodoo();
 
           // Delete potential UTF-8 BOM headers in all edited ini files
@@ -174,6 +175,7 @@ var
 begin
     Result := True;
 
+    // TODO: Remove when the Wine crypt_string issue has been fixed
     if (PageId = PageGraphicsApi.ID) and (DgVoodooGraphicsApi.Checked) and (IsWine) then
       MsgBox('It seems you are using Wine. The dgVoodoo options you see on the next page won''t be applied because Wine is currently missing the implementation of a Win32 API function that this options page uses.' + #13#10#13#10 + 
       'You can still apply the options manually if you wish by opening EXE/dgVoodooCpl.exe after the mod has finished installing.' + #13#10#13#10 + 
