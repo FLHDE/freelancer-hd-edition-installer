@@ -2,8 +2,8 @@
 ; GitHub: https://github.com/ollieraikkonen/Freelancer-hd-edition-install-script
 ; Main GitHub: https://github.com/bc46/Freelancer-hd-edition
 
-#define MyAppName "Freelancer: HD Edition v0.5"
-#define MyAppVersion "0.5"
+#define MyAppName "Freelancer: HD Edition v0.6"
+#define MyAppVersion "0.6"
 #define MyAppPublisher "Freelancer: HD Edition Development Team"
 #define MyAppURL "https://github.com/BC46/freelancer-hd-edition"
 #define MyAppExeName "Freelancer.exe"
@@ -11,7 +11,8 @@
 #define MyZipName "freelancerhd"
 ; TODO: Remember to change the mirror locations for each release
 #dim Mirrors[6] {"https://onedrive.live.com/download?cid=F03BDD831B77D1AD&resid=F03BDD831B77D1AD%2193138&authkey=AN1qT9jEN5eUIUo", "https://pechey.net/files/freelancer-hd-edition-0.5.zip", "http://luyten.viewdns.net:8080/freelancer-hd-edition-0.5.0.zip", "https://bolte.io/freelancer-hd-edition-0.5.zip", "https://github.com/BC46/freelancer-hd-edition/archive/refs/tags/0.5.zip", "https://archive.org/download/freelancer-hd-edition-0.5/freelancer-hd-edition-0.5.zip"}
-#define i 
+#define i
+; TODO: Update sizes 
 #define SizeZip 2438619136 
 #define SizeExtracted 4195188736 
 #define SizeVanilla 985624576
