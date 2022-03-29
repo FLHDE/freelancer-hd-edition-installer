@@ -97,7 +97,7 @@ begin
   Result := Format('%.*x', [Digits, Value])
 end;
 
-// Swaps 2 bytes in a binary string (4 total bytes assumed)
+// Swaps 2 bytes in a binary string (2 bytes, or 4 characters assumed)
 function SwapBytes(BinaryString: string): string;
 begin
   Result := BinaryString[3] + BinaryString[4] + BinaryString[1] + BinaryString[2] 
