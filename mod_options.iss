@@ -852,22 +852,19 @@ begin
   WriteHexToFile(DgVoodooPath, $6E, RefreshRateBinary);
 end;
 
-procedure Process_DxWrapperReShade();
+procedure ApplyReShadeOptions(ReShadeDllName: string; BloomChecked: Boolean; HdrChecked: Boolean; SaturationChecked: Boolean);
 var
   ReShadePath: string;
   Techniques: string;
 begin
-  if (not DxWrapperGraphicsApi.Checked) or (not DxWrapperReShade.Checked) then
-    exit;
-
   ReShadePath := ExpandConstant('{app}\EXE\');
-  RenameFile(ReShadePath + 'd3d9_reshade.dll', ReShadePath + 'd3d9.dll')
+  RenameFile(ReShadePath + ReShadeDllName + '_reshade.dll', ReShadePath + ReShadeDllName + '.dll')
 
-  if (DxWrapperBloom.Checked) then
+  if (BloomChecked) then
     Techniques := Techniques + 'MagicBloom@MagicBloom.fx,';
-  if (DxWrapperHdr.Checked) then
+  if (HdrChecked) then
     Techniques := Techniques + 'HDR@FakeHDR.fx,';
-  if (DxWrapperSaturation.Checked) then
+  if (SaturationChecked) then
     Techniques := Techniques + 'Colourfulness@Colourfulness.fx';
 
   if (LENGTH(Techniques) > 0) and (Techniques[LENGTH(Techniques)] = ',') then
@@ -876,26 +873,14 @@ begin
   FileReplaceString(ReShadePath + 'ReShadePreset.ini', 'Techniques=', 'Techniques=' + Techniques);
 end;
 
-procedure Process_DgVoodooReShade();
-var
-  ReShadePath: string;
-  Techniques: string;
+procedure Process_DxWrapperReShade();
 begin
-  if (not DgVoodooGraphicsApi.Checked) or (not DgVoodooReShade.Checked) then
-    exit;
+  if (DxWrapperGraphicsApi.Checked) and (DxWrapperReShade.Checked) then
+    ApplyReShadeOptions('d3d9', DxWrapperBloom.Checked, DxWrapperHdr.Checked, DxWrapperSaturation.Checked);
+end;
 
-  ReShadePath := ExpandConstant('{app}\EXE\');
-  RenameFile(ReShadePath + 'dxgi_reshade.dll', ReShadePath + 'dxgi.dll')
-
-  if (DgVoodooBloom.Checked) then
-    Techniques := Techniques + 'MagicBloom@MagicBloom.fx,';
-  if (DgVoodooHdr.Checked) then
-    Techniques := Techniques + 'HDR@FakeHDR.fx,';
-  if (DgVoodooSaturation.Checked) then
-    Techniques := Techniques + 'Colourfulness@Colourfulness.fx';
-
-  if (LENGTH(Techniques) > 0) and (Techniques[LENGTH(Techniques)] = ',') then
-    SetLength(Techniques, LENGTH(Techniques) - 1);
-
-  FileReplaceString(ReShadePath + 'ReShadePreset.ini', 'Techniques=', 'Techniques=' + Techniques);
+procedure Process_DgVoodooReShade();
+begin
+  if (DgVoodooGraphicsApi.Checked) and (DgVoodooReShade.Checked) then
+    ApplyReShadeOptions('dxgi', DgVoodooBloom.Checked, DgVoodooHdr.Checked, DgVoodooSaturation.Checked);
 end;
