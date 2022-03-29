@@ -27,6 +27,7 @@ AppPublisher={#MyAppPublisher}
 AppPublisherURL={#MyAppURL}
 AppSupportURL={#MyAppURL}
 AppUpdatesURL={#MyAppURL}
+ChangesAssociations=yes
 Compression=lzma
 DefaultDirName={localappdata}\Freelancer HD Edition
 DefaultGroupName=Freelancer HD Edition
