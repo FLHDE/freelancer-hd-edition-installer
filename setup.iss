@@ -120,8 +120,7 @@ begin
         // Process options
         WizardForm.StatusLabel.Caption := 'Processing your options';
         Process_CallSign();
-        Process_HdFreelancerIntro();
-        Process_TextStringRevision();
+        Process_EnglishImprovements();
         Process_SinglePlayerMode();
         Process_NewSaveFolder();
         Process_StartUpLogo();
