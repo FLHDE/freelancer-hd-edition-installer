@@ -74,7 +74,7 @@ end;
 // Gets the device context
 function GetDC(HWND: DWord): DWord; external 'GetDC@user32.dll stdcall';
 
-// Retrieve information about a device
+// Used to retrieve information about a device 
 function GetDeviceCaps (hDC, nIndex: Integer): Integer;
  external 'GetDeviceCaps@GDI32 stdcall';
 
@@ -88,6 +88,27 @@ begin
     Result := GetDeviceCaps(DC, 116); // 116 = VREFRESH
   except
     Result := 60
+  end;
+end;
+
+type
+	DesktopResolution = record
+		Width: Integer;
+		Height: Integer;
+	end;
+
+// Gets the user's main monitor resolution
+function Resolution(): DesktopResolution;
+var 
+  DC: DWord;
+begin
+  try
+    DC := GetDC(0);
+    Result.Width := GetDeviceCaps(DC, 8); // 8 = HORZRES
+    Result.Height := GetDeviceCaps(DC, 10); // 10 = VERTRES
+  except
+    Result.Width := 1920
+    Result.Height := 1080
   end;
 end;
 
@@ -186,4 +207,11 @@ end;
 function IsDigit(C: Char): Boolean;
 begin
   Result := (C >= '0') and (C <= '9')
+end;
+
+// Creates a directory only if it doesn't exist yet
+function CreateDirIfNotExists(const Dir: String): Boolean;
+begin
+  if not DirExists(Dir) then
+    CreateDir(Dir);
 end;

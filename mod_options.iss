@@ -247,6 +247,66 @@ begin
   if SinglePlayer.Checked then FileReplaceString(ExpandConstant('{app}\EXE\dacom.ini'),';console.dll','console.dll')
 end;
 
+// Best options processing logic
+procedure Process_BestOptions();
+var
+  MyGamesFolder: string;
+  OptionsFolder: string;
+  OptionsPath: string;
+  NewOptionsPath: string;
+  Res: DesktopResolution;
+begin
+  if not BestOptions.Checked then
+    exit;
+
+  if NewSaveFolder.Checked then
+    OptionsFolder := 'FreelancerHD'
+  else
+    OptionsFolder := 'Freelancer';
+
+  MyGamesFolder := ExpandConstant('{userdocs}\My Games\')
+  OptionsPath := MyGamesFolder + OptionsFolder + '\PerfOptions.ini'
+  NewOptionsPath := ExpandConstant('{app}\PerfOptions.ini')
+
+  if FileExists(OptionsPath) then begin
+    FileReplaceString(OptionsPath, 'SkipMachineWarnings=',       'SkipMachineWarnings=TRUE;')
+    FileReplaceString(OptionsPath, 'DitherControl =',            'DitherControl = 1.00;')
+    FileReplaceString(OptionsPath, 'MipFilterControlCallback =', 'MipFilterControlCallback = 1.00;')
+    FileReplaceString(OptionsPath, 'generic_effect_perf =',      'generic_effect_perf = 1.00;')
+    FileReplaceString(OptionsPath, 'Nebula =',                   'Nebula = 1.00;')
+    FileReplaceString(OptionsPath, 'SunEffect =',                'SunEffect = 1.00;')
+    FileReplaceString(OptionsPath, 'Asteroids =',                'Asteroids = 1.00;')
+    FileReplaceString(OptionsPath, 'space_dust_detail =',        'space_dust_detail = 1.00;')
+    FileReplaceString(OptionsPath, 'star_sphere =',              'star_sphere = 1.00;')
+    FileReplaceString(OptionsPath, 'AtmosphereMaterialConfig =', 'AtmosphereMaterialConfig = 1.00;')
+    FileReplaceString(OptionsPath, 'HUDAnimConfig =',            'HUDAnimConfig = 1.00;')
+    FileReplaceString(OptionsPath, 'level_of_detail =',          'level_of_detail = 1.00;')
+    FileReplaceString(OptionsPath, 'use_environment_maps =',     'use_environment_maps = 1.00;')
+    FileReplaceString(OptionsPath, 'high_detail_textures =',     'high_detail_textures = 1.00;')
+    FileReplaceString(OptionsPath, 'sound_max_dist_scale =',     'sound_max_dist_scale = 1.00;')
+    FileReplaceString(OptionsPath, 'sound_level_of_detail =',    'sound_level_of_detail = 1.00;')
+    FileReplaceString(OptionsPath, 'rtc_performance =',          'rtc_performance = 1.00;')
+    FileReplaceString(OptionsPath, 'general_graphics =',         'general_graphics = 1.00;')
+    FileReplaceString(OptionsPath, 'advanced_graphics =',        'advanced_graphics = 1.00;')
+    FileReplaceString(OptionsPath, 'USE_DYNAMIC_COMM_HEAD =',    'USE_DYNAMIC_COMM_HEAD = 1.00;')
+    FileReplaceString(OptionsPath, 'max_submitted_sounds =',     'max_submitted_sounds = 1.00;')
+    FileReplaceString(OptionsPath, 'color_bpp=',                 'color_bpp= 32;')
+    FileReplaceString(OptionsPath, 'depth_bpp=',                 'depth_bpp= 24;')
+  end
+  else begin
+    CreateDirIfNotExists(MyGamesFolder);
+    CreateDirIfNotExists(MyGamesFolder + OptionsFolder);
+
+    FileCopy(NewOptionsPath, OptionsPath, false);
+  end;
+
+  DeleteFile(NewOptionsPath)
+
+  Res := Resolution()
+
+  FileReplaceString(OptionsPath, 'size=', 'size= ' + IntToStr(Res.Width) + ', ' + IntToStr(Res.Height) + ';')
+end;
+
 // Effects processing logic
 procedure Process_Effects();
 var
