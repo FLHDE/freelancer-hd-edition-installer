@@ -36,31 +36,25 @@ begin
     FileReplaceString(FilePath,'DLL = callsign.dll, player 1 1-1','DLL = callsign.dll, fc_lh 9 4-20')
 end;
 
-procedure Process_HdFreelancerIntro();
+procedure Process_EnglishImprovements();
 var
   FreelancerIntroPath: string;
+  TextStringsPath: string;
+  AudioPath: string;
 begin
-  if HdFreelancerIntro.Checked then
+  if EnglishImprovements.Checked then
     begin
     FreelancerIntroPath := ExpandConstant('{app}\DATA\MOVIES\')
+    TextStringsPath := ExpandConstant('{app}\EXE\')
+    AudioPath := ExpandConstant('{app}\DATA\AUDIO\')
 
     // Rename vanilla intro
     RenameFile(FreelancerIntroPath + 'fl_intro.wmv', FreelancerIntroPath + 'fl_intro_vanilla.wmv')
 
     // Rename new HD intro
     RenameFile(FreelancerIntroPath + 'fl_intro_en_hd.wmv', FreelancerIntroPath + 'fl_intro.wmv')
-    end;
-end;
 
-procedure Process_TextStringRevision();
-var
-  TextStringsPath: string;
-begin
-  if TextStringRevision.Checked then
-    begin
-    TextStringsPath := ExpandConstant('{app}\EXE\')
-
-    // Rename vanilla ones
+    // Rename vanilla resource files
     RenameFile(TextStringsPath + 'resources.dll', TextStringsPath + 'resources_vanilla.dll')
     RenameFile(TextStringsPath + 'offerbriberesources.dll', TextStringsPath + 'offerbriberesources_vanilla.dll')
     RenameFile(TextStringsPath + 'nameresources.dll', TextStringsPath + 'nameresources_vanilla.dll')
@@ -69,7 +63,7 @@ begin
     RenameFile(TextStringsPath + 'infocards.dll', TextStringsPath + 'infocards_vanilla.dll')
     RenameFile(TextStringsPath + 'equipresources.dll', TextStringsPath + 'equipresources_vanilla.dll')
 
-    // Rename new text string files
+    // Rename new resource files
     RenameFile(TextStringsPath + 'resources_tsr.dll', TextStringsPath + 'resources.dll')
     RenameFile(TextStringsPath + 'offerbriberesources_tsr.dll', TextStringsPath + 'offerbriberesources.dll')
     RenameFile(TextStringsPath + 'nameresources_tsr.dll', TextStringsPath + 'nameresources.dll')
@@ -77,6 +71,18 @@ begin
     RenameFile(TextStringsPath + 'misctext_tsr.dll', TextStringsPath + 'misctext.dll')
     RenameFile(TextStringsPath + 'infocards_tsr.dll', TextStringsPath + 'infocards.dll')
     RenameFile(TextStringsPath + 'equipresources_tsr.dll', TextStringsPath + 'equipresources.dll')
+
+    // Rename vanilla audio files
+    RenameFile(AudioPath + 'nnvoice.utf', AudioPath + 'nnvoice_vanilla.utf')
+    RenameFile(AudioPath + 'pilot_f_ill_m02.utf', AudioPath + 'pilot_f_ill_m02_vanilla.utf')
+    RenameFile(AudioPath + 'pilot_f_ill_m02a.utf', AudioPath + 'pilot_f_ill_m02a_vanilla.utf')
+    RenameFile(AudioPath + 'pilot_f_ill_m02b.utf', AudioPath + 'pilot_f_ill_m02b_vanilla.utf')
+
+    // Rename new audio files
+    RenameFile(AudioPath + 'nnvoice_eng.utf', AudioPath + 'nnvoice.utf')
+    RenameFile(AudioPath + 'pilot_f_ill_m02_eng.utf', AudioPath + 'pilot_f_ill_m02.utf')
+    RenameFile(AudioPath + 'pilot_f_ill_m02a_eng.utf', AudioPath + 'pilot_f_ill_m02a.utf')
+    RenameFile(AudioPath + 'pilot_f_ill_m02b_eng.utf', AudioPath + 'pilot_f_ill_m02b.utf')
     end;
 end;
 
