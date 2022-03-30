@@ -15,7 +15,7 @@ var
   PageEffects: TWizardPage;
   PageDrawDistances: TInputOptionWizardPage;
   PageSkips: TWizardPage;
-  PageSinglePlayerConsole: TWizardPage;
+  PageMiscOptions: TWizardPage;
   DownloadPage: TDownloadWizardPage;
 
   // Optional pages
@@ -170,6 +170,11 @@ var
   lblSinglePlayer: TLabel;
   SinglePlayer: TCheckBox;
   descSinglePlayer: TNewStaticText;
+
+  // Apply best options
+  lblBestOptions: TLabel;
+  BestOptions: TCheckBox;
+  descBestOptions: TNewStaticText;
 
 // Report on download progress
 function OnDownloadProgress(const Url, FileName: String; const Progress, ProgressMax: Int64): Boolean;
@@ -1032,27 +1037,45 @@ begin
   SkipIntros.Checked := True;
   
   // Single Player Command Console
-  PageSinglePlayerConsole := CreateCustomPage(
+  PageMiscOptions := CreateCustomPage(
     PageSkips.ID,
-    'Single Player Command Console',
+    'Misc options',
     'Check to install'
   );
   
-  lblSinglePlayer := TLabel.Create(PageSinglePlayerConsole);
-  lblSinglePlayer.Parent := PageSinglePlayerConsole.Surface;
+  lblSinglePlayer := TLabel.Create(PageMiscOptions);
+  lblSinglePlayer.Parent := PageMiscOptions.Surface;
   lblSinglePlayer.Caption := 'Single Player Command Console';
   lblSinglePlayer.Left := ScaleX(20);
   
-  descSinglePlayer := TNewStaticText.Create(PageSinglePlayerConsole);
-  descSinglePlayer.Parent := PageSinglePlayerConsole.Surface;
+  descSinglePlayer := TNewStaticText.Create(PageMiscOptions);
+  descSinglePlayer.Parent := PageMiscOptions.Surface;
   descSinglePlayer.WordWrap := True;
   descSinglePlayer.Top := ScaleY(20);
-  descSinglePlayer.Width := PageSinglePlayerConsole.SurfaceWidth;
+  descSinglePlayer.Width := PageMiscOptions.SurfaceWidth;
   descSinglePlayer.Caption := 'This option provides various console commands in Single Player to directly manipulate the environment. It also allows players to own more than one ship. To use it, press Enter while in-game and type "help" for a list of available commands.';
   
-  SinglePlayer := TCheckBox.Create(PageSinglePlayerConsole);
-  SinglePlayer.Parent := PageSinglePlayerConsole.Surface;
+  SinglePlayer := TCheckBox.Create(PageMiscOptions);
+  SinglePlayer.Parent := PageMiscOptions.Surface;
   SinglePlayer.Checked := True;
+
+  lblBestOptions := TLabel.Create(PageMiscOptions);
+  lblBestOptions.Parent := PageMiscOptions.Surface;
+  lblBestOptions.Caption := 'Apply Best Video Options';
+  lblBestOptions.Left := ScaleX(20);
+  lblBestOptions.Top := ScaleY(80);
+  
+  descBestOptions := TNewStaticText.Create(PageMiscOptions);
+  descBestOptions.Parent := PageMiscOptions.Surface;
+  descBestOptions.WordWrap := True;
+  descBestOptions.Top := ScaleY(100);
+  descBestOptions.Width := PageMiscOptions.SurfaceWidth;
+  descBestOptions.Caption := 'Automatically applies the highest video options available in Freelancer. Additionally, it''ll select your monitor''s native resolution. Freelancer usually doesn''t do any of this by default.';
+  
+  BestOptions := TCheckBox.Create(PageMiscOptions);
+  BestOptions.Parent := PageMiscOptions.Surface;
+  BestOptions.Checked := True;
+  BestOptions.Top := ScaleY(80);
 
   with DxWrapperPage do
   begin
