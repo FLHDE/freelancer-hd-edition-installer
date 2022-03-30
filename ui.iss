@@ -3,7 +3,7 @@ var
   // Custom Pages
   DataDirPage: TInputDirWizardPage;
   CallSign: TInputOptionWizardPage;
-  PageHdFreelancerIntro: TWizardPage;
+  PageEnglishImprovements: TWizardPage;
   PageSinglePlayer: TWizardPage;
   StartupRes: TInputOptionWizardPage;
   LogoRes: TInputOptionWizardPage;
@@ -24,13 +24,10 @@ var
   DgVoodooPage: TWizardPage;
   DgVoodooPage2: TWizardPage;
 
-  // HD Freelancer Intro
-  lblHdFreelancerIntro: TLabel;
-  HdFreelancerIntro: TCheckBox;
-  descHdFreelancerIntro: TNewStaticText;
-  lblTextStringRevision: TLabel;
-  TextStringRevision: TCheckBox;
-  descTextStringRevision: TNewStaticText;
+  // Localization
+  lblEnglishImprovements: TLabel;
+  EnglishImprovements: TCheckBox;
+  descEnglishImprovements: TNewStaticText;
 
   // Single Player mode
   lblStoryMode: TLabel;
@@ -272,47 +269,30 @@ begin
   CallSign.Add('Hacker Kappa 4-20');
   CallSign.Values[0] := True;
 
-  // Initialize HdFreelancerIntro page and add content
-  PageHdFreelancerIntro := CreateCustomPage(CallSign.ID,
-  'Localization', 'Customize these options to your liking');
+  // Initialize English Improvements page and add content
+  PageEnglishImprovements := CreateCustomPage(CallSign.ID,
+  'Localization', 'Apply English improvements');
 
-  lblHdFreelancerIntro := TLabel.Create(PageHdFreelancerIntro);
-  lblHdFreelancerIntro.Parent := PageHdFreelancerIntro.Surface;
-  lblHdFreelancerIntro.Caption := 'Add English HD Freelancer Intro';
-  lblHdFreelancerIntro.Left := ScaleX(20);
+  lblEnglishImprovements := TLabel.Create(PageEnglishImprovements);
+  lblEnglishImprovements.Parent := PageEnglishImprovements.Surface;
+  lblEnglishImprovements.Caption := 'Apply English Freelancer improvements';
+  lblEnglishImprovements.Left := ScaleX(20);
   
-  descHdFreelancerIntro := TNewStaticText.Create(PageHdFreelancerIntro);
-  descHdFreelancerIntro.Parent := PageHdFreelancerIntro.Surface;
-  descHdFreelancerIntro.WordWrap := True;
-  descHdFreelancerIntro.Top := ScaleY(20);
-  descHdFreelancerIntro.Width := PageHdFreelancerIntro.SurfaceWidth;
-  descHdFreelancerIntro.Caption := 'The default Freelancer startup movie only has a resolution of 720x480. This option adds a higher quality version of this intro with a resolution if 1440x960. However, this HD intro is only available in English. If you''d like to view the Freelancer intro your game''s original language other than English, disable this option.';
+  descEnglishImprovements := TNewStaticText.Create(PageEnglishImprovements);
+  descEnglishImprovements.Parent := PageEnglishImprovements.Surface;
+  descEnglishImprovements.WordWrap := True;
+  descEnglishImprovements.Top := ScaleY(20);
+  descEnglishImprovements.Width := PageEnglishImprovements.SurfaceWidth;
+  descEnglishImprovements.Caption := 
+  'This option fixes many typos, grammar mistakes, inconsistencies, and more, in the English Freelancer text and audio resources. It also adds a higher quality Freelancer intro (1440x960 instead of 720x480), which is only available in English.' + #13#10#13#10 +  
+  'NOTE: This option will set all of Freelancer''s text, a few voice lines, and the intro to English. Disable this option if you''d to play Freelancer in a different language like German, French, or Russian.';
 
-  HdFreelancerIntro := TCheckBox.Create(PageHdFreelancerIntro);
-  HdFreelancerIntro.Parent := PageHdFreelancerIntro.Surface;
-  HdFreelancerIntro.Checked := True;
-
-  lblTextStringRevision := TLabel.Create(PageHdFreelancerIntro);
-  lblTextStringRevision.Parent := PageHdFreelancerIntro.Surface;
-  lblTextStringRevision.Caption := 'Apply English Text String Revision patch';
-  lblTextStringRevision.Left := ScaleX(20);
-  lblTextStringRevision.Top := ScaleY(90);
-  
-  descTextStringRevision := TNewStaticText.Create(PageHdFreelancerIntro);
-  descTextStringRevision.Parent := PageHdFreelancerIntro.Surface;
-  descTextStringRevision.WordWrap := True;
-  descTextStringRevision.Top := ScaleY(110);
-  descTextStringRevision.Width := PageHdFreelancerIntro.SurfaceWidth;
-  descTextStringRevision.Caption := 'This option fixes many typos, grammar mistakes, inconsistencies, and more, in the English Freelancer text resources. NOTE: This option will set all of Freelancer''s text to English. Disable this option if your intention is to play Freelancer in a different language like German, French, or Russian.';
-
-  TextStringRevision := TCheckBox.Create(PageHdFreelancerIntro);
-  TextStringRevision.Parent := PageHdFreelancerIntro.Surface;
-  TextStringRevision.Checked := True;
-  TextStringRevision.Top := ScaleY(90);
-
+  EnglishImprovements := TCheckBox.Create(PageEnglishImprovements);
+  EnglishImprovements.Parent := PageEnglishImprovements.Surface;
+  EnglishImprovements.Checked := True;
 
   // Initialize Single Player page and add content
-  PageSinglePlayer := CreateCustomPage(PageHdFreelancerIntro.ID, 
+  PageSinglePlayer := CreateCustomPage(PageEnglishImprovements.ID, 
   'Single Player options', 'Choose how you''d like to play Single Player');
 
   lblStoryMode := TLabel.Create(PageSinglePlayer);
