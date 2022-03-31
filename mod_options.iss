@@ -26,12 +26,12 @@ begin
     FileReplaceString(FilePath,'DLL = callsign.dll, player 1 1-1','DLL = callsign.dll, co_os 13 8-0')
   else if(CallSign.Values[10]) then // Daumann Zeta 11-17
     FileReplaceString(FilePath,'DLL = callsign.dll, player 1 1-1','DLL = callsign.dll, co_khc 6 11-17')
-  else if(CallSign.Values[11]) then // Bowex Gamma 5-7
-    FileReplaceString(FilePath,'DLL = callsign.dll, player 1 1-1','DLL = callsign.dll, co_be 3 5-7')
+  else if(CallSign.Values[11]) then // Bowex Delta 5-7
+    FileReplaceString(FilePath,'DLL = callsign.dll, player 1 1-1','DLL = callsign.dll, co_be 4 5-7')
   else if(CallSign.Values[12]) then // Order Omicron 0-0
     FileReplaceString(FilePath,'DLL = callsign.dll, player 1 1-1','DLL = callsign.dll, fc_or 11 0-0')
-  else if(CallSign.Values[13]) then // LSF Delta 6-9
-    FileReplaceString(FilePath,'DLL = callsign.dll, player 1 1-1','DLL = callsign.dll, li_lsf 4 6-9')
+  else if(CallSign.Values[13]) then // LSF Gamma 6-9
+    FileReplaceString(FilePath,'DLL = callsign.dll, player 1 1-1','DLL = callsign.dll, li_lsf 3 6-9')
   else if(CallSign.Values[14]) then // Hacker Kappa 4-20
     FileReplaceString(FilePath,'DLL = callsign.dll, player 1 1-1','DLL = callsign.dll, fc_lh 9 4-20')
 end;
