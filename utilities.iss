@@ -1,11 +1,48 @@
 [Code]
+// Used to detect if the user is using WINE or not
+function LoadLibraryA(lpLibFileName: PAnsiChar): THandle;
+external 'LoadLibraryA@kernel32.dll stdcall';
+function GetProcAddress(Module: THandle; ProcName: PAnsiChar): Longword;
+external 'GetProcAddress@kernel32.dll stdcall';
+
+function IsWine: boolean;
+var  LibHandle  : THandle;
+begin
+  LibHandle := LoadLibraryA('ntdll.dll');
+  Result:= GetProcAddress(LibHandle, 'wine_get_version')<> 0;
+end;
+
+// Gets the attributes for a file or directory (e.g. read and write)
+function GetFileAttributes(lpFileName: string): DWORD;
+ external 'GetFileAttributesW@kernel32.dll stdcall';
+
+// Sets the attributes for a file or directory (e.g. read and write)
+function SetFileAttributes(lpFileName: string; dwFileAttributes: DWORD): BOOL;
+  external 'SetFileAttributesW@kernel32.dll stdcall';
+
+// Removes a read only attribute from a file
+procedure RemoveReadOnly(FileName : String);
+var
+ Attr : DWord;
+begin
+  Attr := GetFileAttributes(FileName);
+  if (Attr and 1) = 1  then          
+  begin
+    Attr := Attr -1;
+    SetFileAttributes(FileName, Attr);
+  end;
+end;
+
 // Used to copy the vanilla install to {app} also the extracted .zip file back to {app}
 procedure DirectoryCopy(SourcePath, DestPath: string; Move: Boolean);
 var
   FindRec: TFindRec;
   SourceFilePath: string;
   DestFilePath: string;
+  Wine: boolean;
 begin
+  Wine := IsWine
+
   if FindFirst(SourcePath + '\*', FindRec) then
   begin
     try
@@ -21,7 +58,10 @@ begin
               RaiseException(Format('Failed to copy %s to %s', [
                 SourceFilePath, DestFilePath]));
             end;
-            if(Move) then DeleteFile(SourceFilePath)
+            if(Move) then DeleteFile(SourceFilePath);
+
+            if not Wine then
+              RemoveReadOnly(DestFilePath);
           end
             else
           begin
@@ -188,19 +228,6 @@ var
 begin
   Exec(ExpandConstant('{tmp}\utf-8-bom-remover.exe'), ExpandConstant('"' + FileName + '"'), '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
   result := ResultCode;
-end;
-
-// Used to detect if the user is using WINE or not
-function LoadLibraryA(lpLibFileName: PAnsiChar): THandle;
-external 'LoadLibraryA@kernel32.dll stdcall';
-function GetProcAddress(Module: THandle; ProcName: PAnsiChar): Longword;
-external 'GetProcAddress@kernel32.dll stdcall';
-
-function IsWine: boolean;
-var  LibHandle  : THandle;
-begin
-  LibHandle := LoadLibraryA('ntdll.dll');
-  Result:= GetProcAddress(LibHandle, 'wine_get_version')<> 0;
 end;
 
 // Whether the given char is a digit
