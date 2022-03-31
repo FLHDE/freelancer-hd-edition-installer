@@ -268,9 +268,9 @@ begin
   CallSign.Add('Dragons Green 16-13');
   CallSign.Add('Spa and Cruise Omega 8-0');
   CallSign.Add('Daumann Zeta 11-17');
-  CallSign.Add('Bowex Gamma 5-7');
+  CallSign.Add('Bowex Delta 5-7');
   CallSign.Add('Order Omicron 0-0');
-  CallSign.Add('LSF Delta 6-9');
+  CallSign.Add('LSF Gamma 6-9');
   CallSign.Add('Hacker Kappa 4-20');
   CallSign.Values[0] := True;
 
