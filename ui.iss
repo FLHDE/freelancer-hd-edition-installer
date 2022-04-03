@@ -556,7 +556,7 @@ begin
   descDgVoodooGraphicsApi.WordWrap := True;
   descDgVoodooGraphicsApi.Top := ScaleY(105);
   descDgVoodooGraphicsApi.Width := PageGraphicsApi.SurfaceWidth;
-  descDgVoodooGraphicsApi.Caption := 'Fixes both lighting bugs on Win 10 and 11. Supports native Anti-Aliasing, Anisotropic Filtering, and ReShade. Not 100% stable, and requires manual refresh rate input.';
+  descDgVoodooGraphicsApi.Caption := 'Fixes the major lighting bug on Windows 10 and 11. Supports native Anti-Aliasing, Anisotropic Filtering, and ReShade. Requires manual refresh rate input.';
 
   lblVanillaGraphicsApi := TLabel.Create(PageGraphicsApi);
   lblVanillaGraphicsApi.Parent := PageGraphicsApi.Surface;
@@ -573,7 +573,7 @@ begin
   descVanillaGraphicsApi.WordWrap := True;
   descVanillaGraphicsApi.Top := ScaleY(155);
   descVanillaGraphicsApi.Width := PageGraphicsApi.SurfaceWidth;
-  descVanillaGraphicsApi.Caption := 'Uses your PC''s default DirectX 8 API for Freelancer. You may experience compatibility issues (lighting bugs, micro stutters) when using it.';
+  descVanillaGraphicsApi.Caption := 'Uses your PC''s default DirectX 8 API for Freelancer. You may experience compatibility issues when using it.';
 
   lblLightingFixGraphicsApi := TLabel.Create(PageGraphicsApi);
   lblLightingFixGraphicsApi.Parent := PageGraphicsApi.Surface;
@@ -590,7 +590,7 @@ begin
   descLightingFixGraphicsApi.WordWrap := True;
   descLightingFixGraphicsApi.Top := ScaleY(205);
   descLightingFixGraphicsApi.Width := PageGraphicsApi.SurfaceWidth;
-  descLightingFixGraphicsApi.Caption := 'About the same as the Vanilla Freelancer option but fixes the known major lighting bug. NOTE: This option only works on Windows 10 and 11!';
+  descLightingFixGraphicsApi.Caption := 'About the same as the Vanilla Freelancer option but fixes the major lighting bug on Windows 10 and 11. NOTE: This option only works on Windows 10 and 11!';
   
   // DxWrapper options
   DxWrapperPage := CreateCustomPage(
