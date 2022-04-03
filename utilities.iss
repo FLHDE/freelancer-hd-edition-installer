@@ -243,7 +243,7 @@ begin
     CreateDir(Dir);
 end;
 
-// Remove Junk Files from 2003
+// Define type for SYSTEMTIME. We only care about the year here really.
 type  
 SYSTEMTIME = record 
   Year:         WORD; 
@@ -256,35 +256,39 @@ SYSTEMTIME = record
   Milliseconds: WORD; 
 end; 
 
-
+// Use windows function to convert date modified to a useable format
 function FileTimeToSystemTime(
 FileTime:        TFileTime; 
 var SystemTime:  SYSTEMTIME
 ): Boolean; 
 external 'FileTimeToSystemTime@kernel32.dll stdcall'; 
 
+// Remove all 2003 files in a folder of a certain type
 procedure RemoveJunkFiles(FileType: string);
 var
 FindRec: TFindRec;
 SystemInfo: SYSTEMTIME;
 begin
-  // if we've found a *.dll file in the specified folder, then...
+  // If we've found a *.type file in the specified folder, then...
   if FindFirst(ExpandConstant('{app}\*.' + FileType), FindRec) then
     try
-      // repeat loop for every *.type file in the specified folder
+      // Repeat loop for every *.type file in the specified folder
       repeat
-        // if the iterated item is not a directory named like Dir.dll
+        // If the iterated item is not a directory named like Dir.type
         if FindRec.Attributes and FILE_ATTRIBUTE_DIRECTORY = 0 then
         begin
+          // Convert LastWrite time to our custom type
           FileTimeToSystemTime( FindRec.LastWriteTime, SystemInfo)
+          // Convert from our custom type to a string and compare with 2003
           if Format('%4.4d',[SystemInfo.Year]) = '2003' then
-            DeleteFile(ExpandConstant('{app}\FindRec.Name'));
+            // If it is 2003 then delete
+            DeleteFile(ExpandConstant('{app}\') + FindRec.Name);
         end;
       until
-        // when there no next file item, the loop ends
+        // When there no next file item, the loop ends
         not FindNext(FindRec);
     finally
-      // release the allocated search resources
+      // Release the allocated search resources
       FindClose(FindRec);
   end;
 end;
