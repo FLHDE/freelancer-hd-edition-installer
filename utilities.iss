@@ -242,3 +242,49 @@ begin
   if not DirExists(Dir) then
     CreateDir(Dir);
 end;
+
+// Remove Junk Files from 2003
+type  
+SYSTEMTIME = record 
+  Year:         WORD; 
+  Month:        WORD; 
+  DayOfWeek:    WORD; 
+  Day:          WORD; 
+  Hour:         WORD; 
+  Minute:       WORD; 
+  Second:       WORD; 
+  Milliseconds: WORD; 
+end; 
+
+
+function FileTimeToSystemTime(
+FileTime:        TFileTime; 
+var SystemTime:  SYSTEMTIME
+): Boolean; 
+external 'FileTimeToSystemTime@kernel32.dll stdcall'; 
+
+procedure RemoveJunkFiles(FileType: string);
+var
+FindRec: TFindRec;
+SystemInfo: SYSTEMTIME;
+begin
+  // if we've found a *.dll file in the specified folder, then...
+  if FindFirst(ExpandConstant('{app}\*.' + FileType), FindRec) then
+    try
+      // repeat loop for every *.type file in the specified folder
+      repeat
+        // if the iterated item is not a directory named like Dir.dll
+        if FindRec.Attributes and FILE_ATTRIBUTE_DIRECTORY = 0 then
+        begin
+          FileTimeToSystemTime( FindRec.LastWriteTime, SystemInfo)
+          if Format('%4.4d',[SystemInfo.Year]) = '2003' then
+            DeleteFile(ExpandConstant('{app}\FindRec.Name'));
+        end;
+      until
+        // when there no next file item, the loop ends
+        not FindNext(FindRec);
+    finally
+      // release the allocated search resources
+      FindClose(FindRec);
+  end;
+end;

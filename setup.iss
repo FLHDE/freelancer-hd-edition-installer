@@ -164,6 +164,10 @@ begin
         DeleteFile(ExpandConstant('{userdocs}\My Games\Freelancer\Accts\SinglePlayer\Restart.fl'));
         DeleteFile(ExpandConstant('{userdocs}\My Games\FreelancerHD\Accts\SinglePlayer\Restart.fl'));
 
+        //Remove 2003 junk files
+        RemoveJunkFiles('dll');
+        RemoveJunkFiles('msi');
+
         // Install Complete!
         UpdateProgress(100);
     end;
