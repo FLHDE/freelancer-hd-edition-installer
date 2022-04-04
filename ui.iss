@@ -522,41 +522,41 @@ begin
   descGraphicsApi.WordWrap := True;
   descGraphicsApi.Width := PageGraphicsApi.SurfaceWidth;
   descGraphicsApi.Caption := 'This page allows you to choose the graphics API. If you have no idea what this means, just go with either the first or second option, since those offer additional graphics enhancements. If they are causing issues for you, go with the 3rd or 4th option.';
-  
-  lblDxWrapperGraphicsApi := TLabel.Create(PageGraphicsApi);
-  lblDxWrapperGraphicsApi.Parent := PageGraphicsApi.Surface;
-  lblDxWrapperGraphicsApi.Caption := 'DxWrapper + d3d8to9 (DirectX 9, recommended)';
-  lblDxWrapperGraphicsApi.Left := ScaleX(20);
-  lblDxWrapperGraphicsApi.Top := ScaleY(50);
-
-  DxWrapperGraphicsApi := TRadioButton.Create(PageGraphicsApi);
-  DxWrapperGraphicsApi.Parent := PageGraphicsApi.Surface;
-  DxWrapperGraphicsApi.Checked := True;
-  DxWrapperGraphicsApi.Top := ScaleY(50);
-
-  descDxWrapperGraphicsApi := TNewStaticText.Create(PageGraphicsApi);
-  descDxWrapperGraphicsApi.Parent := PageGraphicsApi.Surface;
-  descDxWrapperGraphicsApi.WordWrap := True;
-  descDxWrapperGraphicsApi.Top := ScaleY(65);
-  descDxWrapperGraphicsApi.Width := PageGraphicsApi.SurfaceWidth;
-  descDxWrapperGraphicsApi.Caption := 'Supports native Anti-Aliasing, Anisotropic Filtering, and ReShade.';
 
   lblDgVoodooGraphicsApi := TLabel.Create(PageGraphicsApi);
   lblDgVoodooGraphicsApi.Parent := PageGraphicsApi.Surface;
   lblDgVoodooGraphicsApi.Caption := 'dgVoodoo (DirectX 11, recommended)';
   lblDgVoodooGraphicsApi.Left := ScaleX(20);
-  lblDgVoodooGraphicsApi.Top := ScaleY(90);
+  lblDgVoodooGraphicsApi.Top := ScaleY(50);
 
   DgVoodooGraphicsApi := TRadioButton.Create(PageGraphicsApi);
   DgVoodooGraphicsApi.Parent := PageGraphicsApi.Surface;
-  DgVoodooGraphicsApi.Top := ScaleY(90);
+  DgVoodooGraphicsApi.Checked := True;
+  DgVoodooGraphicsApi.Top := ScaleY(50);
 
   descDgVoodooGraphicsApi := TNewStaticText.Create(PageGraphicsApi);
   descDgVoodooGraphicsApi.Parent := PageGraphicsApi.Surface;
   descDgVoodooGraphicsApi.WordWrap := True;
-  descDgVoodooGraphicsApi.Top := ScaleY(105);
+  descDgVoodooGraphicsApi.Top := ScaleY(65);
   descDgVoodooGraphicsApi.Width := PageGraphicsApi.SurfaceWidth;
   descDgVoodooGraphicsApi.Caption := 'Fixes the major lighting bug on Windows 10 and 11. Supports native Anti-Aliasing, Anisotropic Filtering, and ReShade. Requires manual refresh rate input.';
+
+  lblDxWrapperGraphicsApi := TLabel.Create(PageGraphicsApi);
+  lblDxWrapperGraphicsApi.Parent := PageGraphicsApi.Surface;
+  lblDxWrapperGraphicsApi.Caption := 'DxWrapper + d3d8to9 (DirectX 9, recommended)';
+  lblDxWrapperGraphicsApi.Left := ScaleX(20);
+  lblDxWrapperGraphicsApi.Top := ScaleY(100);
+
+  DxWrapperGraphicsApi := TRadioButton.Create(PageGraphicsApi);
+  DxWrapperGraphicsApi.Parent := PageGraphicsApi.Surface;
+  DxWrapperGraphicsApi.Top := ScaleY(100);
+
+  descDxWrapperGraphicsApi := TNewStaticText.Create(PageGraphicsApi);
+  descDxWrapperGraphicsApi.Parent := PageGraphicsApi.Surface;
+  descDxWrapperGraphicsApi.WordWrap := True;
+  descDxWrapperGraphicsApi.Top := ScaleY(115);
+  descDxWrapperGraphicsApi.Width := PageGraphicsApi.SurfaceWidth;
+  descDxWrapperGraphicsApi.Caption := 'Supports native Anti-Aliasing, Anisotropic Filtering, and ReShade.';
 
   lblVanillaGraphicsApi := TLabel.Create(PageGraphicsApi);
   lblVanillaGraphicsApi.Parent := PageGraphicsApi.Surface;
