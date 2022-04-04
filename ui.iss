@@ -639,7 +639,8 @@ begin
   descDxWrapperAf.Parent := DxWrapperPage.Surface;
   descDxWrapperAf.WordWrap := True;
   descDxWrapperAf.Width := DxWrapperPage.SurfaceWidth;
-  descDxWrapperAf.Caption := 'Anisotropic Filtering improves the quality of textures when viewing them from the side, with minimal performance overhead. "Auto" will automatically use the highest option your graphics card supports.';
+  descDxWrapperAf.Caption := 'Anisotropic Filtering improves the quality of textures when viewing them from the side, with minimal performance overhead. "Auto" will automatically use the highest option your graphics card supports.' + #13#10 + #13#10 +
+  'NOTE: If you have an NVIDIA GPU, set Anisotropic Filtering to "Off". Otherwise some textures may not load correctly. Alternatively, you may use the dgVoodoo Graphics API from the previous page. It offers the same option which will work correctly.'
   descDxWrapperAf.Top := ScaleY(140);
 
   // dgVoodoo options
