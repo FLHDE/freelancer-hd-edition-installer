@@ -923,7 +923,7 @@ begin
   descMissileEffects.WordWrap := True;
   descMissileEffects.Top := ScaleY(140);
   descMissileEffects.Width := PageEffects.SurfaceWidth;
-  descMissileEffects.Caption := 'This option adds custom missile and torpedo effects. They''re not necessarily higher quality, just alternatives. This option also make torpedoes look massive.';
+  descMissileEffects.Caption := 'This option adds custom missile and torpedo effects. They''re not necessarily higher quality, just alternatives. This option also adds huge torpedo effects.';
   
   MissileEffects := TCheckBox.Create(PageEffects);
   MissileEffects.Parent := PageEffects.Surface;
