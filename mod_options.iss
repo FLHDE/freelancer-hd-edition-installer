@@ -305,6 +305,9 @@ begin
   Res := Resolution()
 
   FileReplaceString(OptionsPath, 'size=', 'size= ' + IntToStr(Res.Width) + ', ' + IntToStr(Res.Height) + ';')
+  
+  if not IsWine then
+    RemoveBOM(OptionsPath);
 end;
 
 // Effects processing logic
