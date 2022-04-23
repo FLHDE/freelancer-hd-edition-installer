@@ -277,6 +277,8 @@ begin
       mirrors.add('{#Mirrors[i]}');
     #endsub
 
+    DesktopRes := Resolution();
+
     #for {i = 0; i < DimOf(Mirrors); i++} PopMirrors
 
     // Initialize UI. This populates all our ui elements with text, size and other properties

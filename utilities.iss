@@ -152,6 +152,14 @@ begin
   end;
 end;
 
+var
+  DesktopRes: DesktopResolution;
+
+function IsDesktopRes16By9(): Boolean;
+begin
+  Result := Trunc(Single(DesktopRes.Width) / DesktopRes.Height * 100.0) / 100.0 = 1.77
+end;
+
 // Converts an int to hex
 function IntToHex(Value: Integer; Digits: Integer): string;
 begin

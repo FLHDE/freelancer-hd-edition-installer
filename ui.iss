@@ -371,7 +371,14 @@ begin
   StartupRes.Add('1440p 16:9 - 2560x1440');
   StartupRes.Add('4K 4:3 - 2880x2160');
   StartupRes.Add('4K 16:9 - 3840x2160');
-  StartupRes.Values[4] := True;
+
+  // Determine best default startup resolution
+  if (DesktopRes.Height >= 2160) then 
+    StartupRes.Values[8] := True
+  else if (DesktopRes.Height >= 1440) then
+    StartupRes.Values[6] := True
+  else
+    StartupRes.Values[4] := True;
   
   // Initialize LogoRes page and add content
   LogoRes := CreateInputOptionPage(StartupRes.ID,
@@ -390,7 +397,14 @@ begin
   LogoRes.Add('1440p 16:9 - 2560x1440');
   LogoRes.Add('4K 4:3 - 2880x2160');
   LogoRes.Add('4K 16:9 - 3840x2160');
-  LogoRes.Values[5] := True;
+
+  // Determine best default logo resolution
+  if (DesktopRes.Height >= 2160) then 
+    LogoRes.Values[9] := True
+  else if (DesktopRes.Height >= 1440) then
+    LogoRes.Values[7] := True
+  else
+    LogoRes.Values[5] := True;
   
   // Fix Small Text on 1440p/4K resolutions
   SmallText := CreateInputOptionPage(LogoRes.ID,
@@ -401,7 +415,14 @@ begin
   SmallText.Add('No');
   SmallText.Add('Yes, apply fix for 2560x1440 screens');
   SmallText.Add('Yes, apply fix for 3840x2160 screens');
-  SmallText.Values[0] := True;
+
+  // Determine best small text fix
+  if (DesktopRes.Height >= 2160) then 
+    SmallText.Values[2] := True
+  else if (DesktopRes.Height >= 1440) then
+    SmallText.Values[1] := True
+  else
+    SmallText.Values[0] := True;
   
   // Initialize HUD page and add content
   PageWidescreenHud := CreateCustomPage(
@@ -442,8 +463,11 @@ begin
   
   WeaponGroups := TCheckBox.Create(PageWidescreenHud);
   WeaponGroups.Parent := PageWidescreenHud.Surface;
-  WeaponGroups.Checked := True;
   WeaponGroups.Top := ScaleY(130);
+
+  // Only check the weapon groups option if the user's aspect ratio is 16:9
+  if (IsDesktopRes16By9()) then
+    WeaponGroups.Checked := True;
 
   // Initialize Dark HUD page and add content
   PageDarkHud := CreateCustomPage(
@@ -508,7 +532,10 @@ begin
   
   PlanetScape := TCheckBox.Create(PagePlanetScape);
   PlanetScape.Parent := PagePlanetScape.Surface;
-  PlanetScape.Checked := True;
+
+  // Only check the planetscapes fix option if the user's aspect ratio is 16:9
+  if (IsDesktopRes16By9()) then
+    PlanetScape.Checked := True;
   
   // Choose Graphics API
   PageGraphicsApi := CreateCustomPage(
