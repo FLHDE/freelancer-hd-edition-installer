@@ -1098,7 +1098,8 @@ begin
   descBestOptions.WordWrap := True;
   descBestOptions.Top := ScaleY(100);
   descBestOptions.Width := PageMiscOptions.SurfaceWidth;
-  descBestOptions.Caption := 'Automatically applies the highest video options available in Freelancer. Additionally, it''ll select your monitor''s native resolution. Freelancer usually doesn''t do any of this by default.';
+  descBestOptions.Caption := 'Automatically applies the highest video options available in Freelancer. Additionally, it''ll select your monitor''s native resolution ('
+    + IntToStr(DesktopRes.Width) + 'x' + IntToStr(DesktopRes.Height) + '). Freelancer usually doesn''t do any of this by default.';
   
   BestOptions := TCheckBox.Create(PageMiscOptions);
   BestOptions.Parent := PageMiscOptions.Surface;
