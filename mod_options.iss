@@ -254,7 +254,6 @@ var
   OptionsFolder: string;
   OptionsPath: string;
   NewOptionsPath: string;
-  Res: DesktopResolution;
 begin
   if not BestOptions.Checked then
     exit;
@@ -302,9 +301,7 @@ begin
 
   DeleteFile(NewOptionsPath)
 
-  Res := Resolution()
-
-  FileReplaceString(OptionsPath, 'size=', 'size= ' + IntToStr(Res.Width) + ', ' + IntToStr(Res.Height) + ';')
+  FileReplaceString(OptionsPath, 'size=', 'size= ' + IntToStr(DesktopRes.Width) + ', ' + IntToStr(DesktopRes.Height) + ';')
   
   if not IsWine then
     RemoveBOM(OptionsPath);
