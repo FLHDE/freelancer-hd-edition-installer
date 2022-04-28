@@ -146,6 +146,9 @@ begin
     DC := GetDC(0);
     Result.Width := GetDeviceCaps(DC, 8); // 8 = HORZRES
     Result.Height := GetDeviceCaps(DC, 10); // 10 = VERTRES
+
+    if (Result.Width = 0) or (Result.Height = 0) then
+      RaiseException('Display Width and/or Height cannot be 0.');
   except
     Result.Width := 1920
     Result.Height := 1080
