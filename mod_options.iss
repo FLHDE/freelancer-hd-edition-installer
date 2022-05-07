@@ -299,8 +299,6 @@ begin
     FileCopy(NewOptionsPath, OptionsPath, false);
   end;
 
-  DeleteFile(NewOptionsPath)
-
   FileReplaceString(OptionsPath, 'size=', 'size= ' + IntToStr(DesktopRes.Width) + ', ' + IntToStr(DesktopRes.Height) + ';')
   
   if not IsWine then

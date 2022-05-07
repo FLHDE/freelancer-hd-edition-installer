@@ -55,8 +55,8 @@ Name: "{group}\{#MyAppName}"; Filename: "{app}\EXE\{#MyAppExeName}"
 Name: "{commondesktop}\Freelancer HD Edition"; Filename: "{app}\EXE\{#MyAppExeName}"; Tasks: desktopicon
 
 [Files]
-Source: "Assets\Text\installinfo.txt"; DestDir: "{app}"; Flags: ignoreversion
-Source: "Assets\Text\PerfOptions.ini"; DestDir: "{app}"; Flags: ignoreversion
+Source: "Assets\Text\installinfo.txt"; DestDir: "{app}"; Flags: ignoreversion deleteafterinstall
+Source: "Assets\Text\PerfOptions.ini"; DestDir: "{app}"; Flags: ignoreversion deleteafterinstall
 // Comment out the line below if the AllInOneInstall option is disabled. 
 Source: "Assets\Mod\freelancerhd.7z"; DestDir: "{app}"; Flags: nocompression deleteafterinstall
 Source: "Assets\Fonts\AGENCYB.TTF"; DestDir: "{autofonts}"; FontInstall: "Agency FB Bold"; Flags: onlyifdoesntexist uninsneveruninstall
