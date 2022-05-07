@@ -10,9 +10,9 @@
 #define MyFolderName "freelancer-hd-edition-" + MyAppVersion
 #define MyZipName "freelancerhd"
 ; TODO: Remember to change the mirror locations for each release
-#dim Mirrors[6] {"https://onedrive.live.com/download?cid=F03BDD831B77D1AD&resid=F03BDD831B77D1AD%2193138&authkey=AN1qT9jEN5eUIUo", "https://pechey.net/files/freelancer-hd-edition-0.5.zip", "http://luyten.viewdns.net:8080/freelancer-hd-edition-0.5.0.zip", "https://bolte.io/freelancer-hd-edition-0.5.zip", "https://github.com/BC46/freelancer-hd-edition/archive/refs/tags/0.5.zip", "https://archive.org/download/freelancer-hd-edition-0.5/freelancer-hd-edition-0.5.zip"}
+#dim Mirrors[1] {"https://github.com/BC46/freelancer-hd-edition/archive/refs/tags/0.6.zip"}
 #define i
-; TODO: Update sizes 
+; TODO: Update sizes for each release
 #define SizeZip 2438619136 
 #define SizeExtracted 4195188736 
 #define SizeVanilla 985624576
@@ -57,6 +57,8 @@ Name: "{commondesktop}\Freelancer HD Edition"; Filename: "{app}\EXE\{#MyAppExeNa
 [Files]
 Source: "Assets\Text\installinfo.txt"; DestDir: "{app}"; Flags: ignoreversion
 Source: "Assets\Text\PerfOptions.ini"; DestDir: "{app}"; Flags: ignoreversion
+// Comment out the line below if the AllInOneInstall option is disabled. 
+Source: "Assets\Mod\freelancerhd.7z"; DestDir: "{app}"; Flags: nocompression deleteafterinstall
 Source: "Assets\Fonts\AGENCYB.TTF"; DestDir: "{autofonts}"; FontInstall: "Agency FB Bold"; Flags: onlyifdoesntexist uninsneveruninstall
 Source: "Assets\Fonts\AGENCYR.TTF"; DestDir: "{autofonts}"; FontInstall: "Agency FB"; Flags: onlyifdoesntexist uninsneveruninstall
 Source: "Assets\Fonts\ARIALUNI.TTF"; DestDir: "{autofonts}"; FontInstall: "Arial Unicode MS"; Flags: onlyifdoesntexist uninsneveruninstall
@@ -75,6 +77,8 @@ WelcomeLabel2=Freelancer: HD Edition is a mod that aims to improve every aspect 
 [Code]
 // Declaration of global variables
 var
+  // Allows us to perform an install where the mod zip is included in the installation executable, meaning it doesn't have to be downloaded or included from elsewhere.
+  AllInOneInstall: Boolean;
   // Allows us to skip the downloading of the files and just copy it from the local PC to save time
   OfflineInstall: String;
   // String list of mirrors that we can potentially download the mod from. This is populated in InitializeWizard()
@@ -91,11 +95,18 @@ var
 procedure CurStepChanged(CurStep: TSetupStep);
 var
   ResultCode: Integer;
+  ZipLocation: String;
 begin
     if CurStep = ssPostInstall then
     begin
         // Debug
-        if(OfflineInstall <> 'false') then FileCopy(OfflineInstall,ExpandConstant('{tmp}\freelancerhd.zip'),false);
+        if(OfflineInstall <> 'false') and (not AllInOneInstall) then 
+          FileCopy(OfflineInstall,ExpandConstant('{tmp}\freelancerhd.7z'),false);
+
+        if AllInOneInstall then
+          ZipLocation := '{app}'
+        else
+          ZipLocation := '{tmp}';
 
         // Copy Vanilla game to directory
         UpdateProgress(0);
@@ -105,7 +116,7 @@ begin
 
         // Unzip
         WizardForm.StatusLabel.Caption := 'Unzipping Freelancer: HD Edition';
-        Exec(ExpandConstant('{tmp}\7za.exe'), ExpandConstant(' x -y -aoa "{tmp}\{#MyZipName}.zip"  -o"{app}"'), '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
+        Exec(ExpandConstant('{tmp}\7za.exe'), ExpandConstant(' x -y -aoa "' + ZipLocation + '\{#MyZipName}.7z"  -o"{app}"'), '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
         // -aoa Overwrite All existing files without prompt
         // -o Set output directory
         // -y Assume "Yes" on all Queries
@@ -113,7 +124,9 @@ begin
 
         // Copy mod files
         WizardForm.StatusLabel.Caption := 'Moving Freelancer: HD Edition';
+
         DirectoryCopy(ExpandConstant('{app}\{#MyFolderName}'),ExpandConstant('{app}'),True);
+        
         DelTree(ExpandConstant('{app}\{#MyFolderName}'), True, True, True);
         UpdateProgress(95);
 
@@ -210,7 +223,7 @@ begin
     end;
 
     // If they specify an offline file in the cmd line. Check it's valid, if not don't let them continue.
-    if ((PageId = 1) and (OfflineInstall <> 'false') and (not FileExists(OfflineInstall) or (Pos('.zip',OfflineInstall) < 1))) then begin
+    if ((PageId = 1) and (OfflineInstall <> 'false') and (not AllInOneInstall) and (not FileExists(OfflineInstall) or (Pos('.zip',OfflineInstall) < 1))) then begin
       MsgBox('The specified source file either doesn''t exist or is not a valid .zip file', mbError, MB_OK);
       Result := False;
       exit;
@@ -237,7 +250,7 @@ begin
       end;
     end;
     // Start downloading the mod
-    if ((PageId = 10) and (OfflineInstall = 'false')) then begin
+    if ((PageId = 10) and (OfflineInstall = 'false') and (not AllInOneInstall)) then begin
       for i:= 0 to mirrors.Count - 1 do
       begin
         DownloadPage.Clear;
@@ -267,19 +280,25 @@ end;
 // Run when the wizard is opened.
 procedure InitializeWizard;
 begin
+    // All-in-one install
+    AllInOneInstall := true
+
     // Offline install
     OfflineInstall := ExpandConstant('{param:sourcefile|false}')
 
-    // Copy mirrors from our preprocessor to our string array. This allows us to define the array at the top of the file for easy editing
-    mirrors := TStringList.Create;
- 
-    #sub PopMirrors
-      mirrors.add('{#Mirrors[i]}');
-    #endsub
+    if (AllInOneInstall) then
+    begin
+      // Copy mirrors from our preprocessor to our string array. This allows us to define the array at the top of the file for easy editing
+      mirrors := TStringList.Create;
+   
+      #sub PopMirrors
+        mirrors.add('{#Mirrors[i]}');
+      #endsub
 
-    DesktopRes := Resolution();
+      DesktopRes := Resolution();
 
-    #for {i = 0; i < DimOf(Mirrors); i++} PopMirrors
+      #for {i = 0; i < DimOf(Mirrors); i++} PopMirrors
+    end;
 
     // Initialize UI. This populates all our ui elements with text, size and other properties
     InitializeUi();
