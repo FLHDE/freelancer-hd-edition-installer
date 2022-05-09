@@ -252,7 +252,7 @@ begin
         exit;
       end;
     end;
-    # if AllInOneInstall == true
+    # if AllInOneInstall == false
     // Start downloading the mod
     if ((PageId = 10) and (OfflineInstall = 'false')) then begin
       for i:= 0 to mirrors.Count - 1 do
@@ -288,7 +288,7 @@ begin
     // Offline install
     OfflineInstall := ExpandConstant('{param:sourcefile|false}')
 
-    # if AllInOneInstall == true
+    # if AllInOneInstall == false
       // Copy mirrors from our preprocessor to our string array. This allows us to define the array at the top of the file for easy editing
       mirrors := TStringList.Create;
    
