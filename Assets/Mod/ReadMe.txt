@@ -1,1 +1,0 @@
-The Freelancer: HD Edition mod zip goes here.
