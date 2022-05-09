@@ -236,10 +236,9 @@ end;
 procedure InitializeUi();
 var dir : string;
 begin
+  # if AllInOneInstall == false
   // Read download size
   DownloadSize := IntToStr(StrToInt64(ExpandConstant('{#SizeZip}'))/1048576);
-
-  # if AllInOneInstall == false
   // Initialize DownloadPage
   DownloadPage := CreateDownloadPage(SetupMessage(msgWizardPreparing), SetupMessage(msgPreparingDesc), @OnDownloadProgress);
   # endif
