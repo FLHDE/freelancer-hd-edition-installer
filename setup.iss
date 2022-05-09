@@ -81,8 +81,6 @@ FinishedLabel=Setup has finished installing [name] on your computer. The applica
 [Code]
 // Declaration of global variables
 var
-  // Allows us to perform an install where the mod zip is included in the installation executable, meaning it doesn't have to be downloaded or included from elsewhere.
-  AllInOneInstall: Boolean;
   // Allows us to skip the downloading of the files and just copy it from the local PC to save time
   OfflineInstall: String;
   // String list of mirrors that we can potentially download the mod from. This is populated in InitializeWizard()
@@ -103,14 +101,13 @@ var
 begin
     if CurStep = ssPostInstall then
     begin
-        // Debug
-        if(OfflineInstall <> 'false') and (not AllInOneInstall) then 
-          FileCopy(OfflineInstall,ExpandConstant('{tmp}\freelancerhd.7z'),false);
-
-        if AllInOneInstall then
+        # if AllInOneInstall == true
           ZipLocation := '{app}'
-        else
-          ZipLocation := '{tmp}';
+        # else
+        ZipLocation := '{tmp}';
+        if(OfflineInstall <> 'false') then 
+          FileCopy(OfflineInstall,ExpandConstant('{tmp}\freelancerhd.7z'),false);
+        # endif
 
         // Copy Vanilla game to directory
         UpdateProgress(0);
@@ -227,11 +224,13 @@ begin
     end;
 
     // If they specify an offline file in the cmd line. Check it's valid, if not don't let them continue.
-    if ((PageId = 1) and (OfflineInstall <> 'false') and (not AllInOneInstall) and (not FileExists(OfflineInstall) or (Pos('.zip',OfflineInstall) < 1))) then begin
+    # if AllInOneInstall == false
+    if ((PageId = 1) and (OfflineInstall <> 'false') and (not FileExists(OfflineInstall) or (Pos('.zip',OfflineInstall) < 1))) then begin
       MsgBox('The specified source file either doesn''t exist or is not a valid .zip file', mbError, MB_OK);
       Result := False;
       exit;
     end;
+    # endif
     // Check Freelancer is installed in the folder they have specified
     if (PageId = DataDirPage.ID) and not FileExists(DataDirPage.Values[0] + '\EXE\Freelancer.exe') then begin
       MsgBox('Freelancer does not seem to be installed in that folder. Please select the correct folder.', mbError, MB_OK);
