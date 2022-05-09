@@ -16,7 +16,10 @@ var
   PageDrawDistances: TInputOptionWizardPage;
   PageSkips: TWizardPage;
   PageMiscOptions: TWizardPage;
+
+  # if AllInOneInstall == false
   DownloadPage: TDownloadWizardPage;
+  # endif
 
   // Optional pages
   DxWrapperPage: TWizardPage;
@@ -177,6 +180,7 @@ var
   descBestOptions: TNewStaticText;
 
 // Report on download progress
+# if AllInOneInstall == false
 function OnDownloadProgress(const Url, FileName: String; const Progress, ProgressMax: Int64): Boolean;
 begin
   DownloadPage.SetText('Downloading mod',(IntToStr(Progress/1048576)) + 'MB / ' + DownloadSize + 'MB');
@@ -184,6 +188,7 @@ begin
     Log(Format('Successfully downloaded file to {tmp}: %s', [FileName]));
   Result := True;
 end;
+# endif
 
 // Update progress of installer bar
 procedure UpdateProgress(Position: Integer);
@@ -234,8 +239,10 @@ begin
   // Read download size
   DownloadSize := IntToStr(StrToInt64(ExpandConstant('{#SizeZip}'))/1048576);
 
+  # if AllInOneInstall == false
   // Initialize DownloadPage
   DownloadPage := CreateDownloadPage(SetupMessage(msgWizardPreparing), SetupMessage(msgPreparingDesc), @OnDownloadProgress);
+  # endif
 
   // Initialize DataDirPage and add content
   DataDirPage := CreateInputDirPage(wpInfoBefore,
