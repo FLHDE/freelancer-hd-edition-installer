@@ -64,7 +64,7 @@ Source: "Assets\Fonts\AGENCYR.TTF"; DestDir: "{autofonts}"; FontInstall: "Agency
 Source: "Assets\Fonts\ARIALUNI.TTF"; DestDir: "{autofonts}"; FontInstall: "Arial Unicode MS"; Flags: onlyifdoesntexist uninsneveruninstall
 Source: "Assets\External\7za.exe"; DestDir: "{tmp}"; Flags: deleteafterinstall;
 Source: "Assets\External\utf-8-bom-remover.exe"; DestDir: "{tmp}"; Flags: deleteafterinstall;
-# if AllInOneInstall == true
+# if AllInOneInstall
 Source: "Assets\Mod\freelancerhd.7z"; DestDir: "{tmp}"; Flags: nocompression deleteafterinstall
 #endif
 
@@ -100,7 +100,7 @@ var
 begin
     if CurStep = ssPostInstall then
     begin
-        # if AllInOneInstall == false
+        # if !AllInOneInstall
           if (OfflineInstall <> 'false') then 
             FileCopy(OfflineInstall,ExpandConstant('{tmp}\freelancerhd.7z'),false);
         # endif
@@ -220,7 +220,7 @@ begin
     end;
 
     // If they specify an offline file in the cmd line. Check it's valid, if not don't let them continue.
-    # if AllInOneInstall == false
+    # if !AllInOneInstall
     if ((PageId = 1) and (OfflineInstall <> 'false') and (not FileExists(OfflineInstall) or (Pos('.zip',OfflineInstall) < 1))) then begin
       MsgBox('The specified source file either doesn''t exist or is not a valid .zip file', mbError, MB_OK);
       Result := False;
@@ -248,7 +248,7 @@ begin
         exit;
       end;
     end;
-    # if AllInOneInstall == false
+    # if !AllInOneInstall
     // Start downloading the mod
     if ((PageId = 10) and (OfflineInstall = 'false')) then begin
       for i:= 0 to mirrors.Count - 1 do
@@ -284,7 +284,7 @@ begin
     // Offline install
     OfflineInstall := ExpandConstant('{param:sourcefile|false}')
 
-    # if AllInOneInstall == false
+    # if !AllInOneInstall
       // Copy mirrors from our preprocessor to our string array. This allows us to define the array at the top of the file for easy editing
       mirrors := TStringList.Create;
    
