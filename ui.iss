@@ -17,7 +17,7 @@ var
   PageSkips: TWizardPage;
   PageMiscOptions: TWizardPage;
 
-  # if AllInOneInstall == false
+  # if !AllInOneInstall
   DownloadPage: TDownloadWizardPage;
   # endif
 
@@ -180,7 +180,7 @@ var
   descBestOptions: TNewStaticText;
 
 // Report on download progress
-# if AllInOneInstall == false
+# if !AllInOneInstall
 function OnDownloadProgress(const Url, FileName: String; const Progress, ProgressMax: Int64): Boolean;
 begin
   DownloadPage.SetText('Downloading mod',(IntToStr(Progress/1048576)) + 'MB / ' + DownloadSize + 'MB');
@@ -236,7 +236,7 @@ end;
 procedure InitializeUi();
 var dir : string;
 begin
-  # if AllInOneInstall == false
+  # if !AllInOneInstall
   // Read download size
   DownloadSize := IntToStr(StrToInt64(ExpandConstant('{#SizeZip}'))/1048576);
   // Initialize DownloadPage
