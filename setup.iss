@@ -9,9 +9,10 @@
 #define MyAppExeName "Freelancer.exe"
 #define MyFolderName "freelancer-hd-edition-" + MyAppVersion
 #define MyZipName "freelancerhd"
+; This variable controls whether the zip is shipped with the exe or downloaded from a mirror 
+#define AllInOneInstall true
 ; TODO: Remember to change the mirror locations for each release
-#dim Mirrors[1] {"https://github.com/BC46/freelancer-hd-edition/archive/refs/tags/0.6.zip"}
-#define i
+#dim Mirrors[1] {"https://github.com/BC46/freelancer-hd-edition/archive/refs/tags/" + MyAppVersion + ".zip"}
 ; TODO: Update sizes for each release
 #define SizeZip 2438619136 
 #define SizeExtracted 4195188736 
@@ -57,14 +58,15 @@ Name: "{commondesktop}\Freelancer HD Edition"; Filename: "{app}\EXE\{#MyAppExeNa
 
 [Files]
 Source: "Assets\Text\installinfo.txt"; DestDir: "{app}"; Flags: ignoreversion deleteafterinstall
-Source: "Assets\Text\PerfOptions.ini"; DestDir: "{app}"; Flags: ignoreversion deleteafterinstall
-; Comment out the line below if the AllInOneInstall option is disabled. 
-Source: "Assets\Mod\freelancerhd.7z"; DestDir: "{app}"; Flags: nocompression deleteafterinstall
+Source: "Assets\Text\PerfOptions.ini"; DestDir: "{app}"; Flags: ignoreversion deleteafterinstall 
 Source: "Assets\Fonts\AGENCYB.TTF"; DestDir: "{autofonts}"; FontInstall: "Agency FB Bold"; Flags: onlyifdoesntexist uninsneveruninstall
 Source: "Assets\Fonts\AGENCYR.TTF"; DestDir: "{autofonts}"; FontInstall: "Agency FB"; Flags: onlyifdoesntexist uninsneveruninstall
 Source: "Assets\Fonts\ARIALUNI.TTF"; DestDir: "{autofonts}"; FontInstall: "Arial Unicode MS"; Flags: onlyifdoesntexist uninsneveruninstall
 Source: "Assets\External\7za.exe"; DestDir: "{tmp}"; Flags: deleteafterinstall;
 Source: "Assets\External\utf-8-bom-remover.exe"; DestDir: "{tmp}"; Flags: deleteafterinstall;
+# if AllInOneInstall == true
+Source: "Assets\Mod\freelancerhd.7z"; DestDir: "{app}"; Flags: nocompression deleteafterinstall
+#endif
 
 [Run]
 Filename: "{app}\EXE\{#MyAppExeName}"; Description: "{cm:LaunchProgram,{#StringChange(MyAppName, '&', '&&')}}"; Flags: nowait postinstall skipifsilent
@@ -251,8 +253,9 @@ begin
         exit;
       end;
     end;
+    # if AllInOneInstall == true
     // Start downloading the mod
-    if ((PageId = 10) and (OfflineInstall = 'false') and (not AllInOneInstall)) then begin
+    if ((PageId = 10) and (OfflineInstall = 'false')) then begin
       for i:= 0 to mirrors.Count - 1 do
       begin
         DownloadPage.Clear;
@@ -277,19 +280,16 @@ begin
         end;
       end;
     end;
+    # endif
 end;
 
 // Run when the wizard is opened.
 procedure InitializeWizard;
 begin
-    // All-in-one install
-    AllInOneInstall := true
-
     // Offline install
     OfflineInstall := ExpandConstant('{param:sourcefile|false}')
 
-    if (AllInOneInstall) then
-    begin
+    # if AllInOneInstall == true
       // Copy mirrors from our preprocessor to our string array. This allows us to define the array at the top of the file for easy editing
       mirrors := TStringList.Create;
    
@@ -298,9 +298,9 @@ begin
       #endsub
 
       DesktopRes := Resolution();
-
+      # define i
       #for {i = 0; i < DimOf(Mirrors); i++} PopMirrors
-    end;
+    # endif
 
     // Initialize UI. This populates all our ui elements with text, size and other properties
     InitializeUi();
