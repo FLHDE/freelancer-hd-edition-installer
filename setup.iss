@@ -258,7 +258,7 @@ begin
       for i:= 0 to mirrors.Count - 1 do
       begin
         DownloadPage.Clear;
-        DownloadPage.Add(mirrors[i], 'freelancerhd.zip', '');
+        DownloadPage.Add(mirrors[i], 'freelancerhd.7z', '');
         DownloadPage.SetText('Downloading mod','');
         DownloadPage.Show;
         DownloadPage.ProgressBar.Style := npbstNormal;
@@ -296,10 +296,12 @@ begin
         mirrors.add('{#Mirrors[i]}');
       #endsub
 
-      DesktopRes := Resolution();
       # define i
       #for {i = 0; i < DimOf(Mirrors); i++} PopMirrors
     # endif
+
+    // Gets the user's desktop resolution for later use
+    DesktopRes := Resolution();
 
     // Initialize UI. This populates all our ui elements with text, size and other properties
     InitializeUi();
