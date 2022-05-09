@@ -65,7 +65,7 @@ Source: "Assets\Fonts\ARIALUNI.TTF"; DestDir: "{autofonts}"; FontInstall: "Arial
 Source: "Assets\External\7za.exe"; DestDir: "{tmp}"; Flags: deleteafterinstall;
 Source: "Assets\External\utf-8-bom-remover.exe"; DestDir: "{tmp}"; Flags: deleteafterinstall;
 # if AllInOneInstall == true
-Source: "Assets\Mod\freelancerhd.7z"; DestDir: "{app}"; Flags: nocompression deleteafterinstall
+Source: "Assets\Mod\freelancerhd.7z"; DestDir: "{tmp}"; Flags: nocompression deleteafterinstall
 #endif
 
 [Run]
@@ -97,16 +97,12 @@ var
 procedure CurStepChanged(CurStep: TSetupStep);
 var
   ResultCode: Integer;
-  ZipLocation: String;
 begin
     if CurStep = ssPostInstall then
     begin
-        # if AllInOneInstall == true
-          ZipLocation := '{app}'
-        # else
-        ZipLocation := '{tmp}';
-        if(OfflineInstall <> 'false') then 
-          FileCopy(OfflineInstall,ExpandConstant('{tmp}\freelancerhd.7z'),false);
+        # if AllInOneInstall == false
+          if (OfflineInstall <> 'false') then 
+            FileCopy(OfflineInstall,ExpandConstant('{tmp}\freelancerhd.7z'),false);
         # endif
 
         // Copy Vanilla game to directory
@@ -117,7 +113,7 @@ begin
 
         // Unzip
         WizardForm.StatusLabel.Caption := 'Unzipping Freelancer: HD Edition';
-        Exec(ExpandConstant('{tmp}\7za.exe'), ExpandConstant(' x -y -aoa "' + ZipLocation + '\{#MyZipName}.7z"  -o"{app}"'), '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
+        Exec(ExpandConstant('{tmp}\7za.exe'), ExpandConstant(' x -y -aoa "{tmp}\{#MyZipName}.7z"  -o"{app}"'), '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
         // -aoa Overwrite All existing files without prompt
         // -o Set output directory
         // -y Assume "Yes" on all Queries
