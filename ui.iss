@@ -546,7 +546,6 @@ begin
 
   DxWrapperGraphicsApi := TRadioButton.Create(PageGraphicsApi);
   DxWrapperGraphicsApi.Parent := PageGraphicsApi.Surface;
-  DxWrapperGraphicsApi.Checked := True;
   DxWrapperGraphicsApi.Top := ScaleY(50);
 
   descDxWrapperGraphicsApi := TNewStaticText.Create(PageGraphicsApi);
@@ -564,6 +563,7 @@ begin
 
   DgVoodooGraphicsApi := TRadioButton.Create(PageGraphicsApi);
   DgVoodooGraphicsApi.Parent := PageGraphicsApi.Surface;
+  DgVoodooGraphicsApi.Checked := True;
   DgVoodooGraphicsApi.Top := ScaleY(90);
 
   descDgVoodooGraphicsApi := TNewStaticText.Create(PageGraphicsApi);
@@ -571,7 +571,7 @@ begin
   descDgVoodooGraphicsApi.WordWrap := True;
   descDgVoodooGraphicsApi.Top := ScaleY(105);
   descDgVoodooGraphicsApi.Width := PageGraphicsApi.SurfaceWidth;
-  descDgVoodooGraphicsApi.Caption := 'Fixes both lighting bugs on Win 10 and 11. Supports native Anti-Aliasing, Anisotropic Filtering, and ReShade. Not 100% stable, and requires manual refresh rate input.';
+  descDgVoodooGraphicsApi.Caption := 'Fixes both lighting bugs on Win 10 and 11. Supports native Anti-Aliasing, Anisotropic Filtering, and ReShade. Requires manual refresh rate input.';
 
   lblVanillaGraphicsApi := TLabel.Create(PageGraphicsApi);
   lblVanillaGraphicsApi.Parent := PageGraphicsApi.Surface;
@@ -654,7 +654,8 @@ begin
   descDxWrapperAf.Parent := DxWrapperPage.Surface;
   descDxWrapperAf.WordWrap := True;
   descDxWrapperAf.Width := DxWrapperPage.SurfaceWidth;
-  descDxWrapperAf.Caption := 'Anisotropic Filtering improves the quality of textures when viewing them from the side, with minimal performance overhead. "Auto" will automatically use the highest option your graphics card supports.';
+  descDxWrapperAf.Caption := 'Anisotropic Filtering improves the quality of textures when viewing them from the side, with minimal performance overhead. "Auto" will automatically use the highest option your graphics card supports.' + #13#10 + #13#10 +
+  'NOTE: If you have an NVIDIA GPU, set Anisotropic Filtering to "Off". Otherwise some textures may not load correctly. Alternatively, you may use the dgVoodoo Graphics API from the previous page. It offers the same option which will work correctly.'
   descDxWrapperAf.Top := ScaleY(140);
 
   // dgVoodoo options
