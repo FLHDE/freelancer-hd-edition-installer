@@ -44,6 +44,7 @@ UninstallDisplayIcon={#SourcePath}\Assets\Images\icon.ico
 UninstallDisplayName={#MyAppName}
 WizardImageFile={#SourcePath}\Assets\Images\backgroundpattern.bmp
 WizardSmallImageFile={#SourcePath}\Assets\Images\icon.bmp
+WizardSizePercent=105
 VersionInfoVersion=1.0.0.0
 
 [Languages]
@@ -159,6 +160,7 @@ begin
         begin
           // TODO: Place outside of if statement when the Wine crypt_string issue has been fixed
           Process_DgVoodoo();
+          Process_DisplayMode();
 
           // Delete potential UTF-8 BOM headers in all edited ini files
           RemoveBOM(ExpandConstant('{app}\EXE\dacom.ini'));
@@ -198,6 +200,8 @@ begin
       MsgBox('It seems you are using Wine. The dgVoodoo options you see on the next page won''t be applied because Wine is currently missing the implementation of a Win32 API function that this options page uses.' + #13#10#13#10 + 
       'You can still apply the options manually if you wish by opening EXE/dgVoodooCpl.exe after the mod has finished installing.' + #13#10#13#10 + 
       'Alternatively, you could configure similar options with the DxWrapper Graphics API, which will apply correctly.', mbError, MB_OK);
+
+    // TODO: Add for new page
 
     if PageId = DgVoodooPage.ID then
     begin
