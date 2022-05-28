@@ -1140,19 +1140,18 @@ begin
   descDisplayMode.Parent := PageMiscOptions.Surface;
   descDisplayMode.WordWrap := True;
   descDisplayMode.Width := PageMiscOptions.SurfaceWidth;
-  descDisplayMode.Caption := 'In Windowed and Borderless Windowed, the Gamma slider from the options menu won''t work. This is mitigated by applying Gamma with ReShade, if it''s been enabled.';
+  descDisplayMode.Caption := 'In both Windowed options, the Gamma slider from the options menu won''t work. This is mitigated by applying Gamma with ReShade, if it''s been enabled. Also, both windowed options are experimental and may be buggy, so try them at your own risk.';
   descDisplayMode.Top := ScaleY(175);
 
   lblDoNotPauseOnAltTab := TLabel.Create(PageMiscOptions);
   lblDoNotPauseOnAltTab.Parent := PageMiscOptions.Surface;
   lblDoNotPauseOnAltTab.Caption := 'Keep Freelancer running in the background when Alt-Tabbed';
-  lblDoNotPauseOnAltTab.Top := ScaleY(215);
+  lblDoNotPauseOnAltTab.Top := ScaleY(230);
   lblDoNotPauseOnAltTab.Left := ScaleX(20);
   
   DoNotPauseOnAltTab := TCheckBox.Create(PageMiscOptions);
   DoNotPauseOnAltTab.Parent := PageMiscOptions.Surface;
-
-  DoNotPauseOnAltTab.Top := ScaleY(215);
+  DoNotPauseOnAltTab.Top := ScaleY(230);
 
   with DxWrapperPage do
   begin
@@ -1186,6 +1185,6 @@ begin
 
   // TODO: Remove when the Wine label issue has been fixed
   if (IsWine) then
-    MsgBox('It seems you are using Wine. The installer will still work as intended. The only minor issue is that many option labels won''t be displayed correctly, presumably because of an incorrect API translation.'  + #13#10#13#10 +
-    'We''ve uploaded screenshots of all installer pages on https://freelancerhd.com/install . Hopefully this will help.', mbError, MB_OK);
+    MsgBox('It seems you are using Wine. The installer will still work as intended. One only minor issue is that many option labels won''t be displayed correctly, presumably because of an incorrect API translation.'  + #13#10#13#10 +
+    'We''ve uploaded screenshots of all installer pages on https://freelancerhd.com/install. Hopefully this will help.', mbError, MB_OK);
 end;

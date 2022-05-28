@@ -937,8 +937,9 @@ begin
     Techniques := Techniques + 'HDR@FakeHDR.fx,';
   if (SaturationChecked) then
     Techniques := Techniques + 'Colourfulness@Colourfulness.fx,';
-
-  // TODO: Add Tonemap@Tonemap.fx only if fullscreen windowed or windowed have been checked
+  if (DisplayMode.ItemIndex = 1) or (DisplayMode.ItemIndex = 2) then
+    // Use Tonemap only if windowed or fullscreen windowed have been checked
+    Techniques := Techniques + 'Tonemap@Tonemap.fx';
 
   if (LENGTH(Techniques) > 0) and (Techniques[LENGTH(Techniques)] = ',') then
     SetLength(Techniques, LENGTH(Techniques) - 1);
@@ -956,4 +957,23 @@ procedure Process_DgVoodooReShade();
 begin
   if (DgVoodooGraphicsApi.Checked) and (DgVoodooReShade.Checked) then
     ApplyReShadeOptions('dxgi', DgVoodooBloom.Checked, DgVoodooHdr.Checked, DgVoodooSaturation.Checked);
+end;
+
+procedure Process_DisplayMode();
+var
+  ExePath: string;
+begin
+  ExePath := ExpandConstant('{app}\EXE\Freelancer.exe');
+
+  if (DisplayMode.ItemIndex = 1) or (DisplayMode.ItemIndex = 2) then
+    WriteHexToFile(ExePath, $1B16CC, '00'); // Windowed mode
+  
+  if (DisplayMode.ItemIndex = 2) then
+  begin
+    WriteHexToFile(ExePath, $02477A, '0000'); // Borderless window #1
+    WriteHexToFile(ExePath, $02490D, '0000'); // Borderless window #2
+  end;
+
+  if (DoNotPauseOnAltTab.Checked) then
+    WriteHexToFile(ExePath, $1B2665, 'EB'); // Keep Freelancer running in the background when Alt-Tabbed
 end;
