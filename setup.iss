@@ -200,16 +200,18 @@ begin
 
     // TODO: Remove when the Wine crypt_string issue has been fixed
     if (PageId = PageGraphicsApi.ID) and (DgVoodooGraphicsApi.Checked) and (IsWine) then
-      MsgBox('It seems you are using Wine. The dgVoodoo options you see on the next page won''t be applied because Wine is currently missing the implementation of a Win32 API function that this options page uses.' + #13#10#13#10 + 
+      MsgBox('It seems you are using Wine. The dgVoodoo options you see on the next page won''t be applied because Wine is currently missing the implementation of a Win32 API function that this options page requires.' + #13#10#13#10 + 
       'You can still apply the options manually if you wish by opening EXE/dgVoodooCpl.exe after the mod has finished installing.' + #13#10#13#10 + 
       'Alternatively, you could configure similar options with the DxWrapper Graphics API, which will apply correctly.', mbError, MB_OK);
 
-    // TODO: Add for new page
+    if (PageId = PageSkips.ID)and (IsWine) then
+      MsgBox('It seems you are using Wine. The Display Mode and Alt-Tab options you see on the next page won''t be applied because Wine is currently missing the implementation of a Win32 API function that these options require.', mbError, MB_OK);
 
     if PageId = DgVoodooPage.ID then
     begin
       RefreshRateError := 'Refresh rate must be a valid number between 30 and 3840. If you don''t know how to find your monitor''s refresh rate, look it up on the internet.' + #13#10#13#10 + 'Keep in mind that the DxWrapper option does not require you to set a refresh rate manually.'
 
+      // dgVoodoo options page refresh rate validation
       if (StrToInt(DgVoodooRefreshRate.Text) < 30) or (StrToInt(DgVoodooRefreshRate.Text) > 3840) then
         begin
           MsgBox(RefreshRateError, mbError, MB_OK);

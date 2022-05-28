@@ -1124,7 +1124,8 @@ begin
   DisplayMode := TComboBox.Create(PageMiscOptions);
   DisplayMode.Parent := PageMiscOptions.Surface;
   DisplayMode.Style := csDropDownList;
-  DisplayMode.Items.Add('Fullscreen (default)');
+  DisplayMode.Width := 200;
+  DisplayMode.Items.Add('Fullscreen (default, recommended)');
   DisplayMode.Items.Add('Windowed');
   DisplayMode.Items.Add('Borderless Windowed');
   DisplayMode.ItemIndex := 0;
@@ -1134,7 +1135,7 @@ begin
   lblDisplayMode.Parent := PageMiscOptions.Surface;
   lblDisplayMode.Caption := 'Display Mode';
   lblDisplayMode.Top := ScaleY(155);
-  lblDisplayMode.Left := ScaleX(150);
+  lblDisplayMode.Left := ScaleX(210);
 
   descDisplayMode := TNewStaticText.Create(PageMiscOptions);
   descDisplayMode.Parent := PageMiscOptions.Surface;
