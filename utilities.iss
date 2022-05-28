@@ -248,7 +248,7 @@ begin
 end;
 
 // Creates a directory only if it doesn't exist yet
-function CreateDirIfNotExists(const Dir: String): Boolean;
+procedure CreateDirIfNotExists(const Dir: String);
 begin
   if not DirExists(Dir) then
     CreateDir(Dir);
