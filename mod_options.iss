@@ -441,6 +441,8 @@ var
   EXEPath: string;
 begin
   EXEPath := ExpandConstant('{app}\EXE\');
+
+  // Applies the correct graphics API
   if DxWrapperGraphicsApi.Checked then 
     RenameFile(EXEPath + 'd3d8_dxwrapper.dll', EXEPath + 'd3d8.dll')
   else if dgVoodooGraphicsApi.Checked then
@@ -457,6 +459,7 @@ begin
   begin
       HudShiftPath := ExpandConstant('{app}\DATA\INTERFACE\HudShift.ini')
 
+      // Enable plugins
       FileReplaceString(
         ExpandConstant('{app}\EXE\dacom.ini')
         ,
@@ -471,6 +474,7 @@ begin
         'HudStatus.dll'
       )
 
+      // Adjust target and player info positions
       FileReplaceString(
         HudShiftPath
         ,
@@ -495,8 +499,9 @@ begin
         'position = 4e175c, -0.2550, 4e1764, -0.3610		; TargetRankText'
       )
 
-     FileReplaceString(HudShiftPath,'position = 4da2fa,  0.4180, 4da30e, -0.2900','position = 4da2fa,  0.1765, 4da30e, -0.3025')
-     FileReplaceString(HudShiftPath,'position = 4e14db, -0.2020, 4e14e3, -0.3700		; TargetTradeButton','position = 4e14db, -0.0180, 4e14e3, -0.3700		; TargetTradeButton')
+    // Adjust request trade button and player wireframe positions
+    FileReplaceString(HudShiftPath,'position = 4da2fa,  0.4180, 4da30e, -0.2900','position = 4da2fa,  0.1765, 4da30e, -0.3025')
+    FileReplaceString(HudShiftPath,'position = 4e14db, -0.2020, 4e14e3, -0.3700		; TargetTradeButton','position = 4e14db, -0.0180, 4e14e3, -0.3700		; TargetTradeButton')
   end
 end;
 
@@ -763,6 +768,7 @@ var
 begin
   FilePath := ExpandConstant('{app}\DATA\FX\jumpeffect.ini');
 
+  // Modify jump in and out tunnel time based on selected option
   if(JumpTunnel5Sec.Checked) then 
     begin 
       FileReplaceString(FilePath, 'jump_out_tunnel_time = 7' + #13#10
@@ -857,19 +863,19 @@ begin
     FileReplaceString(DxWrapperPath, 'AntiAliasing               = 0', 'AntiAliasing               = 1');
 
   if DxWrapperAf.ItemIndex = 1 then
-    // 2x AF
+    // Enable 2x AF
     FileReplaceString(DxWrapperPath, 'AnisotropicFiltering       = 0', 'AnisotropicFiltering       = 2');
   if DxWrapperAf.ItemIndex = 2 then
-    // 4x AF
+    // Enable 4x AF
     FileReplaceString(DxWrapperPath, 'AnisotropicFiltering       = 0', 'AnisotropicFiltering       = 4');
   if DxWrapperAf.ItemIndex = 3 then
-    // 8x AF
+    // Enable 8x AF
     FileReplaceString(DxWrapperPath, 'AnisotropicFiltering       = 0', 'AnisotropicFiltering       = 8');
   if DxWrapperAf.ItemIndex = 4 then
-    // 16x AF
+    // Enable 16x AF
     FileReplaceString(DxWrapperPath, 'AnisotropicFiltering       = 0', 'AnisotropicFiltering       = 16');
   if DxWrapperAf.ItemIndex = 5 then
-    // Auto AF
+    // Enable auto AF
     FileReplaceString(DxWrapperPath, 'AnisotropicFiltering       = 0', 'AnisotropicFiltering       = 1');
 end;
 
@@ -924,12 +930,15 @@ begin
   ReShadePath := ExpandConstant('{app}\EXE\');
   RenameFile(ReShadePath + ReShadeDllName + '_reshade.dll', ReShadePath + ReShadeDllName + '.dll')
 
+  // Enable checked ReShade options
   if (BloomChecked) then
     Techniques := Techniques + 'MagicBloom@MagicBloom.fx,';
   if (HdrChecked) then
     Techniques := Techniques + 'HDR@FakeHDR.fx,';
   if (SaturationChecked) then
-    Techniques := Techniques + 'Colourfulness@Colourfulness.fx';
+    Techniques := Techniques + 'Colourfulness@Colourfulness.fx,';
+
+  // TODO: Add Tonemap@Tonemap.fx only if fullscreen windowed or windowed have been checked
 
   if (LENGTH(Techniques) > 0) and (Techniques[LENGTH(Techniques)] = ',') then
     SetLength(Techniques, LENGTH(Techniques) - 1);
