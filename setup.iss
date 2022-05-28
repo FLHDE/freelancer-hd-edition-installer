@@ -2,8 +2,8 @@
 ; GitHub: https://github.com/ollieraikkonen/Freelancer-hd-edition-install-script
 ; Main GitHub: https://github.com/bc46/Freelancer-hd-edition
 
-#define MyAppName "Freelancer: HD Edition v0.6"
 #define MyAppVersion "0.6"
+#define MyAppName "Freelancer: HD Edition v" + MyAppVersion
 #define MyAppPublisher "Freelancer: HD Edition Development Team"
 #define MyAppURL "https://github.com/BC46/freelancer-hd-edition"
 #define MyAppExeName "Freelancer.exe"
@@ -110,25 +110,25 @@ begin
 
         // Copy Vanilla game to directory
         UpdateProgress(0);
-        WizardForm.StatusLabel.Caption := 'Copying Vanilla Freelancer directory';
+        WizardForm.StatusLabel.Caption := 'Copying vanilla Freelancer directory';
         DirectoryCopy(DataDirPage.Values[0],ExpandConstant('{app}'),False);
-        UpdateProgress(50);
+        UpdateProgress(30);
 
         // Unzip
-        WizardForm.StatusLabel.Caption := 'Unzipping Freelancer: HD Edition';
+        WizardForm.StatusLabel.Caption := ExpandConstant('Unzipping {#MyAppName}');
         Exec(ExpandConstant('{tmp}\7za.exe'), ExpandConstant(' x -y -aoa "{tmp}\{#MyZipName}.7z"  -o"{app}"'), '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
         // -aoa Overwrite All existing files without prompt
         // -o Set output directory
         // -y Assume "Yes" on all Queries
-        UpdateProgress(90);
+        UpdateProgress(60);
 
         // Copy mod files
-        WizardForm.StatusLabel.Caption := 'Moving Freelancer: HD Edition';
+        WizardForm.StatusLabel.Caption := ExpandConstant('Moving {#MyAppName}');
 
         DirectoryCopy(ExpandConstant('{app}\{#MyFolderName}'),ExpandConstant('{app}'),True);
         
         DelTree(ExpandConstant('{app}\{#MyFolderName}'), True, True, True);
-        UpdateProgress(95);
+        UpdateProgress(90);
 
         // Process options
         WizardForm.StatusLabel.Caption := 'Processing your options';
@@ -155,6 +155,9 @@ begin
         Process_DxWrapperReShade();
         Process_DgVoodooReShade();
 
+        WizardForm.StatusLabel.Caption := 'Cleanup';
+        UpdateProgress(95);
+
         // Perform operations that (potentially) do not work on Wine
         if not IsWine then 
         begin
@@ -178,7 +181,7 @@ begin
         DeleteFile(ExpandConstant('{userdocs}\My Games\Freelancer\Accts\SinglePlayer\Restart.fl'));
         DeleteFile(ExpandConstant('{userdocs}\My Games\FreelancerHD\Accts\SinglePlayer\Restart.fl'));
 
-        //Remove 2003 junk files
+        // Remove 2003 junk files
         RemoveJunkFiles('dll');
         RemoveJunkFiles('msi');
 
