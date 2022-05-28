@@ -355,19 +355,19 @@ begin
   lblNewSaveFolder := TLabel.Create(PageSinglePlayer);
   lblNewSaveFolder.Parent := PageSinglePlayer.Surface;
   lblNewSaveFolder.Caption := 'Store save game files in a different folder';
-  lblNewSaveFolder.Top := ScaleY(160);
+  lblNewSaveFolder.Top := ScaleY(170);
   lblNewSaveFolder.Left := ScaleX(20);
   
   descNewSaveFolder := TNewStaticText.Create(PageSinglePlayer);
   descNewSaveFolder.Parent := PageSinglePlayer.Surface;
   descNewSaveFolder.WordWrap := True;
-  descNewSaveFolder.Top := ScaleY(180);
+  descNewSaveFolder.Top := ScaleY(190);
   descNewSaveFolder.Width := PageSinglePlayer.SurfaceWidth;
   descNewSaveFolder.Caption := 'Normally Freelancer save games are stored in "Documents/My Games/Freelancer". This option ensures save games will be stored in "Documents/My Games/FreelancerHD" instead, which may help avoid conflicts when having multiple mods installed simultaneously.';
   
   NewSaveFolder := TCheckBox.Create(PageSinglePlayer);
   NewSaveFolder.Parent := PageSinglePlayer.Surface;
-  NewSaveFolder.Top := ScaleY(160);
+  NewSaveFolder.Top := ScaleY(170);
 
 
   // Initialize StartupRes page and add content
@@ -587,16 +587,16 @@ begin
   lblDxWrapperGraphicsApi.Parent := PageGraphicsApi.Surface;
   lblDxWrapperGraphicsApi.Caption := 'DxWrapper + d3d8to9 (DirectX 9, recommended)';
   lblDxWrapperGraphicsApi.Left := ScaleX(20);
-  lblDxWrapperGraphicsApi.Top := ScaleY(100);
+  lblDxWrapperGraphicsApi.Top := ScaleY(105);
 
   DxWrapperGraphicsApi := TRadioButton.Create(PageGraphicsApi);
   DxWrapperGraphicsApi.Parent := PageGraphicsApi.Surface;
-  DxWrapperGraphicsApi.Top := ScaleY(100);
+  DxWrapperGraphicsApi.Top := ScaleY(105);
 
   descDxWrapperGraphicsApi := TNewStaticText.Create(PageGraphicsApi);
   descDxWrapperGraphicsApi.Parent := PageGraphicsApi.Surface;
   descDxWrapperGraphicsApi.WordWrap := True;
-  descDxWrapperGraphicsApi.Top := ScaleY(115);
+  descDxWrapperGraphicsApi.Top := ScaleY(120);
   descDxWrapperGraphicsApi.Width := PageGraphicsApi.SurfaceWidth;
   descDxWrapperGraphicsApi.Caption := 'Supports native Anti-Aliasing, Anisotropic Filtering, and ReShade.';
 
@@ -604,16 +604,16 @@ begin
   lblVanillaGraphicsApi.Parent := PageGraphicsApi.Surface;
   lblVanillaGraphicsApi.Caption := 'Vanilla Freelancer (DirectX 8)';
   lblVanillaGraphicsApi.Left := ScaleX(20);
-  lblVanillaGraphicsApi.Top := ScaleY(140);
+  lblVanillaGraphicsApi.Top := ScaleY(150);
 
   VanillaGraphicsApi := TRadioButton.Create(PageGraphicsApi);
   VanillaGraphicsApi.Parent := PageGraphicsApi.Surface;
-  VanillaGraphicsApi.Top := ScaleY(140);
+  VanillaGraphicsApi.Top := ScaleY(150);
 
   descVanillaGraphicsApi := TNewStaticText.Create(PageGraphicsApi);
   descVanillaGraphicsApi.Parent := PageGraphicsApi.Surface;
   descVanillaGraphicsApi.WordWrap := True;
-  descVanillaGraphicsApi.Top := ScaleY(155);
+  descVanillaGraphicsApi.Top := ScaleY(165);
   descVanillaGraphicsApi.Width := PageGraphicsApi.SurfaceWidth;
   descVanillaGraphicsApi.Caption := 'Uses your PC''s default DirectX 8 API for Freelancer. You may experience compatibility issues when using it.';
 
@@ -621,16 +621,16 @@ begin
   lblLightingFixGraphicsApi.Parent := PageGraphicsApi.Surface;
   lblLightingFixGraphicsApi.Caption := 'Vanilla Freelancer + Lighting Bug Fix (DirectX 8)';
   lblLightingFixGraphicsApi.Left := ScaleX(20);
-  lblLightingFixGraphicsApi.Top := ScaleY(190);
+  lblLightingFixGraphicsApi.Top := ScaleY(205);
 
   LightingFixGraphicsApi := TRadioButton.Create(PageGraphicsApi);
   LightingFixGraphicsApi.Parent := PageGraphicsApi.Surface;
-  LightingFixGraphicsApi.Top := ScaleY(190);
+  LightingFixGraphicsApi.Top := ScaleY(205);
 
   descLightingFixGraphicsApi := TNewStaticText.Create(PageGraphicsApi);
   descLightingFixGraphicsApi.Parent := PageGraphicsApi.Surface;
   descLightingFixGraphicsApi.WordWrap := True;
-  descLightingFixGraphicsApi.Top := ScaleY(205);
+  descLightingFixGraphicsApi.Top := ScaleY(220);
   descLightingFixGraphicsApi.Width := PageGraphicsApi.SurfaceWidth;
   descLightingFixGraphicsApi.Caption := 'About the same as the Vanilla Freelancer option but fixes the major lighting bug on Windows 10 and 11. NOTE: This option only works on Windows 10 and 11!';
   
@@ -716,7 +716,7 @@ begin
   lblDgVoodooAf := TLabel.Create(DgVoodooPage);
   lblDgVoodooAf.Parent := DgVoodooPage.Surface;
   lblDgVoodooAf.Caption := 'Anisotropic Filtering';
-  lblDgVoodooAf.Top := ScaleY(85);
+  lblDgVoodooAf.Top := ScaleY(90);
   
   DgVoodooAf := TComboBox.Create(DgVoodooPage);
   DgVoodooAf.Parent := DgVoodooPage.Surface;
@@ -727,29 +727,29 @@ begin
   DgVoodooAf.Items.Add('8x');
   DgVoodooAf.Items.Add('16x (recommended)');
   DgVoodooAf.ItemIndex := 4;
-  DgVoodooAf.Top := ScaleY(105);
+  DgVoodooAf.Top := ScaleY(110);
 
   descDgVoodooAf := TNewStaticText.Create(DgVoodooPage);
   descDgVoodooAf.Parent := DgVoodooPage.Surface;
   descDgVoodooAf.WordWrap := True;
   descDgVoodooAf.Width := DgVoodooPage.SurfaceWidth;
   descDgVoodooAf.Caption := 'Anisotropic Filtering improves the quality of textures when viewing them from the side, with minimal performance overhead.';
-  descDgVoodooAf.Top := ScaleY(130);
+  descDgVoodooAf.Top := ScaleY(135);
 
   lblDgVoodooRefreshRate := TLabel.Create(DgVoodooPage);
   lblDgVoodooRefreshRate.Parent := DgVoodooPage.Surface;
   lblDgVoodooRefreshRate.Caption := 'Refresh Rate';
-  lblDgVoodooRefreshRate.Top := ScaleY(170);
+  lblDgVoodooRefreshRate.Top := ScaleY(180);
 
   lblDgVoodooRefreshRateHz := TLabel.Create(DgVoodooPage);
   lblDgVoodooRefreshRateHz.Parent := DgVoodooPage.Surface;
   lblDgVoodooRefreshRateHz.Caption := 'Hz';
-  lblDgVoodooRefreshRateHz.Top := ScaleY(193);
+  lblDgVoodooRefreshRateHz.Top := ScaleY(203);
   lblDgVoodooRefreshRateHz.Left := ScaleX(125);
   
   DgVoodooRefreshRate := TNewEdit.Create(DgVoodooPage);
   DgVoodooRefreshRate.Parent := DgVoodooPage.Surface;;
-  DgVoodooRefreshRate.Top := ScaleY(190);
+  DgVoodooRefreshRate.Top := ScaleY(200);
   DgVoodooRefreshRate.Text := IntToStr(RefreshRate());
   DgVoodooRefreshRate.OnKeyPress := @DigitFieldKeyPress;
 
@@ -758,7 +758,7 @@ begin
   descDgVoodooRefreshRate.WordWrap := True;
   descDgVoodooRefreshRate.Width := DgVoodooPage.SurfaceWidth;
   descDgVoodooRefreshRate.Caption := 'Enter your monitor''s refresh rate here. Freelancer will run at this refresh rate.';
-  descDgVoodooRefreshRate.Top := ScaleY(215);
+  descDgVoodooRefreshRate.Top := ScaleY(225);
 
   // DxWrapper options #2
   DxWrapperPage2 := CreateCustomPage(
@@ -975,19 +975,19 @@ begin
   lblEngineTrails := TLabel.Create(PageEffects);
   lblEngineTrails.Parent := PageEffects.Surface;
   lblEngineTrails.Caption := 'Add player ship engine trails';
-  lblEngineTrails.Top := ScaleY(180);
+  lblEngineTrails.Top := ScaleY(185);
   lblEngineTrails.Left := ScaleX(20);
   
   descEngineTrails := TNewStaticText.Create(PageEffects);
   descEngineTrails.Parent := PageEffects.Surface;
   descEngineTrails.WordWrap := True;
-  descEngineTrails.Top := ScaleY(200);
+  descEngineTrails.Top := ScaleY(205);
   descEngineTrails.Width := PageEffects.SurfaceWidth;
   descEngineTrails.Caption := 'In vanilla Freelancer, NPC ships have engine trials while player ships don''t. This option adds engine trails to all player ships.';
   
   EngineTrails := TCheckBox.Create(PageEffects);
   EngineTrails.Parent := PageEffects.Surface;
-  EngineTrails.Top := ScaleY(180);
+  EngineTrails.Top := ScaleY(185);
   EngineTrails.Checked := True;
 
   // Draw distances
@@ -1128,12 +1128,12 @@ begin
   DisplayMode.Items.Add('Windowed');
   DisplayMode.Items.Add('Borderless Windowed');
   DisplayMode.ItemIndex := 0;
-  DisplayMode.Top := ScaleY(150);
+  DisplayMode.Top := ScaleY(155);
 
   lblDisplayMode := TLabel.Create(PageMiscOptions);
   lblDisplayMode.Parent := PageMiscOptions.Surface;
   lblDisplayMode.Caption := 'Display Mode';
-  lblDisplayMode.Top := ScaleY(150);
+  lblDisplayMode.Top := ScaleY(155);
   lblDisplayMode.Left := ScaleX(150);
 
   descDisplayMode := TNewStaticText.Create(PageMiscOptions);
@@ -1141,17 +1141,17 @@ begin
   descDisplayMode.WordWrap := True;
   descDisplayMode.Width := PageMiscOptions.SurfaceWidth;
   descDisplayMode.Caption := 'In both Windowed options, the Gamma slider from the options menu won''t work. This is mitigated by applying Gamma with ReShade, if it''s been enabled. Also, both windowed options are experimental and may be buggy, so try them at your own risk.';
-  descDisplayMode.Top := ScaleY(175);
+  descDisplayMode.Top := ScaleY(180);
 
   lblDoNotPauseOnAltTab := TLabel.Create(PageMiscOptions);
   lblDoNotPauseOnAltTab.Parent := PageMiscOptions.Surface;
   lblDoNotPauseOnAltTab.Caption := 'Keep Freelancer running in the background when Alt-Tabbed';
-  lblDoNotPauseOnAltTab.Top := ScaleY(230);
+  lblDoNotPauseOnAltTab.Top := ScaleY(235);
   lblDoNotPauseOnAltTab.Left := ScaleX(20);
   
   DoNotPauseOnAltTab := TCheckBox.Create(PageMiscOptions);
   DoNotPauseOnAltTab.Parent := PageMiscOptions.Surface;
-  DoNotPauseOnAltTab.Top := ScaleY(230);
+  DoNotPauseOnAltTab.Top := ScaleY(235);
 
   with DxWrapperPage do
   begin
