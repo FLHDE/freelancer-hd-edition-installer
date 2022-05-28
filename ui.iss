@@ -179,6 +179,15 @@ var
   BestOptions: TCheckBox;
   descBestOptions: TNewStaticText;
 
+  // Display mode
+  lblDisplayMode: TLabel;
+  DisplayMode: TComboBox;
+  descDisplayMode: TNewStaticText;
+
+  // Do not pause on alt tab
+  lblDoNotPauseOnAltTab: TLabel;
+  DoNotPauseOnAltTab: TCheckBox;
+
 // Report on download progress
 # if !AllInOneInstall
 function OnDownloadProgress(const Url, FileName: String; const Progress, ProgressMax: Int64): Boolean;
@@ -1097,12 +1106,12 @@ begin
   lblBestOptions.Parent := PageMiscOptions.Surface;
   lblBestOptions.Caption := 'Apply Best Video Options';
   lblBestOptions.Left := ScaleX(20);
-  lblBestOptions.Top := ScaleY(80);
+  lblBestOptions.Top := ScaleY(75);
   
   descBestOptions := TNewStaticText.Create(PageMiscOptions);
   descBestOptions.Parent := PageMiscOptions.Surface;
   descBestOptions.WordWrap := True;
-  descBestOptions.Top := ScaleY(100);
+  descBestOptions.Top := ScaleY(95);
   descBestOptions.Width := PageMiscOptions.SurfaceWidth;
   descBestOptions.Caption := 'Automatically applies the highest video options available in Freelancer. Additionally, it''ll select your monitor''s native resolution ('
     + IntToStr(DesktopRes.Width) + 'x' + IntToStr(DesktopRes.Height) + '). Freelancer usually doesn''t do any of this by default.';
@@ -1110,7 +1119,41 @@ begin
   BestOptions := TCheckBox.Create(PageMiscOptions);
   BestOptions.Parent := PageMiscOptions.Surface;
   BestOptions.Checked := True;
-  BestOptions.Top := ScaleY(80);
+  BestOptions.Top := ScaleY(75);
+
+  DisplayMode := TComboBox.Create(PageMiscOptions);
+  DisplayMode.Parent := PageMiscOptions.Surface;
+  DisplayMode.Style := csDropDownList;
+  DisplayMode.Items.Add('Fullscreen (default)');
+  DisplayMode.Items.Add('Windowed');
+  DisplayMode.Items.Add('Borderless Windowed');
+  DisplayMode.ItemIndex := 0;
+  DisplayMode.Top := ScaleY(150);
+
+  lblDisplayMode := TLabel.Create(PageMiscOptions);
+  lblDisplayMode.Parent := PageMiscOptions.Surface;
+  lblDisplayMode.Caption := 'Display Mode';
+  lblDisplayMode.Top := ScaleY(150);
+  lblDisplayMode.Left := ScaleX(150);
+
+  descDisplayMode := TNewStaticText.Create(PageMiscOptions);
+  descDisplayMode.Parent := PageMiscOptions.Surface;
+  descDisplayMode.WordWrap := True;
+  descDisplayMode.Width := PageMiscOptions.SurfaceWidth;
+  descDisplayMode.Caption := 'In Windowed and Borderless Windowed, the Gamma slider from the options menu won''t work. This is mitigated by applying Gamma with ReShade, if it''s been enabled.';
+  descDisplayMode.Top := ScaleY(175);
+
+  lblDoNotPauseOnAltTab := TLabel.Create(PageMiscOptions);
+  lblDoNotPauseOnAltTab.Parent := PageMiscOptions.Surface;
+  lblDoNotPauseOnAltTab.Caption := 'Keep Freelancer running in the background when Alt-Tabbed';
+  lblDoNotPauseOnAltTab.Top := ScaleY(215);
+  lblDoNotPauseOnAltTab.Left := ScaleX(20);
+  
+  DoNotPauseOnAltTab := TCheckBox.Create(PageMiscOptions);
+  DoNotPauseOnAltTab.Parent := PageMiscOptions.Surface;
+  DoNotPauseOnAltTab.Checked := True;
+
+  DoNotPauseOnAltTab.Top := ScaleY(215);
 
   with DxWrapperPage do
   begin
