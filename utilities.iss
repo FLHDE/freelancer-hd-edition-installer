@@ -131,11 +131,16 @@ begin
   end;
 end;
 
+// Data type for a desktop resolution (stores the width and height of the display in pixels)
 type
 	DesktopResolution = record
 		Width: Integer;
 		Height: Integer;
-	end;
+end;
+
+// Used to store the user's desktop resolution so it doesn't have to be requested multiple times
+var
+  DesktopRes: DesktopResolution;
 
 // Gets the user's main monitor resolution
 function Resolution(): DesktopResolution;
@@ -155,9 +160,7 @@ begin
   end;
 end;
 
-var
-  DesktopRes: DesktopResolution;
-
+// Whether or not the desktop resolution has an aspect ratio of 16:9
 function IsDesktopRes16By9(): Boolean;
 begin
   Result := Trunc(Single(DesktopRes.Width) / DesktopRes.Height * 100.0) / 100.0 = 1.77
