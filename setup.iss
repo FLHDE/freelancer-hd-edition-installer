@@ -83,10 +83,12 @@ FinishedLabel=Setup has finished installing [name] on your computer. The applica
 var
   // Allows us to skip the downloading of the files and just copy it from the local PC to save time
   OfflineInstall: String;
+  # if !AllInOneInstall
   // String list of mirrors that we can potentially download the mod from. This is populated in InitializeWizard()
   mirrors : TStringList;
   // Size of Download in MB
   DownloadSize : String;
+  #endif
 
 // Imports from other .iss files
 #include "utilities.iss"
