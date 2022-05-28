@@ -1151,7 +1151,6 @@ begin
   
   DoNotPauseOnAltTab := TCheckBox.Create(PageMiscOptions);
   DoNotPauseOnAltTab.Parent := PageMiscOptions.Surface;
-  DoNotPauseOnAltTab.Checked := True;
 
   DoNotPauseOnAltTab.Top := ScaleY(215);
 

@@ -26,7 +26,7 @@ var
  Attr : DWord;
 begin
   Attr := GetFileAttributes(FileName);
-  if (Attr and 1) = 1  then          
+  if (Attr and 1) = 1 then          
   begin
     Attr := Attr -1;
     SetFileAttributes(FileName, Attr);
