@@ -179,10 +179,8 @@ begin
 end;
 
 // Used to convert a binary expression in string format to an actual binary stream
-function CryptStringToBinary(
-  sz: string; cch: LongWord; flags: LongWord; binary: string; var size: LongWord;
-  skip: LongWord; flagsused: LongWord): Integer;
-  external 'CryptStringToBinaryW@crypt32.dll stdcall';
+function ConvertHexToBinary(hexString: string; hexLength: LongWord; binaryString: string): Boolean;
+  external 'ConvertHexToBinary@files:HexToBinary.dll cdecl setuponly delayload';
 
 // Used to perform a hex edit in a file at a specific location
 procedure WriteHexToFile(FileName: string; Offset: longint; Hex: string);
@@ -196,10 +194,7 @@ begin
   try
     SetLength(Buffer, (Length(Hex) div 4) + 1);
     Size := Length(Hex) div 2;
-    if (CryptStringToBinary(
-          // 04 = CRYPT_STRING_HEX
-          Hex, Length(Hex), $04, Buffer, Size, 0, 0) = 0) or
-       (Size <> Length(Hex) div 2) then
+    if (not ConvertHexToBinary(Hex, Length(Hex), Buffer)) then
     begin
       RaiseException('Could not convert string to binary stream.');
     end;
