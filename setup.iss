@@ -155,6 +155,8 @@ begin
         Process_DxWrapper();
         Process_DxWrapperReShade();
         Process_DgVoodooReShade();
+        Process_DgVoodoo();
+        Process_DisplayMode();
 
         WizardForm.StatusLabel.Caption := 'Cleaning up';
         UpdateProgress(95);
@@ -162,10 +164,6 @@ begin
         // Perform operations that (potentially) do not work on Wine
         if not IsWine then 
         begin
-          // TODO: Place outside of if statement when the Wine crypt_string issue has been fixed
-          Process_DgVoodoo();
-          Process_DisplayMode();
-
           // Delete potential UTF-8 BOM headers in all edited ini files
           RemoveBOM(ExpandConstant('{app}\EXE\dacom.ini'));
           RemoveBOM(ExpandConstant('{app}\EXE\freelancer.ini'));
@@ -198,15 +196,6 @@ var
   RefreshRateError: String;
 begin
     Result := True;
-
-    // TODO: Remove when the Wine crypt_string issue has been fixed
-    if (PageId = PageGraphicsApi.ID) and (DgVoodooGraphicsApi.Checked) and (IsWine) then
-      MsgBox('It seems you are using Wine. The dgVoodoo options you see on the next page won''t be applied because Wine is currently missing the implementation of a Win32 API function that this options page requires.' + #13#10#13#10 + 
-      'You can still apply the options manually if you wish by opening EXE/dgVoodooCpl.exe after the mod has finished installing.' + #13#10#13#10 + 
-      'Alternatively, you could configure similar options with the DxWrapper Graphics API, which will apply correctly.', mbError, MB_OK);
-
-    if (PageId = PageSkips.ID)and (IsWine) then
-      MsgBox('It seems you are using Wine. The Display Mode and Alt-Tab options you see on the next page won''t be applied because Wine is currently missing the implementation of a Win32 API function that these options require.', mbError, MB_OK);
 
     if PageId = DgVoodooPage.ID then
     begin

@@ -24,5 +24,8 @@ This was created using Inno and used custom Pascal scripting.
 ### [7-Zip executable](https://www.7-zip.org/download.html)
 7-Zip is licensed under the GNU LGPL license. www.7-zip.org.
 
+### [Hex To Binary](https://github.com/BC46/HexToBinary) by [BC46](https://github.com/BC46)
+Hex To Binary is licensed under the MIT license. https://github.com/BC46/HexToBinary/blob/main/LICENSE.
+
 ### [UTF-8 BOM Remover](https://github.com/BC46/utf-8-bom-remover) by [BC46](https://github.com/BC46)
 UTF-8 BOM Remover is licensed under the MIT license. https://github.com/BC46/utf-8-bom-remover/blob/main/LICENSE.
