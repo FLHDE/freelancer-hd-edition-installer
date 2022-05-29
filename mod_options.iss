@@ -975,5 +975,10 @@ begin
   end;
 
   if (DoNotPauseOnAltTab.Checked) then
-    WriteHexToFile(ExePath, $1B2665, 'EB'); // Keep Freelancer running in the background when Alt-Tabbed
+  begin
+    if (DisplayMode.ItemIndex = 0) then   
+      WriteHexToFile(ExePath, $1B2665, 'EB') // Keep Freelancer running in the background when Alt-Tabbed
+    else
+      WriteHexToFile(ExePath, $1B264C, 'BA0100000090'); // Keep Freelancer and its window running in the background when Alt-Tabbed
+  end;
 end;
