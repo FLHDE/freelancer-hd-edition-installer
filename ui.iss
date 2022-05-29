@@ -1141,7 +1141,7 @@ begin
   descDisplayMode.Parent := PageMiscOptions.Surface;
   descDisplayMode.WordWrap := True;
   descDisplayMode.Width := PageMiscOptions.SurfaceWidth;
-  descDisplayMode.Caption := 'In both Windowed options, the Gamma slider from the options menu won''t work. This is mitigated by applying Gamma with ReShade, if it''s been enabled. Also, both windowed options are experimental and may be buggy, so try them at your own risk.';
+  descDisplayMode.Caption := 'In both Windowed modes, the Gamma slider from the options menu won''t work. To remedy this, Gamma will be applied using ReShade, if it''s been enabled. Also, both windowed options are experimental and may be buggy, so try them at your own risk.';
   descDisplayMode.Top := ScaleY(180);
 
   lblDoNotPauseOnAltTab := TLabel.Create(PageMiscOptions);
@@ -1186,6 +1186,6 @@ begin
 
   // TODO: Remove when the Wine label issue has been fixed
   if (IsWine) then
-    MsgBox('It seems you are using Wine. The installer will still work as intended. One only minor issue is that many option labels won''t be displayed correctly, presumably because of an incorrect API translation.'  + #13#10#13#10 +
+    MsgBox('It seems you are using Wine. The installer will still work as intended. One minor issue is that many option labels won''t be displayed correctly, presumably because of an incorrect API translation.'  + #13#10#13#10 +
     'We''ve uploaded screenshots of all installer pages on https://freelancerhd.com/install. Hopefully this will help.', mbError, MB_OK);
 end;
