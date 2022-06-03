@@ -290,7 +290,7 @@ begin
     FileReplaceString(OptionsPath, 'USE_DYNAMIC_COMM_HEAD =',    'USE_DYNAMIC_COMM_HEAD = 1.00;')
     FileReplaceString(OptionsPath, 'max_submitted_sounds =',     'max_submitted_sounds = 1.00;')
     FileReplaceString(OptionsPath, 'color_bpp=',                 'color_bpp= 32;')
-    FileReplaceString(OptionsPath, 'depth_bpp=',                 'depth_bpp= 24;')
+    FileReplaceString(OptionsPath, 'depth_bpp=',                 'depth_bpp= 32;')
   end
   else begin
     CreateDirIfNotExists(MyGamesFolder);
