@@ -338,36 +338,36 @@ begin
   lblOspPirate.Parent := PageSinglePlayer.Surface;
   lblOspPirate.Caption := 'Open Single Player (Pirate)';
   lblOspPirate.Left := ScaleX(20);
-  lblOspPirate.Top := ScaleY(40);
+  lblOspPirate.Top := OspNormal.Top + ScaleY(20);
   
   OspPirate := TRadioButton.Create(PageSinglePlayer);
   OspPirate.Parent := PageSinglePlayer.Surface;
-  OspPirate.Top := ScaleY(40);
+  OspPirate.Top := lblOspPirate.Top;
   
   descSinglePlayerMode := TNewStaticText.Create(PageSinglePlayer);
   descSinglePlayerMode.Parent := PageSinglePlayer.Surface;
   descSinglePlayerMode.WordWrap := True;
   descSinglePlayerMode.Width := PageSinglePlayer.SurfaceWidth;
   descSinglePlayerMode.Caption := 'This option allows you to choose the Single Player mode. Story Mode simply lets you play through the entire storyline, as usual. Both Open Single Player options skip the entire storyline and allow you to freely roam the universe right away. With OSP (Normal), you start in Manhattan with a basic loadout and a default reputation. The OSP (Pirate) option on the other hand, spawns you at Rochester with a similar loadout and an inverted reputation. NOTE: Both OSP options may cause existing storyline saves to not work correctly.';
-  descSinglePlayerMode.Top := ScaleY(60);
+  descSinglePlayerMode.Top := OspPirate.Top + ScaleY(20);
   
   // Add new missile effects
   lblNewSaveFolder := TLabel.Create(PageSinglePlayer);
   lblNewSaveFolder.Parent := PageSinglePlayer.Surface;
   lblNewSaveFolder.Caption := 'Store save game files in a different folder';
-  lblNewSaveFolder.Top := ScaleY(170);
+  lblNewSaveFolder.Top := descSinglePlayerMode.Top + ScaleY(110);
   lblNewSaveFolder.Left := ScaleX(20);
   
   descNewSaveFolder := TNewStaticText.Create(PageSinglePlayer);
   descNewSaveFolder.Parent := PageSinglePlayer.Surface;
   descNewSaveFolder.WordWrap := True;
-  descNewSaveFolder.Top := ScaleY(190);
+  descNewSaveFolder.Top := lblNewSaveFolder.Top + ScaleY(20);
   descNewSaveFolder.Width := PageSinglePlayer.SurfaceWidth;
   descNewSaveFolder.Caption := 'Normally Freelancer save games are stored in "Documents/My Games/Freelancer". This option ensures save games will be stored in "Documents/My Games/FreelancerHD" instead, which may help avoid conflicts when having multiple mods installed simultaneously.';
   
   NewSaveFolder := TCheckBox.Create(PageSinglePlayer);
   NewSaveFolder.Parent := PageSinglePlayer.Surface;
-  NewSaveFolder.Top := ScaleY(170);
+  NewSaveFolder.Top := lblNewSaveFolder.Top;
 
 
   // Initialize StartupRes page and add content
@@ -467,18 +467,18 @@ begin
   lblWeaponGroups.Parent := PageWidescreenHud.Surface;
   lblWeaponGroups.Caption := 'Add Weapon Group buttons';
   lblWeaponGroups.Left := ScaleX(20);
-  lblWeaponGroups.Top := ScaleY(130);
+  lblWeaponGroups.Top := descWidescreenHud.Top + ScaleY(120);
   
   descWeaponGroups := TNewStaticText.Create(PageWidescreenHud);
   descWeaponGroups.Parent := PageWidescreenHud.Surface;
   descWeaponGroups.WordWrap := True;
-  descWeaponGroups.Top := ScaleY(150);
+  descWeaponGroups.Top := lblWeaponGroups.Top + ScaleY(20);
   descWeaponGroups.Width := PageWidescreenHud.SurfaceWidth;
   descWeaponGroups.Caption := 'This option adds buttons for selecting 3 different weapon groups in your ship info panel. NOTE: These buttons may not be positioned correctly on aspect ratios other than 16:9.';
   
   WeaponGroups := TCheckBox.Create(PageWidescreenHud);
   WeaponGroups.Parent := PageWidescreenHud.Surface;
-  WeaponGroups.Top := ScaleY(130);
+  WeaponGroups.Top := lblWeaponGroups.Top;
 
   // Only check the weapon groups option if the user's aspect ratio is 16:9
   if (IsDesktopRes16By9()) then
@@ -510,18 +510,18 @@ begin
   lblFlatIcons.Parent := PageDarkHud.Surface;
   lblFlatIcons.Caption := 'Enable Custom Flat Icons';
   lblFlatIcons.Left := ScaleX(20);
-  lblFlatIcons.Top := ScaleY(70);
+  lblFlatIcons.Top := descDarkHud.Top + ScaleY(50);
   
   descFlatIcons := TNewStaticText.Create(PageDarkHud);
   descFlatIcons.Parent := PageDarkHud.Surface;
   descFlatIcons.WordWrap := True;
-  descFlatIcons.Top := ScaleY(90);
+  descFlatIcons.Top := lblFlatIcons.Top + ScaleY(20);
   descFlatIcons.Width := PageWidescreenHud.SurfaceWidth;
   descFlatIcons.Caption := 'This option replaces Freelancer''s default icon set with new simpler flat-looking icons. If this option is disabled, you''ll get the HD vanilla icons instead.';
   
   FlatIcons := TCheckBox.Create(PageDarkHud);
   FlatIcons.Parent := PageDarkHud.Surface;
-  FlatIcons.Top := ScaleY(70);
+  FlatIcons.Top := lblFlatIcons.Top;
 
   
   // Fix clipping with 16:9 resolution planetscapes
@@ -574,12 +574,12 @@ begin
   DgVoodooGraphicsApi := TRadioButton.Create(PageGraphicsApi);
   DgVoodooGraphicsApi.Parent := PageGraphicsApi.Surface;
   DgVoodooGraphicsApi.Checked := True;
-  DgVoodooGraphicsApi.Top := ScaleY(50);
+  DgVoodooGraphicsApi.Top := lblDgVoodooGraphicsApi.Top;
 
   descDgVoodooGraphicsApi := TNewStaticText.Create(PageGraphicsApi);
   descDgVoodooGraphicsApi.Parent := PageGraphicsApi.Surface;
   descDgVoodooGraphicsApi.WordWrap := True;
-  descDgVoodooGraphicsApi.Top := ScaleY(65);
+  descDgVoodooGraphicsApi.Top := DgVoodooGraphicsApi.Top + ScaleY(15);
   descDgVoodooGraphicsApi.Width := PageGraphicsApi.SurfaceWidth;
   descDgVoodooGraphicsApi.Caption := 'Fixes the major lighting bug on Windows 10 and 11. Supports native Anti-Aliasing, Anisotropic Filtering, and ReShade. Requires manual refresh rate input.';
 
@@ -587,16 +587,16 @@ begin
   lblDxWrapperGraphicsApi.Parent := PageGraphicsApi.Surface;
   lblDxWrapperGraphicsApi.Caption := 'DxWrapper + d3d8to9 (DirectX 9, recommended)';
   lblDxWrapperGraphicsApi.Left := ScaleX(20);
-  lblDxWrapperGraphicsApi.Top := ScaleY(105);
+  lblDxWrapperGraphicsApi.Top := descDgVoodooGraphicsApi.Top + ScaleY(40);
 
   DxWrapperGraphicsApi := TRadioButton.Create(PageGraphicsApi);
   DxWrapperGraphicsApi.Parent := PageGraphicsApi.Surface;
-  DxWrapperGraphicsApi.Top := ScaleY(105);
+  DxWrapperGraphicsApi.Top := lblDxWrapperGraphicsApi.Top;
 
   descDxWrapperGraphicsApi := TNewStaticText.Create(PageGraphicsApi);
   descDxWrapperGraphicsApi.Parent := PageGraphicsApi.Surface;
   descDxWrapperGraphicsApi.WordWrap := True;
-  descDxWrapperGraphicsApi.Top := ScaleY(120);
+  descDxWrapperGraphicsApi.Top := DxWrapperGraphicsApi.Top + ScaleY(15);
   descDxWrapperGraphicsApi.Width := PageGraphicsApi.SurfaceWidth;
   descDxWrapperGraphicsApi.Caption := 'Supports native Anti-Aliasing, Anisotropic Filtering, and ReShade.';
 
@@ -604,16 +604,16 @@ begin
   lblVanillaGraphicsApi.Parent := PageGraphicsApi.Surface;
   lblVanillaGraphicsApi.Caption := 'Vanilla Freelancer (DirectX 8)';
   lblVanillaGraphicsApi.Left := ScaleX(20);
-  lblVanillaGraphicsApi.Top := ScaleY(150);
+  lblVanillaGraphicsApi.Top := descDxWrapperGraphicsApi.Top + ScaleY(30);
 
   VanillaGraphicsApi := TRadioButton.Create(PageGraphicsApi);
   VanillaGraphicsApi.Parent := PageGraphicsApi.Surface;
-  VanillaGraphicsApi.Top := ScaleY(150);
+  VanillaGraphicsApi.Top := lblVanillaGraphicsApi.Top;
 
   descVanillaGraphicsApi := TNewStaticText.Create(PageGraphicsApi);
   descVanillaGraphicsApi.Parent := PageGraphicsApi.Surface;
   descVanillaGraphicsApi.WordWrap := True;
-  descVanillaGraphicsApi.Top := ScaleY(165);
+  descVanillaGraphicsApi.Top := VanillaGraphicsApi.Top + ScaleY(15);
   descVanillaGraphicsApi.Width := PageGraphicsApi.SurfaceWidth;
   descVanillaGraphicsApi.Caption := 'Uses your PC''s default DirectX 8 API for Freelancer. You may experience compatibility issues when using it.';
 
@@ -621,16 +621,16 @@ begin
   lblLightingFixGraphicsApi.Parent := PageGraphicsApi.Surface;
   lblLightingFixGraphicsApi.Caption := 'Vanilla Freelancer + Lighting Bug Fix (DirectX 8)';
   lblLightingFixGraphicsApi.Left := ScaleX(20);
-  lblLightingFixGraphicsApi.Top := ScaleY(205);
+  lblLightingFixGraphicsApi.Top := descVanillaGraphicsApi.Top + ScaleY(40);
 
   LightingFixGraphicsApi := TRadioButton.Create(PageGraphicsApi);
   LightingFixGraphicsApi.Parent := PageGraphicsApi.Surface;
-  LightingFixGraphicsApi.Top := ScaleY(205);
+  LightingFixGraphicsApi.Top := lblLightingFixGraphicsApi.Top;
 
   descLightingFixGraphicsApi := TNewStaticText.Create(PageGraphicsApi);
   descLightingFixGraphicsApi.Parent := PageGraphicsApi.Surface;
   descLightingFixGraphicsApi.WordWrap := True;
-  descLightingFixGraphicsApi.Top := ScaleY(220);
+  descLightingFixGraphicsApi.Top := lblLightingFixGraphicsApi.Top + ScaleY(15);
   descLightingFixGraphicsApi.Width := PageGraphicsApi.SurfaceWidth;
   descLightingFixGraphicsApi.Caption := 'About the same as the Vanilla Freelancer option but fixes the major lighting bug on Windows 10 and 11. NOTE: This option only works on Windows 10 and 11!';
   
@@ -658,12 +658,12 @@ begin
   descDxWrapperAa.WordWrap := True;
   descDxWrapperAa.Width := DxWrapperPage.SurfaceWidth;
   descDxWrapperAa.Caption := 'Anti-Aliasing removes jagged edges in-game, effectively making them appear smoother at a performance cost.';
-  descDxWrapperAa.Top := ScaleY(45);
+  descDxWrapperAa.Top := DxWrapperAa.Top + ScaleY(25);
 
   lblDxWrapperAf := TLabel.Create(DxWrapperPage);
   lblDxWrapperAf.Parent := DxWrapperPage.Surface;
   lblDxWrapperAf.Caption := 'Anisotropic Filtering';
-  lblDxWrapperAf.Top := ScaleY(95);
+  lblDxWrapperAf.Top := descDxWrapperAa.Top + ScaleY(50);
   
   DxWrapperAf := TComboBox.Create(DxWrapperPage);
   DxWrapperAf.Parent := DxWrapperPage.Surface;
@@ -675,7 +675,7 @@ begin
   DxWrapperAf.Items.Add('16x');
   DxWrapperAf.Items.Add('Auto (recommended)');
   DxWrapperAf.ItemIndex := 5;
-  DxWrapperAf.Top := ScaleY(115);
+  DxWrapperAf.Top := lblDxWrapperAf.Top + ScaleY(25);
 
   descDxWrapperAf := TNewStaticText.Create(DxWrapperPage);
   descDxWrapperAf.Parent := DxWrapperPage.Surface;
@@ -683,7 +683,7 @@ begin
   descDxWrapperAf.Width := DxWrapperPage.SurfaceWidth;
   descDxWrapperAf.Caption := 'Anisotropic Filtering improves the quality of textures when viewing them from the side, with minimal performance overhead. "Auto" will automatically use the highest option your graphics card supports.' + #13#10 + #13#10 +
   'NOTE: If you have an NVIDIA GPU, set Anisotropic Filtering to "Off". Otherwise some textures may not load correctly. Alternatively, you may use the dgVoodoo Graphics API from the previous page. It offers the same option which will work correctly.'
-  descDxWrapperAf.Top := ScaleY(140);
+  descDxWrapperAf.Top := DxWrapperAf.Top + ScaleY(25);
 
   // dgVoodoo options
   DgVoodooPage := CreateCustomPage(
@@ -711,12 +711,12 @@ begin
   descDgVoodooAa.WordWrap := True;
   descDgVoodooAa.Width := DgVoodooPage.SurfaceWidth;
   descDgVoodooAa.Caption := 'Anti-Aliasing removes jagged edges in-game, effectively making them appear smoother at a performance cost.';
-  descDgVoodooAa.Top := ScaleY(45);
+  descDgVoodooAa.Top := DgVoodooAa.Top + ScaleY(25);
 
   lblDgVoodooAf := TLabel.Create(DgVoodooPage);
   lblDgVoodooAf.Parent := DgVoodooPage.Surface;
   lblDgVoodooAf.Caption := 'Anisotropic Filtering';
-  lblDgVoodooAf.Top := ScaleY(90);
+  lblDgVoodooAf.Top := descDgVoodooAa.Top + ScaleY(45);
   
   DgVoodooAf := TComboBox.Create(DgVoodooPage);
   DgVoodooAf.Parent := DgVoodooPage.Surface;
@@ -727,29 +727,29 @@ begin
   DgVoodooAf.Items.Add('8x');
   DgVoodooAf.Items.Add('16x (recommended)');
   DgVoodooAf.ItemIndex := 4;
-  DgVoodooAf.Top := ScaleY(110);
+  DgVoodooAf.Top := lblDgVoodooAf.Top + ScaleY(20);
 
   descDgVoodooAf := TNewStaticText.Create(DgVoodooPage);
   descDgVoodooAf.Parent := DgVoodooPage.Surface;
   descDgVoodooAf.WordWrap := True;
   descDgVoodooAf.Width := DgVoodooPage.SurfaceWidth;
   descDgVoodooAf.Caption := 'Anisotropic Filtering improves the quality of textures when viewing them from the side, with minimal performance overhead.';
-  descDgVoodooAf.Top := ScaleY(135);
+  descDgVoodooAf.Top := DgVoodooAf.Top + ScaleY(25);
 
   lblDgVoodooRefreshRate := TLabel.Create(DgVoodooPage);
   lblDgVoodooRefreshRate.Parent := DgVoodooPage.Surface;
   lblDgVoodooRefreshRate.Caption := 'Refresh Rate';
-  lblDgVoodooRefreshRate.Top := ScaleY(180);
+  lblDgVoodooRefreshRate.Top := descDgVoodooAf.Top + ScaleY(45);
 
   lblDgVoodooRefreshRateHz := TLabel.Create(DgVoodooPage);
   lblDgVoodooRefreshRateHz.Parent := DgVoodooPage.Surface;
   lblDgVoodooRefreshRateHz.Caption := 'Hz';
-  lblDgVoodooRefreshRateHz.Top := ScaleY(203);
+  lblDgVoodooRefreshRateHz.Top := lblDgVoodooRefreshRate.Top + ScaleY(23);
   lblDgVoodooRefreshRateHz.Left := ScaleX(125);
   
   DgVoodooRefreshRate := TNewEdit.Create(DgVoodooPage);
   DgVoodooRefreshRate.Parent := DgVoodooPage.Surface;;
-  DgVoodooRefreshRate.Top := ScaleY(200);
+  DgVoodooRefreshRate.Top := lblDgVoodooRefreshRateHz.Top - ScaleY(3);
   DgVoodooRefreshRate.Text := IntToStr(RefreshRate());
   DgVoodooRefreshRate.OnKeyPress := @DigitFieldKeyPress;
 
@@ -758,7 +758,7 @@ begin
   descDgVoodooRefreshRate.WordWrap := True;
   descDgVoodooRefreshRate.Width := DgVoodooPage.SurfaceWidth;
   descDgVoodooRefreshRate.Caption := 'Enter your monitor''s refresh rate here. Freelancer will run at this refresh rate.';
-  descDgVoodooRefreshRate.Top := ScaleY(225);
+  descDgVoodooRefreshRate.Top := DgVoodooRefreshRate.Top + ScaleY(25);
 
   // DxWrapper options #2
   DxWrapperPage2 := CreateCustomPage(
@@ -787,53 +787,53 @@ begin
   lblDxWrapperSaturation.Parent := DxWrapperPage2.Surface;
   lblDxWrapperSaturation.Caption := 'Add increased saturation';
   lblDxWrapperSaturation.Left := ScaleX(20);
-  lblDxWrapperSaturation.Top := ScaleY(90);
+  lblDxWrapperSaturation.Top := descDxWrapperReShade.Top + ScaleY(70);
   
   descDxWrapperSaturation := TNewStaticText.Create(DxWrapperPage2);
   descDxWrapperSaturation.Parent := DxWrapperPage2.Surface;
   descDxWrapperSaturation.WordWrap := True;
-  descDxWrapperSaturation.Top := ScaleY(110);
+  descDxWrapperSaturation.Top := lblDxWrapperSaturation.Top + ScaleY(20);
   descDxWrapperSaturation.Width := DxWrapperPage2.SurfaceWidth;
   descDxWrapperSaturation.Caption := 'Simply gives Freelancer a slightly more-saturated look.'
   
   DxWrapperSaturation := TCheckBox.Create(DxWrapperPage2);
   DxWrapperSaturation.Parent := DxWrapperPage2.Surface;
   DxWrapperSaturation.Checked := True;
-  DxWrapperSaturation.Top := ScaleY(90);
+  DxWrapperSaturation.Top := lblDxWrapperSaturation.Top;
 
   lblDxWrapperHdr := TLabel.Create(DxWrapperPage2);
   lblDxWrapperHdr.Parent := DxWrapperPage2.Surface;
   lblDxWrapperHdr.Caption := 'Add Fake HDR (High Dynamic Range)';
   lblDxWrapperHdr.Left := ScaleX(20);
-  lblDxWrapperHdr.Top := ScaleY(140);
+  lblDxWrapperHdr.Top := descDxWrapperSaturation.Top + ScaleY(30);
   
   descDxWrapperHdr := TNewStaticText.Create(DxWrapperPage2);
   descDxWrapperHdr.Parent := DxWrapperPage2.Surface;
   descDxWrapperHdr.WordWrap := True;
-  descDxWrapperHdr.Top := ScaleY(160);
+  descDxWrapperHdr.Top := lblDxWrapperHdr.Top + ScaleY(20);
   descDxWrapperHdr.Width := DxWrapperPage2.SurfaceWidth;
   descDxWrapperHdr.Caption := 'Makes darker areas a bit darker, and brighter areas a bit brighter.'
   
   DxWrapperHdr := TCheckBox.Create(DxWrapperPage2);
   DxWrapperHdr.Parent := DxWrapperPage2.Surface;
-  DxWrapperHdr.Top := ScaleY(140);
+  DxWrapperHdr.Top := lblDxWrapperHdr.Top;
 
   lblDxWrapperBloom := TLabel.Create(DxWrapperPage2);
   lblDxWrapperBloom.Parent := DxWrapperPage2.Surface;
   lblDxWrapperBloom.Caption := 'Add Bloom';
   lblDxWrapperBloom.Left := ScaleX(20);
-  lblDxWrapperBloom.Top := ScaleY(190);
+  lblDxWrapperBloom.Top := descDxWrapperHdr.Top + ScaleY(30);
   
   descDxWrapperBloom := TNewStaticText.Create(DxWrapperPage2);
   descDxWrapperBloom.Parent := DxWrapperPage2.Surface;
   descDxWrapperBloom.WordWrap := True;
-  descDxWrapperBloom.Top := ScaleY(210);
+  descDxWrapperBloom.Top := lblDxWrapperBloom.Top + ScaleY(20);
   descDxWrapperBloom.Width := DxWrapperPage2.SurfaceWidth;
   descDxWrapperBloom.Caption := 'Adds glow to brighter areas. May reduce detail.'
   
   DxWrapperBloom := TCheckBox.Create(DxWrapperPage2);
   DxWrapperBloom.Parent := DxWrapperPage2.Surface;
-  DxWrapperBloom.Top := ScaleY(190);
+  DxWrapperBloom.Top := lblDxWrapperBloom.Top;
 
   // dgVoodoo options #2
   DgVoodooPage2 := CreateCustomPage(
@@ -862,53 +862,53 @@ begin
   lblDgVoodooSaturation.Parent := DgVoodooPage2.Surface;
   lblDgVoodooSaturation.Caption := 'Add increased saturation';
   lblDgVoodooSaturation.Left := ScaleX(20);
-  lblDgVoodooSaturation.Top := ScaleY(90);
+  lblDgVoodooSaturation.Top := descDgVoodooReShade.Top + ScaleY(70);
   
   descDgVoodooSaturation := TNewStaticText.Create(DgVoodooPage2);
   descDgVoodooSaturation.Parent := DgVoodooPage2.Surface;
   descDgVoodooSaturation.WordWrap := True;
-  descDgVoodooSaturation.Top := ScaleY(110);
+  descDgVoodooSaturation.Top := lblDgVoodooSaturation.Top + ScaleY(20);
   descDgVoodooSaturation.Width := DgVoodooPage2.SurfaceWidth;
   descDgVoodooSaturation.Caption := 'Simply gives Freelancer a slightly more-saturated look.'
   
   DgVoodooSaturation := TCheckBox.Create(DgVoodooPage2);
   DgVoodooSaturation.Parent := DgVoodooPage2.Surface;
   DgVoodooSaturation.Checked := True;
-  DgVoodooSaturation.Top := ScaleY(90);
+  DgVoodooSaturation.Top := lblDgVoodooSaturation.Top;
 
   lblDgVoodooHdr := TLabel.Create(DgVoodooPage2);
   lblDgVoodooHdr.Parent := DgVoodooPage2.Surface;
   lblDgVoodooHdr.Caption := 'Add Fake HDR (High Dynamic Range)';
   lblDgVoodooHdr.Left := ScaleX(20);
-  lblDgVoodooHdr.Top := ScaleY(140);
+  lblDgVoodooHdr.Top := descDgVoodooSaturation.Top + ScaleY(30);
   
   descDgVoodooHdr := TNewStaticText.Create(DgVoodooPage2);
   descDgVoodooHdr.Parent := DgVoodooPage2.Surface;
   descDgVoodooHdr.WordWrap := True;
-  descDgVoodooHdr.Top := ScaleY(160);
+  descDgVoodooHdr.Top := lblDgVoodooHdr.Top + ScaleY(20);
   descDgVoodooHdr.Width := DgVoodooPage2.SurfaceWidth;
   descDgVoodooHdr.Caption := 'Makes darker areas a bit darker, and brighter areas a bit brighter.'
   
   DgVoodooHdr := TCheckBox.Create(DgVoodooPage2);
   DgVoodooHdr.Parent := DgVoodooPage2.Surface;
-  DgVoodooHdr.Top := ScaleY(140);
+  DgVoodooHdr.Top := lblDgVoodooHdr.Top;
 
   lblDgVoodooBloom := TLabel.Create(DgVoodooPage2);
   lblDgVoodooBloom.Parent := DgVoodooPage2.Surface;
   lblDgVoodooBloom.Caption := 'Add Bloom';
   lblDgVoodooBloom.Left := ScaleX(20);
-  lblDgVoodooBloom.Top := ScaleY(190);
+  lblDgVoodooBloom.Top := descDgVoodooHdr.Top + ScaleY(30);
   
   descDgVoodooBloom := TNewStaticText.Create(DgVoodooPage2);
   descDgVoodooBloom.Parent := DgVoodooPage2.Surface;
   descDgVoodooBloom.WordWrap := True;
-  descDgVoodooBloom.Top := ScaleY(210);
+  descDgVoodooBloom.Top := lblDgVoodooBloom.Top + ScaleY(20);
   descDgVoodooBloom.Width := DxWrapperPage2.SurfaceWidth;
   descDgVoodooBloom.Caption := 'Adds glow to brighter areas. May reduce detail.'
   
   DgVoodooBloom := TCheckBox.Create(DgVoodooPage2);
   DgVoodooBloom.Parent := DgVoodooPage2.Surface;
-  DgVoodooBloom.Top := ScaleY(190);
+  DgVoodooBloom.Top := lblDgVoodooBloom.Top;
 
   // Add improved reflections
   PageEffects := CreateCustomPage(
@@ -933,61 +933,61 @@ begin
   
   ShinyReflections := TRadioButton.Create(PageEffects);
   ShinyReflections.Parent := PageEffects.Surface;
-  ShinyReflections.Top := ScaleY(20);
+  ShinyReflections.Top := lblShinyReflections.Top;
   ShinyReflections.Checked := True;
   
   lblShiniestReflections := TLabel.Create(PageEffects);
   lblShiniestReflections.Parent := PageEffects.Surface;
   lblShiniestReflections.Caption := 'Use shiniest reflections';
   lblShiniestReflections.Left := ScaleX(20);
-  lblShiniestReflections.Top := ScaleY(40);
+  lblShiniestReflections.Top := lblShinyReflections.Top + ScaleY(20);
   
   ShiniestReflections := TRadioButton.Create(PageEffects);
   ShiniestReflections.Parent := PageEffects.Surface;
-  ShiniestReflections.Top := ScaleY(40);
+  ShiniestReflections.Top := lblShiniestReflections.Top;
   
   descReflections := TNewStaticText.Create(PageEffects);
   descReflections.Parent := PageEffects.Surface;
   descReflections.WordWrap := True;
   descReflections.Width := PageEffects.SurfaceWidth;
   descReflections.Caption := 'This option changes the way light reflects off ships, bases, etc. The shiny option is recommended since vanilla looks quite dull. Shiniest on the other hand makes all surfaces very reflective, which most users may not like.';
-  descReflections.Top := ScaleY(60);
+  descReflections.Top := ShiniestReflections.Top + ScaleY(20);
   
   // Add new missile effects
   lblMissleEffects := TLabel.Create(PageEffects);
   lblMissleEffects.Parent := PageEffects.Surface;
   lblMissleEffects.Caption := 'Add alternative missile and torpedo effects';
-  lblMissleEffects.Top := ScaleY(120);
+  lblMissleEffects.Top := descReflections.Top + ScaleY(60);
   lblMissleEffects.Left := ScaleX(20);
   
   descMissileEffects := TNewStaticText.Create(PageEffects);
   descMissileEffects.Parent := PageEffects.Surface;
   descMissileEffects.WordWrap := True;
-  descMissileEffects.Top := ScaleY(140);
+  descMissileEffects.Top := lblMissleEffects.Top + ScaleY(20);
   descMissileEffects.Width := PageEffects.SurfaceWidth;
   descMissileEffects.Caption := 'This option adds custom missile and torpedo effects. They''re not necessarily higher quality, just alternatives. This option also adds huge torpedo effects.';
   
   MissileEffects := TCheckBox.Create(PageEffects);
   MissileEffects.Parent := PageEffects.Surface;
-  MissileEffects.Top := ScaleY(120);
+  MissileEffects.Top := lblMissleEffects.Top;
   
   // Add player ship engine trails
   lblEngineTrails := TLabel.Create(PageEffects);
   lblEngineTrails.Parent := PageEffects.Surface;
   lblEngineTrails.Caption := 'Add player ship engine trails';
-  lblEngineTrails.Top := ScaleY(185);
+  lblEngineTrails.Top := MissileEffects.Top + ScaleY(70);
   lblEngineTrails.Left := ScaleX(20);
   
   descEngineTrails := TNewStaticText.Create(PageEffects);
   descEngineTrails.Parent := PageEffects.Surface;
   descEngineTrails.WordWrap := True;
-  descEngineTrails.Top := ScaleY(205);
+  descEngineTrails.Top := lblEngineTrails.Top + ScaleY(20);
   descEngineTrails.Width := PageEffects.SurfaceWidth;
   descEngineTrails.Caption := 'In vanilla Freelancer, NPC ships have engine trials while player ships don''t. This option adds engine trails to all player ships.';
   
   EngineTrails := TCheckBox.Create(PageEffects);
   EngineTrails.Parent := PageEffects.Surface;
-  EngineTrails.Top := ScaleY(185);
+  EngineTrails.Top := lblEngineTrails.Top;
   EngineTrails.Checked := True;
 
   // Draw distances
@@ -1030,53 +1030,53 @@ begin
   
   JumpTunnel5Sec := TRadioButton.Create(PageSkips);
   JumpTunnel5Sec.Parent := PageSkips.Surface;
-  JumpTunnel5Sec.Top := ScaleY(20);
+  JumpTunnel5Sec.Top := lblJumpTunnel5Sec.Top;
   JumpTunnel5Sec.Checked := True;
   
   lblJumpTunnel2Sec := TLabel.Create(PageSkips);
   lblJumpTunnel2Sec.Parent := PageSkips.Surface;
   lblJumpTunnel2Sec.Caption := '2.5 second jump tunnels';
   lblJumpTunnel2Sec.Left := ScaleX(20);
-  lblJumpTunnel2Sec.Top := ScaleY(40);
+  lblJumpTunnel2Sec.Top := JumpTunnel5Sec.Top + ScaleY(20);
   
   JumpTunnel2Sec := TRadioButton.Create(PageSkips);
   JumpTunnel2Sec.Parent := PageSkips.Surface;
-  JumpTunnel2Sec.Top := ScaleY(40);
+  JumpTunnel2Sec.Top := lblJumpTunnel2Sec.Top;
 
   lblJumpTunnelSkip := TLabel.Create(PageSkips);
   lblJumpTunnelSkip.Parent := PageSkips.Surface;
   lblJumpTunnelSkip.Caption := '0 second jump tunnels (skip them entirely)';
   lblJumpTunnelSkip.Left := ScaleX(20);
-  lblJumpTunnelSkip.Top := ScaleY(60);
+  lblJumpTunnelSkip.Top := JumpTunnel2Sec.Top + ScaleY(20);
   
   JumpTunnelSkip := TRadioButton.Create(PageSkips);
   JumpTunnelSkip.Parent := PageSkips.Surface;
-  JumpTunnelSkip.Top := ScaleY(60)
+  JumpTunnelSkip.Top := lblJumpTunnelSkip.Top
   
   descJumpTunnelDuration := TNewStaticText.Create(PageSkips);
   descJumpTunnelDuration.Parent := PageSkips.Surface;
   descJumpTunnelDuration.WordWrap := True;
   descJumpTunnelDuration.Width := PageSkips.SurfaceWidth;
   descJumpTunnelDuration.Caption := 'This option allows you to change the duration of the jump tunnels which you go through when using any jump hole or jump gate.';
-  descJumpTunnelDuration.Top := ScaleY(80);
+  descJumpTunnelDuration.Top := lblJumpTunnelSkip.Top + ScaleY(20);
   
   // Jump tunnel duration
   lblSkipIntros := TLabel.Create(PageSkips);
   lblSkipIntros.Parent := PageSkips.Surface;
   lblSkipIntros.Caption := 'Skip startup intros';
-  lblSkipIntros.Top := ScaleY(160);
+  lblSkipIntros.Top := descJumpTunnelDuration.Top + ScaleY(80);
   lblSkipIntros.Left := ScaleX(20);
   
   descSkipIntros := TNewStaticText.Create(PageSkips);
   descSkipIntros.Parent := PageSkips.Surface;
   descSkipIntros.WordWrap := True;
-  descSkipIntros.Top := ScaleY(180);
+  descSkipIntros.Top := lblSkipIntros.Top + ScaleY(20);
   descSkipIntros.Width := PageSkips.SurfaceWidth;
   descSkipIntros.Caption := 'This option skips the 3 movies that play when the game starts, which include the Microsoft logo, Digital Anvil logo, and Freelancer intro.';
   
   SkipIntros := TCheckBox.Create(PageSkips);
   SkipIntros.Parent := PageSkips.Surface;
-  SkipIntros.Top := ScaleY(160);
+  SkipIntros.Top := lblSkipIntros.Top;
   SkipIntros.Checked := True;
   
   // Single Player Command Console
@@ -1106,12 +1106,12 @@ begin
   lblBestOptions.Parent := PageMiscOptions.Surface;
   lblBestOptions.Caption := 'Apply Best Video Options';
   lblBestOptions.Left := ScaleX(20);
-  lblBestOptions.Top := ScaleY(75);
+  lblBestOptions.Top := descSinglePlayer.Top + ScaleY(55);
   
   descBestOptions := TNewStaticText.Create(PageMiscOptions);
   descBestOptions.Parent := PageMiscOptions.Surface;
   descBestOptions.WordWrap := True;
-  descBestOptions.Top := ScaleY(95);
+  descBestOptions.Top := lblBestOptions.Top + ScaleY(20);
   descBestOptions.Width := PageMiscOptions.SurfaceWidth;
   descBestOptions.Caption := 'Automatically applies the highest video options available in Freelancer. Additionally, it''ll select your monitor''s native resolution ('
     + IntToStr(DesktopRes.Width) + 'x' + IntToStr(DesktopRes.Height) + '). Freelancer usually doesn''t do any of this by default.';
@@ -1119,7 +1119,7 @@ begin
   BestOptions := TCheckBox.Create(PageMiscOptions);
   BestOptions.Parent := PageMiscOptions.Surface;
   BestOptions.Checked := True;
-  BestOptions.Top := ScaleY(75);
+  BestOptions.Top := lblBestOptions.Top;
 
   DisplayMode := TComboBox.Create(PageMiscOptions);
   DisplayMode.Parent := PageMiscOptions.Surface;
@@ -1129,12 +1129,12 @@ begin
   DisplayMode.Items.Add('Windowed');
   DisplayMode.Items.Add('Borderless Windowed');
   DisplayMode.ItemIndex := 0;
-  DisplayMode.Top := ScaleY(155);
+  DisplayMode.Top := BestOptions.Top + ScaleY(80);
 
   lblDisplayMode := TLabel.Create(PageMiscOptions);
   lblDisplayMode.Parent := PageMiscOptions.Surface;
   lblDisplayMode.Caption := 'Display Mode';
-  lblDisplayMode.Top := ScaleY(155);
+  lblDisplayMode.Top := DisplayMode.Top;
   lblDisplayMode.Left := ScaleX(210);
 
   descDisplayMode := TNewStaticText.Create(PageMiscOptions);
@@ -1142,17 +1142,17 @@ begin
   descDisplayMode.WordWrap := True;
   descDisplayMode.Width := PageMiscOptions.SurfaceWidth;
   descDisplayMode.Caption := 'In both Windowed modes, the Gamma slider from the options menu won''t work. To remedy this, Gamma will be applied using ReShade, if it''s been enabled. Also, both windowed options are experimental and may be buggy, so try them at your own risk.';
-  descDisplayMode.Top := ScaleY(180);
+  descDisplayMode.Top := lblDisplayMode.Top + ScaleY(25);
 
   lblDoNotPauseOnAltTab := TLabel.Create(PageMiscOptions);
   lblDoNotPauseOnAltTab.Parent := PageMiscOptions.Surface;
   lblDoNotPauseOnAltTab.Caption := 'Keep Freelancer running in the background when Alt-Tabbed';
-  lblDoNotPauseOnAltTab.Top := ScaleY(235);
+  lblDoNotPauseOnAltTab.Top := descDisplayMode.Top + ScaleY(55);
   lblDoNotPauseOnAltTab.Left := ScaleX(20);
   
   DoNotPauseOnAltTab := TCheckBox.Create(PageMiscOptions);
   DoNotPauseOnAltTab.Parent := PageMiscOptions.Surface;
-  DoNotPauseOnAltTab.Top := ScaleY(235);
+  DoNotPauseOnAltTab.Top := lblDoNotPauseOnAltTab.Top;
 
   with DxWrapperPage do
   begin
