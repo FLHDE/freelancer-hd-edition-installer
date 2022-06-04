@@ -65,6 +65,7 @@ Source: "Assets\Fonts\AGENCYR.TTF"; DestDir: "{autofonts}"; FontInstall: "Agency
 Source: "Assets\Fonts\ARIALUNI.TTF"; DestDir: "{autofonts}"; FontInstall: "Arial Unicode MS"; Flags: onlyifdoesntexist uninsneveruninstall
 Source: "Assets\External\7za.exe"; DestDir: "{tmp}"; Flags: deleteafterinstall;
 Source: "Assets\External\utf-8-bom-remover.exe"; DestDir: "{tmp}"; Flags: deleteafterinstall;
+Source: "Assets\External\HexToBinary.dll"; Flags: dontcopy;
 # if AllInOneInstall
 Source: "Assets\Mod\freelancerhd.7z"; DestDir: "{tmp}"; Flags: nocompression deleteafterinstall
 #endif
@@ -155,7 +156,7 @@ begin
         Process_DxWrapperReShade();
         Process_DgVoodooReShade();
 
-        WizardForm.StatusLabel.Caption := 'Cleanup';
+        WizardForm.StatusLabel.Caption := 'Cleaning up';
         UpdateProgress(95);
 
         // Perform operations that (potentially) do not work on Wine
