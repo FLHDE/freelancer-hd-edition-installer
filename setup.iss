@@ -161,6 +161,9 @@ begin
         WizardForm.StatusLabel.Caption := 'Cleaning up';
         UpdateProgress(95);
 
+        WizardForm.StatusLabel.Caption := 'Cleanup';
+        UpdateProgress(95);
+
         // Perform operations that (potentially) do not work on Wine
         if not IsWine then 
         begin
