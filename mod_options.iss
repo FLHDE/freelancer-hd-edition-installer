@@ -142,19 +142,19 @@ begin
     // Rename old file away
     RenameFile(NewFile,FolderPath + 'startupscreen_1280_vanilla.tga');
     // Rename the correct startup res depending on option
-    if(StartupRes.Values[1]) then
+    if(StartupRes.Values[1]) then // 720p 16:9
       OldFile := FolderPath + 'startupscreen_1280_1280x720.tga'
-    else if(StartupRes.Values[3]) then
+    else if(StartupRes.Values[3]) then // 1080p 4:3
       OldFile := FolderPath + 'startupscreen_1280_1440x1080.tga'
-    else if(StartupRes.Values[4]) then
+    else if(StartupRes.Values[4]) then// 1080p 16:9
       OldFile := FolderPath + 'startupscreen_1280_1920x1080.tga'
-    else if(StartupRes.Values[5]) then
+    else if(StartupRes.Values[5]) then// 1440p 4:3
       OldFile := FolderPath + 'startupscreen_1280_1920x1440.tga'
-    else if(StartupRes.Values[6]) then
+    else if(StartupRes.Values[6]) then // 1440p 16:9
       OldFile := FolderPath + 'startupscreen_1280_2560x1440.tga'
-    else if(StartupRes.Values[7]) then
+    else if(StartupRes.Values[7]) then // 2160p 4:3
       OldFile := FolderPath + 'startupscreen_1280_2880x2160.tga'
-    else if(StartupRes.Values[8]) then
+    else if(StartupRes.Values[8]) then // 2160p 16:9
       OldFile := FolderPath + 'startupscreen_1280_3840x2160.tga';
     // Actually rename the file
     RenameFile(OldFile,NewFile);
@@ -175,21 +175,21 @@ begin
     // Rename old file away
     RenameFile(NewFile,FolderPath + 'front_freelancerlogo_vanilla.tga')
     // Rename correct logo res depending on option
-    if(LogoRes.Values[2]) then
+    if(LogoRes.Values[2]) then // 720p 4:3
       OldFile := FolderPath + 'front_freelancerlogo_960x720.tga'
-    else if(LogoRes.Values[3]) then
+    else if(LogoRes.Values[3]) then // 720p 16:9
       OldFile := FolderPath + 'front_freelancerlogo_1280x720.tga'
-    else if(LogoRes.Values[4]) then
+    else if(LogoRes.Values[4]) then // 1440p 4:3
       OldFile := FolderPath + 'front_freelancerlogo_1440x1080.tga'
-    else if(LogoRes.Values[5]) then
+    else if(LogoRes.Values[5]) then // 1440p 16:9
       OldFile := FolderPath + 'front_freelancerlogo_1920x1080.tga'
-    else if(LogoRes.Values[6]) then
+    else if(LogoRes.Values[6]) then // 1440p 4:3
       OldFile := FolderPath + 'front_freelancerlogo_1920x1440.tga'
-    else if(LogoRes.Values[7]) then
+    else if(LogoRes.Values[7]) then // 1440p 16:9
       OldFile := FolderPath + 'front_freelancerlogo_2560x1440.tga'
-    else if(LogoRes.Values[8]) then
+    else if(LogoRes.Values[8]) then // 2160p 4:3
       OldFile := FolderPath + 'front_freelancerlogo_2880x2160.tga'
-    else if(LogoRes.Values[9]) then
+    else if(LogoRes.Values[9]) then // 2160p 16:9
       OldFile := FolderPath + 'front_freelancerlogo_3840x2160.tga';
     // Actually rename the file
     RenameFile(OldFile,NewFile);
@@ -203,7 +203,7 @@ procedure Process_SmallText();
 begin
     FilePath := ExpandConstant('{app}\DATA\FONTS\fonts.ini');
 
-    if SmallText.Values[1] then
+    if SmallText.Values[1] then // Fix for 2560x1440 screens
       FileReplaceString(FilePath,
       'nickname = NavMap1600' + #13#10 +
       'font = Agency FB' + #13#10 +
@@ -213,7 +213,7 @@ begin
       'font = Agency FB' + #13#10 +
       'fixed_height = 0.025');
 
-    if SmallText.Values[2] then begin
+    if SmallText.Values[2] then begin // Fix for 3840x2160 screens
       FileReplaceString(FilePath,
         'nickname = HudSmall' + #13#10 +
         'font = Agency FB' + #13#10 +
@@ -418,21 +418,21 @@ var
 begin
   FilePath := ExpandConstant('{app}\EXE\flplusplus.ini');
 
-  if(PageDrawDistances.Values[0]) then
+  if(PageDrawDistances.Values[0]) then // 1x (Vanilla)
     FileReplaceString(FilePath, 'lod_scale = 9', 'lod_scale = 0')
-  else if(PageDrawDistances.Values[1]) then
+  else if(PageDrawDistances.Values[1]) then // 2x 
     FileReplaceString(FilePath, 'lod_scale = 9', 'lod_scale = 2')
-  else if(PageDrawDistances.Values[2]) then
+  else if(PageDrawDistances.Values[2]) then // 3x 
     FileReplaceString(FilePath, 'lod_scale = 9', 'lod_scale = 3')
-  else if(PageDrawDistances.Values[3]) then
+  else if(PageDrawDistances.Values[3]) then // 4x 
     FileReplaceString(FilePath, 'lod_scale = 9', 'lod_scale = 4')
-  else if(PageDrawDistances.Values[4]) then
+  else if(PageDrawDistances.Values[4]) then // 5x 
     FileReplaceString(FilePath, 'lod_scale = 9', 'lod_scale = 5')
-  else if(PageDrawDistances.Values[5]) then
+  else if(PageDrawDistances.Values[5]) then // 6x 
     FileReplaceString(FilePath, 'lod_scale = 9', 'lod_scale = 6')
-  else if(PageDrawDistances.Values[6]) then
+  else if(PageDrawDistances.Values[6]) then // 7x 
     FileReplaceString(FilePath, 'lod_scale = 9', 'lod_scale = 7')
-  else if(PageDrawDistances.Values[7]) then
+  else if(PageDrawDistances.Values[7]) then // 8x 
     FileReplaceString(FilePath, 'lod_scale = 9', 'lod_scale = 8')
 end;
 
@@ -965,10 +965,10 @@ var
 begin
   ExePath := ExpandConstant('{app}\EXE\Freelancer.exe');
 
-  if (DisplayMode.ItemIndex = 1) or (DisplayMode.ItemIndex = 2) then
+  if (DisplayMode.ItemIndex = 1) or (DisplayMode.ItemIndex = 2) then // Windowed or borderless windowed selected
     WriteHexToFile(ExePath, $1B16CC, '00'); // Windowed mode
   
-  if (DisplayMode.ItemIndex = 2) then
+  if (DisplayMode.ItemIndex = 2) then // Borderless windowed selected 
   begin
     WriteHexToFile(ExePath, $02477A, '0000'); // Borderless window #1
     WriteHexToFile(ExePath, $02490D, '0000'); // Borderless window #2
@@ -976,7 +976,7 @@ begin
 
   if (DoNotPauseOnAltTab.Checked) then
   begin
-    if (DisplayMode.ItemIndex = 0) then   
+    if (DisplayMode.ItemIndex = 0) then // Fullscreen selected   
       WriteHexToFile(ExePath, $1B2665, 'EB') // Keep Freelancer running in the background when Alt-Tabbed
     else
       WriteHexToFile(ExePath, $1B264C, 'BA0100000090'); // Keep Freelancer and its window running in the background when Alt-Tabbed
