@@ -243,7 +243,9 @@ begin
 end;
 
 procedure InitializeUi();
-var dir : string;
+var 
+  dir : string;
+  CheckBoxWidth: Integer;
 begin
   # if !AllInOneInstall
   // Read download size
@@ -1183,8 +1185,48 @@ begin
     OnClick := @DgVoodooReShadeCheckBoxClick;
   end;
 
-  // TODO: Remove when the Wine label issue has been fixed
+  // Make all the custom checkboxes and radio buttons less wide so the clickable area doesn't hide the accompanying labels.
   if (IsWine) then
-    MsgBox('It seems you are using Wine. The installer will still work as intended. One minor issue is that many option labels won''t be displayed correctly, presumably because of an incorrect API translation.'  + #13#10#13#10 +
-    'We''ve uploaded screenshots of all installer pages on https://freelancerhd.com/install. Hopefully this will help.', mbError, MB_OK);
+  begin
+    CheckBoxWidth := ScaleX(20)
+
+    // Checkboxes
+    EnglishImprovements.Width := CheckBoxWidth
+    NewSaveFolder.Width := CheckBoxWidth
+    WidescreenHud.Width := CheckBoxWidth
+    WeaponGroups.Width := CheckBoxWidth
+    DarkHud.Width := CheckBoxWidth
+    FlatIcons.Width := CheckBoxWidth
+    PlanetScape.Width := CheckBoxWidth
+    DxWrapperReShade.Width := CheckBoxWidth
+    DxWrapperSaturation.Width := CheckBoxWidth
+    DxWrapperHdr.Width := CheckBoxWidth
+    DxWrapperBloom.Width := CheckBoxWidth
+    DgVoodooReShade.Width := CheckBoxWidth
+    DgVoodooSaturation.Width := CheckBoxWidth
+    DgVoodooHdr.Width := CheckBoxWidth
+    DgVoodooBloom.Width := CheckBoxWidth
+    MissileEffects.Width := CheckBoxWidth
+    EngineTrails.Width := CheckBoxWidth
+    SkipIntros.Width := CheckBoxWidth
+    SinglePlayer.Width := CheckBoxWidth
+    BestOptions.Width := CheckBoxWidth
+    DoNotPauseOnAltTab.Width := CheckBoxWidth
+
+    // Radio buttons
+    StoryMode.Width := CheckBoxWidth
+    OspNormal.Width := CheckBoxWidth
+    OspPirate.Width := CheckBoxWidth
+    DxWrapperGraphicsApi.Width := CheckBoxWidth
+    DgVoodooGraphicsApi.Width := CheckBoxWidth
+    VanillaGraphicsApi.Width := CheckBoxWidth
+    LightingFixGraphicsApi.Width := CheckBoxWidth
+    VanillaReflections.Width := CheckBoxWidth
+    ShinyReflections.Width := CheckBoxWidth
+    ShiniestReflections.Width := CheckBoxWidth
+    JumpTunnel10Sec.Width := CheckBoxWidth
+    JumpTunnel5Sec.Width := CheckBoxWidth
+    JumpTunnel2Sec.Width := CheckBoxWidth
+    JumpTunnelSkip.Width := CheckBoxWidth
+  end;
 end;
