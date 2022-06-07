@@ -676,7 +676,7 @@ begin
   DxWrapperAf.Items.Add('16x');
   DxWrapperAf.Items.Add('Auto (recommended)');
   DxWrapperAf.ItemIndex := 5;
-  DxWrapperAf.Top := lblDxWrapperAf.Top + ScaleY(25);
+  DxWrapperAf.Top := lblDxWrapperAf.Top + ScaleY(20);
 
   descDxWrapperAf := TNewStaticText.Create(DxWrapperPage);
   descDxWrapperAf.Parent := DxWrapperPage.Surface;
