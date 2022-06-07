@@ -59,6 +59,7 @@ Source: "Assets\Fonts\AGENCYR.TTF"; DestDir: "{autofonts}"; FontInstall: "Agency
 Source: "Assets\Fonts\ARIALUNI.TTF"; DestDir: "{autofonts}"; FontInstall: "Arial Unicode MS"; Flags: onlyifdoesntexist uninsneveruninstall
 Source: "Assets\External\7za.exe"; DestDir: "{tmp}"; Flags: deleteafterinstall;
 Source: "Assets\External\utf-8-bom-remover.exe"; DestDir: "{tmp}"; Flags: deleteafterinstall;
+Source: "Assets\Mod\freelancerhd.7z"; DestDir: "{tmp}"; Flags: nocompression deleteafterinstall
 
 [Run]
 Filename: "{app}\EXE\{#MyAppExeName}"; Description: "{cm:LaunchProgram,{#StringChange(MyAppName, '&', '&&')}}"; Flags: nowait postinstall skipifsilent
@@ -71,15 +72,6 @@ WelcomeLabel2=Freelancer: HD Edition is a mod that aims to improve every aspect 
 FinishedLabel=Setup has finished installing [name] on your computer. The application may be launched by selecting the installed shortcut.%n%nPlease note that Freelancer runs at a very low resolution by default. You may change this in the game's display settings. You may also need to restart the game after that in order for the widescreen patch to apply.
 
 [Code]
-// Declaration of global variables
-var
-  // Allows us to skip the downloading of the files and just copy it from the local PC to save time
-  OfflineInstall: String;
-  // String list of mirrors that we can potentially download the mod from. This is populated in InitializeWizard()
-  mirrors : TStringList;
-  // Size of Download in MB
-  DownloadSize : String;
-
 // Imports from other .iss files
 #include "utilities.iss"
 #include "ui.iss"
@@ -92,9 +84,6 @@ var
 begin
     if CurStep = ssPostInstall then
     begin
-        // Debug
-        if(OfflineInstall <> 'false') then FileCopy(OfflineInstall,ExpandConstant('{tmp}\freelancerhd.zip'),false);
-
         // Copy Vanilla game to directory
         UpdateProgress(0);
         WizardForm.StatusLabel.Caption := 'Copying Vanilla Freelancer directory';
@@ -103,7 +92,7 @@ begin
 
         // Unzip
         WizardForm.StatusLabel.Caption := 'Unzipping Freelancer: HD Edition';
-        Exec(ExpandConstant('{tmp}\7za.exe'), ExpandConstant(' x -y -aoa "{tmp}\{#MyZipName}.zip"  -o"{app}"'), '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
+        Exec(ExpandConstant('{tmp}\7za.exe'), ExpandConstant(' x -y -aoa "{tmp}\{#MyZipName}.7z"  -o"{app}"'), '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
         // -aoa Overwrite All existing files without prompt
         // -o Set output directory
         // -y Assume "Yes" on all Queries
@@ -203,12 +192,6 @@ begin
       end;
     end;
 
-    // If they specify an offline file in the cmd line. Check it's valid, if not don't let them continue.
-    if ((PageId = 1) and (OfflineInstall <> 'false') and (not FileExists(OfflineInstall) or (Pos('.zip',OfflineInstall) < 1))) then begin
-      MsgBox('The specified source file either doesn''t exist or is not a valid .zip file', mbError, MB_OK);
-      Result := False;
-      exit;
-    end;
     // Check Freelancer is installed in the folder they have specified
     if (PageId = DataDirPage.ID) and not FileExists(DataDirPage.Values[0] + '\EXE\Freelancer.exe') then begin
       MsgBox('Freelancer does not seem to be installed in that folder. Please select the correct folder.', mbError, MB_OK);
@@ -230,49 +213,11 @@ begin
         exit;
       end;
     end;
-    // Start downloading the mod
-    if ((PageId = 10) and (OfflineInstall = 'false')) then begin
-      for i:= 0 to mirrors.Count - 1 do
-      begin
-        DownloadPage.Clear;
-        DownloadPage.Add(mirrors[i], 'freelancerhd.zip', '');
-        DownloadPage.SetText('Downloading mod','');
-        DownloadPage.Show;
-        DownloadPage.ProgressBar.Style := npbstNormal;
-        try
-          DownloadPage.Download;
-          Result := True;
-          i := mirrors.Count - 1;
-        except
-          if(i = mirrors.Count - 1) then
-            SuppressibleMsgBox('All downloads failed. Please contact us on Discord: https://discord.gg/ScqgYuFqmU', mbError, MB_OK, IDOK)
-          else
-            if SuppressibleMsgBox('Download failed. Do you want to try downloading with an alternate mirror?', mbError, MB_RETRYCANCEL, IDRETRY) = IDCANCEL then
-              i := mirrors.Count - 1; 
-          Result := False;
-          DownloadPage.Hide;
-        finally
-          DownloadPage.Hide;
-        end;
-      end;
-    end;
 end;
 
 // Run when the wizard is opened.
 procedure InitializeWizard;
 begin
-    // Offline install
-    OfflineInstall := ExpandConstant('{param:sourcefile|false}')
-
-    // Copy mirrors from our preprocessor to our string array. This allows us to define the array at the top of the file for easy editing
-    mirrors := TStringList.Create;
- 
-    #sub PopMirrors
-      mirrors.add('{#Mirrors[i]}');
-    #endsub
-
-    #for {i = 0; i < DimOf(Mirrors); i++} PopMirrors
-
     // Initialize UI. This populates all our ui elements with text, size and other properties
     InitializeUi();
  end;
