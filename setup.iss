@@ -12,10 +12,11 @@
 ; TODO: Remember to change the mirror locations for each release
 #dim Mirrors[6] {"https://onedrive.live.com/download?cid=F03BDD831B77D1AD&resid=F03BDD831B77D1AD%2193138&authkey=AN1qT9jEN5eUIUo", "https://pechey.net/files/freelancer-hd-edition-0.5.zip", "http://luyten.viewdns.net:8080/freelancer-hd-edition-0.5.0.zip", "https://bolte.io/freelancer-hd-edition-0.5.zip", "https://github.com/BC46/freelancer-hd-edition/archive/refs/tags/0.5.zip", "https://archive.org/download/freelancer-hd-edition-0.5/freelancer-hd-edition-0.5.zip"}
 #define i 
-#define SizeZip 2438619136 
+#define SizeZip 1676050432 
 #define SizeExtracted 4195188736 
 #define SizeVanilla 985624576
-#define SizeAll SizeZip + SizeExtracted + SizeVanilla
+#define SizeBuffer 50000
+#define SizeAll SizeZip + SizeExtracted + SizeVanilla + SizeBuffer
 
 [Setup]
 AllowNoIcons=yes
