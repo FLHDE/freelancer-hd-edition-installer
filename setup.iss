@@ -141,7 +141,7 @@ begin
         Process_FreelancerLogo();
         Process_SmallText();
         Process_Console();
-        Process_BestOptions(); // Must be called after Process_NewSaveFolder();
+        Process_BestOptions();
         Process_Effects();
         Process_SkipIntros();
         Process_JumpTunnelDurations();
@@ -149,9 +149,9 @@ begin
         Process_Planetscape();
         Process_Win10();
         Process_HUD();
-        Process_DarkHUD(); // Must be called after Process_HUD();
+        Process_DarkHUD(); 
         Process_FlatIcons();
-        Process_WeaponGroups();
+        Process_WeaponGroups(); // Must be called after Process_HUD();
         Process_DxWrapper();
         Process_DxWrapperReShade();
         Process_DgVoodooReShade();
