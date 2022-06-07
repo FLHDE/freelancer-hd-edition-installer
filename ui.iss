@@ -252,20 +252,19 @@ begin
   DownloadPage := CreateDownloadPage(SetupMessage(msgWizardPreparing), SetupMessage(msgPreparingDesc), @OnDownloadProgress);
   # endif
 
+  dir := 'C:\Program Files (x86)\Microsoft Games\Freelancer'
+
   // Initialize DataDirPage and add content
   DataDirPage := CreateInputDirPage(wpInfoBefore,
   'Select Freelancer installation', 'Where is Freelancer installed?',
-  'Select the folder in which a fresh and completely unmodded copy of Freelancer is installed. This is usually C:\Program Files (x86)\Microsoft Games\Freelancer.'  + #13#10 +
+  'Select the folder in which a fresh and completely unmodded copy of Freelancer is installed. This is usually ' + dir + '.' + #13#10 +
   'The folder you select here will be copied without modification.',
   False, '');
   DataDirPage.Add('');
   
-  if RegQueryStringValue(HKEY_LOCAL_MACHINE, 'SOFTWARE\Wow6432Node\Microsoft\Microsoft Games\Freelancer\1.0',
-  'AppPath', dir) then
-  begin
-  // If the Reg key exists, populate the folder location box
-    DataDirPage.Values[0] := dir
-  end;
+  // If the Reg key exists, use its content to populate the folder location box. Use the default path if othwerise.
+  RegQueryStringValue(HKEY_LOCAL_MACHINE, 'SOFTWARE\Wow6432Node\Microsoft\Microsoft Games\Freelancer\1.0', 'AppPath', dir)
+  DataDirPage.Values[0] := dir
   
   // Initialize CallSign page and add content
   CallSign := CreateInputOptionPage(DataDirPage.ID,
