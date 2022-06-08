@@ -81,16 +81,17 @@ WelcomeLabel2=Freelancer: HD Edition is a mod that aims to improve every aspect 
 FinishedLabel=Setup has finished installing [name] on your computer. The application may be launched by selecting the installed shortcut.%n%nNOTE: [name] has been installed as a separate application. Therefore, your vanilla Freelancer installation has not been modified and can still be played at any time.
 
 [Code]
+# if !AllInOneInstall
 // Declaration of global variables
 var
   // Allows us to skip the downloading of the files and just copy it from the local PC to save time
   OfflineInstall: String;
-  # if !AllInOneInstall
+
   // String list of mirrors that we can potentially download the mod from. This is populated in InitializeWizard()
   mirrors : TStringList;
   // Size of Download in MB
   DownloadSize : String;
-  #endif
+#endif
 
 // Imports from other .iss files
 #include "utilities.iss"
@@ -222,8 +223,8 @@ begin
 
     // If they specify an offline file in the cmd line. Check it's valid, if not don't let them continue.
     # if !AllInOneInstall
-    if ((PageId = 1) and (OfflineInstall <> 'false') and (not FileExists(OfflineInstall) or (Pos('.zip',OfflineInstall) < 1))) then begin
-      MsgBox('The specified source file either doesn''t exist or is not a valid .zip file', mbError, MB_OK);
+    if ((PageId = 1) and (OfflineInstall <> 'false') and (not FileExists(OfflineInstall) or (Pos('.7z',OfflineInstall) < 1))) then begin
+      MsgBox('The specified source file either doesn''t exist or is not a valid .7z file', mbError, MB_OK);
       Result := False;
       exit;
     end;
@@ -282,10 +283,10 @@ end;
 // Run when the wizard is opened.
 procedure InitializeWizard;
 begin
-    // Offline install
-    OfflineInstall := ExpandConstant('{param:sourcefile|false}')
-
     # if !AllInOneInstall
+      // Offline install
+      OfflineInstall := ExpandConstant('{param:sourcefile|false}')
+
       // Copy mirrors from our preprocessor to our string array. This allows us to define the array at the top of the file for easy editing
       mirrors := TStringList.Create;
    
