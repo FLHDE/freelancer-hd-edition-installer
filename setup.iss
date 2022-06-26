@@ -149,7 +149,7 @@ begin
         Process_DrawDistances();
         Process_Planetscape();
         Process_Win10();
-        Process_HUD();
+        Process_HUD(); // Must be called before Process_WeaponGroups();
         Process_DarkHUD();
         Process_FlatIcons();
         Process_WeaponGroups(); // Must be called after Process_HUD();
