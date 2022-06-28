@@ -388,7 +388,7 @@ begin
   StartupRes.Add('4K 4:3 - 2880x2160');
   StartupRes.Add('4K 16:9 - 3840x2160');
 
-  // Determine best default startup resolution
+  // Determine best default startup resolution based on user's screen size
   if (DesktopRes.Height >= 2160) then 
     StartupRes.Values[8] := True
   else if (DesktopRes.Height >= 1440) then
@@ -414,7 +414,7 @@ begin
   LogoRes.Add('4K 4:3 - 2880x2160');
   LogoRes.Add('4K 16:9 - 3840x2160');
 
-  // Determine best default logo resolution
+  // Determine best default logo resolution based on user's screen size
   if (DesktopRes.Height >= 2160) then 
     LogoRes.Values[9] := True
   else if (DesktopRes.Height >= 1440) then
@@ -432,7 +432,7 @@ begin
   SmallText.Add('Yes, apply fix for 2560x1440 screens');
   SmallText.Add('Yes, apply fix for 3840x2160 screens');
 
-  // Determine best small text fix
+  // Determine best small text fix based on user's screen size
   if (DesktopRes.Height >= 2160) then 
     SmallText.Values[2] := True
   else if (DesktopRes.Height >= 1440) then

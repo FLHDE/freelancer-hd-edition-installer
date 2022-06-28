@@ -1,6 +1,6 @@
 ; Inno Install Script for Freelancer: HD Edition
 ; GitHub: https://github.com/oliverpechey/Freelancer-hd-edition-install-script
-; Main GitHub: https://github.com/bc46/Freelancer-hd-edition
+; Main GitHub: https://github.com/BC46/Freelancer-hd-edition
 
 #define MyAppVersion "0.6"
 #define MyAppName "Freelancer: HD Edition v" + MyAppVersion
