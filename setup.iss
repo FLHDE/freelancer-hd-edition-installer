@@ -664,6 +664,9 @@ begin
 procedure InitializeWizard;
 var dir : string;
 begin
+    MsgBox('NOTE: This installer and version 0.4.1 of Freelancer: HD Edition are outdated and no longer supported!'  + #13#10#13#10 + 
+      'Please visit moddb.com/mods/freelancer-hd-edition/downloads or github.com/BC46/freelancer-hd-edition/releases for the latest release.', mbError, MB_OK);
+
     // Initialize DataDirPage and add content
     DataDirPage := CreateInputDirPage(wpInfoBefore,
     'Select Freelancer installation', 'Where is Freelancer installed?',
