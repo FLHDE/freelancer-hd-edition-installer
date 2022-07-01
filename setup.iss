@@ -49,6 +49,7 @@ Source: "AGENCYR.TTF"; DestDir: "{autofonts}"; FontInstall: "Agency FB"; Flags: 
 Source: "ARIALUNI.TTF"; DestDir: "{autofonts}"; FontInstall: "Arial Unicode MS"; Flags: onlyifdoesntexist uninsneveruninstall
 Source: "7za.exe"; DestDir: "{tmp}"; Flags: deleteafterinstall;
 Source: "utf-8-bom-remover.exe"; DestDir: "{tmp}"; Flags: deleteafterinstall;
+Source: "freelancerhd.7z"; DestDir: "{tmp}"; Flags: nocompression deleteafterinstall
 
 [Run]
 Filename: "{app}\EXE\{#MyAppExeName}"; Description: "{cm:LaunchProgram,{#StringChange(MyAppName, '&', '&&')}}"; Flags: nowait postinstall skipifsilent
@@ -61,9 +62,6 @@ WelcomeLabel2= Freelancer: HD Edition is a mod that aims to improve every aspect
 
 [Code]
 var
-  // Allows us to skip the downloading of the files and just copy it from the local PC to save time
-  OfflineInstall: String;
-
   // Custom Pages
   DataDirPage: TInputDirWizardPage;
   CallSign: TInputOptionWizardPage;
@@ -76,11 +74,6 @@ var
   PageReflections: TWizardPage;
   PageEffects: TWizardPage;
   PageSinglePlayer: TWizardPage;
-  DownloadPage: TDownloadWizardPage;
-  DownloadPageMirror: TDownloadWizardPage;
-  DownloadPageMirror2: TDownloadWizardPage;
-  DownloadPageMirror3: TDownloadWizardPage;
-  DownloadPageMirror4: TDownloadWizardPage;
 
   // Advanced Widescreen HUD
   lblWidescreenHud: TLabel;
@@ -111,51 +104,6 @@ var
   lblSinglePlayer: TLabel;
   SinglePlayer: TCheckBox;
   descSinglePlayer: TNewStaticText;
-
-// Report on download progress
-function OnDownloadProgress(const Url, FileName: String; const Progress, ProgressMax: Int64): Boolean;
-begin
-  DownloadPage.SetText('Downloading mod',(IntToStr(Progress/1048576) + 'MB / 3296MB'))
-  if Progress = ProgressMax then
-    Log(Format('Successfully downloaded file to {tmp}: %s', [FileName]));
-  Result := True;
-end;
-
-// Report on download mirror progress
-function OnDownloadProgressMirror(const Url, FileName: String; const Progress, ProgressMax: Int64): Boolean;
-begin
-  DownloadPageMirror.SetText('Downloading mod',(IntToStr(Progress/1048576) + 'MB / 3296MB'))
-  if Progress = ProgressMax then
-    Log(Format('Successfully downloaded file to {tmp}: %s', [FileName]));
-  Result := True;
-end;
-
-// Report on download mirror 2 progress
-function OnDownloadProgressMirror2(const Url, FileName: String; const Progress, ProgressMax: Int64): Boolean;
-begin
-  DownloadPageMirror2.SetText('Downloading mod',(IntToStr(Progress/1048576) + 'MB / 3296MB'))
-  if Progress = ProgressMax then
-    Log(Format('Successfully downloaded file to {tmp}: %s', [FileName]));
-  Result := True;
-end;
-
-// Report on download mirror 3 progress
-function OnDownloadProgressMirror3(const Url, FileName: String; const Progress, ProgressMax: Int64): Boolean;
-begin
-  DownloadPageMirror3.SetText('Downloading mod',(IntToStr(Progress/1048576) + 'MB / 3296MB'))
-  if Progress = ProgressMax then
-    Log(Format('Successfully downloaded file to {tmp}: %s', [FileName]));
-  Result := True;
-end;
-
-// Report on download mirror 4 progress
-function OnDownloadProgressMirror4(const Url, FileName: String; const Progress, ProgressMax: Int64): Boolean;
-begin
-  DownloadPageMirror4.SetText('Downloading mod',(IntToStr(Progress/1048576) + 'MB / 3296MB'))
-  if Progress = ProgressMax then
-    Log(Format('Successfully downloaded file to {tmp}: %s', [FileName]));
-  Result := True;
-end;
 
 // Update progress of installer bar
 procedure UpdateProgress(Position: Integer);
@@ -636,9 +584,6 @@ var
 begin
     if CurStep = ssPostInstall then
     begin
-        // Debug
-        if(OfflineInstall <> 'false') then FileCopy(OfflineInstall,ExpandConstant('{tmp}\freelancerhd.zip'),false);
-
         // Copy Vanilla game to directory
         UpdateProgress(0);
         WizardForm.StatusLabel.Caption := 'Copying Vanilla Freelancer directory';
@@ -647,7 +592,7 @@ begin
 
         // Unzip
         WizardForm.StatusLabel.Caption := 'Unzipping Freelancer: HD Edition';
-        Exec(ExpandConstant('{tmp}\7za.exe'), ExpandConstant(' x -y -aoa "{tmp}\{#MyZipName}.zip"  -o"{app}"'), '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
+        Exec(ExpandConstant('{tmp}\7za.exe'), ExpandConstant(' x -y -aoa "{tmp}\{#MyZipName}.7z"  -o"{app}"'), '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
         // -aoa Overwrite All existing files without prompt
         // -o Set output directory
         // -y Assume "Yes" on all Queries
@@ -692,12 +637,6 @@ end;
 function NextButtonClick(PageId: Integer): Boolean;
 begin
     Result := True;
-    // If they specify an offline file in the cmd line. Check it's valid, if not don't let them continue.
-    if ((PageId = 1) and (OfflineInstall <> 'false') and (not FileExists(OfflineInstall) or (Pos('.zip',OfflineInstall) < 1))) then begin
-      MsgBox('The specified source file either doesn''t exist or is not a valid .zip file', mbError, MB_OK);
-      Result := False;
-      exit;
-    end;
     // Check Freelancer is installed in the folder they have specified
     if (PageId = DataDirPage.ID) and not FileExists(DataDirPage.Values[0] + '\EXE\Freelancer.exe') then begin
       MsgBox('Freelancer does not seem to be installed in that folder. Please select the correct folder.', mbError, MB_OK);
@@ -719,115 +658,12 @@ begin
         exit;
       end;
     end;
-    // Start downloading the mod
-    if ((PageId = 10) and (OfflineInstall = 'false')) then begin
-    // 1st Attempt
-      DownloadPage.Clear;
-      DownloadPage.Add('https://onedrive.live.com/download?cid=F03BDD831B77D1AD&resid=F03BDD831B77D1AD%2193136&authkey=AB-33u2fKjr1-V8', 'freelancerhd.zip', '');
-      DownloadPage.SetText('Downloading mod','');
-      DownloadPage.Show;
-      DownloadPage.ProgressBar.Style := npbstNormal;
-      try
-        try
-          DownloadPage.Download;
-          Result := True;
-        except
-          // 2nd Attempt
-          SuppressibleMsgBox('Download failed. Attempting download with alternate mirror.', mbError, MB_OK, IDOK);
-          Result := False;
-          DownloadPage.Hide;
-          DownloadPageMirror.Clear;
-          DownloadPageMirror.Add('https://pechey.net/files/freelancer-hd-edition-0.4.1.zip', 'freelancerhd.zip', '');
-          DownloadPageMirror.SetText('Downloading mod','');
-          DownloadPageMirror.Show;
-          DownloadPageMirror.ProgressBar.Style := npbstNormal;
-          try
-            try
-              DownloadPageMirror.Download;
-              Result := True;
-            except
-              // 3rd Attempt
-              Result := False;
-              SuppressibleMsgBox('Download failed. Attempting download with another alternate mirror.', mbError, MB_OK, IDOK);
-              DownloadPageMirror.Hide;
-              DownloadPageMirror2.Clear;
-              DownloadPageMirror2.Add('http://luyten.viewdns.net:8080/freelancer-hd-edition-0.4.1.zip', 'freelancerhd.zip', '');
-              DownloadPageMirror2.SetText('Downloading mod','');
-              DownloadPageMirror2.Show;
-              DownloadPageMirror2.ProgressBar.Style := npbstNormal;
-              try
-                try
-                  DownloadPageMirror2.Download;
-                  Result := True;
-                except
-                  // 4th Attempt
-                  Result := False;
-                  SuppressibleMsgBox('Download failed. Attempting download with another alternate mirror.', mbError, MB_OK, IDOK);
-                  DownloadPageMirror2.Hide;
-                  DownloadPageMirror3.Clear;
-                  DownloadPageMirror3.Add('https://github.com/BC46/freelancer-hd-edition/archive/refs/tags/0.4.1.zip', 'freelancerhd.zip', '');
-                  DownloadPageMirror3.SetText('Downloading mod','');
-                  DownloadPageMirror3.Show;
-                  DownloadPageMirror3.ProgressBar.Style := npbstNormal;
-                  try
-                    try
-                      DownloadPageMirror3.Download;
-                      Result := True;
-                    except
-                      // 5th Attempt
-                      Result := False;
-                      SuppressibleMsgBox('Download failed. Attempting download with another alternate mirror.', mbError, MB_OK, IDOK);
-                      DownloadPageMirror3.Hide;
-                      DownloadPageMirror4.Clear;
-                      DownloadPageMirror4.Add('https://archive.org/download/freelancer-hd-edition-0.4.1/freelancer-hd-edition-0.4.1.zip', 'freelancerhd.zip', '');
-                      DownloadPageMirror4.SetText('Downloading mod','');
-                      DownloadPageMirror4.Show;
-                      DownloadPageMirror4.ProgressBar.Style := npbstNormal;
-                      try
-                        try
-                          DownloadPageMirror4.Download;
-                          Result := True;
-                        except
-                          // All attempts failed
-                          Result := False;
-                          SuppressibleMsgBox('Unable to download from alternate mirror. Please use the FLMM version.', mbCriticalError, MB_OK, IDOK);
-                        end;
-                      finally
-                        DownloadPageMirror4.Hide;
-                      end;
-                    end;
-                  finally
-                    DownloadPageMirror3.Hide;
-                  end;
-                end;
-              finally
-                DownloadPageMirror2.Hide;
-              end;
-          end;
-         finally
-            DownloadPageMirror.Hide;
-         end;
-       end;
-     finally
-        DownloadPage.Hide;
-     end;
-   end;
   end;
 
 // Run when the wizard is opened.
 procedure InitializeWizard;
 var dir : string;
 begin
-    // Offline install
-    OfflineInstall := ExpandConstant('{param:sourcefile|false}')
-
-    // Initialise download page and mirrors
-    DownloadPage := CreateDownloadPage(SetupMessage(msgWizardPreparing), SetupMessage(msgPreparingDesc), @OnDownloadProgress);
-    DownloadPageMirror := CreateDownloadPage(SetupMessage(msgWizardPreparing), SetupMessage(msgPreparingDesc), @OnDownloadProgressMirror);
-    DownloadPageMirror2 := CreateDownloadPage(SetupMessage(msgWizardPreparing), SetupMessage(msgPreparingDesc), @OnDownloadProgressMirror2);
-    DownloadPageMirror3 := CreateDownloadPage(SetupMessage(msgWizardPreparing), SetupMessage(msgPreparingDesc), @OnDownloadProgressMirror3);
-    DownloadPageMirror4 := CreateDownloadPage(SetupMessage(msgWizardPreparing), SetupMessage(msgPreparingDesc), @OnDownloadProgressMirror4);
-
     // Initialize DataDirPage and add content
     DataDirPage := CreateInputDirPage(wpInfoBefore,
     'Select Freelancer installation', 'Where is Freelancer installed?',
