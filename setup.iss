@@ -106,7 +106,7 @@ begin
     begin
         # if !AllInOneInstall
           if (OfflineInstall <> 'false') then
-            FileCopy(OfflineInstall,ExpandConstant('{tmp}\freelancerhd.7z'),false);
+            FileCopy(OfflineInstall,ExpandConstant('{tmp}\' + MyZipName + '.7z'),false);
         # endif
 
         // Copy Vanilla game to directory
@@ -148,9 +148,9 @@ begin
         Process_DrawDistances();
         Process_Planetscape();
         Process_Win10();
-        Process_HUD(); // Must be called before Process_WeaponGroups();
+        Process_HUD(); // Must be called before Process_FlatIcons(); and before Process_WeaponGroups();
         Process_DarkHUD();
-        Process_FlatIcons();
+        Process_FlatIcons(); // Must be called after Process_HUD();
         Process_WeaponGroups(); // Must be called after Process_HUD();
         Process_DxWrapper();
         Process_DxWrapperReShade();
@@ -203,9 +203,11 @@ begin
 
     if PageId = DgVoodooPage.ID then
     begin
-      RefreshRateError := 'Refresh rate must be a valid number between 30 and 3840. If you don''t know how to find your monitor''s refresh rate, look it up on the internet.' + #13#10#13#10 + 'Keep in mind that the DxWrapper option does not require you to set a refresh rate manually.'
+      RefreshRateError := 'Refresh rate must be a valid number between 30 and 3840. If you don''t know how to find your monitor''s refresh rate, look it up on the internet.' 
+        + #13#10#13#10 + 'Keep in mind that the DxWrapper option does not require you to set a refresh rate manually.'
 
       // dgVoodoo options page refresh rate validation
+      // Checks if the input is a valid number between 30 and 3840
       if (StrToInt(DgVoodooRefreshRate.Text) < 30) or (StrToInt(DgVoodooRefreshRate.Text) > 3840) then
         begin
           MsgBox(RefreshRateError, mbError, MB_OK);
@@ -213,6 +215,7 @@ begin
           Exit;
         end;
 
+      // Checks if the input consists entirely of digits
       for i := 1 to Length(DgVoodooRefreshRate.Text) do
       begin
         if not IsDigit(DgVoodooRefreshRate.Text[i]) then
@@ -224,7 +227,7 @@ begin
       end;
     end;
 
-    // If they specify an offline file in the cmd line. Check it's valid, if not don't let them continue.
+    // If they specify an offline file in the cmd line. Check if it's valid, if not don't let them continue.
     # if !AllInOneInstall
     if ((PageId = 1) and (OfflineInstall <> 'false') and (not FileExists(OfflineInstall) or (Pos('.7z',OfflineInstall) < 1))) then begin
       MsgBox('The specified source file either doesn''t exist or is not a valid .7z file', mbError, MB_OK);
@@ -259,8 +262,8 @@ begin
       for i:= 0 to mirrors.Count - 1 do
       begin
         DownloadPage.Clear;
-        DownloadPage.Add(mirrors[i], 'freelancerhd.7z', '');
-        DownloadPage.SetText('Downloading mod','');
+        DownloadPage.Add(mirrors[i], MyZipName + '.7z', '');
+        DownloadPage.SetText('Downloading mod', '');
         DownloadPage.Show;
         DownloadPage.ProgressBar.Style := npbstNormal;
         try
