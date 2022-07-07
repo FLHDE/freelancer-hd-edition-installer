@@ -9,12 +9,12 @@
 #define MyAppExeName "Freelancer.exe"
 #define MyFolderName "freelancer-hd-edition-" + MyAppVersion
 #define MyZipName "freelancerhd"
-; This variable controls whether the zip is shipped with the exe or downloaded from a mirror 
+; This variable controls whether the zip is shipped with the exe or downloaded from a mirror
 #define AllInOneInstall true
 #dim Mirrors[2] {"https://github.com/BC46/freelancer-hd-edition/archive/refs/tags/" + MyAppVersion + ".zip", "https://archive.org/download/freelancer-hd-edition-" + MyAppVersion + "/freelancer-hd-edition-" + MyAppVersion + ".7z"}
 ; TODO: Update sizes for each release
-#define SizeZip 2438619136 
-#define SizeExtracted 4195188736 
+#define SizeZip 2438619136
+#define SizeExtracted 4195188736
 #define SizeVanilla 985624576
 #define SizeBuffer 100000
 #define SizeAll SizeZip + SizeExtracted + SizeVanilla + SizeBuffer
@@ -58,7 +58,7 @@ Name: "{commondesktop}\Freelancer HD Edition"; Filename: "{app}\EXE\{#MyAppExeNa
 
 [Files]
 Source: "Assets\Text\installinfo.txt"; DestDir: "{app}"; Flags: ignoreversion deleteafterinstall
-Source: "Assets\Text\PerfOptions.ini"; DestDir: "{app}"; Flags: ignoreversion deleteafterinstall 
+Source: "Assets\Text\PerfOptions.ini"; DestDir: "{app}"; Flags: ignoreversion deleteafterinstall
 Source: "Assets\Fonts\AGENCYB.TTF"; DestDir: "{autofonts}"; FontInstall: "Agency FB Bold"; Flags: onlyifdoesntexist uninsneveruninstall
 Source: "Assets\Fonts\AGENCYR.TTF"; DestDir: "{autofonts}"; FontInstall: "Agency FB"; Flags: onlyifdoesntexist uninsneveruninstall
 Source: "Assets\Fonts\ARIALUNI.TTF"; DestDir: "{autofonts}"; FontInstall: "Arial Unicode MS"; Flags: onlyifdoesntexist uninsneveruninstall
@@ -105,7 +105,7 @@ begin
     if CurStep = ssPostInstall then
     begin
         # if !AllInOneInstall
-          if (OfflineInstall <> 'false') then 
+          if (OfflineInstall <> 'false') then
             FileCopy(OfflineInstall,ExpandConstant('{tmp}\' + MyZipName + '.7z'),false);
         # endif
 
@@ -127,7 +127,7 @@ begin
         WizardForm.StatusLabel.Caption := ExpandConstant('Moving {#MyAppName}');
 
         DirectoryCopy(ExpandConstant('{app}\{#MyFolderName}'),ExpandConstant('{app}'),True);
-        
+
         DelTree(ExpandConstant('{app}\{#MyFolderName}'), True, True, True);
         UpdateProgress(90);
 
@@ -149,7 +149,7 @@ begin
         Process_Planetscape();
         Process_Win10();
         Process_HUD(); // Must be called before Process_FlatIcons(); and before Process_WeaponGroups();
-        Process_DarkHUD(); 
+        Process_DarkHUD();
         Process_FlatIcons(); // Must be called after Process_HUD();
         Process_WeaponGroups(); // Must be called after Process_HUD();
         Process_DxWrapper();
@@ -162,7 +162,7 @@ begin
         UpdateProgress(95);
 
         // Perform operations that (potentially) do not work on Wine
-        if not IsWine then 
+        if not IsWine then
         begin
           // Delete potential UTF-8 BOM headers in all edited ini files
           RemoveBOM(ExpandConstant('{app}\EXE\dacom.ini'));
@@ -174,6 +174,10 @@ begin
           RemoveBOM(ExpandConstant('{app}\EXE\newplayer.fl'));
           RemoveBOM(ExpandConstant('{app}\EXE\dxwrapper.ini'));
           RemoveBOM(ExpandConstant('{app}\EXE\ReShadePreset.ini'));
+        end else
+        begin
+          // Write d3d8 DLL override for Wine/Linux. For more information, see https://wiki.winehq.org/Wine_User%27s_Guide#DLL_Overrides
+          RegWriteStringValue(HKEY_CURRENT_USER, 'Software\Wine\DllOverrides', 'd3d8', 'native,builtin');
         end;
 
         // Delete restart.fl to stop crashes
@@ -271,7 +275,7 @@ begin
             SuppressibleMsgBox('All downloads failed. Please contact us on Discord: https://discord.gg/ScqgYuFqmU', mbError, MB_OK, IDOK)
           else
             if SuppressibleMsgBox('Download failed. Do you want to try downloading with an alternate mirror?', mbError, MB_RETRYCANCEL, IDRETRY) = IDCANCEL then
-              i := mirrors.Count - 1; 
+              i := mirrors.Count - 1;
           Result := False;
           DownloadPage.Hide;
         finally
@@ -291,7 +295,7 @@ begin
 
       // Copy mirrors from our preprocessor to our string array. This allows us to define the array at the top of the file for easy editing
       mirrors := TStringList.Create;
-   
+
       #sub PopMirrors
         mirrors.add('{#Mirrors[i]}');
       #endsub
