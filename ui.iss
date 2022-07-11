@@ -399,7 +399,7 @@ begin
   // Initialize LogoRes page and add content
   LogoRes := CreateInputOptionPage(StartupRes.ID,
   'Freelancer Logo Resolution', 'In the game''s main menu',
-  'This logo has a resolution of 800x600 by default, which makes it look stretched and pixelated/blurry on HD 16:9 monitors. ' +
+  'The main menu Freelancer logo has a resolution of 800x600 by default, which makes it look stretched and pixelated/blurry on HD widescreen monitors. ' +
   'Setting this to a higher resolution with the correct aspect ratio makes the logo look nice and sharp and not stretched-out. Hence we recommend setting this option to your monitor''s native resolution. ' +
   'Please note that a higher resolution option may negatively impact the game''s start-up speed.',
   True, False);
@@ -462,7 +462,10 @@ begin
   
   WidescreenHud := TCheckBox.Create(PageWidescreenHud);
   WidescreenHud.Parent := PageWidescreenHud.Surface;
-  WidescreenHud.Checked := True;
+
+  // Only check the wide screen HUD option if the user's aspect ratio is not 4:3
+  if (not IsDesktopRes4By3()) then
+    WidescreenHud.Checked := True;
 
   lblWeaponGroups := TLabel.Create(PageWidescreenHud);
   lblWeaponGroups.Parent := PageWidescreenHud.Surface;
