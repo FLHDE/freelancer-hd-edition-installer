@@ -1,5 +1,5 @@
 ; Inno Install Script for Freelancer: HD Edition
-; GitHub: https://github.com/ollieraikkonen/Freelancer-hd-edition-install-script
+; GitHub: https://github.com/oliverpechey/Freelancer-hd-edition-install-script
 ; Main GitHub: https://github.com/bc46/Freelancer-hd-edition
 
 #define MyAppVersion "0.6"
@@ -11,13 +11,12 @@
 #define MyZipName "freelancerhd"
 ; This variable controls whether the zip is shipped with the exe or downloaded from a mirror
 #define AllInOneInstall true
-; TODO: Remember to change the mirror locations for each release
-#dim Mirrors[1] {"https://github.com/BC46/freelancer-hd-edition/archive/refs/tags/" + MyAppVersion + ".zip"}
+#dim Mirrors[2] {"https://github.com/BC46/freelancer-hd-edition/archive/refs/tags/" + MyAppVersion + ".zip", "https://archive.org/download/freelancer-hd-edition-" + MyAppVersion + "/freelancer-hd-edition-" + MyAppVersion + ".7z"}
 ; TODO: Update sizes for each release
 #define SizeZip 2438619136
 #define SizeExtracted 4195188736
 #define SizeVanilla 985624576
-#define SizeBuffer 50000
+#define SizeBuffer 100000
 #define SizeAll SizeZip + SizeExtracted + SizeVanilla + SizeBuffer
 
 [Setup]
