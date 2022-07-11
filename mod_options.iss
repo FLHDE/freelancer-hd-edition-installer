@@ -100,7 +100,7 @@ begin
   // Rename vanilla mission 13 file
   RenameFile(Mission13Path + 'm13.ini', Mission13Path + 'm13_vanilla.ini')
 
-  // Rename new open sp pirate file
+  // Rename new open sp file
   RenameFile(Mission13Path + 'm13_opensp_' + FileName + '.ini', Mission13Path + 'm13.ini')
 end;
 
