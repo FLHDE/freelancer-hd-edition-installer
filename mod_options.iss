@@ -86,7 +86,7 @@ begin
     end;
 end;
 
-procedure Process_SinglePlayerMode();
+procedure EnableOpenSP(FileName: string);
 var
   NewPlayerPath: string;
   Mission13Path: string;
@@ -94,26 +94,22 @@ begin
   NewPlayerPath := ExpandConstant('{app}\EXE\newplayer.fl')
   Mission13Path := ExpandConstant('{app}\DATA\MISSIONS\M13\')
 
+  // Ensure the mission 13 script is used when starting a new game
+  FileReplaceString(NewPlayerPath, 'Mission = Mission_01a', 'Mission = Mission_13')
+
+  // Rename vanilla mission 13 file
+  RenameFile(Mission13Path + 'm13.ini', Mission13Path + 'm13_vanilla.ini')
+
+  // Rename new open sp pirate file
+  RenameFile(Mission13Path + 'm13_opensp_' + FileName + '.ini', Mission13Path + 'm13.ini')
+end;
+
+procedure Process_SinglePlayerMode();
+begin
   if OspNormal.Checked then
-    begin
-    FileReplaceString(NewPlayerPath, 'Mission = Mission_01a', 'Mission = Mission_13')
-
-    // Rename vanilla mission 13 file
-    RenameFile(Mission13Path + 'm13.ini', Mission13Path + 'm13_vanilla.ini')
-    
-    // Rename new open sp normal file
-    RenameFile(Mission13Path + 'm13_opensp_normal.ini', Mission13Path + 'm13.ini')
-    end
+    EnableOpenSP('normal')
   else if OspPirate.Checked then
-    begin
-    FileReplaceString(NewPlayerPath, 'Mission = Mission_01a', 'Mission = Mission_13')
-
-    // Rename vanilla mission 13 file
-    RenameFile(Mission13Path + 'm13.ini', Mission13Path + 'm13_vanilla.ini')
-    
-    // Rename new open sp pirate file
-    RenameFile(Mission13Path + 'm13_opensp_pirate.ini', Mission13Path + 'm13.ini')
-    end;
+    EnableOpenSP('pirate');
 end;
 
 procedure Process_NewSaveFolder();
@@ -141,7 +137,7 @@ begin
   if(not StartupRes.Values[2]) then begin
     // Rename old file away
     RenameFile(NewFile,FolderPath + 'startupscreen_1280_vanilla.tga');
-    // Rename the correct startup res depending on option
+    // Rename the correct startup res depending on the selected option
     if(StartupRes.Values[1]) then // 720p 16:9
       OldFile := FolderPath + 'startupscreen_1280_1280x720.tga'
     else if(StartupRes.Values[3]) then // 1080p 4:3
@@ -418,6 +414,7 @@ var
 begin
   FilePath := ExpandConstant('{app}\EXE\flplusplus.ini');
 
+  // Set draw distances
   if(PageDrawDistances.Values[0]) then // 1x (Vanilla)
     FileReplaceString(FilePath, 'lod_scale = 9', 'lod_scale = 0')
   else if(PageDrawDistances.Values[1]) then // 2x 
@@ -941,6 +938,7 @@ begin
     // Use Tonemap only if windowed or fullscreen windowed have been checked
     Techniques := Techniques + 'Tonemap@Tonemap.fx';
 
+  // Removes a trailing comma at the end of the techniques if it's there
   if (LENGTH(Techniques) > 0) and (Techniques[LENGTH(Techniques)] = ',') then
     SetLength(Techniques, LENGTH(Techniques) - 1);
 
