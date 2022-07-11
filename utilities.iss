@@ -169,6 +169,12 @@ begin
   Result := Trunc(Single(DesktopRes.Width) / DesktopRes.Height * 100.0) / 100.0 = 1.77
 end;
 
+// Whether or not the desktop resolution has an aspect ratio of 4:3
+function IsDesktopRes4By3(): Boolean;
+begin
+  Result := Trunc(Single(DesktopRes.Width) / DesktopRes.Height * 100.0) / 100.0 = 1.33
+end;
+
 // Converts an int to hex
 function IntToHex(Value: Integer; Digits: Integer): string;
 begin
