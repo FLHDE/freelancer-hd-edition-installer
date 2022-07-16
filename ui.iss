@@ -567,7 +567,7 @@ begin
   descGraphicsApi.Parent := PageGraphicsApi.Surface;
   descGraphicsApi.WordWrap := True;
   descGraphicsApi.Width := PageGraphicsApi.SurfaceWidth;
-  descGraphicsApi.Caption := 'This page allows you to choose the graphics API. If you have no idea what this means, just go with either the first or second option, since those offer additional graphics enhancements. If they are causing issues for you, go with the 3rd or 4th option.';
+  descGraphicsApi.Caption := 'This page allows you to choose the graphics API. If you have no idea what this means, just go with the first option, since it offer additional graphics enhancements and fixes. If it''s causing issues for you, go with the 2nd, 3rd, or 4th option.';
 
   lblDgVoodooGraphicsApi := TLabel.Create(PageGraphicsApi);
   lblDgVoodooGraphicsApi.Parent := PageGraphicsApi.Surface;
@@ -589,7 +589,7 @@ begin
 
   lblDxWrapperGraphicsApi := TLabel.Create(PageGraphicsApi);
   lblDxWrapperGraphicsApi.Parent := PageGraphicsApi.Surface;
-  lblDxWrapperGraphicsApi.Caption := 'DxWrapper + d3d8to9 (DirectX 9, recommended)';
+  lblDxWrapperGraphicsApi.Caption := 'DxWrapper + d3d8to9 (DirectX 9)';
   lblDxWrapperGraphicsApi.Left := ScaleX(20);
   lblDxWrapperGraphicsApi.Top := descDgVoodooGraphicsApi.Top + ScaleY(40);
 
@@ -602,7 +602,7 @@ begin
   descDxWrapperGraphicsApi.WordWrap := True;
   descDxWrapperGraphicsApi.Top := DxWrapperGraphicsApi.Top + ScaleY(15);
   descDxWrapperGraphicsApi.Width := PageGraphicsApi.SurfaceWidth;
-  descDxWrapperGraphicsApi.Caption := 'Supports native Anti-Aliasing, Anisotropic Filtering, and ReShade.';
+  descDxWrapperGraphicsApi.Caption := 'Supports native Anti-Aliasing, Anisotropic Filtering, and ReShade. Not 100% stable.';
 
   lblVanillaGraphicsApi := TLabel.Create(PageGraphicsApi);
   lblVanillaGraphicsApi.Parent := PageGraphicsApi.Surface;
