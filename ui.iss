@@ -1128,18 +1128,26 @@ begin
   DisplayMode := TComboBox.Create(PageMiscOptions);
   DisplayMode.Parent := PageMiscOptions.Surface;
   DisplayMode.Style := csDropDownList;
-  DisplayMode.Width := 200;
+  DisplayMode.Width := 210;
   DisplayMode.Items.Add('Fullscreen (default, recommended)');
   DisplayMode.Items.Add('Windowed');
   DisplayMode.Items.Add('Borderless Windowed');
   DisplayMode.ItemIndex := 0;
   DisplayMode.Top := BestOptions.Top + ScaleY(80);
 
+  // Make Borderless Windowed the recommended and selected option on Wine to fix the Alt-Tab bug
+  if IsWine then
+  begin
+    DisplayMode.Items[0] := 'Fullscreen (default)';
+    DisplayMode.Items[2] := 'Borderless Windowed (recommended)';
+    DisplayMode.ItemIndex := 2;
+  end;
+
   lblDisplayMode := TLabel.Create(PageMiscOptions);
   lblDisplayMode.Parent := PageMiscOptions.Surface;
   lblDisplayMode.Caption := 'Display Mode';
   lblDisplayMode.Top := DisplayMode.Top;
-  lblDisplayMode.Left := ScaleX(210);
+  lblDisplayMode.Left := ScaleX(220);
 
   descDisplayMode := TNewStaticText.Create(PageMiscOptions);
   descDisplayMode.Parent := PageMiscOptions.Surface;
@@ -1189,7 +1197,7 @@ begin
   end;
 
   // Make all the custom checkboxes and radio buttons less wide so the clickable area doesn't hide the accompanying labels.
-  if (IsWine) then
+  if IsWine then
   begin
     CheckBoxWidth := ScaleX(20)
 
