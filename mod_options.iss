@@ -243,26 +243,37 @@ begin
   if SinglePlayer.Checked then FileReplaceString(ExpandConstant('{app}\EXE\dacom.ini'),';console.dll','console.dll')
 end;
 
-// Best options processing logic
-procedure Process_BestOptions();
+function GetOptionsPath(FileName: string): string;
 var
-  MyGamesFolder: string;
   OptionsFolder: string;
-  OptionsPath: string;
-  NewOptionsPath: string;
+  MyGamesFolder: string;
 begin
-  if not BestOptions.Checked then
-    exit;
+  MyGamesFolder := ExpandConstant('{userdocs}\My Games\')
 
   if NewSaveFolder.Checked then
     OptionsFolder := 'FreelancerHD'
   else
     OptionsFolder := 'Freelancer';
 
-  MyGamesFolder := ExpandConstant('{userdocs}\My Games\')
-  OptionsPath := MyGamesFolder + OptionsFolder + '\PerfOptions.ini'
+    CreateDirIfNotExists(MyGamesFolder);
+    CreateDirIfNotExists(MyGamesFolder + OptionsFolder);
+
+  Result := MyGamesFolder + OptionsFolder + '\' + FileName + '.ini'
+end;
+
+// Best options processing logic
+procedure Process_BestOptions();
+var
+  OptionsPath: string;
+  NewOptionsPath: string;
+begin
+  if not BestOptions.Checked then
+    exit;
+
+  OptionsPath := GetOptionsPath('PerfOptions')
   NewOptionsPath := ExpandConstant('{app}\PerfOptions.ini')
 
+  // If the options file exists, apply all the best known options in that file. If it doesn't exist, copy a pre-existing file with the best options already applied.
   if FileExists(OptionsPath) then begin
     FileReplaceString(OptionsPath, 'SkipMachineWarnings=',       'SkipMachineWarnings=TRUE;')
     FileReplaceString(OptionsPath, 'DitherControl =',            'DitherControl = 1.00;')
@@ -288,15 +299,13 @@ begin
     FileReplaceString(OptionsPath, 'color_bpp=',                 'color_bpp= 32;')
     FileReplaceString(OptionsPath, 'depth_bpp=',                 'depth_bpp= 32;')
   end
-  else begin
-    CreateDirIfNotExists(MyGamesFolder);
-    CreateDirIfNotExists(MyGamesFolder + OptionsFolder);
-
+  else
     FileCopy(NewOptionsPath, OptionsPath, false);
-  end;
 
+  // Set the user's desktop resolution as the display size in the options file
   FileReplaceString(OptionsPath, 'size=', 'size= ' + IntToStr(DesktopRes.Width) + ', ' + IntToStr(DesktopRes.Height) + ';')
   
+  // Remove the BOM character if added
   if not IsWine then
     RemoveBOM(OptionsPath);
 end;
@@ -451,55 +460,78 @@ end;
 procedure Process_HUD();
 var
   HudShiftPath: string;
+  KeyMapPath: string;
+  NewKeyMapPath: string;
 begin
-  if WidescreenHud.Checked then
-  begin
-      HudShiftPath := ExpandConstant('{app}\DATA\INTERFACE\HudShift.ini')
+  if not WidescreenHud.Checked then
+    exit;
 
-      // Enable plugins
-      FileReplaceString(
-        ExpandConstant('{app}\EXE\dacom.ini')
-        ,
-        ';HudFacility.dll' + #13#10 +
-        ';HudWeaponGroups.dll' + #13#10 +
-        ';HudTarget.dll' + #13#10 +
-        ';HudStatus.dll'
-        ,
-        'HudFacility.dll' + #13#10 +
-        ';HudWeaponGroups.dll' + #13#10 +
-        'HudTarget.dll' + #13#10 +
-        'HudStatus.dll'
-      )
+    HudShiftPath := ExpandConstant('{app}\DATA\INTERFACE\HudShift.ini')
 
-      // Adjust target and player info positions
-      FileReplaceString(
-        HudShiftPath
-        ,
-        'position = 4e0a80, -0.3630, 4e0a94, -0.3025		; wireframe' + #13#10 +
-        'position = 4e0fe7, -0.4105, 4e0fef, -0.3700		; TargetMinimizedFrame' + #13#10 +
-        'position = 4e10ff, -0.4820, 4e1107, -0.2000		; TargetShipName' + #13#10 +
-        'position = 4e1145, -0.4820, 4e1158, -0.2000' + #13#10 +
-        'position = 4e1180, -0.4820, 4e1188, -0.2180		; SubtargetName' + #13#10 +
-        'position = 4e11e2, -0.4820, 4e11f0, -0.2180' + #13#10 +
-        'position = 4e1247, -0.2650, 4e124f, -0.2695		; TargetPreviousButton' + #13#10 +
-        'position = 4e12b4, -0.2650, 4e12bc, -0.3005		; TargetNextButton' + #13#10 +
-        'position = 4e175c, -0.4940, 4e1764, -0.3610		; TargetRankText'
-        ,
-        'position = 4e0a80, -0.1245, 4e0a94, -0.2935		; wireframe' + #13#10 +
-        'position = 4e0fe7, -0.4105, 4e0fef, -0.3700		; TargetMinimizedFrame' + #13#10 +
-        'position = 4e10ff, -0.2430, 4e1107, -0.2030		; TargetShipName' + #13#10 +
-        'position = 4e1145, -0.2430, 4e1158, -0.2030' + #13#10 +
-        'position = 4e1180, -0.2430, 4e1188, -0.2210		; SubtargetName' + #13#10 +
-        'position = 4e11e2, -0.2430, 4e11f0, -0.2210' + #13#10 +
-        'position = 4e1247, -0.0595, 4e124f, -0.2780		; TargetPreviousButton' + #13#10 +
-        'position = 4e12b4, -0.0595, 4e12bc, -0.3090		; TargetNextButton' + #13#10 +
-        'position = 4e175c, -0.2550, 4e1764, -0.3610		; TargetRankText'
-      )
+    // Enable plugins
+    FileReplaceString(
+      ExpandConstant('{app}\EXE\dacom.ini')
+      ,
+      ';HudFacility.dll' + #13#10 +
+      ';HudWeaponGroups.dll' + #13#10 +
+      ';HudTarget.dll' + #13#10 +
+      ';HudStatus.dll'
+      ,
+      'HudFacility.dll' + #13#10 +
+      ';HudWeaponGroups.dll' + #13#10 +
+      'HudTarget.dll' + #13#10 +
+      'HudStatus.dll'
+    )
+
+    // Adjust target and player info positions
+    FileReplaceString(
+      HudShiftPath
+      ,
+      'position = 4e0a80, -0.3630, 4e0a94, -0.3025		; wireframe' + #13#10 +
+      'position = 4e0fe7, -0.4105, 4e0fef, -0.3700		; TargetMinimizedFrame' + #13#10 +
+      'position = 4e10ff, -0.4820, 4e1107, -0.2000		; TargetShipName' + #13#10 +
+      'position = 4e1145, -0.4820, 4e1158, -0.2000' + #13#10 +
+      'position = 4e1180, -0.4820, 4e1188, -0.2180		; SubtargetName' + #13#10 +
+      'position = 4e11e2, -0.4820, 4e11f0, -0.2180' + #13#10 +
+      'position = 4e1247, -0.2650, 4e124f, -0.2695		; TargetPreviousButton' + #13#10 +
+      'position = 4e12b4, -0.2650, 4e12bc, -0.3005		; TargetNextButton' + #13#10 +
+      'position = 4e175c, -0.4940, 4e1764, -0.3610		; TargetRankText'
+      ,
+      'position = 4e0a80, -0.1245, 4e0a94, -0.2935		; wireframe' + #13#10 +
+      'position = 4e0fe7, -0.4105, 4e0fef, -0.3700		; TargetMinimizedFrame' + #13#10 +
+      'position = 4e10ff, -0.2430, 4e1107, -0.2030		; TargetShipName' + #13#10 +
+      'position = 4e1145, -0.2430, 4e1158, -0.2030' + #13#10 +
+      'position = 4e1180, -0.2430, 4e1188, -0.2210		; SubtargetName' + #13#10 +
+      'position = 4e11e2, -0.2430, 4e11f0, -0.2210' + #13#10 +
+      'position = 4e1247, -0.0595, 4e124f, -0.2780		; TargetPreviousButton' + #13#10 +
+      'position = 4e12b4, -0.0595, 4e12bc, -0.3090		; TargetNextButton' + #13#10 +
+      'position = 4e175c, -0.2550, 4e1764, -0.3610		; TargetRankText'
+    )
 
     // Adjust request trade button and player wireframe positions
     FileReplaceString(HudShiftPath,'position = 4da2fa,  0.4180, 4da30e, -0.2900','position = 4da2fa,  0.1765, 4da30e, -0.3025')
     FileReplaceString(HudShiftPath,'position = 4e14db, -0.2020, 4e14e3, -0.3700		; TargetTradeButton','position = 4e14db, -0.0180, 4e14e3, -0.3700		; TargetTradeButton')
-  end
+
+    KeyMapPath := GetOptionsPath('UserKeyMap')
+    NewKeyMapPath := ExpandConstant('{app}\UserKeyMap.ini')
+
+    // If a key map file already exists, remove the "Target View (Alt + T) bind. If the key map file doesn't exist yet, copy a pre-existing key map file where this hotkey has already been removed.
+    if FileExists(KeyMapPath) then begin
+      FileReplaceString(KeyMapPath, 
+        '[KeyCmd]' + #13#10
+        'nickname = USER_SWITCH_TO_TARGET' + #13#10
+        'key',
+
+        ';[KeyCmd]' + #13#10
+        ';nickname = USER_SWITCH_TO_TARGET' + #13#10
+        ';key')
+
+      // Remove the BOM character if added
+      if not IsWine then
+        RemoveBOM(KeyMapPath);
+    end
+    else
+      FileCopy(NewKeyMapPath, KeyMapPath, false);
 end;
 
 procedure Process_DarkHud();
