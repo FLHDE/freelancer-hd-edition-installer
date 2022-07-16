@@ -457,8 +457,7 @@ begin
   descWidescreenHud.WordWrap := True;
   descWidescreenHud.Top := ScaleY(20);
   descWidescreenHud.Width := PageWidescreenHud.SurfaceWidth;
-  descWidescreenHud.Caption := 'This option adds two new useful widgets to your HUD. Next to your contact list, you will have a wireframe representation of your selected target. Next to your weapons list, you will have a wireframe of your own ship. Disable this option if you play in 4:3.' + #13#10 + #13#10 +
-  'If you choose to enable this option, go to the Controls settings in-game and under "User Interface", disable Target View (Alt + T). This key binding has become obsolete as both the target view and contact list are visible simultaneously.';
+  descWidescreenHud.Caption := 'This option adds two new useful widgets to your HUD. Next to your contact list, you will have a wireframe representation of your selected target. Next to your weapons list, you will have a wireframe of your own ship. Disable this option if you play in 4:3.';
   
   WidescreenHud := TCheckBox.Create(PageWidescreenHud);
   WidescreenHud.Parent := PageWidescreenHud.Surface;
@@ -471,7 +470,7 @@ begin
   lblWeaponGroups.Parent := PageWidescreenHud.Surface;
   lblWeaponGroups.Caption := 'Add Weapon Group buttons';
   lblWeaponGroups.Left := ScaleX(20);
-  lblWeaponGroups.Top := descWidescreenHud.Top + ScaleY(120);
+  lblWeaponGroups.Top := descWidescreenHud.Top + ScaleY(65);
   
   descWeaponGroups := TNewStaticText.Create(PageWidescreenHud);
   descWeaponGroups.Parent := PageWidescreenHud.Surface;
