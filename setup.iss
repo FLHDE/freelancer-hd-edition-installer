@@ -175,6 +175,8 @@ begin
           RemoveBOM(ExpandConstant('{app}\EXE\newplayer.fl'));
           RemoveBOM(ExpandConstant('{app}\EXE\dxwrapper.ini'));
           RemoveBOM(ExpandConstant('{app}\EXE\ReShadePreset.ini'));
+          RemoveBOM(GetOptionsPath('PerfOptions'));
+          RemoveBOM(GetOptionsPath('UserKeyMap'));
         end else
         begin
           // Write d3d8 DLL override for Wine/Linux. For more information, see https://wiki.winehq.org/Wine_User%27s_Guide#DLL_Overrides
