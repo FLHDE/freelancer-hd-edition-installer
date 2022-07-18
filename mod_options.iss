@@ -199,7 +199,7 @@ procedure Process_SmallText();
 begin
     FilePath := ExpandConstant('{app}\DATA\FONTS\fonts.ini');
 
-    if SmallText.Values[1] then // Fix for 2560x1440 screens
+    if (SmallText.Values[1]) or (SmallText.Values[2]) then // Fix for both 2560x1440 and 3840x2160 screens
       FileReplaceString(FilePath,
       'nickname = NavMap1600' + #13#10 +
       'font = Agency FB' + #13#10 +
@@ -226,14 +226,6 @@ begin
         'nickname = Normal' + #13#10 +
         'font = Agency FB' + #13#10 +
         'fixed_height = 0.029');
-      FileReplaceString(FilePath,
-        'nickname = NavMap1600' + #13#10 +
-        'font = Agency FB' + #13#10 +
-        'fixed_height = 0.015',
-
-        'nickname = NavMap1600' + #13#10 +
-        'font = Agency FB' + #13#10 +
-        'fixed_height = 0.025');
     end;
 end;
 
@@ -243,6 +235,7 @@ begin
   if SinglePlayer.Checked then FileReplaceString(ExpandConstant('{app}\EXE\dacom.ini'),';console.dll','console.dll')
 end;
 
+// Gets the path of a file in the My Games\Freelancer(HD) directory
 function GetOptionsPath(FileName: string): string;
 var
   OptionsFolder: string;
@@ -304,10 +297,6 @@ begin
 
   // Set the user's desktop resolution as the display size in the options file
   FileReplaceString(OptionsPath, 'size=', 'size= ' + IntToStr(DesktopRes.Width) + ', ' + IntToStr(DesktopRes.Height) + ';')
-  
-  // Remove the BOM character if added
-  if not IsWine then
-    RemoveBOM(OptionsPath);
 end;
 
 // Effects processing logic
@@ -355,6 +344,7 @@ if MissileEffects.Checked then
     RenameFile(MissilePath + 'rh_missile02_new.ale',MissilePath + 'rh_missile02.ale')
   end;
 
+  // Rename chosen reflection file
   if ShinyReflections.Checked then begin
     RenameFile(ExpandConstant('{app}\DATA\FX\envmapbasic.mat'),ExpandConstant('{app}\DATA\FX\envmapbasic_vanilla.mat'))
     RenameFile(ExpandConstant('{app}\DATA\FX\envmapbasic_shiny.mat'),ExpandConstant('{app}\DATA\FX\envmapbasic.mat'))
@@ -364,6 +354,7 @@ if MissileEffects.Checked then
     RenameFile(ExpandConstant('{app}\DATA\FX\envmapbasic_shinier.mat'),ExpandConstant('{app}\DATA\FX\envmapbasic.mat'))
   end;
   
+  // Add player engine trails
   if EngineTrails.Checked then begin
     RenameFile(ExpandConstant('{app}\DATA\EQUIPMENT\engine_equip.ini'),ExpandConstant('{app}\DATA\EQUIPMENT\engine_equip_vanilla.ini'))
     RenameFile(ExpandConstant('{app}\DATA\EQUIPMENT\engine_equip_player_trails.ini'),ExpandConstant('{app}\DATA\EQUIPMENT\engine_equip.ini'))
@@ -525,10 +516,6 @@ begin
         ';[KeyCmd]' + #13#10
         ';nickname = USER_SWITCH_TO_TARGET' + #13#10
         ';key')
-
-      // Remove the BOM character if added
-      if not IsWine then
-        RemoveBOM(KeyMapPath);
     end
     else
       FileCopy(NewKeyMapPath, KeyMapPath, false);
@@ -848,6 +835,7 @@ var
 begin
   FilePath := ExpandConstant('{app}\EXE\freelancer.ini');
 
+  // Skip intros if selected
   if(SkipIntros.Checked) then 
     begin 
       FileReplaceString(FilePath, 'movie_file = movies\MGS_Logo_Final.wmv' + #13#10
@@ -870,6 +858,7 @@ begin
 
       FileReplaceString(HudShiftPath,';HudWeaponGroups = true','HudWeaponGroups = true')
 
+      // Enable weapon groups
       FileReplaceString(
         ExpandConstant('{app}\EXE\dacom.ini'),
         ';HudWeaponGroups.dll' + #13#10,
@@ -920,11 +909,6 @@ begin
   DgVoodooPath := ExpandConstant('{app}\EXE\dgVoodoo.conf');
   RefreshRateInt := StrToInt(DgVoodooRefreshRate.Text)
 
-  if RefreshRateInt <= 255 then
-    RefreshRateBinary := IntToHex(RefreshRateInt, 2)
-  else
-    RefreshRateBinary := SwapBytes(IntToHex(RefreshRateInt, 4));
-
   if DgVoodooAa.ItemIndex = 1 then
     // Enable AA 2x
     WriteHexToFile(DgVoodooPath, $6A, '02');
@@ -948,6 +932,13 @@ begin
     // Enable AF 16x
     WriteHexToFile(DgVoodooPath, $86, '10');
 
+  // Get the correct refresh rate as 2 or 4 byte hexadecimals
+  if RefreshRateInt <= 255 then
+    RefreshRateBinary := IntToHex(RefreshRateInt, 2)
+  else
+    RefreshRateBinary := SwapBytes(IntToHex(RefreshRateInt, 4));
+
+  // Set refresh rate
   WriteHexToFile(DgVoodooPath, $6E, RefreshRateBinary);
 end;
 
@@ -980,13 +971,13 @@ end;
 procedure Process_DxWrapperReShade();
 begin
   if (DxWrapperGraphicsApi.Checked) and (DxWrapperReShade.Checked) then
-    ApplyReShadeOptions('d3d9', DxWrapperBloom.Checked, DxWrapperHdr.Checked, DxWrapperSaturation.Checked);
+    ApplyReShadeOptions('d3d9', DxWrapperBloom.Checked, DxWrapperHdr.Checked, DxWrapperSaturation.Checked); // d3d9 is for DirectX 9 (DxWrapper)
 end;
 
 procedure Process_DgVoodooReShade();
 begin
   if (DgVoodooGraphicsApi.Checked) and (DgVoodooReShade.Checked) then
-    ApplyReShadeOptions('dxgi', DgVoodooBloom.Checked, DgVoodooHdr.Checked, DgVoodooSaturation.Checked);
+    ApplyReShadeOptions('dxgi', DgVoodooBloom.Checked, DgVoodooHdr.Checked, DgVoodooSaturation.Checked); // dxgi is for DirectX 11 (ReShade)
 end;
 
 procedure Process_DisplayMode();
