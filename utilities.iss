@@ -126,11 +126,11 @@ begin
   try
     DC := GetDC(0);
     Result := GetDeviceCaps(DC, 116); // 116 = VREFRESH
-  except
-    Result := 60
 
     if Result = 0 then
       RaiseException('Refresh Rate cannot be 0.');
+  except
+    Result := 60
   end;
 end;
 
