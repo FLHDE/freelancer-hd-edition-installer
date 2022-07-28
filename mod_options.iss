@@ -982,9 +982,11 @@ end;
 
 procedure Process_DisplayMode();
 var
+  ExeFolderPath: string;
   ExePath: string;
 begin
-  ExePath := ExpandConstant('{app}\EXE\Freelancer.exe');
+  ExeFolderPath := ExpandConstant('{app}\EXE\');
+  ExePath := ExeFolderPath + 'Freelancer.exe';
 
   if (DisplayMode.ItemIndex = 1) or (DisplayMode.ItemIndex = 2) then // Windowed or borderless windowed selected
     WriteHexToFile(ExePath, $1B16CC, '00'); // Windowed mode
@@ -1001,5 +1003,11 @@ begin
       WriteHexToFile(ExePath, $1B2665, 'EB') // Keep Freelancer running in the background when Alt-Tabbed
     else
       WriteHexToFile(ExePath, $1B264C, 'BA0100000090'); // Keep Freelancer and its window running in the background when Alt-Tabbed
+    
+    if MusicInBackground then
+      begin
+        WriteHexToFile(ExeFolderPath + 'soundmanager.dll', $00A021, '80'); // Continue playing the game's audio when Alt-Tabbed #1
+        WriteHexToFile(ExeFolderPath + 'soundstreamer.dll', $0018A9, '80'); // Continue playing the game's audio when Alt-Tabbed #1
+      end;
   end;
 end;

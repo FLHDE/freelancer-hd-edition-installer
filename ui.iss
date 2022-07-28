@@ -187,6 +187,7 @@ var
   // Do not pause on alt tab
   lblDoNotPauseOnAltTab: TLabel;
   DoNotPauseOnAltTab: TCheckBox;
+  MusicInBackground: Boolean;
 
 // Report on download progress
 # if !AllInOneInstall
@@ -1165,6 +1166,7 @@ begin
   DoNotPauseOnAltTab := TCheckBox.Create(PageMiscOptions);
   DoNotPauseOnAltTab.Parent := PageMiscOptions.Surface;
   DoNotPauseOnAltTab.Top := lblDoNotPauseOnAltTab.Top;
+  MusicInBackground := False;
 
   with DxWrapperPage do
   begin

@@ -230,6 +230,14 @@ begin
       end;
     end;
 
+    if (PageId = PageMiscOptions.ID) and (DoNotPauseOnAltTab.Checked) then
+    begin
+      MusicInBackground := MsgBox(
+        'Freelancer will continue running in the background when Alt-Tabbed. Would you also like the game''s audio to continue playing in the background?' + #13#10 + #13#10 + 
+        'You may not want this if you''re planning to run multiple instances of Freelancer simultaneously.',
+        mbConfirmation, MB_YESNO) = IDYES
+    end;
+
     // If they specify an offline file in the cmd line. Check if it's valid, if not don't let them continue.
     # if !AllInOneInstall
     if ((PageId = 1) and (OfflineInstall <> 'false') and (not FileExists(OfflineInstall) or (Pos('.7z',OfflineInstall) < 1))) then begin
