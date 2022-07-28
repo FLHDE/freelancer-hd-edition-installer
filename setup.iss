@@ -117,7 +117,7 @@ begin
         UpdateProgress(30);
 
         // Unzip
-        WizardForm.StatusLabel.Caption := ExpandConstant('Unzipping {#MyAppName}');
+        WizardForm.StatusLabel.Caption := ExpandConstant('Unpacking {#MyAppName}');
         Exec(ExpandConstant('{tmp}\7za.exe'), ExpandConstant(' x -y -aoa "{tmp}\{#MyZipName}.7z"  -o"{app}"'), '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
         // -aoa Overwrite All existing files without prompt
         // -o Set output directory
@@ -125,7 +125,7 @@ begin
         UpdateProgress(60);
 
         // Copy mod files
-        WizardForm.StatusLabel.Caption := ExpandConstant('Moving {#MyAppName}');
+        WizardForm.StatusLabel.Caption := ExpandConstant('Relocating {#MyAppName}');
 
         DirectoryCopy(ExpandConstant('{app}\{#MyFolderName}'),ExpandConstant('{app}'),True);
 
