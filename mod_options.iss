@@ -1007,7 +1007,7 @@ begin
     if MusicInBackground then
       begin
         WriteHexToFile(ExeFolderPath + 'soundmanager.dll', $00A021, '80'); // Continue playing the game's audio when Alt-Tabbed #1
-        WriteHexToFile(ExeFolderPath + 'soundstreamer.dll', $0018A9, '80'); // Continue playing the game's audio when Alt-Tabbed #1
+        WriteHexToFile(ExeFolderPath + 'soundstreamer.dll', $0018A9, '80'); // Continue playing the game's audio when Alt-Tabbed #2
       end;
   end;
 end;
