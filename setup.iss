@@ -230,6 +230,7 @@ begin
       end;
     end;
 
+    // If the user has selected the "do not pause on Alt-Tab" option, ask them if they want the game audio to continue playing in the background too.
     if (PageId = PageMiscOptions.ID) and (DoNotPauseOnAltTab.Checked) then
     begin
       MusicInBackground := MsgBox(
@@ -254,7 +255,7 @@ begin
     end;
     // Validate install location
     if (PageId = 6) then begin
-      // Need needs to be in a seperate if since it tries to expand {app} even if not on PageID 6. Pascal what are you doing!
+      // Needs to be in a seperate if statement since it tries to expand {app} even if not on PageID 6. Pascal what are you doing!
       if(Pos(AddBackslash(DataDirPage.Values[0]),ExpandConstant('{app}')) > 0) then begin
         MsgBox('Freelancer: HD Edition cannot be installed to the same location as your vanilla install. Please select a new location.', mbError, MB_OK);
         Result := False;
