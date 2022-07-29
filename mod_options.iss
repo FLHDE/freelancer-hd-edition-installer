@@ -457,68 +457,68 @@ begin
   if not WidescreenHud.Checked then
     exit;
 
-    HudShiftPath := ExpandConstant('{app}\DATA\INTERFACE\HudShift.ini')
+  HudShiftPath := ExpandConstant('{app}\DATA\INTERFACE\HudShift.ini')
 
-    // Enable plugins
-    FileReplaceString(
-      ExpandConstant('{app}\EXE\dacom.ini')
-      ,
-      ';HudFacility.dll' + #13#10 +
-      ';HudWeaponGroups.dll' + #13#10 +
-      ';HudTarget.dll' + #13#10 +
-      ';HudStatus.dll'
-      ,
-      'HudFacility.dll' + #13#10 +
-      ';HudWeaponGroups.dll' + #13#10 +
-      'HudTarget.dll' + #13#10 +
-      'HudStatus.dll'
-    )
+  // Enable plugins
+  FileReplaceString(
+    ExpandConstant('{app}\EXE\dacom.ini')
+    ,
+    ';HudFacility.dll' + #13#10 +
+    ';HudWeaponGroups.dll' + #13#10 +
+    ';HudTarget.dll' + #13#10 +
+    ';HudStatus.dll'
+    ,
+    'HudFacility.dll' + #13#10 +
+    ';HudWeaponGroups.dll' + #13#10 +
+    'HudTarget.dll' + #13#10 +
+    'HudStatus.dll'
+  )
 
-    // Adjust target and player info positions
-    FileReplaceString(
-      HudShiftPath
-      ,
-      'position = 4e0a80, -0.3630, 4e0a94, -0.3025		; wireframe' + #13#10 +
-      'position = 4e0fe7, -0.4105, 4e0fef, -0.3700		; TargetMinimizedFrame' + #13#10 +
-      'position = 4e10ff, -0.4820, 4e1107, -0.2000		; TargetShipName' + #13#10 +
-      'position = 4e1145, -0.4820, 4e1158, -0.2000' + #13#10 +
-      'position = 4e1180, -0.4820, 4e1188, -0.2180		; SubtargetName' + #13#10 +
-      'position = 4e11e2, -0.4820, 4e11f0, -0.2180' + #13#10 +
-      'position = 4e1247, -0.2650, 4e124f, -0.2695		; TargetPreviousButton' + #13#10 +
-      'position = 4e12b4, -0.2650, 4e12bc, -0.3005		; TargetNextButton' + #13#10 +
-      'position = 4e175c, -0.4940, 4e1764, -0.3610		; TargetRankText'
-      ,
-      'position = 4e0a80, -0.1245, 4e0a94, -0.2935		; wireframe' + #13#10 +
-      'position = 4e0fe7, -0.4105, 4e0fef, -0.3700		; TargetMinimizedFrame' + #13#10 +
-      'position = 4e10ff, -0.2430, 4e1107, -0.2030		; TargetShipName' + #13#10 +
-      'position = 4e1145, -0.2430, 4e1158, -0.2030' + #13#10 +
-      'position = 4e1180, -0.2430, 4e1188, -0.2210		; SubtargetName' + #13#10 +
-      'position = 4e11e2, -0.2430, 4e11f0, -0.2210' + #13#10 +
-      'position = 4e1247, -0.0595, 4e124f, -0.2780		; TargetPreviousButton' + #13#10 +
-      'position = 4e12b4, -0.0595, 4e12bc, -0.3090		; TargetNextButton' + #13#10 +
-      'position = 4e175c, -0.2550, 4e1764, -0.3610		; TargetRankText'
-    )
+  // Adjust target and player info positions
+  FileReplaceString(
+    HudShiftPath
+    ,
+    'position = 4e0a80, -0.3630, 4e0a94, -0.3025		; wireframe' + #13#10 +
+    'position = 4e0fe7, -0.4105, 4e0fef, -0.3700		; TargetMinimizedFrame' + #13#10 +
+    'position = 4e10ff, -0.4820, 4e1107, -0.2000		; TargetShipName' + #13#10 +
+    'position = 4e1145, -0.4820, 4e1158, -0.2000' + #13#10 +
+    'position = 4e1180, -0.4820, 4e1188, -0.2180		; SubtargetName' + #13#10 +
+    'position = 4e11e2, -0.4820, 4e11f0, -0.2180' + #13#10 +
+    'position = 4e1247, -0.2650, 4e124f, -0.2695		; TargetPreviousButton' + #13#10 +
+    'position = 4e12b4, -0.2650, 4e12bc, -0.3005		; TargetNextButton' + #13#10 +
+    'position = 4e175c, -0.4940, 4e1764, -0.3610		; TargetRankText'
+    ,
+    'position = 4e0a80, -0.1245, 4e0a94, -0.2935		; wireframe' + #13#10 +
+    'position = 4e0fe7, -0.4105, 4e0fef, -0.3700		; TargetMinimizedFrame' + #13#10 +
+    'position = 4e10ff, -0.2430, 4e1107, -0.2030		; TargetShipName' + #13#10 +
+    'position = 4e1145, -0.2430, 4e1158, -0.2030' + #13#10 +
+    'position = 4e1180, -0.2430, 4e1188, -0.2210		; SubtargetName' + #13#10 +
+    'position = 4e11e2, -0.2430, 4e11f0, -0.2210' + #13#10 +
+    'position = 4e1247, -0.0595, 4e124f, -0.2780		; TargetPreviousButton' + #13#10 +
+    'position = 4e12b4, -0.0595, 4e12bc, -0.3090		; TargetNextButton' + #13#10 +
+    'position = 4e175c, -0.2550, 4e1764, -0.3610		; TargetRankText'
+  )
 
-    // Adjust request trade button and player wireframe positions
-    FileReplaceString(HudShiftPath,'position = 4da2fa,  0.4180, 4da30e, -0.2900','position = 4da2fa,  0.1765, 4da30e, -0.3025')
-    FileReplaceString(HudShiftPath,'position = 4e14db, -0.2020, 4e14e3, -0.3700		; TargetTradeButton','position = 4e14db, -0.0180, 4e14e3, -0.3700		; TargetTradeButton')
+  // Adjust request trade button and player wireframe positions
+  FileReplaceString(HudShiftPath,'position = 4da2fa,  0.4180, 4da30e, -0.2900','position = 4da2fa,  0.1765, 4da30e, -0.3025')
+  FileReplaceString(HudShiftPath,'position = 4e14db, -0.2020, 4e14e3, -0.3700		; TargetTradeButton','position = 4e14db, -0.0180, 4e14e3, -0.3700		; TargetTradeButton')
 
-    KeyMapPath := GetOptionsPath('UserKeyMap')
-    NewKeyMapPath := ExpandConstant('{app}\UserKeyMap.ini')
+  KeyMapPath := GetOptionsPath('UserKeyMap')
+  NewKeyMapPath := ExpandConstant('{app}\UserKeyMap.ini')
 
-    // If a key map file already exists, remove the "Target View (Alt + T) bind. If the key map file doesn't exist yet, copy a pre-existing key map file where this hotkey has already been removed.
-    if FileExists(KeyMapPath) then begin
-      FileReplaceString(KeyMapPath, 
-        '[KeyCmd]' + #13#10
-        'nickname = USER_SWITCH_TO_TARGET' + #13#10
-        'key',
+  // If a key map file already exists, remove the "Target View (Alt + T) bind. If the key map file doesn't exist yet, copy a pre-existing key map file where this hotkey has already been removed.
+  if FileExists(KeyMapPath) then begin
+    FileReplaceString(KeyMapPath, 
+      '[KeyCmd]' + #13#10
+      'nickname = USER_SWITCH_TO_TARGET' + #13#10
+      'key',
 
-        ';[KeyCmd]' + #13#10
-        ';nickname = USER_SWITCH_TO_TARGET' + #13#10
-        ';key')
-    end
-    else
-      FileCopy(NewKeyMapPath, KeyMapPath, false);
+      ';[KeyCmd]' + #13#10
+      ';nickname = USER_SWITCH_TO_TARGET' + #13#10
+      ';key')
+  end
+  else
+    FileCopy(NewKeyMapPath, KeyMapPath, false);
 end;
 
 procedure Process_DarkHud();
@@ -965,6 +965,7 @@ begin
   if (LENGTH(Techniques) > 0) and (Techniques[LENGTH(Techniques)] = ',') then
     SetLength(Techniques, LENGTH(Techniques) - 1);
 
+  // Set the techniques
   FileReplaceString(ReShadePath + 'ReShadePreset.ini', 'Techniques=', 'Techniques=' + Techniques);
 end;
 
@@ -977,7 +978,7 @@ end;
 procedure Process_DgVoodooReShade();
 begin
   if (DgVoodooGraphicsApi.Checked) and (DgVoodooReShade.Checked) then
-    ApplyReShadeOptions('dxgi', DgVoodooBloom.Checked, DgVoodooHdr.Checked, DgVoodooSaturation.Checked); // dxgi is for DirectX 11 (ReShade)
+    ApplyReShadeOptions('dxgi', DgVoodooBloom.Checked, DgVoodooHdr.Checked, DgVoodooSaturation.Checked); // dxgi is for DirectX 11 (dgVoodoo)
 end;
 
 procedure Process_DisplayMode();
