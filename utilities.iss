@@ -82,11 +82,16 @@ begin
   end;
 end;
 
+// Used to store the names of all edited config files
+var
+  EditedConfigFiles: TStringList;
+
 // Used to replace strings in files. This replaces FLMM functions
 function FileReplaceString(const FileName, SearchString, ReplaceString: string):boolean;
 var
   MyFile : TStrings;
   MyText : string;
+  Index : Integer;
 begin
   MyFile := TStringList.Create;
 
@@ -102,6 +107,9 @@ begin
       begin;
         MyFile.Text := MyText;
         MyFile.SaveToFile(FileName);
+
+        if not EditedConfigFiles.Find(FileName, Index) then
+          EditedConfigFiles.Add(FileName);
       end;
     except
       result := false;
