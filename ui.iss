@@ -1203,6 +1203,7 @@ begin
 
     // Checkboxes
     EnglishImprovements.Width := CheckBoxWidth
+    LevelRequirements.Width := CheckBoxWidth
     NewSaveFolder.Width := CheckBoxWidth
     WidescreenHud.Width := CheckBoxWidth
     WeaponGroups.Width := CheckBoxWidth
