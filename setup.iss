@@ -101,7 +101,7 @@ var
 // Checks which step we are on when it changed. If its the postinstall step then start the actual installing
 procedure CurStepChanged(CurStep: TSetupStep);
 var
-  ResultCode: Integer;
+  ResultCode, i: Integer;
 begin
     if CurStep = ssPostInstall then
     begin
@@ -163,21 +163,11 @@ begin
         WizardForm.StatusLabel.Caption := 'Cleaning up';
         UpdateProgress(95);
 
-        // Perform operations that (potentially) do not work on Wine
         if not IsWine then
         begin
-          // Delete potential UTF-8 BOM headers in all edited ini files
-          RemoveBOM(ExpandConstant('{app}\EXE\dacom.ini'));
-          RemoveBOM(ExpandConstant('{app}\EXE\freelancer.ini'));
-          RemoveBOM(ExpandConstant('{app}\EXE\flplusplus.ini'));
-          RemoveBOM(ExpandConstant('{app}\DATA\FONTS\fonts.ini'));
-          RemoveBOM(ExpandConstant('{app}\DATA\INTERFACE\HudShift.ini'));
-          RemoveBOM(ExpandConstant('{app}\DATA\FX\jumpeffect.ini'));
-          RemoveBOM(ExpandConstant('{app}\EXE\newplayer.fl'));
-          RemoveBOM(ExpandConstant('{app}\EXE\dxwrapper.ini'));
-          RemoveBOM(ExpandConstant('{app}\EXE\ReShadePreset.ini'));
-          RemoveBOM(GetOptionsPath('PerfOptions'));
-          RemoveBOM(GetOptionsPath('UserKeyMap'));
+          // Delete potential UTF-8 BOM headers in all edited config files. May not work properly on Wine.
+          for i := 0 to EditedConfigFiles.Count - 1 do
+            Log(EditedConfigFiles[i]);
         end else
         begin
           // Write d3d8 DLL override for Wine/Linux. For more information, see https://wiki.winehq.org/Wine_User%27s_Guide#DLL_Overrides
@@ -319,6 +309,10 @@ begin
 
     // Gets the user's desktop resolution for later use
     DesktopRes := Resolution();
+
+    // Initialize EditedConfigFiles
+    EditedConfigFiles := TStringList.Create;
+    EditedConfigFiles.Sorted := true;
 
     // Initialize UI. This populates all our ui elements with text, size and other properties
     InitializeUi();
