@@ -138,6 +138,7 @@ begin
         Process_EnglishImprovements();
         Process_SinglePlayerMode();
         Process_NewSaveFolder();
+        Process_LevelRequirements();
         Process_StartUpLogo();
         Process_FreelancerLogo();
         Process_SmallText();

@@ -33,13 +33,13 @@ var
   descEnglishImprovements: TNewStaticText;
 
   // Single Player mode
-  lblStoryMode: TLabel;
-  lblOspNormal: TLabel;
-  lblOspPirate: TLabel;
-  StoryMode: TRadioButton;
-  OspNormal: TRadioButton;
-  OspPirate: TRadioButton;
+  StoryMode: TComboBox;
   descSinglePlayerMode: TNewStaticText;
+
+  // Level requirements
+  lblLevelRequirements: TLabel;
+  LevelRequirements: TCheckBox;
+  descLevelRequirements: TNewStaticText;
 
   // New save folder
   lblNewSaveFolder: TLabel;
@@ -318,47 +318,45 @@ begin
   PageSinglePlayer := CreateCustomPage(PageEnglishImprovements.ID, 
   'Single Player options', 'Choose how you''d like to play Single Player');
 
-  lblStoryMode := TLabel.Create(PageSinglePlayer);
-  lblStoryMode.Parent := PageSinglePlayer.Surface;
-  lblStoryMode.Caption := 'Story Mode (default)';
-  lblStoryMode.Left := ScaleX(20);
-  
-  StoryMode := TRadioButton.Create(PageSinglePlayer);
+  StoryMode := TComboBox.Create(PageSinglePlayer);
   StoryMode.Parent := PageSinglePlayer.Surface;
-  StoryMode.Checked := True;
-  
-  lblOspNormal := TLabel.Create(PageSinglePlayer);
-  lblOspNormal.Parent := PageSinglePlayer.Surface;
-  lblOspNormal.Caption := 'Open Single Player (Normal)';
-  lblOspNormal.Left := ScaleX(20);
-  lblOspNormal.Top := ScaleY(20);
-  
-  OspNormal := TRadioButton.Create(PageSinglePlayer);
-  OspNormal.Parent := PageSinglePlayer.Surface;
-  OspNormal.Top := ScaleY(20);
-  
-  lblOspPirate := TLabel.Create(PageSinglePlayer);
-  lblOspPirate.Parent := PageSinglePlayer.Surface;
-  lblOspPirate.Caption := 'Open Single Player (Pirate)';
-  lblOspPirate.Left := ScaleX(20);
-  lblOspPirate.Top := OspNormal.Top + ScaleY(20);
-  
-  OspPirate := TRadioButton.Create(PageSinglePlayer);
-  OspPirate.Parent := PageSinglePlayer.Surface;
-  OspPirate.Top := lblOspPirate.Top;
+  StoryMode.Style := csDropDownList;
+  StoryMode.Width := 180;
+  StoryMode.Items.Add('Story Mode (default)');
+  StoryMode.Items.Add('Open Single Player (Normal)');
+  StoryMode.Items.Add('Open Single Player (Pirate)');
+  StoryMode.ItemIndex := 0;
   
   descSinglePlayerMode := TNewStaticText.Create(PageSinglePlayer);
   descSinglePlayerMode.Parent := PageSinglePlayer.Surface;
   descSinglePlayerMode.WordWrap := True;
   descSinglePlayerMode.Width := PageSinglePlayer.SurfaceWidth;
   descSinglePlayerMode.Caption := 'This option allows you to choose the Single Player mode. Story Mode simply lets you play through the entire storyline, as usual. Both Open Single Player options skip the entire storyline and allow you to freely roam the universe right away. With OSP (Normal), you start in Manhattan with a basic loadout and a default reputation. The OSP (Pirate) option on the other hand, spawns you at Rochester with a similar loadout and an inverted reputation. NOTE: Both OSP options may cause existing storyline saves to not work correctly.';
-  descSinglePlayerMode.Top := OspPirate.Top + ScaleY(20);
+  descSinglePlayerMode.Top := ScaleY(25);
   
+  // Level requirements
+  lblLevelRequirements := TLabel.Create(PageSinglePlayer);
+  lblLevelRequirements.Parent := PageSinglePlayer.Surface;
+  lblLevelRequirements.Caption := 'Remove level requirements';
+  lblLevelRequirements.Left := ScaleX(20);
+  lblLevelRequirements.Top := descSinglePlayerMode.Top + ScaleY(108);
+
+  LevelRequirements := TCheckBox.Create(PageWidescreenHud);
+  LevelRequirements.Parent := PageSinglePlayer.Surface;
+  LevelRequirements.Top := lblLevelRequirements.Top;
+  
+  descLevelRequirements := TNewStaticText.Create(PageSinglePlayer);
+  descLevelRequirements.Parent := PageSinglePlayer.Surface;
+  descLevelRequirements.WordWrap := True;
+  descLevelRequirements.Top := LevelRequirements.Top + ScaleY(20);
+  descLevelRequirements.Width := PageSinglePlayer.SurfaceWidth;
+  descLevelRequirements.Caption := 'This option removes the level requirements for ships and equipment in Single Player.';
+
   // Add new missile effects
   lblNewSaveFolder := TLabel.Create(PageSinglePlayer);
   lblNewSaveFolder.Parent := PageSinglePlayer.Surface;
   lblNewSaveFolder.Caption := 'Store save game files in a different folder';
-  lblNewSaveFolder.Top := descSinglePlayerMode.Top + ScaleY(110);
+  lblNewSaveFolder.Top := descLevelRequirements.Top + ScaleY(30);
   lblNewSaveFolder.Left := ScaleX(20);
   
   descNewSaveFolder := TNewStaticText.Create(PageSinglePlayer);
@@ -1227,9 +1225,6 @@ begin
     DoNotPauseOnAltTab.Width := CheckBoxWidth
 
     // Radio buttons
-    StoryMode.Width := CheckBoxWidth
-    OspNormal.Width := CheckBoxWidth
-    OspPirate.Width := CheckBoxWidth
     DxWrapperGraphicsApi.Width := CheckBoxWidth
     DgVoodooGraphicsApi.Width := CheckBoxWidth
     VanillaGraphicsApi.Width := CheckBoxWidth
