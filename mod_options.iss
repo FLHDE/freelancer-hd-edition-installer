@@ -106,9 +106,9 @@ end;
 
 procedure Process_SinglePlayerMode();
 begin
-  if OspNormal.Checked then
+  if StoryMode.ItemIndex = 1 then // OSP Normal selected
     EnableOpenSP('normal')
-  else if OspPirate.Checked then
+  else if StoryMode.ItemIndex = 2 then // OSP Pirate selected
     EnableOpenSP('pirate');
 end;
 
@@ -122,6 +122,23 @@ begin
     begin
     FileReplaceString(FlPlusPlusPath, 'save_folder_name = Freelancer', 'save_folder_name = FreelancerHD')
     end;
+end;
+
+procedure Process_LevelRequirements();
+var
+  ExePath: string;
+begin
+  if not LevelRequirements.Checked then
+    exit;
+
+  ExePath := ExpandConstant('{app}\EXE\')
+
+  WriteHexToFile(ExePath + 'Freelancer.exe', $0080499, 'EB'); // Allows purchase of equipment
+  WriteHexToFile(ExePath + 'Freelancer.exe', $0082E95, 'EB'); // Changes display of equipment
+  WriteHexToFile(ExePath + 'Freelancer.exe', $00B948D, 'EB'); // Allows purchase of ships
+  
+  // Disable the MP Rep plugin because it's incompatible with the above patches
+  FileReplaceString(ExePath + 'dacom.ini', 'MPRep.dll', ';MPRep.dll')
 end;
 
 // Processes the Startup Logo option. Renames files depending on what option is selected
@@ -248,8 +265,8 @@ begin
   else
     OptionsFolder := 'Freelancer';
 
-    CreateDirIfNotExists(MyGamesFolder);
-    CreateDirIfNotExists(MyGamesFolder + OptionsFolder);
+  CreateDirIfNotExists(MyGamesFolder);
+  CreateDirIfNotExists(MyGamesFolder + OptionsFolder);
 
   Result := MyGamesFolder + OptionsFolder + '\' + FileName + '.ini'
 end;
@@ -948,6 +965,8 @@ var
   Techniques: string;
 begin
   ReShadePath := ExpandConstant('{app}\EXE\');
+
+  // Activate ReShade by renaming the file
   RenameFile(ReShadePath + ReShadeDllName + '_reshade.dll', ReShadePath + ReShadeDllName + '.dll')
 
   // Enable checked ReShade options
