@@ -167,7 +167,7 @@ begin
         begin
           // Delete potential UTF-8 BOM headers in all edited config files. May not work properly on Wine.
           for i := 0 to EditedConfigFiles.Count - 1 do
-            Log(EditedConfigFiles[i]);
+            RemoveBOM(EditedConfigFiles[i]);
         end else
         begin
           // Write d3d8 DLL override for Wine/Linux. For more information, see https://wiki.winehq.org/Wine_User%27s_Guide#DLL_Overrides
