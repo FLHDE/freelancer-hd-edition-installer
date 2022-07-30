@@ -133,9 +133,9 @@ begin
 
   ExePath := ExpandConstant('{app}\EXE\')
 
-  WriteHexToFile(ExePath + 'Freelancer.exe', $0080499, 'EB'); // Allows purchase of equipment
-  WriteHexToFile(ExePath + 'Freelancer.exe', $0082E95, 'EB'); // Changes display of equipment
-  WriteHexToFile(ExePath + 'Freelancer.exe', $00B948D, 'EB'); // Allows purchase of ships
+  WriteHexToFile(ExePath + 'Freelancer.exe', $080499, 'EB'); // Allows the purchase of equipment below the required level
+  WriteHexToFile(ExePath + 'Freelancer.exe', $082E95, 'EB'); // Changes the display of equipment below the required level
+  WriteHexToFile(ExePath + 'Freelancer.exe', $0B948D, 'EB'); // Allows the purchase of ships below the required level
   
   // Disable the MP Rep plugin because it's incompatible with the above patches
   FileReplaceString(ExePath + 'dacom.ini', 'MPRep.dll', ';MPRep.dll')
