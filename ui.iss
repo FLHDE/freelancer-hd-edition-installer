@@ -32,6 +32,11 @@ var
   EnglishImprovements: TCheckBox;
   descEnglishImprovements: TNewStaticText;
 
+  // Russian fonts
+  lblRussianFonts: TLabel;
+  RussianFonts: TCheckBox;
+  descRussianFonts: TNewStaticText;
+
   // Single Player mode
   StoryMode: TComboBox;
   descSinglePlayerMode: TNewStaticText;
@@ -293,7 +298,7 @@ begin
 
   // Initialize English Improvements page and add content
   PageEnglishImprovements := CreateCustomPage(CallSign.ID,
-  'Localization', 'Apply English improvements');
+  'Localization', 'Apply English improvements and other fixes');
 
   lblEnglishImprovements := TLabel.Create(PageEnglishImprovements);
   lblEnglishImprovements.Parent := PageEnglishImprovements.Surface;
@@ -308,11 +313,29 @@ begin
   descEnglishImprovements.Caption := 
   'This option fixes many typos, grammar mistakes, inconsistencies, and more, in the English Freelancer text and audio resources. It also adds a higher quality Freelancer intro (1440x960 instead of 720x480), which is only available in English.' + #13#10#13#10 +  
   'NOTE: This option will set all of Freelancer''s text, a few voice lines, and the intro to English. Disable this option if you''d like to play Freelancer in a different language like German, French, or Russian.'  + #13#10#13#10 +
-  'NOTE 2: If this option is disabled, the names of several new ship control options will be blank.';
+  'NOTE 2: If this option is disabled, several ship control option names from the settings menu will be blank.';
 
   EnglishImprovements := TCheckBox.Create(PageEnglishImprovements);
   EnglishImprovements.Parent := PageEnglishImprovements.Surface;
   EnglishImprovements.Checked := True;
+
+  lblRussianFonts := TLabel.Create(PageEnglishImprovements);
+  lblRussianFonts.Parent := PageEnglishImprovements.Surface;
+  lblRussianFonts.Caption := 'Use Russian fonts';
+  lblRussianFonts.Left := ScaleX(20);
+  lblRussianFonts.Top := descEnglishImprovements.Top + ScaleY(160);
+  
+  descRussianFonts := TNewStaticText.Create(PageEnglishImprovements);
+  descRussianFonts.Parent := PageEnglishImprovements.Surface;
+  descRussianFonts.WordWrap := True;
+  descRussianFonts.Top := descEnglishImprovements.Top + ScaleY(180);
+  descRussianFonts.Width := PageEnglishImprovements.SurfaceWidth;
+  descRussianFonts.Caption := 'This option will use a Cyrillic version of the Agency FB font for Freelancer. Users with a Russian Freelancer installation may want to enable this.';
+
+  RussianFonts := TCheckBox.Create(PageEnglishImprovements);
+  RussianFonts.Parent := PageEnglishImprovements.Surface;
+  RussianFonts.Top := lblRussianFonts.Top;
+
 
   // Initialize Single Player page and add content
   PageSinglePlayer := CreateCustomPage(PageEnglishImprovements.ID, 

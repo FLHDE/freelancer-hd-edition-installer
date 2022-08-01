@@ -62,6 +62,7 @@ Source: "Assets\Text\PerfOptions.ini"; DestDir: "{app}"; Flags: ignoreversion de
 Source: "Assets\Text\UserKeyMap.ini"; DestDir: "{app}"; Flags: ignoreversion deleteafterinstall
 Source: "Assets\Fonts\AGENCYB.TTF"; DestDir: "{autofonts}"; FontInstall: "Agency FB Bold"; Flags: onlyifdoesntexist uninsneveruninstall
 Source: "Assets\Fonts\AGENCYR.TTF"; DestDir: "{autofonts}"; FontInstall: "Agency FB"; Flags: onlyifdoesntexist uninsneveruninstall
+Source: "Assets\Fonts\AGENCYR_CR.TTF"; DestDir: "{autofonts}"; FontInstall: "Agency FB Cyrillic"; Flags: onlyifdoesntexist uninsneveruninstall
 Source: "Assets\Fonts\ARIALUNI.TTF"; DestDir: "{autofonts}"; FontInstall: "Arial Unicode MS"; Flags: onlyifdoesntexist uninsneveruninstall
 Source: "Assets\External\7za.exe"; DestDir: "{tmp}"; Flags: deleteafterinstall;
 Source: "Assets\External\utf-8-bom-remover.exe"; DestDir: "{tmp}"; Flags: deleteafterinstall;
@@ -141,7 +142,8 @@ begin
         Process_LevelRequirements();
         Process_StartUpLogo();
         Process_FreelancerLogo();
-        Process_SmallText();
+        Process_SmallText(); // Must be called before Process_RussianFonts();
+        Process_RussianFonts(); // Must be called after Process_SmallText();
         Process_Console();
         Process_BestOptions();
         Process_Effects();

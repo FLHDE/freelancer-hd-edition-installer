@@ -246,6 +246,25 @@ begin
     end;
 end;
 
+procedure Process_RussianFonts();
+  var
+    FontsPath : string;
+    _ : Integer;
+begin
+    if not RussianFonts.Checked then
+      exit;
+
+    FontsPath := ExpandConstant('{app}\DATA\FONTS\');
+
+    // Replace all 14 occurrences of Agency FB with Agency FB Cyrillic in fonts.ini
+    for _ := 1 to 14 do
+      FileReplaceString(FontsPath + 'fonts.ini', 'Agency FB' + #13#10, 'Agency FB Cyrillic' + #13#10);
+
+    // Replace all 6 occurrences of Agency FB with Agency FB Cyrillic in rich_fonts.ini
+    for _ := 1 to 6 do
+      FileReplaceString(FontsPath + 'rich_fonts.ini', 'Agency FB,', 'Agency FB Cyrillic,');
+end;
+
 // SinglePlayer console processing logic
 procedure Process_Console();
 begin
