@@ -475,6 +475,8 @@ begin
     exit;
 
   HudShiftPath := ExpandConstant('{app}\DATA\INTERFACE\HudShift.ini')
+  KeyMapPath := GetOptionsPath('UserKeyMap')
+  NewKeyMapPath := ExpandConstant('{app}\UserKeyMap.ini')
 
   // Enable plugins
   FileReplaceString(
@@ -520,10 +522,7 @@ begin
   FileReplaceString(HudShiftPath,'position = 4da2fa,  0.4180, 4da30e, -0.2900','position = 4da2fa,  0.1765, 4da30e, -0.3025')
   FileReplaceString(HudShiftPath,'position = 4e14db, -0.2020, 4e14e3, -0.3700		; TargetTradeButton','position = 4e14db, -0.0180, 4e14e3, -0.3700		; TargetTradeButton')
 
-  KeyMapPath := GetOptionsPath('UserKeyMap')
-  NewKeyMapPath := ExpandConstant('{app}\UserKeyMap.ini')
-
-  // If a key map file already exists, remove the "Target View (Alt + T) bind. If the key map file doesn't exist yet, copy a pre-existing key map file where this hotkey has already been removed.
+  // If a key map file already exists, remove the "Target View" (Alt + T) bind. If the key map file doesn't exist yet, copy a pre-existing key map file where this hotkey has already been removed.
   if FileExists(KeyMapPath) then begin
     FileReplaceString(KeyMapPath, 
       '[KeyCmd]' + #13#10
@@ -1026,8 +1025,8 @@ begin
     
     if MusicInBackground then
       begin
-        WriteHexToFile(ExeFolderPath + 'soundmanager.dll', $00A021, '80'); // Continue playing the game's audio when Alt-Tabbed #1
-        WriteHexToFile(ExeFolderPath + 'soundstreamer.dll', $0018A9, '80'); // Continue playing the game's audio when Alt-Tabbed #2
+        WriteHexToFile(ExeFolderPath + 'soundmanager.dll', $0A021, '80'); // Continue playing the game's audio when Alt-Tabbed #1
+        WriteHexToFile(ExeFolderPath + 'soundstreamer.dll', $018A9, '80'); // Continue playing the game's audio when Alt-Tabbed #2
       end;
   end;
 end;

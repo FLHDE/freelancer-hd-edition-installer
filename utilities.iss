@@ -108,6 +108,7 @@ begin
         MyFile.Text := MyText;
         MyFile.SaveToFile(FileName);
 
+        // Keep track of all config files that have been edited
         if not EditedConfigFiles.Find(FileName, Index) then
           EditedConfigFiles.Add(FileName);
       end;
