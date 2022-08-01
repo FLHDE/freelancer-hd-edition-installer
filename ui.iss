@@ -1196,7 +1196,7 @@ begin
     OnClick := @DgVoodooReShadeCheckBoxClick;
   end;
 
-  // Make all the custom checkboxes and radio buttons less wide so the clickable area doesn't hide the accompanying labels.
+  // Make all the custom checkboxes and radio buttons less wide so the clickable area doesn't hide the accompanying labels on Wine.
   if IsWine then
   begin
     CheckBoxWidth := ScaleX(20)
