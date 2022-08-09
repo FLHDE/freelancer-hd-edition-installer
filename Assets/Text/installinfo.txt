@@ -21,6 +21,7 @@ HD Nebulae
 HD Starspheres
 Maximized Draw Distances
 Anti-Aliasing and Anisotropic Filtering support
+ReShade
 HQ Music
 Windows 10 & 11 compatibility fixes
 Jason's Freelancer Patch
