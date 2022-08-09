@@ -339,10 +339,13 @@ end;
 procedure Process_Effects();
 var
   MissilePath : string;
+  ExplosionsPath : string;
 begin
 if MissileEffects.Checked then
   begin
     MissilePath := ExpandConstant('{app}\DATA\FX\WEAPONS\')
+    ExplosionsPath := ExpandConstant('{app}\DATA\FX\')
+
     // Rename vanilla ones
     RenameFile(MissilePath + 'br_empmissile.ale',MissilePath + 'br_empmissile_vanilla.ale')
     RenameFile(MissilePath + 'br_missile01.ale',MissilePath + 'br_missile01_vanilla.ale')
@@ -378,6 +381,12 @@ if MissileEffects.Checked then
     RenameFile(MissilePath + 'rh_empmissile_new.ale',MissilePath + 'rh_empmissile.ale')
     RenameFile(MissilePath + 'rh_missile01_new.ale',MissilePath + 'rh_missile01.ale')
     RenameFile(MissilePath + 'rh_missile02_new.ale',MissilePath + 'rh_missile02.ale')
+
+    // Rename vanilla explosions file
+    RenameFile(ExplosionsPath + 'effects_explosion.ini', ExplosionsPath + 'effects_explosion_vanilla.ini')
+
+    // Rename new explosions file
+    RenameFile(ExplosionsPath + 'effects_explosion_new.ini', ExplosionsPath + 'effects_explosion.ini')
   end;
 
   // Rename chosen reflection file
@@ -953,6 +962,8 @@ begin
   if DgVoodooAa.ItemIndex = 3 then
     // Enable AA 8x
     WriteHexToFile(DgVoodooPath, $6A, '08');
+
+  // It's possible to use AA 16x by setting $6A to '10'. Unfortunately this'll cause the game to crash on AMD GPUs for some reason...
 
   if DgVoodooAf.ItemIndex = 1 then
     // Enable AF 2x

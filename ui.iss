@@ -375,7 +375,7 @@ begin
   descLevelRequirements.Width := PageSinglePlayer.SurfaceWidth;
   descLevelRequirements.Caption := 'This option removes the level requirements for ships and equipment in Single Player.';
 
-  // Add new missile effects
+  // New save folder
   lblNewSaveFolder := TLabel.Create(PageSinglePlayer);
   lblNewSaveFolder.Parent := PageSinglePlayer.Surface;
   lblNewSaveFolder.Caption := 'Store save game files in a different folder';
@@ -982,7 +982,7 @@ begin
   // Add new missile effects
   lblMissleEffects := TLabel.Create(PageEffects);
   lblMissleEffects.Parent := PageEffects.Surface;
-  lblMissleEffects.Caption := 'Add alternative missile and torpedo effects';
+  lblMissleEffects.Caption := 'Add alternative missile, torpedo, and explosion effects';
   lblMissleEffects.Top := descReflections.Top + ScaleY(60);
   lblMissleEffects.Left := ScaleX(20);
   
@@ -991,7 +991,7 @@ begin
   descMissileEffects.WordWrap := True;
   descMissileEffects.Top := lblMissleEffects.Top + ScaleY(20);
   descMissileEffects.Width := PageEffects.SurfaceWidth;
-  descMissileEffects.Caption := 'This option adds custom missile and torpedo effects. They''re not necessarily higher quality, just alternatives. This option also adds huge torpedo effects.';
+  descMissileEffects.Caption := 'This option adds custom missile, torpedo, and explosion effects. They''re not necessarily higher quality, just alternatives. These torpedo and explosion effects are significantly larger than the normal ones.';
   
   MissileEffects := TCheckBox.Create(PageEffects);
   MissileEffects.Parent := PageEffects.Surface;
@@ -1001,7 +1001,7 @@ begin
   lblEngineTrails := TLabel.Create(PageEffects);
   lblEngineTrails.Parent := PageEffects.Surface;
   lblEngineTrails.Caption := 'Add player ship engine trails';
-  lblEngineTrails.Top := MissileEffects.Top + ScaleY(70);
+  lblEngineTrails.Top := MissileEffects.Top + ScaleY(80);
   lblEngineTrails.Left := ScaleX(20);
   
   descEngineTrails := TNewStaticText.Create(PageEffects);
