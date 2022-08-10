@@ -38,6 +38,7 @@ var
   descRussianFonts: TNewStaticText;
 
   // Single Player mode
+  lblSinglePlayerMode: TLabel;
   StoryMode: TComboBox;
   descSinglePlayerMode: TNewStaticText;
 
@@ -349,6 +350,11 @@ begin
   StoryMode.Items.Add('Open Single Player (Normal)');
   StoryMode.Items.Add('Open Single Player (Pirate)');
   StoryMode.ItemIndex := 0;
+
+  lblSinglePlayerMode := TLabel.Create(PageSinglePlayer);
+  lblSinglePlayerMode.Parent := PageSinglePlayer.Surface;
+  lblSinglePlayerMode.Caption := 'Single Player mode';
+  lblSinglePlayerMode.Left := ScaleX(190);
   
   descSinglePlayerMode := TNewStaticText.Create(PageSinglePlayer);
   descSinglePlayerMode.Parent := PageSinglePlayer.Surface;
