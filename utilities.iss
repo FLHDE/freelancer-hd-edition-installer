@@ -102,13 +102,13 @@ begin
       MyFile.LoadFromFile(FileName);
       MyText := MyFile.Text;
 
-      // Save the file the text has been changed
+      // Save the file in which the text has been changed
       if StringChangeEx(MyText, SearchString, ReplaceString, True) > 0 then
       begin;
         MyFile.Text := MyText;
         MyFile.SaveToFile(FileName);
 
-        // Keep track of all config files that have been edited
+        // Keep track of all config files that have been edited. We only want to store each file name once.
         if not EditedConfigFiles.Find(FileName, Index) then
           EditedConfigFiles.Add(FileName);
       end;
@@ -316,4 +316,21 @@ begin
       // Release the allocated search resources
       FindClose(FindRec);
   end;
+end;
+
+// Checks if the Windows version is from or newer than a specific release
+function IsWindowsVersionOrNewer(Major, Minor: Integer): Boolean;
+var
+  Version: TWindowsVersion;
+begin
+  GetWindowsVersionEx(Version);
+  Result :=
+    (Version.Major > Major) or
+    ((Version.Major = Major) and (Version.Minor >= Minor));
+end;
+
+// Whether or not the current Windows version is 10 or newer
+function IsWindows10OrNewer: Boolean;
+begin
+  Result := IsWindowsVersionOrNewer(10, 0);
 end;
