@@ -1237,6 +1237,7 @@ begin
 
     // Checkboxes
     EnglishImprovements.Width := CheckBoxWidth
+    RussianFonts.Width := CheckBoxWidth
     LevelRequirements.Width := CheckBoxWidth
     NewSaveFolder.Width := CheckBoxWidth
     WidescreenHud.Width := CheckBoxWidth

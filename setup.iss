@@ -108,7 +108,7 @@ begin
     begin
         # if !AllInOneInstall
           if (OfflineInstall <> 'false') then
-            FileCopy(OfflineInstall,ExpandConstant('{tmp}\' + MyZipName + '.7z'),false);
+            FileCopy(OfflineInstall,ExpandConstant('{tmp}\{#MyZipName}.7z'),false);
         # endif
 
         // Copy Vanilla game to directory
@@ -267,7 +267,7 @@ begin
       for i:= 0 to mirrors.Count - 1 do
       begin
         DownloadPage.Clear;
-        DownloadPage.Add(mirrors[i], MyZipName + '.7z', '');
+        DownloadPage.Add(mirrors[i], ExpandConstant('{#MyZipName}.7z'), '');
         DownloadPage.SetText('Downloading mod', '');
         DownloadPage.Show;
         DownloadPage.ProgressBar.Style := npbstNormal;
