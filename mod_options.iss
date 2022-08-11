@@ -900,7 +900,11 @@ begin
   begin
       HudShiftPath := ExpandConstant('{app}\DATA\INTERFACE\HudShift.ini')
 
-      FileReplaceString(HudShiftPath,';HudWeaponGroups = true','HudWeaponGroups = true')
+      // The position of the Weapon Group buttons are hardcoded. Currently we only support the correct positions for 4:3 and 16:9 aspect ratios.
+      // By default it's set to 4:3, and by changing HudWeaponGroups in HudShift.ini to true, it'll be set to 16:9.
+      // The 16:9 position will only be set if the resolution is NOT 4:3, because it's possible that people with other aspect ratios will disregard the warning anyway.
+      if not IsDesktopRes4By3() then
+        FileReplaceString(HudShiftPath, ';HudWeaponGroups = true', 'HudWeaponGroups = true');
 
       // Enable weapon groups
       FileReplaceString(
@@ -978,10 +982,11 @@ begin
     // Enable AF 16x
     WriteHexToFile(DgVoodooPath, $86, '10');
 
-  // Get the correct refresh rate as 2 or 4 byte hexadecimals
+  // Get the correct refresh rate as 1 or 2 byte hexadecimals
   if RefreshRateInt <= 255 then
     RefreshRateBinary := IntToHex(RefreshRateInt, 2)
   else
+    // If the value is above 255, that means we have to work with 2 bytes instead of 1. Since we want to write these hexadecimal values to a binary file, we have to swap the bytes first. Don't ask me why...
     RefreshRateBinary := SwapBytes(IntToHex(RefreshRateInt, 4));
 
   // Set refresh rate

@@ -506,14 +506,14 @@ begin
   descWeaponGroups.WordWrap := True;
   descWeaponGroups.Top := lblWeaponGroups.Top + ScaleY(20);
   descWeaponGroups.Width := PageWidescreenHud.SurfaceWidth;
-  descWeaponGroups.Caption := 'This option adds buttons for selecting 3 different weapon groups in your ship info panel. NOTE: These buttons may not be positioned correctly on aspect ratios other than 16:9.';
+  descWeaponGroups.Caption := 'This option adds buttons for selecting 3 different weapon groups in your ship info panel. NOTE: These buttons may not be positioned correctly on aspect ratios other than 16:9 and 4:3.';
   
   WeaponGroups := TCheckBox.Create(PageWidescreenHud);
   WeaponGroups.Parent := PageWidescreenHud.Surface;
   WeaponGroups.Top := lblWeaponGroups.Top;
 
-  // Only check the weapon groups option if the user's aspect ratio is 16:9
-  if (IsDesktopRes16By9()) then
+  // Only check the weapon groups option if the user's aspect ratio is 16:9 or 4:3
+  if (IsDesktopRes16By9()) or (IsDesktopRes4By3()) then
     WeaponGroups.Checked := True;
 
   // Initialize Dark HUD page and add content
