@@ -649,22 +649,27 @@ begin
   descVanillaGraphicsApi.Width := PageGraphicsApi.SurfaceWidth;
   descVanillaGraphicsApi.Caption := 'Uses your PC''s default DirectX 8 API for Freelancer. You may experience compatibility issues when using it.';
 
-  lblLightingFixGraphicsApi := TLabel.Create(PageGraphicsApi);
-  lblLightingFixGraphicsApi.Parent := PageGraphicsApi.Surface;
-  lblLightingFixGraphicsApi.Caption := 'Vanilla Freelancer + Lighting Bug Fix (DirectX 8)';
-  lblLightingFixGraphicsApi.Left := ScaleX(20);
-  lblLightingFixGraphicsApi.Top := descVanillaGraphicsApi.Top + ScaleY(40);
+  // Only display the Lighting Bug Fix option if the Windows version is 10 or higher, because this option will cause the game to not launch on Windows 8 and lower.
+  // We're assuming this isn't an issue on Wine...
+  if IsWine or IsWindows10OrNewer() then
+  begin
+    lblLightingFixGraphicsApi := TLabel.Create(PageGraphicsApi);
+    lblLightingFixGraphicsApi.Parent := PageGraphicsApi.Surface;
+    lblLightingFixGraphicsApi.Caption := 'Vanilla Freelancer + Lighting Bug Fix (DirectX 8)';
+    lblLightingFixGraphicsApi.Left := ScaleX(20);
+    lblLightingFixGraphicsApi.Top := descVanillaGraphicsApi.Top + ScaleY(40);
 
-  LightingFixGraphicsApi := TRadioButton.Create(PageGraphicsApi);
-  LightingFixGraphicsApi.Parent := PageGraphicsApi.Surface;
-  LightingFixGraphicsApi.Top := lblLightingFixGraphicsApi.Top;
+    LightingFixGraphicsApi := TRadioButton.Create(PageGraphicsApi);
+    LightingFixGraphicsApi.Parent := PageGraphicsApi.Surface;
+    LightingFixGraphicsApi.Top := lblLightingFixGraphicsApi.Top;
 
-  descLightingFixGraphicsApi := TNewStaticText.Create(PageGraphicsApi);
-  descLightingFixGraphicsApi.Parent := PageGraphicsApi.Surface;
-  descLightingFixGraphicsApi.WordWrap := True;
-  descLightingFixGraphicsApi.Top := lblLightingFixGraphicsApi.Top + ScaleY(15);
-  descLightingFixGraphicsApi.Width := PageGraphicsApi.SurfaceWidth;
-  descLightingFixGraphicsApi.Caption := 'About the same as the Vanilla Freelancer option but fixes the major lighting bug on Windows 10 and 11. NOTE: This option only works on Windows 10 and 11!';
+    descLightingFixGraphicsApi := TNewStaticText.Create(PageGraphicsApi);
+    descLightingFixGraphicsApi.Parent := PageGraphicsApi.Surface;
+    descLightingFixGraphicsApi.WordWrap := True;
+    descLightingFixGraphicsApi.Top := lblLightingFixGraphicsApi.Top + ScaleY(15);
+    descLightingFixGraphicsApi.Width := PageGraphicsApi.SurfaceWidth;
+    descLightingFixGraphicsApi.Caption := 'About the same as the Vanilla Freelancer option but fixes the major lighting bug on Windows 10 and 11. NOTE: This option only works on Windows 10 and 11!';
+  end;
   
   // DxWrapper options
   DxWrapperPage := CreateCustomPage(
