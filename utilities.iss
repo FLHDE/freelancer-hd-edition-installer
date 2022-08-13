@@ -318,19 +318,23 @@ begin
   end;
 end;
 
-// Checks if the Windows version is from or newer than a specific release
-function IsWindowsVersionOrNewer(Major, Minor: Integer): Boolean;
+// Whether or not the current operating system could suffer from the major lighting bug in Freelancer
+function HasLightingBug(): Boolean;
 var
   Version: TWindowsVersion;
 begin
   GetWindowsVersionEx(Version);
-  Result :=
-    (Version.Major > Major) or
-    ((Version.Major = Major) and (Version.Minor >= Minor));
-end;
 
-// Whether or not the current Windows version is 10 or newer
-function IsWindows10OrNewer: Boolean;
-begin
-  Result := IsWindowsVersionOrNewer(10, 0);
+  // No issues on Windows 8.1 and older.
+  // At this time anything higher than Minor 0 doesn't exist on Windows 10 and 11, but perhaps in the future.
+  // In any case, Minor 1 and newer will have issues because they've been there since 0.
+  if (Version.Major < 10) or (Version.Minor > 0) then
+  begin
+    Result := false
+    exit
+  end;
+
+  // Windows 10 version 2004 (20H1), or build 18917 is the first known Windows version where the lighting bug appears.
+  // Returns true if the current version is equal to or newer than this build.
+  Result := Version.Build >= 18917;
 end;

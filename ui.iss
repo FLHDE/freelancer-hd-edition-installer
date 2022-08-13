@@ -649,9 +649,10 @@ begin
   descVanillaGraphicsApi.Width := PageGraphicsApi.SurfaceWidth;
   descVanillaGraphicsApi.Caption := 'Uses your PC''s default DirectX 8 API for Freelancer. You may experience compatibility issues when using it.';
 
-  // Only display the Lighting Bug Fix option if the Windows version is 10 or higher, because this option will cause the game to not launch on Windows 8 and lower.
-  // We're assuming this isn't an issue on Wine...
-  if IsWine or IsWindows10OrNewer() then
+  // Only display the Lighting Bug Fix option if the current operating system could potentially suffer from it. If it won't, enabling this option may cause the game to not launch.
+  // On top of that, the Lighting Bug isn't present on such operating systems anyway.
+  // We're assuming this isn't a problem on Wine either...
+  if IsWine or HasLightingBug() then
   begin
     lblLightingFixGraphicsApi := TLabel.Create(PageGraphicsApi);
     lblLightingFixGraphicsApi.Parent := PageGraphicsApi.Surface;
