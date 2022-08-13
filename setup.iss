@@ -113,12 +113,12 @@ begin
 
         // Copy Vanilla game to directory
         UpdateProgress(0);
-        WizardForm.StatusLabel.Caption := 'Copying vanilla Freelancer directory';
+        WizardForm.StatusLabel.Caption := 'Copying vanilla Freelancer directory...';
         DirectoryCopy(DataDirPage.Values[0],ExpandConstant('{app}'),False);
         UpdateProgress(30);
 
         // Unzip
-        WizardForm.StatusLabel.Caption := ExpandConstant('Unpacking {#MyAppName}');
+        WizardForm.StatusLabel.Caption := ExpandConstant('Unpacking {#MyAppName}...');
         Exec(ExpandConstant('{tmp}\7za.exe'), ExpandConstant(' x -y -aoa "{tmp}\{#MyZipName}.7z"  -o"{app}"'), '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
         // -aoa Overwrite All existing files without prompt
         // -o Set output directory
@@ -126,7 +126,7 @@ begin
         UpdateProgress(60);
 
         // Copy mod files
-        WizardForm.StatusLabel.Caption := ExpandConstant('Relocating {#MyAppName}');
+        WizardForm.StatusLabel.Caption := ExpandConstant('Relocating {#MyAppName}...');
 
         DirectoryCopy(ExpandConstant('{app}\{#MyFolderName}'),ExpandConstant('{app}'),True);
 
@@ -134,7 +134,7 @@ begin
         UpdateProgress(90);
 
         // Process options
-        WizardForm.StatusLabel.Caption := 'Processing your options';
+        WizardForm.StatusLabel.Caption := 'Processing your options...';
         Process_CallSign();
         Process_EnglishImprovements();
         Process_SinglePlayerMode();
@@ -162,7 +162,7 @@ begin
         Process_DgVoodoo();
         Process_DisplayMode();
 
-        WizardForm.StatusLabel.Caption := 'Cleaning up';
+        WizardForm.StatusLabel.Caption := 'Cleaning up...';
         UpdateProgress(95);
 
         if not IsWine then
@@ -246,6 +246,17 @@ begin
       Result := False;
       exit;
     end;
+
+    // If the installer is being run from the same directory as the vanilla Freelancer directory, the installation will fail because the running installer cannot be copied.
+    // It's also possible that the installer is in a nested vanilla Freelancer directory, such as EXE or DATA. Though that requires too much effort to check...
+    // If the user actually thinks it's a good idea to put the installer in one of those nested directories, then I'm done lol.
+    if (PageId = DataDirPage.ID) and (GetCurrentDir() = DataDirPage.Values[0]) then begin
+      MsgBox(ExpandConstant('The {#MyAppName} installer is located in the same directory as the vanilla Freelancer directory. This may cause the install to fail because this file cannot be copied.' + #13#10 + #13#10
+        + 'Please close the {#MyAppName} installer, move the installer .exe file to a directory outside your vanilla Freelnacer installation and try again.'), mbError, MB_OK);
+      Result := False;
+      exit;
+    end;
+
     // Validate install location
     if (PageId = 6) then begin
       // Needs to be in a seperate if statement since it tries to expand {app} even if not on PageID 6. Pascal what are you doing!
