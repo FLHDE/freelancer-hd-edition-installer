@@ -240,21 +240,26 @@ begin
       exit;
     end;
     # endif
-    // Check Freelancer is installed in the folder they have specified
-    if (PageId = DataDirPage.ID) and not FileExists(DataDirPage.Values[0] + '\EXE\Freelancer.exe') then begin
-      MsgBox('Freelancer does not seem to be installed in that folder. Please select the correct folder.', mbError, MB_OK);
-      Result := False;
-      exit;
-    end;
 
-    // If the installer is being run from the same directory as the vanilla Freelancer directory, the installation will fail because the running installer cannot be copied.
-    // It's also possible that the installer is in a nested vanilla Freelancer directory, such as EXE or DATA. Though that requires too much effort to check...
-    // If the user actually thinks it's a good idea to put the installer in one of those nested directories, then I'm done lol.
-    if (PageId = DataDirPage.ID) and (GetCurrentDir() = DataDirPage.Values[0]) then begin
-      MsgBox(ExpandConstant('The {#MyAppName} installer is located in the same directory as the vanilla Freelancer directory. This may cause the install to fail because this file cannot be copied.' + #13#10 + #13#10
-        + 'Please close the {#MyAppName} installer, move the installer .exe file to a directory outside your vanilla Freelnacer installation and try again.'), mbError, MB_OK);
-      Result := False;
-      exit;
+    // Validate vanilla Freelancer directory
+    if PageId = DataDirPage.ID then begin
+      // Check if Freelancer is installed in the folder they have specified
+      if not FileExists(DataDirPage.Values[0] + '\EXE\Freelancer.exe') then begin
+        MsgBox('Freelancer does not seem to be installed in that folder. Please select the correct folder.', mbError, MB_OK);
+        Result := False;
+        exit;
+      end;
+
+      // If the installer is being run from the same directory as the vanilla Freelancer directory, the installation will fail because the running installer cannot be copied.
+      // It's also possible that the installer is in a nested vanilla Freelancer directory, such as EXE or DATA. Though that requires too much effort to check...
+      // If the user actually thinks it's a good idea to put the installer in one of those nested directories, then I'm done lol.
+      // No issues occur when Freelancer from the vanilla directory is running, so no need to check for that.
+      if GetCurrentDir() = DataDirPage.Values[0] then begin
+        MsgBox(ExpandConstant('The {#MyAppName} installer is located in the same directory as the vanilla Freelancer directory. This would cause the installation to fail because this file cannot be copied.' + #13#10 + #13#10
+          + 'Please close the {#MyAppName} installer, move the installer .exe file to a directory outside your vanilla Freelancer installation and try again.'), mbError, MB_OK);
+        Result := False;
+        exit;
+      end;
     end;
 
     // Validate install location
