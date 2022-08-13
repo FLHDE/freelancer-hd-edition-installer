@@ -200,7 +200,7 @@ begin
     if PageId = DgVoodooPage.ID then
     begin
       RefreshRateError := 'Refresh rate must be a valid number between 30 and 3840. If you don''t know how to find your monitor''s refresh rate, look it up on the internet.'
-        + #13#10#13#10 + 'Keep in mind that the DxWrapper graphics API does not require you to set a refresh rate manually.'
+        + #13#10#13#10 + 'Keep in mind that the DxWrapper graphics API from the previous page does not require you to set a refresh rate manually.'
 
       // dgVoodoo options page refresh rate validation
       // Checks if the input is a valid number between 30 and 3840
