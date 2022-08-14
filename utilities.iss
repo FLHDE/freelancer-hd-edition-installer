@@ -58,8 +58,12 @@ begin
               RaiseException(Format('Failed to copy %s to %s', [
                 SourceFilePath, DestFilePath]));
             end;
+
+            // Delete the source file if it's been moved successfully
             if(Move) then DeleteFile(SourceFilePath);
 
+            // We want to ensure every file has write access so we can properly overwrite them later.
+            // Presumably these permissions aren't an issue on Wine.
             if not Wine then
               RemoveReadOnly(DestFilePath);
           end
@@ -327,14 +331,14 @@ begin
 
   // No issues on Windows 8.1 and older.
   // At this time anything higher than Minor 0 doesn't exist on Windows 10 and 11, but perhaps in the future.
-  // In any case, Minor 1 and newer will have issues because they've been there since 0.
+  // In any case, Minor 1 and newer will have the lighting bug because it was introduced in Minor 0.
   if (Version.Major < 10) or (Version.Minor > 0) then
   begin
     Result := false
     exit
   end;
 
-  // Windows 10 version 2004 (20H1), or build 18917 is the first known Windows version where the lighting bug appears.
+  // Windows 10 version 2004 (20H1), or build 19041 is the first known Windows version where the lighting bug appears.
   // Returns true if the current version is equal to or newer than this build.
-  Result := Version.Build >= 18917;
+  Result := Version.Build >= 19041;
 end;
