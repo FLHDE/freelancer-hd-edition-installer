@@ -256,6 +256,8 @@ begin
 
     FontsPath := ExpandConstant('{app}\DATA\FONTS\');
 
+    // Because a part of the replace string is the entire search string, we use an additional character at the end to ensure not all replacements happen at the same line.
+
     // Replace all 14 occurrences of Agency FB with Agency FB Cyrillic in fonts.ini
     for _ := 1 to 14 do
       FileReplaceString(FontsPath + 'fonts.ini', 'Agency FB' + #13#10, 'Agency FB Cyrillic' + #13#10);
