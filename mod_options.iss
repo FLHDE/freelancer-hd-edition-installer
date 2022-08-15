@@ -249,22 +249,17 @@ end;
 procedure Process_RussianFonts();
   var
     FontsPath : string;
-    _ : Integer;
 begin
     if not RussianFonts.Checked then
       exit;
 
     FontsPath := ExpandConstant('{app}\DATA\FONTS\');
 
-    // Because a part of the replace string is the entire search string, we use an additional character at the end to ensure not all replacements happen at the same line.
-
     // Replace all 14 occurrences of Agency FB with Agency FB Cyrillic in fonts.ini
-    for _ := 1 to 14 do
-      FileReplaceString(FontsPath + 'fonts.ini', 'Agency FB' + #13#10, 'Agency FB Cyrillic' + #13#10);
+    FileReplaceString(FontsPath + 'fonts.ini', 'Agency FB', 'Agency FB Cyrillic');
 
     // Replace all 6 occurrences of Agency FB with Agency FB Cyrillic in rich_fonts.ini
-    for _ := 1 to 6 do
-      FileReplaceString(FontsPath + 'rich_fonts.ini', 'Agency FB,', 'Agency FB Cyrillic,');
+    FileReplaceString(FontsPath + 'rich_fonts.ini', 'Agency FB', 'Agency FB Cyrillic');
 end;
 
 // SinglePlayer console processing logic
@@ -848,12 +843,6 @@ begin
                                    
                                   'jump_out_tunnel_time = 3.5' + #13#10
                                   'jump_in_tunnel_time = 1.5'  + #13#10)
-
-      FileReplaceString(FilePath, 'jump_out_tunnel_time = 7' + #13#10
-                                  'jump_in_tunnel_time = 3'  + #13#10,
-                                   
-                                  'jump_out_tunnel_time = 3.5' + #13#10
-                                  'jump_in_tunnel_time = 1.5'  + #13#10)
   end
   else if(JumpTunnel2Sec.Checked) then
     begin
@@ -862,21 +851,9 @@ begin
                                    
                                   'jump_out_tunnel_time = 1.75' + #13#10
                                   'jump_in_tunnel_time = 0.75'  + #13#10)
-
-      FileReplaceString(FilePath, 'jump_out_tunnel_time = 7' + #13#10
-                                  'jump_in_tunnel_time = 3'  + #13#10,
-                                   
-                                  'jump_out_tunnel_time = 1.75' + #13#10
-                                  'jump_in_tunnel_time = 0.75'  + #13#10)
     end
   else if(JumpTunnelSkip.Checked) then 
     begin
-      FileReplaceString(FilePath, 'jump_out_tunnel_time = 7' + #13#10
-                                  'jump_in_tunnel_time = 3'  + #13#10,
-                                   
-                                  'jump_out_tunnel_time = 0' + #13#10
-                                  'jump_in_tunnel_time = 0'  + #13#10)
-
       FileReplaceString(FilePath, 'jump_out_tunnel_time = 7' + #13#10
                                   'jump_in_tunnel_time = 3'  + #13#10,
                                    
