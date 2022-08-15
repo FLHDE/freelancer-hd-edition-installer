@@ -533,8 +533,8 @@ begin
     'position = 4e1145, -0.4820, 4e1158, -0.2000' + #13#10 +
     'position = 4e1180, -0.4820, 4e1188, -0.2180		; SubtargetName' + #13#10 +
     'position = 4e11e2, -0.4820, 4e11f0, -0.2180' + #13#10 +
-    'position = 4e1247, -0.2650, 4e124f, -0.2695		; TargetPreviousButton' + #13#10 +
-    'position = 4e12b4, -0.2650, 4e12bc, -0.3005		; TargetNextButton' + #13#10 +
+    'position = 4e1247, -0.2650, 4e124f, -0.2680		; TargetPreviousButton' + #13#10 +
+    'position = 4e12b4, -0.2650, 4e12bc, -0.2990		; TargetNextButton' + #13#10 +
     'position = 4e175c, -0.4940, 4e1764, -0.3610		; TargetRankText'
     ,
     'position = 4e0a80, -0.1245, 4e0a94, -0.2935		; wireframe' + #13#10 +
@@ -790,13 +790,13 @@ begin
     // Adjust next and previous target buttons slightly to position them correctly (those flat icons specifically have a slight offset from the vanilla positions.)
     if WidescreenHud.Checked then
       begin
-        FileReplaceString(HudShiftPath, 'position = 4e1247, -0.0595, 4e124f, -0.2780		; TargetPreviousButton', 'position = 4e1247, -0.0545, 4e124f, -0.2770		; TargetPreviousButton')
-        FileReplaceString(HudShiftPath, 'position = 4e12b4, -0.0595, 4e12bc, -0.3090		; TargetNextButton', 'position = 4e12b4, -0.0580, 4e12bc, -0.3080		; TargetNextButton')
+        FileReplaceString(HudShiftPath, 'position = 4e1247, -0.0595, 4e124f, -0.2780		; TargetPreviousButton', 'position = 4e1247, -0.0545, 4e124f, -0.2780		; TargetPreviousButton')
+        FileReplaceString(HudShiftPath, 'position = 4e12b4, -0.0595, 4e12bc, -0.3090		; TargetNextButton', 'position = 4e12b4, -0.0580, 4e12bc, -0.3090		; TargetNextButton')
       end
     else
       begin
-        FileReplaceString(HudShiftPath, 'position = 4e1247, -0.2650, 4e124f, -0.2695		; TargetPreviousButton', 'position = 4e1247, -0.2605, 4e124f, -0.2695		; TargetPreviousButton')
-        FileReplaceString(HudShiftPath, 'position = 4e12b4, -0.2650, 4e12bc, -0.3005		; TargetNextButton', 'position = 4e12b4, -0.2640, 4e12bc, -0.3005		; TargetNextButton')
+        FileReplaceString(HudShiftPath, 'position = 4e1247, -0.2650, 4e124f, -0.2680		; TargetPreviousButton', 'position = 4e1247, -0.2605, 4e124f, -0.2680		; TargetPreviousButton')
+        FileReplaceString(HudShiftPath, 'position = 4e12b4, -0.2650, 4e12bc, -0.2990		; TargetNextButton', 'position = 4e12b4, -0.2640, 4e12bc, -0.2990		; TargetNextButton')
       end
   end
   else
