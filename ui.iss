@@ -67,10 +67,14 @@ var
   DarkHud: TCheckBox;
   descDarkHud: TNewStaticText;
 
-  // Flat Icons
+  // Custom Icons
+  lblVanillaIcons: TLabel;
+  lblAlternativeIcons: TLabel;
   lblFlatIcons: TLabel;
-  FlatIcons: TCheckBox;
-  descFlatIcons: TNewStaticText;
+  VanillaIcons: TRadioButton;
+  AlternativeIcons: TRadioButton;
+  FlatIcons: TRadioButton;
+  descCustomIcons: TNewStaticText;
 
   // Fix clipping with 16:9 resolution planetscapes
   lblPlanetScape: TLabel;
@@ -519,7 +523,7 @@ begin
   // Initialize Dark HUD page and add content
   PageDarkHud := CreateCustomPage(
     PageWidescreenHud.ID,
-    'Custom HUD and icons',
+    'Custom HUD and Icons',
     'Check to install'
   );
   
@@ -538,22 +542,43 @@ begin
   DarkHud := TCheckBox.Create(PageDarkHud);
   DarkHud.Parent := PageDarkHud.Surface;
 
+  lblVanillaIcons := TLabel.Create(PageDarkHud);
+  lblVanillaIcons.Parent := PageDarkHud.Surface;
+  lblVanillaIcons.Caption := 'HD Vanilla Icons';
+  lblVanillaIcons.Left := ScaleX(20);
+  lblVanillaIcons.Top := descDarkHud.Top + ScaleY(50);
+
+  VanillaIcons := TRadioButton.Create(PageDarkHud);
+  VanillaIcons.Parent := PageDarkHud.Surface;
+  VanillaIcons.Top := lblVanillaIcons.Top;
+  VanillaIcons.Checked := True;
+
+  lblAlternativeIcons := TLabel.Create(PageDarkHud);
+  lblAlternativeIcons.Parent := PageDarkHud.Surface;
+  lblAlternativeIcons.Caption := 'Custom Alternative Icons';
+  lblAlternativeIcons.Left := ScaleX(20);
+  lblAlternativeIcons.Top := VanillaIcons.Top + ScaleY(20);
+
+  AlternativeIcons := TRadioButton.Create(PageDarkHud);
+  AlternativeIcons.Parent := PageDarkHud.Surface;
+  AlternativeIcons.Top := lblAlternativeIcons.Top;
+
   lblFlatIcons := TLabel.Create(PageDarkHud);
   lblFlatIcons.Parent := PageDarkHud.Surface;
-  lblFlatIcons.Caption := 'Enable Custom Flat Icons';
+  lblFlatIcons.Caption := 'Custom Flat Icons';
   lblFlatIcons.Left := ScaleX(20);
-  lblFlatIcons.Top := descDarkHud.Top + ScaleY(50);
-  
-  descFlatIcons := TNewStaticText.Create(PageDarkHud);
-  descFlatIcons.Parent := PageDarkHud.Surface;
-  descFlatIcons.WordWrap := True;
-  descFlatIcons.Top := lblFlatIcons.Top + ScaleY(20);
-  descFlatIcons.Width := PageWidescreenHud.SurfaceWidth;
-  descFlatIcons.Caption := 'This option replaces Freelancer''s default icon set with new simpler flat-looking icons. If this option is disabled, you''ll get the HD vanilla icons instead.';
-  
-  FlatIcons := TCheckBox.Create(PageDarkHud);
+  lblFlatIcons.Top := AlternativeIcons.Top + ScaleY(20);
+
+  FlatIcons := TRadioButton.Create(PageDarkHud);
   FlatIcons.Parent := PageDarkHud.Surface;
   FlatIcons.Top := lblFlatIcons.Top;
+
+  descCustomIcons := TNewStaticText.Create(PageDarkHud);
+  descCustomIcons.Parent := PageDarkHud.Surface;
+  descCustomIcons.WordWrap := True;
+  descCustomIcons.Top := lblFlatIcons.Top + ScaleY(20);
+  descCustomIcons.Width := PageDarkHud.SurfaceWidth;
+  descCustomIcons.Caption := 'This option allows you to choose a set of icons for Freelancer. The HD Vanilla Icons option adds an HD version of the default Freelancer icons. The Custom Alternative Icons have a different look but a style similar to the vanilla icons. Lastly, the Custom Flat Icons option adds new icons that have a more flat and simple look.';
 
   
   // Fix clipping with 16:9 resolution planetscapes
@@ -575,7 +600,7 @@ begin
   descPlanetScape.Width := PagePlanetScape.SurfaceWidth;
   descPlanetScape.Caption := 'Since Freelancer was never optimized for 16:9 resolutions, there are several inconsistencies with planetscapes that occur while viewing them in 16:9, such as clipping and geometry issues.' + #13#10 + #13#10 +
   'This mod gives you the option of fixing this, as it adjusts the camera values in the planetscapes so the issues are no longer visible in 16:9 resolutions.' + #13#10 + #13#10 +
-  'Disable this option if you play in 4:3. Also please note that this option may yield strange results when using it with an ultrawide resolution.'
+  'Disable this option if you play in 4:3. Also please note that the planetscape views may look zoomed in when using this option with an ultrawide resolution.'
   
   PlanetScape := TCheckBox.Create(PagePlanetScape);
   PlanetScape.Parent := PagePlanetScape.Surface;
@@ -1244,7 +1269,9 @@ begin
     WidescreenHud.Width := CheckBoxWidth
     WeaponGroups.Width := CheckBoxWidth
     DarkHud.Width := CheckBoxWidth
+    VanillaIcons.Width := CheckBoxWidth
     FlatIcons.Width := CheckBoxWidth
+    AlternativeIcons.Width := CheckBoxWidth
     PlanetScape.Width := CheckBoxWidth
     DxWrapperReShade.Width := CheckBoxWidth
     DxWrapperSaturation.Width := CheckBoxWidth
