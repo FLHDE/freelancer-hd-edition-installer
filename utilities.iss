@@ -330,9 +330,7 @@ begin
   GetWindowsVersionEx(Version);
 
   // No issues on Windows 8.1 and older.
-  // At this time anything higher than Minor 0 doesn't exist on Windows 10 and 11, but perhaps in the future.
-  // In any case, Minor 1 and newer will have the lighting bug because it was introduced in Minor 0.
-  if (Version.Major < 10) or (Version.Minor > 0) then
+  if Version.Major < 10 then
   begin
     Result := false
     exit

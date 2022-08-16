@@ -620,7 +620,7 @@ begin
   descGraphicsApi.Parent := PageGraphicsApi.Surface;
   descGraphicsApi.WordWrap := True;
   descGraphicsApi.Width := PageGraphicsApi.SurfaceWidth;
-  descGraphicsApi.Caption := 'This page allows you to choose the graphics API. If you have no idea what this means, just go with the first option, since it offer additional graphics enhancements and fixes. If it''s causing issues for you, go with the 2nd, 3rd, or 4th option.';
+  descGraphicsApi.Caption := 'This page allows you to choose the graphics API. If you have no idea what this means, just go with the first option, since it offer additional graphics enhancements and fixes. If it''s causing issues for you, choose one of the other options.';
 
   lblDgVoodooGraphicsApi := TLabel.Create(PageGraphicsApi);
   lblDgVoodooGraphicsApi.Parent := PageGraphicsApi.Surface;
@@ -848,7 +848,7 @@ begin
 
   lblDxWrapperSaturation := TLabel.Create(DxWrapperPage2);
   lblDxWrapperSaturation.Parent := DxWrapperPage2.Surface;
-  lblDxWrapperSaturation.Caption := 'Add increased saturation';
+  lblDxWrapperSaturation.Caption := 'Add increased saturation (recommended)';
   lblDxWrapperSaturation.Left := ScaleX(20);
   lblDxWrapperSaturation.Top := descDxWrapperReShade.Top + ScaleY(70);
   
@@ -923,7 +923,7 @@ begin
 
   lblDgVoodooSaturation := TLabel.Create(DgVoodooPage2);
   lblDgVoodooSaturation.Parent := DgVoodooPage2.Surface;
-  lblDgVoodooSaturation.Caption := 'Add increased saturation';
+  lblDgVoodooSaturation.Caption := 'Add increased saturation (recommended)';
   lblDgVoodooSaturation.Left := ScaleX(20);
   lblDgVoodooSaturation.Top := descDgVoodooReShade.Top + ScaleY(70);
   
