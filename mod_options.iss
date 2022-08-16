@@ -481,6 +481,10 @@ var
 begin
   EXEPath := ExpandConstant('{app}\EXE\');
 
+  // If a d3d8.dll already exists in the vanilla installation, rename that away because otherwise the new d3d8.dll can't be activated.
+  if FileExists(EXEPath + 'd3d8.dll') then
+    RenameFile(EXEPath + 'd3d8.dll', EXEPath + 'd3d8_vanilla.dll');
+
   // Applies the correct graphics API
   if DxWrapperGraphicsApi.Checked then 
     RenameFile(EXEPath + 'd3d8_dxwrapper.dll', EXEPath + 'd3d8.dll')
@@ -988,6 +992,10 @@ var
   Techniques: string;
 begin
   ReShadePath := ExpandConstant('{app}\EXE\');
+
+  // If a ReShade dll already exists in the vanilla installation, rename that away because otherwise the new ReShade file can't be activated.
+  if FileExists(ReShadePath + ReShadeDllName + '.dll') then
+    RenameFile(ReShadePath + ReShadeDllName + '.dll', ReShadePath + ReShadeDllName + '_vanilla.dll');
 
   // Activate ReShade by renaming the file
   RenameFile(ReShadePath + ReShadeDllName + '_reshade.dll', ReShadePath + ReShadeDllName + '.dll')
