@@ -334,6 +334,12 @@ begin
   begin
     Result := false
     exit
+  end
+  // Because the issue was introduced in Windows 10 Minor 0, newer versions definitely have it too.
+  else if (Version.Major > 10) or (Version.Minor > 0) then
+  begin
+    Result := true
+    exit
   end;
 
   // Windows 10 version 2004 (20H1), or build 19041 is the first known Windows version where the lighting bug appears.
