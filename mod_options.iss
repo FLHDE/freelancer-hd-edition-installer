@@ -986,7 +986,7 @@ begin
   WriteHexToFile(DgVoodooPath, $6E, RefreshRateBinary);
 end;
 
-procedure ApplyReShadeOptions(ReShadeDllName: string; BloomChecked: Boolean; HdrChecked: Boolean; SaturationChecked: Boolean);
+procedure ApplyReShadeOptions(ReShadeDllName: string; BloomChecked: Boolean; HdrChecked: Boolean; SaturationChecked: Boolean; SharpeningChecked: Boolean);
 var
   ReShadePath: string;
   Techniques: string;
@@ -1009,7 +1009,9 @@ begin
     Techniques := Techniques + 'Colourfulness@Colourfulness.fx,';
   if (DisplayMode.ItemIndex = 1) or (DisplayMode.ItemIndex = 2) then
     // Use Tonemap only if windowed or fullscreen windowed have been checked
-    Techniques := Techniques + 'Tonemap@Tonemap.fx';
+    Techniques := Techniques + 'Tonemap@Tonemap.fx,';
+  if (SharpeningChecked) then
+    Techniques := Techniques + 'ContrastAdaptiveSharpen@CAS.fx';
 
   // Removes a trailing comma at the end of the techniques if it's there
   if (LENGTH(Techniques) > 0) and (Techniques[LENGTH(Techniques)] = ',') then
@@ -1022,13 +1024,13 @@ end;
 procedure Process_DxWrapperReShade();
 begin
   if (DxWrapperGraphicsApi.Checked) and (DxWrapperReShade.Checked) then
-    ApplyReShadeOptions('d3d9', DxWrapperBloom.Checked, DxWrapperHdr.Checked, DxWrapperSaturation.Checked); // d3d9 is for DirectX 9 (DxWrapper)
+    ApplyReShadeOptions('d3d9', DxWrapperBloom.Checked, DxWrapperHdr.Checked, DxWrapperSaturation.Checked, DxWrapperSharpening.Checked); // d3d9 is for DirectX 9 (DxWrapper)
 end;
 
 procedure Process_DgVoodooReShade();
 begin
   if (DgVoodooGraphicsApi.Checked) and (DgVoodooReShade.Checked) then
-    ApplyReShadeOptions('dxgi', DgVoodooBloom.Checked, DgVoodooHdr.Checked, DgVoodooSaturation.Checked); // dxgi is for DirectX 11 (dgVoodoo)
+    ApplyReShadeOptions('dxgi', DgVoodooBloom.Checked, DgVoodooHdr.Checked, DgVoodooSaturation.Checked, DgVoodooSharpening.Checked); // dxgi is for DirectX 11 (dgVoodoo)
 end;
 
 procedure Process_DisplayMode();
