@@ -107,14 +107,17 @@ var
   // DxWrapper #2
   lblDxWrapperReShade: TLabel;
   lblDxWrapperSaturation: TLabel;
+  lblDxWrapperSharpening: TLabel;
   lblDxWrapperHdr: TLabel;
   lblDxWrapperBloom: TLabel;
   DxWrapperReShade: TCheckBox;
   DxWrapperSaturation: TCheckBox;
+  DxWrapperSharpening: TCheckBox;
   DxWrapperHdr: TCheckBox;
   DxWrapperBloom: TCheckBox;
   descDxWrapperReShade: TNewStaticText;
   descDxWrapperSaturation: TNewStaticText;
+  descDxWrapperSharpening: TNewStaticText;
   descDxWrapperHdr: TNewStaticText;
   descDxWrapperBloom: TNewStaticText;
 
@@ -133,14 +136,17 @@ var
   // dgVoodoo #2
   lblDgVoodooReShade: TLabel;
   lblDgVoodooSaturation: TLabel;
+  lblDgVoodooSharpening: TLabel;
   lblDgVoodooHdr: TLabel;
   lblDgVoodooBloom: TLabel;
   DgVoodooReShade: TCheckBox;
   DgVoodooSaturation: TCheckBox;
+  DgVoodooSharpening: TCheckBox;
   DgVoodooHdr: TCheckBox;
   DgVoodooBloom: TCheckBox;
   descDgVoodooReShade: TNewStaticText;
   descDgVoodooSaturation: TNewStaticText;
+  descDgVoodooSharpening: TNewStaticText;
   descDgVoodooHdr: TNewStaticText;
   descDgVoodooBloom: TNewStaticText;
 
@@ -242,6 +248,7 @@ end;
 procedure DxWrapperReShadeCheckBoxClick(Sender: TObject);
 begin
   DxWrapperSaturation.Enabled := DxWrapperReShade.Checked;
+  DxWrapperSharpening.Enabled := DxWrapperReShade.Checked;
   DxWrapperHdr.Enabled := DxWrapperReShade.Checked;
   DxWrapperBloom.Enabled := DxWrapperReShade.Checked;
 end;
@@ -249,6 +256,7 @@ end;
 procedure DgVoodooReShadeCheckBoxClick(Sender: TObject);
 begin
   DgVoodooSaturation.Enabled := DgVoodooReShade.Checked;
+  DgVoodooSharpening.Enabled := DgVoodooReShade.Checked;
   DgVoodooHdr.Enabled := DgVoodooReShade.Checked;
   DgVoodooBloom.Enabled := DgVoodooReShade.Checked;
 end;
@@ -850,7 +858,7 @@ begin
   lblDxWrapperSaturation.Parent := DxWrapperPage2.Surface;
   lblDxWrapperSaturation.Caption := 'Add increased saturation (recommended)';
   lblDxWrapperSaturation.Left := ScaleX(20);
-  lblDxWrapperSaturation.Top := descDxWrapperReShade.Top + ScaleY(70);
+  lblDxWrapperSaturation.Top := descDxWrapperReShade.Top + ScaleY(58);
   
   descDxWrapperSaturation := TNewStaticText.Create(DxWrapperPage2);
   descDxWrapperSaturation.Parent := DxWrapperPage2.Surface;
@@ -864,11 +872,29 @@ begin
   DxWrapperSaturation.Checked := True;
   DxWrapperSaturation.Top := lblDxWrapperSaturation.Top;
 
+  lblDxWrapperSharpening := TLabel.Create(DxWrapperPage2);
+  lblDxWrapperSharpening.Parent := DxWrapperPage2.Surface;
+  lblDxWrapperSharpening.Caption := 'Add adaptive sharpening (recommended)';
+  lblDxWrapperSharpening.Left := ScaleX(20);
+  lblDxWrapperSharpening.Top := descDxWrapperSaturation.Top + ScaleY(28);
+
+  descDxWrapperSharpening := TNewStaticText.Create(DxWrapperPage2);
+  descDxWrapperSharpening.Parent := DxWrapperPage2.Surface;
+  descDxWrapperSharpening.WordWrap := True;
+  descDxWrapperSharpening.Top := lblDxWrapperSharpening.Top + ScaleY(20);
+  descDxWrapperSharpening.Width := DxWrapperPage2.SurfaceWidth;
+  descDxWrapperSharpening.Caption := 'Makes the game look slightly more crisp without oversharpening everything.'
+
+  DxWrapperSharpening := TCheckBox.Create(DxWrapperPage2);
+  DxWrapperSharpening.Parent := DxWrapperPage2.Surface;
+  DxWrapperSharpening.Checked := True;
+  DxWrapperSharpening.Top := lblDxWrapperSharpening.Top;
+
   lblDxWrapperHdr := TLabel.Create(DxWrapperPage2);
   lblDxWrapperHdr.Parent := DxWrapperPage2.Surface;
   lblDxWrapperHdr.Caption := 'Add Fake HDR (High Dynamic Range)';
   lblDxWrapperHdr.Left := ScaleX(20);
-  lblDxWrapperHdr.Top := descDxWrapperSaturation.Top + ScaleY(30);
+  lblDxWrapperHdr.Top := descDxWrapperSharpening.Top + ScaleY(28);
   
   descDxWrapperHdr := TNewStaticText.Create(DxWrapperPage2);
   descDxWrapperHdr.Parent := DxWrapperPage2.Surface;
@@ -885,7 +911,7 @@ begin
   lblDxWrapperBloom.Parent := DxWrapperPage2.Surface;
   lblDxWrapperBloom.Caption := 'Add Bloom';
   lblDxWrapperBloom.Left := ScaleX(20);
-  lblDxWrapperBloom.Top := descDxWrapperHdr.Top + ScaleY(30);
+  lblDxWrapperBloom.Top := descDxWrapperHdr.Top + ScaleY(28);
   
   descDxWrapperBloom := TNewStaticText.Create(DxWrapperPage2);
   descDxWrapperBloom.Parent := DxWrapperPage2.Surface;
@@ -925,7 +951,7 @@ begin
   lblDgVoodooSaturation.Parent := DgVoodooPage2.Surface;
   lblDgVoodooSaturation.Caption := 'Add increased saturation (recommended)';
   lblDgVoodooSaturation.Left := ScaleX(20);
-  lblDgVoodooSaturation.Top := descDgVoodooReShade.Top + ScaleY(70);
+  lblDgVoodooSaturation.Top := descDgVoodooReShade.Top + ScaleY(58);
   
   descDgVoodooSaturation := TNewStaticText.Create(DgVoodooPage2);
   descDgVoodooSaturation.Parent := DgVoodooPage2.Surface;
@@ -939,11 +965,29 @@ begin
   DgVoodooSaturation.Checked := True;
   DgVoodooSaturation.Top := lblDgVoodooSaturation.Top;
 
+  lblDgVoodooSharpening := TLabel.Create(DgVoodooPage2);
+  lblDgVoodooSharpening.Parent := DgVoodooPage2.Surface;
+  lblDgVoodooSharpening.Caption := 'Add adaptive sharpening (recommended)';
+  lblDgVoodooSharpening.Left := ScaleX(20);
+  lblDgVoodooSharpening.Top := descDgVoodooSaturation.Top + ScaleY(28);
+
+  descDgVoodooSharpening := TNewStaticText.Create(DgVoodooPage2);
+  descDgVoodooSharpening.Parent := DgVoodooPage2.Surface;
+  descDgVoodooSharpening.WordWrap := True;
+  descDgVoodooSharpening.Top := lblDgVoodooSharpening.Top + ScaleY(20);
+  descDgVoodooSharpening.Width := DgVoodooPage2.SurfaceWidth;
+  descDgVoodooSharpening.Caption := 'Makes the game look slightly more crisp without oversharpening everything.'
+
+  DgVoodooSharpening := TCheckBox.Create(DgVoodooPage2);
+  DgVoodooSharpening.Parent := DgVoodooPage2.Surface;
+  DgVoodooSharpening.Checked := True;
+  DgVoodooSharpening.Top := lblDgVoodooSharpening.Top;
+
   lblDgVoodooHdr := TLabel.Create(DgVoodooPage2);
   lblDgVoodooHdr.Parent := DgVoodooPage2.Surface;
   lblDgVoodooHdr.Caption := 'Add Fake HDR (High Dynamic Range)';
   lblDgVoodooHdr.Left := ScaleX(20);
-  lblDgVoodooHdr.Top := descDgVoodooSaturation.Top + ScaleY(30);
+  lblDgVoodooHdr.Top := descDgVoodooSharpening.Top + ScaleY(28);
   
   descDgVoodooHdr := TNewStaticText.Create(DgVoodooPage2);
   descDgVoodooHdr.Parent := DgVoodooPage2.Surface;
@@ -960,7 +1004,7 @@ begin
   lblDgVoodooBloom.Parent := DgVoodooPage2.Surface;
   lblDgVoodooBloom.Caption := 'Add Bloom';
   lblDgVoodooBloom.Left := ScaleX(20);
-  lblDgVoodooBloom.Top := descDgVoodooHdr.Top + ScaleY(30);
+  lblDgVoodooBloom.Top := descDgVoodooHdr.Top + ScaleY(28);
   
   descDgVoodooBloom := TNewStaticText.Create(DgVoodooPage2);
   descDgVoodooBloom.Parent := DgVoodooPage2.Surface;
@@ -1275,10 +1319,12 @@ begin
     PlanetScape.Width := CheckBoxWidth
     DxWrapperReShade.Width := CheckBoxWidth
     DxWrapperSaturation.Width := CheckBoxWidth
+    DxWrapperSharpening.Width := CheckBoxWidth
     DxWrapperHdr.Width := CheckBoxWidth
     DxWrapperBloom.Width := CheckBoxWidth
     DgVoodooReShade.Width := CheckBoxWidth
     DgVoodooSaturation.Width := CheckBoxWidth
+    DgVoodooSharpening.Width := CheckBoxWidth
     DgVoodooHdr.Width := CheckBoxWidth
     DgVoodooBloom.Width := CheckBoxWidth
     MissileEffects.Width := CheckBoxWidth
