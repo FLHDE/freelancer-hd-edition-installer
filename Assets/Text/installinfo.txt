@@ -34,6 +34,7 @@ No-CD Patch
 Official 1.1 Patch
 Tons of additional bug fixes
 Additional gameplay improvements
+Easy customization
 Full vanilla Multiplayer support
 
 Mod files: https://github.com/BC46/freelancer-hd-edition
