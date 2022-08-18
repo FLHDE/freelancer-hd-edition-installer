@@ -159,9 +159,11 @@ var
   ShiniestReflections: TRadioButton;
   descReflections: TNewStaticText;
 
-  // Add new missile effects
+  // Add new missile and explosion effects
   lblMissleEffects: TLabel;
+  lblExplosionEffects: TLabel;
   MissileEffects: TCheckBox;
+  ExplosionEffects: TCheckBox;
   descMissileEffects: TNewStaticText;
 
   // Add player ship engine trails
@@ -1061,10 +1063,16 @@ begin
   descReflections.Top := ShiniestReflections.Top + ScaleY(20);
   
   // Add new missile effects
+  lblExplosionEffects := TLabel.Create(PageEffects);
+  lblExplosionEffects.Parent := PageEffects.Surface;
+  lblExplosionEffects.Caption := 'Add custom explosion effects';
+  lblExplosionEffects.Top := descReflections.Top + ScaleY(60);
+  lblExplosionEffects.Left := ScaleX(20);
+
   lblMissleEffects := TLabel.Create(PageEffects);
   lblMissleEffects.Parent := PageEffects.Surface;
-  lblMissleEffects.Caption := 'Add alternative missile, torpedo, and explosion effects';
-  lblMissleEffects.Top := descReflections.Top + ScaleY(60);
+  lblMissleEffects.Caption := 'Add custom missile and torpedo effects';
+  lblMissleEffects.Top :=  lblExplosionEffects.Top + ScaleY(20);
   lblMissleEffects.Left := ScaleX(20);
   
   descMissileEffects := TNewStaticText.Create(PageEffects);
@@ -1072,8 +1080,12 @@ begin
   descMissileEffects.WordWrap := True;
   descMissileEffects.Top := lblMissleEffects.Top + ScaleY(20);
   descMissileEffects.Width := PageEffects.SurfaceWidth;
-  descMissileEffects.Caption := 'This option adds custom missile, torpedo, and explosion effects. They''re not necessarily higher quality, just alternatives. These torpedo and explosion effects are significantly larger than the normal ones.';
+  descMissileEffects.Caption := 'These options add missile, torpedo, and explosion effects that have a different look. The torpedo and explosion effects are a lot larger than the normal ones.';
   
+  ExplosionEffects := TCheckBox.Create(PageEffects);
+  ExplosionEffects.Parent := PageEffects.Surface;
+  ExplosionEffects.Top := lblExplosionEffects.Top;
+
   MissileEffects := TCheckBox.Create(PageEffects);
   MissileEffects.Parent := PageEffects.Surface;
   MissileEffects.Top := lblMissleEffects.Top;
@@ -1082,7 +1094,7 @@ begin
   lblEngineTrails := TLabel.Create(PageEffects);
   lblEngineTrails.Parent := PageEffects.Surface;
   lblEngineTrails.Caption := 'Add player ship engine trails';
-  lblEngineTrails.Top := MissileEffects.Top + ScaleY(80);
+  lblEngineTrails.Top := descMissileEffects.Top + ScaleY(47);
   lblEngineTrails.Left := ScaleX(20);
   
   descEngineTrails := TNewStaticText.Create(PageEffects);
