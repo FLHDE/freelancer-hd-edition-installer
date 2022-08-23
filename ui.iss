@@ -212,7 +212,7 @@ var
 # if !AllInOneInstall
 function OnDownloadProgress(const Url, FileName: String; const Progress, ProgressMax: Int64): Boolean;
 begin
-  DownloadPage.SetText('Downloading mod',(IntToStr(Progress/1048576)) + 'MB / ' + DownloadSize + 'MB');
+  DownloadPage.SetText('Downloading mod',(IntToStr(Progress/1048576)) + ' MB / ' + DownloadSize + ' MB');
   if Progress = ProgressMax then
     Log(Format('Successfully downloaded file to {tmp}: %s', [FileName]));
   Result := True;
@@ -1335,9 +1335,6 @@ begin
     WidescreenHud.Width := CheckBoxWidth
     WeaponGroups.Width := CheckBoxWidth
     DarkHud.Width := CheckBoxWidth
-    VanillaIcons.Width := CheckBoxWidth
-    FlatIcons.Width := CheckBoxWidth
-    AlternativeIcons.Width := CheckBoxWidth
     PlanetScape.Width := CheckBoxWidth
     DxWrapperReShade.Width := CheckBoxWidth
     DxWrapperSaturation.Width := CheckBoxWidth
@@ -1368,5 +1365,8 @@ begin
     JumpTunnel5Sec.Width := CheckBoxWidth
     JumpTunnel2Sec.Width := CheckBoxWidth
     JumpTunnelSkip.Width := CheckBoxWidth
+    VanillaIcons.Width := CheckBoxWidth
+    FlatIcons.Width := CheckBoxWidth
+    AlternativeIcons.Width := CheckBoxWidth
   end;
 end;
