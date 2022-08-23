@@ -284,7 +284,7 @@ begin
       begin
         DownloadPage.Clear;
         DownloadPage.Add(mirrors[i], ExpandConstant('{#MyZipName}.7z'), '');
-        DownloadPage.SetText('Downloading mod', '');
+        DownloadPage.SetText('Downloading mod...', '');
         DownloadPage.Show;
         DownloadPage.ProgressBar.Style := npbstNormal;
         try
