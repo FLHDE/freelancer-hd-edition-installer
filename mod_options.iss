@@ -36,6 +36,23 @@ begin
     FileReplaceString(FilePath,'DLL = callsign.dll, player 1 1-1','DLL = callsign.dll, fc_lh 9 4-20')
 end;
 
+procedure Process_PitchVariations();
+var
+  FactionPropPath : string;
+begin
+  FactionPropPath := ExpandConstant('{app}\DATA\MISSIONS\');
+
+  // Option is checked
+  if PitchVariations.Values[0] then
+    begin
+    // Rename vanilla faction properties file
+    RenameFile(FactionPropPath + 'faction_prop.ini', FactionPropPath + 'faction_prop_vanilla.ini')
+
+    // Rename extended voices faction properties file
+    RenameFile(FactionPropPath + 'faction_prop_extended_voices.ini', FactionPropPath + 'faction_prop.ini')
+    end;
+end;
+
 procedure Process_EnglishImprovements();
 var
   FreelancerIntroPath: string;

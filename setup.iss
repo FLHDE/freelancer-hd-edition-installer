@@ -13,8 +13,8 @@
 #define AllInOneInstall true
 #dim Mirrors[2] {"https://archive.org/download/freelancer-hd-edition-" + MyAppVersion + "/freelancer-hd-edition-" + MyAppVersion + ".7z", "https://github.com/BC46/freelancer-hd-edition/archive/refs/tags/" + MyAppVersion + ".zip"}
 ; TODO: Update sizes for each release
-#define SizeZip 2438619136
-#define SizeExtracted 4195188736
+#define SizeZip 1963319296
+#define SizeExtracted 4646719488
 #define SizeVanilla 985624576
 #define SizeBuffer 100000
 #define SizeAll SizeZip + SizeExtracted + SizeVanilla + SizeBuffer
@@ -136,6 +136,7 @@ begin
         // Process options
         WizardForm.StatusLabel.Caption := 'Processing your options...';
         Process_CallSign();
+        Process_PitchVariations();
         Process_EnglishImprovements();
         Process_SinglePlayerMode();
         Process_NewSaveFolder();

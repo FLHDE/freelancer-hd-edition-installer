@@ -3,6 +3,7 @@ var
   // Custom Pages
   DataDirPage: TInputDirWizardPage;
   CallSign: TInputOptionWizardPage;
+  PitchVariations: TInputOptionWizardPage;
   PageEnglishImprovements: TWizardPage;
   PageSinglePlayer: TWizardPage;
   StartupRes: TInputOptionWizardPage;
@@ -292,7 +293,7 @@ begin
   // Initialize CallSign page and add content
   CallSign := CreateInputOptionPage(DataDirPage.ID,
   'Single Player ID Code', 'Tired of being called Freelancer Alpha 1-1?',
-  'You know when each time an NPC talks to you in-game, they call you Freelancer Alpha 1-1? This mod gives you the ability to change that ID code in Single Player! Just select any option you like and the NPCs will call you by that.',
+  'You know when each time an NPC talks to you in-game, they call you Freelancer Alpha 1-1? This mod gives you the ability to change that ID code in Single Player. Select any option you like and the NPCs will call you by that.',
   True, False);
   CallSign.Add('Freelancer Alpha 1-1 (Default)');
   CallSign.Add('Navy Beta 2-5');
@@ -311,8 +312,17 @@ begin
   CallSign.Add('Hacker Kappa 4-20');
   CallSign.Values[0] := True;
 
+  // Initialize PitchVariations page and add content
+  PitchVariations := CreateInputOptionPage(CallSign.ID,
+  'More NPC voices', 'Check to install',
+  'NPCs from a faction talking in space usually only have one or two different voices. This option adds pitches to the NPC voices so there''s more variation. Only affects Single Player and local Multiplayer games.',
+  False, False);
+
+  PitchVariations.Add('Add more voices for the NPCs');
+  PitchVariations.Values[0] := True;
+
   // Initialize English Improvements page and add content
-  PageEnglishImprovements := CreateCustomPage(CallSign.ID,
+  PageEnglishImprovements := CreateCustomPage(PitchVariations.ID,
   'Localization', 'Apply English improvements and other fixes');
 
   lblEnglishImprovements := TLabel.Create(PageEnglishImprovements);
@@ -1022,7 +1032,7 @@ begin
   // Add improved reflections
   PageEffects := CreateCustomPage(
     DgVoodooPage2.ID,
-    'Add improved effects',
+    'Add custom effects',
     'Check to install'
   );
   
@@ -1072,7 +1082,7 @@ begin
   lblMissleEffects := TLabel.Create(PageEffects);
   lblMissleEffects.Parent := PageEffects.Surface;
   lblMissleEffects.Caption := 'Add custom missile and torpedo effects';
-  lblMissleEffects.Top :=  lblExplosionEffects.Top + ScaleY(20);
+  lblMissleEffects.Top := lblExplosionEffects.Top + ScaleY(20);
   lblMissleEffects.Left := ScaleX(20);
   
   descMissileEffects := TNewStaticText.Create(PageEffects);
