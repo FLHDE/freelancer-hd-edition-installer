@@ -13,7 +13,11 @@
 #define AllInOneInstall true
 #dim Mirrors[2] {"https://archive.org/download/freelancer-hd-edition-" + MyAppVersion + "/freelancer-hd-edition-" + MyAppVersion + ".7z", "https://github.com/BC46/freelancer-hd-edition/archive/refs/tags/" + MyAppVersion + ".zip"}
 ; TODO: Update sizes for each release
-#define SizeZip 1963319296
+#if AllInOneInstall
+  #define SizeZip 0 ; The zip size is already included in the pre-calculated required diskspace
+#else
+  #define SizeZip 2688696320 ; The zip provided by the GitHub mirror is larger than the archive.org one
+#endif
 #define SizeExtracted 4646719488
 #define SizeVanilla 985624576
 #define SizeBuffer 100000
