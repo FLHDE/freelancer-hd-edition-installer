@@ -1075,7 +1075,7 @@ begin
   // Add new missile effects
   lblExplosionEffects := TLabel.Create(PageEffects);
   lblExplosionEffects.Parent := PageEffects.Surface;
-  lblExplosionEffects.Caption := 'Add custom explosion effects';
+  lblExplosionEffects.Caption := 'Add custom ship explosion effects';
   lblExplosionEffects.Top := descReflections.Top + ScaleY(60);
   lblExplosionEffects.Left := ScaleX(20);
 
@@ -1090,7 +1090,7 @@ begin
   descMissileEffects.WordWrap := True;
   descMissileEffects.Top := lblMissleEffects.Top + ScaleY(20);
   descMissileEffects.Width := PageEffects.SurfaceWidth;
-  descMissileEffects.Caption := 'These options add missile, torpedo, and explosion effects that have a different look. The torpedo and explosion effects are a lot larger than the normal ones.';
+  descMissileEffects.Caption := 'These options add missile, torpedo, and ship explosion effects that have a different look. The torpedo and ship explosion effects are a lot larger than the normal ones.';
   
   ExplosionEffects := TCheckBox.Create(PageEffects);
   ExplosionEffects.Parent := PageEffects.Surface;
@@ -1347,6 +1347,7 @@ begin
     DgVoodooHdr.Width := CheckBoxWidth
     DgVoodooBloom.Width := CheckBoxWidth
     MissileEffects.Width := CheckBoxWidth
+    ExplosionEffects.Width := CheckBoxWidth
     EngineTrails.Width := CheckBoxWidth
     SkipIntros.Width := CheckBoxWidth
     SinglePlayer.Width := CheckBoxWidth
