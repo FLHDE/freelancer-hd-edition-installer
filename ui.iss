@@ -1373,7 +1373,7 @@ begin
     // Give Wine users some tips on how to avoid compatibility issues; could be useful.
     MsgBox(ExpandConstant(
       'It seems you''re using Wine. It''s possible that {#MyAppName} won''t run out of the box on your setup due to incompatibilities. From our testing, {#MyAppName} works best on Linux when the mod is installed and launched with Lutris.'
-      + #13#10#13#10 + 'This installer will automatically set the "native,builtin" d3d8 override in your environment to ensure the grahics-related DLLs provided by {#MyAppName} are loaded. However, this may or may not work on your setup.'
+      + #13#10#13#10 + 'This installer will automatically set the "native,builtin" d3d8 override in your environment to ensure the graphics-related DLLs provided by {#MyAppName} are loaded. However, this may or may not work on your setup.'
       + #13#10#13#10 + 'If you experience crashes, bad colors, or other compatibility issues during gameplay, you may need to remove/replace/override any of the following DLLs in the EXE folder:'
       + #13#10 + 'd3d8.dll (dgVoodoo or DxWrapper)'
       + #13#10 + 'd3d9.dll (DxWrapper ReShade)'
