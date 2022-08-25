@@ -1322,9 +1322,9 @@ begin
     OnClick := @DgVoodooReShadeCheckBoxClick;
   end;
 
-  // Make all the custom checkboxes and radio buttons less wide so the clickable area doesn't hide the accompanying labels on Wine.
   if IsWine then
   begin
+    // Make all the custom checkboxes and radio buttons less wide so the clickable area doesn't hide the accompanying labels on Wine.
     CheckBoxWidth := ScaleX(20)
 
     // Checkboxes
@@ -1369,5 +1369,14 @@ begin
     VanillaIcons.Width := CheckBoxWidth
     FlatIcons.Width := CheckBoxWidth
     AlternativeIcons.Width := CheckBoxWidth
+
+    // Give Wine users some tips on how to avoid compatibility issues; could be useful.
+    MsgBox(ExpandConstant(
+      'It seems you''re using Wine. It''s possible that {#MyAppName} won''t run out of the box on your setup due to incompatibilities. From our testing, {#MyAppName} works best on Linux when the mod is installed and launched with Lutris.'
+      + #13#10#13#10 + 'This installer will automatically set the "native,builtin" d3d8 override in your environment to ensure the grahics-related DLLs provided by {#MyAppName} are loaded. However, this may or may not work on your setup.'
+      + #13#10#13#10 + 'If you experience crashes, bad colors, or other compatibility issues during gameplay, you may need to remove/replace/override any of the following DLLs in the EXE folder:'
+      + #13#10 + 'd3d8.dll (dgVoodoo or DxWrapper)'
+      + #13#10 + 'd3d9.dll (DxWrapper ReShade)'
+      + #13#10 + 'dxgi.dll (dgVoodoo ReShade)'), mbError, MB_OK);
   end;
 end;
