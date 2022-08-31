@@ -508,7 +508,23 @@ begin
   if DxWrapperGraphicsApi.Checked then 
     RenameFile(EXEPath + 'd3d8_dxwrapper.dll', EXEPath + 'd3d8.dll')
   else if dgVoodooGraphicsApi.Checked then
-    RenameFile(EXEPath + 'd3d8_dgvoodoo.dll', EXEPath + 'd3d8.dll')
+  begin
+    // Rename correct dgVoodoo files based on whether or not the user has an AMD GPU for the best compatibility
+    if AmdGpu then
+      begin
+      RenameFile(EXEPath + 'd3d8_dgvoodoo_old.dll', EXEPath + 'd3d8.dll')
+      RenameFile(EXEPath + 'dgVoodoo_old.conf', EXEPath + 'dgVoodoo.conf')
+      RenameFile(EXEPath + 'dgVoodooCpl_old.exe', EXEPath + 'dgVoodooCpl.exe')
+      RenameFile(EXEPath + 'dgVoodooCpl_new.exe', EXEPath + 'dgVoodooCpl_new') // Remove extension from other exe don't get confused with the 2 exes
+      end
+    else
+      begin
+      RenameFile(EXEPath + 'd3d8_dgvoodoo_new.dll', EXEPath + 'd3d8.dll')
+      RenameFile(EXEPath + 'dgVoodoo_new.conf', EXEPath + 'dgVoodoo.conf')
+      RenameFile(EXEPath + 'dgVoodooCpl_new.exe', EXEPath + 'dgVoodooCpl.exe')
+      RenameFile(EXEPath + 'dgVoodooCpl_old.exe', EXEPath + 'dgVoodooCpl_old') // Remove extension from other exe so people don't get confused with the 2 exes
+      end;
+  end
   else if LightingFixGraphicsApi.Checked then
     RenameFile(EXEPath + 'd3d8_legacy.dll', EXEPath + 'd3d8.dll')
 end;
@@ -957,16 +973,11 @@ begin
     FileReplaceString(DxWrapperPath, 'AnisotropicFiltering       = 0', 'AnisotropicFiltering       = 1');
 end;
 
-procedure Process_DgVoodoo();
+procedure ApplyOldDgVoodooOptions(DgVoodooPath: string);
 var
-  DgVoodooPath: string;
   RefreshRateBinary: string;
   RefreshRateInt: Integer;
 begin
-  if not DgVoodooGraphicsApi.Checked then
-    exit;
-
-  DgVoodooPath := ExpandConstant('{app}\EXE\dgVoodoo.conf');
   RefreshRateInt := StrToInt(DgVoodooRefreshRate.Text)
 
   if DgVoodooAa.ItemIndex = 1 then
@@ -998,11 +1009,34 @@ begin
   if RefreshRateInt <= 255 then
     RefreshRateBinary := IntToHex(RefreshRateInt, 2)
   else
-    // If the value is above 255, that means we have to work with 2 bytes instead of 1. Since we want to write these hexadecimal values to a binary file, we have to swap the bytes first. Don't ask me why...
+    // If the value is above 255, that means we have to work with 2 bytes instead of 1. Since we want to write these hexadecimal values to a binary file, we have to swap the bytes first, because LIFO.
     RefreshRateBinary := SwapBytes(IntToHex(RefreshRateInt, 4));
 
   // Set refresh rate
   WriteHexToFile(DgVoodooPath, $6E, RefreshRateBinary);
+end;
+
+procedure ApplyNewDgVoodooOptions(DgVoodooPath: string);
+begin
+  // TODO: Implement
+end;
+
+procedure Process_DgVoodoo();
+var
+  DgVoodooPath: string;
+  RefreshRateBinary: string;
+  RefreshRateInt: Integer;
+begin
+  if not DgVoodooGraphicsApi.Checked then
+    exit;
+
+  DgVoodooPath := ExpandConstant('{app}\EXE\dgVoodoo.conf');
+
+  // Apply correct settings for the activated dgVoodoo versions
+  if AmdGpu then
+    ApplyOldDgVoodooOptions(DgVoodooPath)
+  else
+    ApplyNewDgVoodooOptions(DgVoodooPath);
 end;
 
 procedure ApplyReShadeOptions(ReShadeDllName: string; BloomChecked: Boolean; HdrChecked: Boolean; SaturationChecked: Boolean; SharpeningChecked: Boolean);

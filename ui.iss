@@ -819,29 +819,33 @@ begin
   descDgVoodooAf.Caption := 'Anisotropic Filtering improves the quality of textures when viewing them from the side, with minimal performance overhead.';
   descDgVoodooAf.Top := DgVoodooAf.Top + ScaleY(25);
 
-  lblDgVoodooRefreshRate := TLabel.Create(DgVoodooPage);
-  lblDgVoodooRefreshRate.Parent := DgVoodooPage.Surface;
-  lblDgVoodooRefreshRate.Caption := 'Refresh Rate';
-  lblDgVoodooRefreshRate.Top := descDgVoodooAf.Top + ScaleY(45);
+  // This option is not needed on the newer dgVoodoo version, because it automatically runs at the native refresh rate.
+  if AmdGpu then
+    begin
+    lblDgVoodooRefreshRate := TLabel.Create(DgVoodooPage);
+    lblDgVoodooRefreshRate.Parent := DgVoodooPage.Surface;
+    lblDgVoodooRefreshRate.Caption := 'Refresh Rate';
+    lblDgVoodooRefreshRate.Top := descDgVoodooAf.Top + ScaleY(45);
 
-  lblDgVoodooRefreshRateHz := TLabel.Create(DgVoodooPage);
-  lblDgVoodooRefreshRateHz.Parent := DgVoodooPage.Surface;
-  lblDgVoodooRefreshRateHz.Caption := 'Hz';
-  lblDgVoodooRefreshRateHz.Top := lblDgVoodooRefreshRate.Top + ScaleY(23);
-  lblDgVoodooRefreshRateHz.Left := ScaleX(125);
-  
-  DgVoodooRefreshRate := TNewEdit.Create(DgVoodooPage);
-  DgVoodooRefreshRate.Parent := DgVoodooPage.Surface;;
-  DgVoodooRefreshRate.Top := lblDgVoodooRefreshRateHz.Top - ScaleY(3);
-  DgVoodooRefreshRate.Text := IntToStr(RefreshRate());
-  DgVoodooRefreshRate.OnKeyPress := @DigitFieldKeyPress;
+    lblDgVoodooRefreshRateHz := TLabel.Create(DgVoodooPage);
+    lblDgVoodooRefreshRateHz.Parent := DgVoodooPage.Surface;
+    lblDgVoodooRefreshRateHz.Caption := 'Hz';
+    lblDgVoodooRefreshRateHz.Top := lblDgVoodooRefreshRate.Top + ScaleY(23);
+    lblDgVoodooRefreshRateHz.Left := ScaleX(125);
 
-  descDgVoodooRefreshRate := TNewStaticText.Create(DgVoodooPage);
-  descDgVoodooRefreshRate.Parent := DgVoodooPage.Surface;
-  descDgVoodooRefreshRate.WordWrap := True;
-  descDgVoodooRefreshRate.Width := DgVoodooPage.SurfaceWidth;
-  descDgVoodooRefreshRate.Caption := 'Enter your monitor''s refresh rate here. Freelancer will run at this refresh rate.';
-  descDgVoodooRefreshRate.Top := DgVoodooRefreshRate.Top + ScaleY(25);
+    DgVoodooRefreshRate := TNewEdit.Create(DgVoodooPage);
+    DgVoodooRefreshRate.Parent := DgVoodooPage.Surface;;
+    DgVoodooRefreshRate.Top := lblDgVoodooRefreshRateHz.Top - ScaleY(3);
+    DgVoodooRefreshRate.Text := IntToStr(RefreshRate());
+    DgVoodooRefreshRate.OnKeyPress := @DigitFieldKeyPress;
+
+    descDgVoodooRefreshRate := TNewStaticText.Create(DgVoodooPage);
+    descDgVoodooRefreshRate.Parent := DgVoodooPage.Surface;
+    descDgVoodooRefreshRate.WordWrap := True;
+    descDgVoodooRefreshRate.Width := DgVoodooPage.SurfaceWidth;
+    descDgVoodooRefreshRate.Caption := 'Enter your monitor''s refresh rate here. Freelancer will run at this refresh rate.';
+    descDgVoodooRefreshRate.Top := DgVoodooRefreshRate.Top + ScaleY(25);
+    end;
 
   // DxWrapper options #2
   DxWrapperPage2 := CreateCustomPage(
