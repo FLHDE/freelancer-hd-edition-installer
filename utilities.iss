@@ -358,28 +358,33 @@ begin
   // Assume true by default, because if any of the operations fail and the user is using an AMD GPU, they will experience compatibility issues if we would've assumed false.
   Result := true;
 
-  // The cmd and/or PowerShell calls below don't work on Wine, so don't bother
-  if Wine then
-    exit;
+  try
+    if Wine then
+      RaiseException('The cmd and/or PowerShell calls below don''t work on Wine, so don''t bother.');
 
-  GpuOutputFile := ExpandConstant('{tmp}') + '\gpu_name_output.txt';
-  GpuOutputFileUtf8 := ExpandConstant('{tmp}') + '\gpu_name_output_utf8.txt';
+    GpuOutputFile := ExpandConstant('{tmp}') + '\gpu_name_output.txt';
+    GpuOutputFileUtf8 := ExpandConstant('{tmp}') + '\gpu_name_output_utf8.txt';
 
-  // Gets the GPU name through a wmic call and write that to a text file
-  Exec(ExpandConstant('{cmd}'), '/c wmic path win32_VideoController get name > ' + '"' + GpuOutputFile + '"', '', SW_HIDE, ewWaitUntilTerminated, ResultCodeGpu);
-  if ResultCodeGpu <> 0 then
-    exit;
+    // Gets the GPU name through a wmic call and write that to a text file
+    Exec(ExpandConstant('{cmd}'), '/c wmic path win32_VideoController get name > ' + '"' + GpuOutputFile + '"', '', SW_HIDE, ewWaitUntilTerminated, ResultCodeGpu);
+    if ResultCodeGpu <> 0 then
+      RaiseException('Can''t get GPU name and write it to a file.');
 
-  // Convert the text file to UTF-8 because by default it's UTF-16 which is a bit difficult to read
-  Exec(ExpandConstant('{cmd}'), '/c powershell -c "Get-Content ''' + GpuOutputFile + ''' | Set-Content -Encoding utf8 ''' + GpuOutputFileUtf8 + '''"', '', SW_HIDE, ewWaitUntilTerminated, ResultCodeUtf8);
-  if ResultCodeUtf8 <> 0 then
-    exit;
+    // Convert the text file to UTF-8 because by default it's UTF-16 which is a bit difficult to read
+    Exec(ExpandConstant('{cmd}'), '/c powershell -c "Get-Content ''' + GpuOutputFile + ''' | Set-Content -Encoding utf8 ''' + GpuOutputFileUtf8 + '''"', '', SW_HIDE, ewWaitUntilTerminated, ResultCodeUtf8);
+    if ResultCodeUtf8 <> 0 then
+      RaiseException('Can''t convert GPU name file to UTF-8.');
 
-  // Load the string from the file and check whether the second line contains "AMD". If yes, it's an AMD GPU.
-  if (LoadStringsFromFile(GpuOutputFileUtf8, GpuOutput)) and (GetArrayLength(GpuOutput) >= 2) then
-    Result := Pos('AMD', GpuOutput[1]) > 0;
-
-  // Cleanup
-  DeleteFile(GpuOutputFile);
-  DeleteFile(GpuOutputFileUtf8);
+    // Load the string from the file and check whether the second line contains "AMD". If yes, it's an AMD GPU.
+    if (LoadStringsFromFile(GpuOutputFileUtf8, GpuOutput)) and (GetArrayLength(GpuOutput) >= 2) then
+      Result := Pos('AMD', GpuOutput[1]) > 0;
+  except
+    Result := MsgBox(
+        'We weren''t able to automatically determine what graphics card is in your system. Please click "Yes" if your computer has an AMD graphics card. Click "No" if otherwise.',
+        mbConfirmation, MB_YESNO) = IDYES
+  finally
+    // Cleanup
+    DeleteFile(GpuOutputFile);
+    DeleteFile(GpuOutputFileUtf8);
+  end;
 end;
