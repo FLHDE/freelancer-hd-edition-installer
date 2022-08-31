@@ -332,6 +332,12 @@ begin
     // Gets the user's desktop resolution for later use
     DesktopRes := Resolution();
 
+    // Gets whether the user is on Wine for later use
+    Wine := IsWine;
+
+    // Gets whether or not the user has an AMD GPU for later use
+    AmdGpu := HasAmdGpu();
+
     // Initialize EditedConfigFiles
     EditedConfigFiles := TStringList.Create;
     EditedConfigFiles.Sorted := true;

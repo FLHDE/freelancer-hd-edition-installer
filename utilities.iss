@@ -5,6 +5,19 @@ external 'LoadLibraryA@kernel32.dll stdcall';
 function GetProcAddress(Module: THandle; ProcName: PAnsiChar): Longword;
 external 'GetProcAddress@kernel32.dll stdcall';
 
+// Data type for a desktop resolution (stores the width and height of the display in pixels)
+type
+	DesktopResolution = record
+		Width: Integer;
+		Height: Integer;
+end;
+
+// Used to store values used across numerous files and functions so they don't have to be requested multiple times
+var
+  DesktopRes: DesktopResolution;
+  Wine: Boolean;
+  AmdGpu: Boolean;
+
 function IsWine: boolean;
 var  LibHandle  : THandle;
 begin
@@ -39,10 +52,7 @@ var
   FindRec: TFindRec;
   SourceFilePath: string;
   DestFilePath: string;
-  Wine: boolean;
 begin
-  Wine := IsWine
-
   if FindFirst(SourcePath + '\*', FindRec) then
   begin
     try
@@ -131,33 +141,6 @@ function GetDC(HWND: DWord): DWord; external 'GetDC@user32.dll stdcall';
 function GetDeviceCaps (hDC, nIndex: Integer): Integer;
  external 'GetDeviceCaps@GDI32 stdcall';
 
-// Gets the user's main monitor refresh rate
-function RefreshRate(): Integer;
-var 
-  DC: DWord;
-begin
-  try
-    DC := GetDC(0);
-    Result := GetDeviceCaps(DC, 116); // 116 = VREFRESH
-
-    if Result = 0 then
-      RaiseException('Refresh Rate cannot be 0.');
-  except
-    Result := 60
-  end;
-end;
-
-// Data type for a desktop resolution (stores the width and height of the display in pixels)
-type
-	DesktopResolution = record
-		Width: Integer;
-		Height: Integer;
-end;
-
-// Used to store the user's desktop resolution so it doesn't have to be requested multiple times
-var
-  DesktopRes: DesktopResolution;
-
 // Gets the user's main monitor resolution
 function Resolution(): DesktopResolution;
 var 
@@ -173,6 +156,22 @@ begin
   except
     Result.Width := 1920
     Result.Height := 1080
+  end;
+end;
+
+// Gets the user's main monitor refresh rate
+function RefreshRate(): Integer;
+var 
+  DC: DWord;
+begin
+  try
+    DC := GetDC(0);
+    Result := GetDeviceCaps(DC, 116); // 116 = VREFRESH
+
+    if Result = 0 then
+      RaiseException('Refresh Rate cannot be 0.');
+  except
+    Result := 60
   end;
 end;
 
@@ -360,7 +359,7 @@ begin
   Result := true;
 
   // The cmd and/or PowerShell calls below don't work on Wine, so don't bother
-  if IsWine then
+  if Wine then
     exit;
 
   GpuOutputFile := ExpandConstant('{tmp}') + '\gpu_name_output.txt';

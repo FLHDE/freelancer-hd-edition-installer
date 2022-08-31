@@ -697,7 +697,7 @@ begin
   // Only display the Lighting Bug Fix option if the current operating system could potentially suffer from it. If it won't, enabling this option may cause the game to not launch.
   // On top of that, the Lighting Bug isn't present on such operating systems anyway.
   // We're assuming this isn't a problem on Wine either...
-  if IsWine or HasLightingBug() then
+  if Wine or HasLightingBug() then
   begin
     lblLightingFixGraphicsApi := TLabel.Create(PageGraphicsApi);
     lblLightingFixGraphicsApi.Parent := PageGraphicsApi.Surface;
@@ -1261,7 +1261,7 @@ begin
   DisplayMode.Top := BestOptions.Top + ScaleY(80);
 
   // Make Borderless Windowed the recommended and selected option on Wine to fix the Alt-Tab bug
-  if IsWine then
+  if Wine then
   begin
     DisplayMode.Items[0] := 'Fullscreen (default)';
     DisplayMode.Items[2] := 'Borderless Windowed (recommended)';
@@ -1322,7 +1322,7 @@ begin
     OnClick := @DgVoodooReShadeCheckBoxClick;
   end;
 
-  if IsWine then
+  if Wine then
   begin
     // Make all the custom checkboxes and radio buttons less wide so the clickable area doesn't hide the accompanying labels on Wine.
     CheckBoxWidth := ScaleX(20)
