@@ -353,10 +353,7 @@ var
   ResultCodeGpu, ResultCodeUtf8: integer;
   GpuOutput: TArrayOfString;
 begin
-  SetArrayLength(GpuOutput, 3);
-
-  // Assume true by default, because if any of the operations fail and the user is using an AMD GPU, they will experience compatibility issues if we would've assumed false.
-  Result := true;
+  SetArrayLength(GpuOutput, 8);
 
   try
     if Wine then
@@ -375,10 +372,17 @@ begin
     if ResultCodeUtf8 <> 0 then
       RaiseException('Can''t convert GPU name file to UTF-8.');
 
-    // Load the string from the file and check whether the second line contains "AMD". If yes, it's an AMD GPU.
+    // Load the string from the file and check if it's been retrieved successfully
     if (LoadStringsFromFile(GpuOutputFileUtf8, GpuOutput)) and (GetArrayLength(GpuOutput) >= 2) then
+      begin
+      if Length(GpuOutput[1]) < 3 then
+        RaiseException('The retrieved GPU name is less than 3 characters long. Something must have gone wrong here.');
+
+      // Check whether the second line contains "AMD". If yes, the PC has an AMD GPU.
       Result := Pos('AMD', GpuOutput[1]) > 0;
+      end;
   except
+    // If something has gone wrong, just ask the user whether they have an AMD GPU.
     Result := MsgBox(
         'We weren''t able to automatically determine what graphics card is in your system. Please click "Yes" if your computer has an AMD graphics card. Click "No" if otherwise.',
         mbConfirmation, MB_YESNO) = IDYES
