@@ -337,8 +337,7 @@ begin
   descEnglishImprovements.Width := PageEnglishImprovements.SurfaceWidth;
   descEnglishImprovements.Caption := 
   'This option fixes many typos, grammar mistakes, inconsistencies, and more, in the English Freelancer text and audio resources. It also adds a higher quality Freelancer intro (1440x960 instead of 720x480), which is only available in English.' + #13#10#13#10 +  
-  'NOTE: This option will set all of Freelancer''s text, a few voice lines, and the intro to English. Disable this option if you''d like to play Freelancer in a different language like German, French, or Russian.'  + #13#10#13#10 +
-  'NOTE 2: If this option is disabled, several ship control option names from the settings menu will be blank.';
+  'NOTE: This option will set all of Freelancer''s text, a few voice lines, and the intro to English. Disable this option if you''d like to play Freelancer in a different language like German, French, or Russian.';
 
   EnglishImprovements := TCheckBox.Create(PageEnglishImprovements);
   EnglishImprovements.Parent := PageEnglishImprovements.Surface;
@@ -696,8 +695,7 @@ begin
 
   // Only display the Lighting Bug Fix option if the current operating system could potentially suffer from it. If it won't, enabling this option may cause the game to not launch.
   // On top of that, the Lighting Bug isn't present on such operating systems anyway.
-  // We're assuming this isn't a problem on Wine either...
-  if Wine or HasLightingBug() then
+  if HasLightingBug() then
   begin
     lblLightingFixGraphicsApi := TLabel.Create(PageGraphicsApi);
     lblLightingFixGraphicsApi.Parent := PageGraphicsApi.Surface;

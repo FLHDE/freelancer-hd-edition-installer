@@ -515,14 +515,14 @@ begin
       RenameFile(EXEPath + 'd3d8_dgvoodoo_old.dll', EXEPath + 'd3d8.dll')
       RenameFile(EXEPath + 'dgVoodoo_old.conf', EXEPath + 'dgVoodoo.conf')
       RenameFile(EXEPath + 'dgVoodooCpl_old.exe', EXEPath + 'dgVoodooCpl.exe')
-      RenameFile(EXEPath + 'dgVoodooCpl_new.exe', EXEPath + 'dgVoodooCpl_new') // Remove extension from other exe don't get confused with the 2 exes
+      RenameFile(EXEPath + 'dgVoodooCpl_new.exe', EXEPath + 'dgVoodooCpl_new_exe') // Remove extension from other exe so people don't get confused with the 2 exes
       end
     else
       begin
       RenameFile(EXEPath + 'd3d8_dgvoodoo_new.dll', EXEPath + 'd3d8.dll')
       RenameFile(EXEPath + 'dgVoodoo_new.conf', EXEPath + 'dgVoodoo.conf')
       RenameFile(EXEPath + 'dgVoodooCpl_new.exe', EXEPath + 'dgVoodooCpl.exe')
-      RenameFile(EXEPath + 'dgVoodooCpl_old.exe', EXEPath + 'dgVoodooCpl_old') // Remove extension from other exe so people don't get confused with the 2 exes
+      RenameFile(EXEPath + 'dgVoodooCpl_old.exe', EXEPath + 'dgVoodooCpl_old_exe') // Remove extension from other exe so people don't get confused with the 2 exes
       end;
   end
   else if LightingFixGraphicsApi.Checked then
@@ -1009,7 +1009,8 @@ begin
   if RefreshRateInt <= 255 then
     RefreshRateBinary := IntToHex(RefreshRateInt, 2)
   else
-    // If the value is above 255, that means we have to work with 2 bytes instead of 1. Since we want to write these hexadecimal values to a binary file, we have to swap the bytes first, because LIFO.
+    // If the value is above 255, that means we have to work with 2 bytes instead of 1.
+    // Since we want to write these hexadecimal values to a binary file, we have to express the bytes in a different order by swapping them, because LIFO.
     RefreshRateBinary := SwapBytes(IntToHex(RefreshRateInt, 4));
 
   // Set refresh rate
