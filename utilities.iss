@@ -326,6 +326,13 @@ function HasLightingBug(): Boolean;
 var
   Version: TWindowsVersion;
 begin
+  // We're assuming there's no issues on Wine.
+  if Wine then
+  begin
+    Result := false
+    exit
+  end;
+
   GetWindowsVersionEx(Version);
 
   // No issues on Windows 8.1 and older.
@@ -384,7 +391,8 @@ begin
   except
     // If something has gone wrong, just ask the user whether they have an AMD GPU.
     Result := MsgBox(
-        'We weren''t able to automatically determine what graphics card is in your system. Please click "Yes" if your computer has an AMD graphics card. Click "No" if otherwise.',
+        'We weren''t able to automatically determine what graphics card is in your system. We use this information to apply the best compatibility options for you.'
+        + #13#10 + 'Please click "Yes" if your computer has an AMD graphics card. Click "No" if otherwise.',
         mbConfirmation, MB_YESNO) = IDYES
   finally
     // Cleanup
