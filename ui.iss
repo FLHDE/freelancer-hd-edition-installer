@@ -712,7 +712,7 @@ begin
     descLightingFixGraphicsApi.WordWrap := True;
     descLightingFixGraphicsApi.Top := lblLightingFixGraphicsApi.Top + ScaleY(15);
     descLightingFixGraphicsApi.Width := PageGraphicsApi.SurfaceWidth;
-    descLightingFixGraphicsApi.Caption := 'About the same as the Vanilla Freelancer option but fixes the major lighting bug on Windows 10 and 11. NOTE: This option only works on Windows 10 and 11!';
+    descLightingFixGraphicsApi.Caption := 'About the same as the Vanilla Freelancer option but fixes the major lighting bug on Windows 10 and 11.';
   end;
   
   // DxWrapper options
@@ -741,30 +741,33 @@ begin
   descDxWrapperAa.Caption := 'Anti-Aliasing removes jagged edges in-game, effectively making them appear smoother at a performance cost.';
   descDxWrapperAa.Top := DxWrapperAa.Top + ScaleY(25);
 
-  lblDxWrapperAf := TLabel.Create(DxWrapperPage);
-  lblDxWrapperAf.Parent := DxWrapperPage.Surface;
-  lblDxWrapperAf.Caption := 'Anisotropic Filtering';
-  lblDxWrapperAf.Top := descDxWrapperAa.Top + ScaleY(50);
-  
-  DxWrapperAf := TComboBox.Create(DxWrapperPage);
-  DxWrapperAf.Parent := DxWrapperPage.Surface;
-  DxWrapperAf.Style := csDropDownList;
-  DxWrapperAf.Items.Add('Off');
-  DxWrapperAf.Items.Add('2x');
-  DxWrapperAf.Items.Add('4x');
-  DxWrapperAf.Items.Add('8x');
-  DxWrapperAf.Items.Add('16x');
-  DxWrapperAf.Items.Add('Auto');
-  DxWrapperAf.ItemIndex := 0;
-  DxWrapperAf.Top := lblDxWrapperAf.Top + ScaleY(20);
+  // Anisotropic Filtering is broken on NVIDIA GPUs, so don't show the option for users who have one
+  if GpuManufacturer <> NVIDIA then
+  begin
+    lblDxWrapperAf := TLabel.Create(DxWrapperPage);
+    lblDxWrapperAf.Parent := DxWrapperPage.Surface;
+    lblDxWrapperAf.Caption := 'Anisotropic Filtering';
+    lblDxWrapperAf.Top := descDxWrapperAa.Top + ScaleY(50);
+    
+    DxWrapperAf := TComboBox.Create(DxWrapperPage);
+    DxWrapperAf.Parent := DxWrapperPage.Surface;
+    DxWrapperAf.Style := csDropDownList;
+    DxWrapperAf.Items.Add('Off');
+    DxWrapperAf.Items.Add('2x');
+    DxWrapperAf.Items.Add('4x');
+    DxWrapperAf.Items.Add('8x');
+    DxWrapperAf.Items.Add('16x');
+    DxWrapperAf.Items.Add('Auto');
+    DxWrapperAf.ItemIndex := 5;
+    DxWrapperAf.Top := lblDxWrapperAf.Top + ScaleY(20);
 
-  descDxWrapperAf := TNewStaticText.Create(DxWrapperPage);
-  descDxWrapperAf.Parent := DxWrapperPage.Surface;
-  descDxWrapperAf.WordWrap := True;
-  descDxWrapperAf.Width := DxWrapperPage.SurfaceWidth;
-  descDxWrapperAf.Caption := 'Anisotropic Filtering improves the quality of textures when viewing them from the side, with minimal performance overhead. "Auto" will automatically use the highest option your graphics card supports.' + #13#10 + #13#10 +
-  'NOTE: If you have an NVIDIA GPU, set Anisotropic Filtering to "Off". Otherwise some textures may not load correctly. Alternatively, you may use the dgVoodoo Graphics API from the previous page. It offers the same option which will work correctly.'
-  descDxWrapperAf.Top := DxWrapperAf.Top + ScaleY(25);
+    descDxWrapperAf := TNewStaticText.Create(DxWrapperPage);
+    descDxWrapperAf.Parent := DxWrapperPage.Surface;
+    descDxWrapperAf.WordWrap := True;
+    descDxWrapperAf.Width := DxWrapperPage.SurfaceWidth;
+    descDxWrapperAf.Caption := 'Anisotropic Filtering improves the quality of textures when viewing them from the side, with minimal performance overhead. "Auto" will automatically use the highest option your graphics card supports.'
+    descDxWrapperAf.Top := DxWrapperAf.Top + ScaleY(25);
+  end;
 
   // dgVoodoo options
   DgVoodooPage := CreateCustomPage(
