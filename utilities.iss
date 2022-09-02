@@ -12,11 +12,15 @@ type
 		Height: Integer;
 end;
 
+// Enum for GPU manufacturers
+type
+  TGpuManufacturer = (NVIDIA, AMD, Other);
+
 // Used to store values used across numerous files and functions so they don't have to be requested multiple times
 var
   DesktopRes: DesktopResolution;
   Wine: Boolean;
-  AmdGpu: Boolean;
+  GpuManufacturer: TGpuManufacturer;
 
 function IsWine: boolean;
 var  LibHandle  : THandle;
@@ -353,8 +357,8 @@ begin
   Result := Version.Build >= 19041;
 end;
 
-// Whether or not the user has an AMD GPU
-function HasAmdGpu(): Boolean;
+// Gets the manuacturer of the user's GPU
+function GetGpuManufacturer(): TGpuManufacturer;
 var
   GpuOutputFile, GpuOutputFileUtf8: string;
   ResultCodeGpu, ResultCodeUtf8: integer;
@@ -385,15 +389,24 @@ begin
       if Length(GpuOutput[1]) < 3 then
         RaiseException('The retrieved GPU name is less than 3 characters long. Something must have gone wrong here.');
 
-      // Check whether the second line contains "AMD". If yes, the PC has an AMD GPU.
-      Result := Pos('AMD', GpuOutput[1]) > 0;
+      // Determine the GPU manufacturer based on the second output line.
+      if Pos('AMD', GpuOutput[1]) > 0 then
+        Result := AMD
+      else if Pos('NVIDIA', GpuOutput[1]) > 0 then
+        Result := NVIDIA
+      else
+        Result := Other;
       end;
   except
-    // If something has gone wrong, just ask the user whether they have an AMD GPU.
-    Result := MsgBox(
-        'We weren''t able to automatically determine what graphics card is in your system. We use this information to apply the best compatibility options for you.'
-        + #13#10 + 'Please click "Yes" if your computer has an AMD graphics card. Click "No" if otherwise.',
-        mbConfirmation, MB_YESNO) = IDYES
+    // If something has gone wrong, just ask the user what GPU they have
+    if (MsgBox('We weren''t able to automatically determine what graphics card is in your system. We use this information to apply the best compatibility options for you.'
+    + #13#10 + 'Please click "Yes" if your computer has an NVIDIA graphics card. Click "No" if otherwise.', mbConfirmation, MB_YESNO) = IDYES) then
+      Result := NVIDIA
+    else if (MsgBox('Please click "Yes" if your system uses an AMD graphics card. Click "No" if it''s from another manufacturer like Intel.', mbConfirmation, MB_YESNO) = IDYES) then
+      Result := AMD
+    else
+      Result := Other;
+
   finally
     // Cleanup
     DeleteFile(GpuOutputFile);

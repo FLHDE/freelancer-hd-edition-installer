@@ -510,7 +510,7 @@ begin
   else if dgVoodooGraphicsApi.Checked then
   begin
     // Rename correct dgVoodoo files based on whether or not the user has an AMD GPU for the best compatibility
-    if AmdGpu then
+    if GpuManufacturer = AMD then
       begin
       RenameFile(EXEPath + 'd3d8_dgvoodoo_old.dll', EXEPath + 'd3d8.dll')
       RenameFile(EXEPath + 'dgVoodoo_old.conf', EXEPath + 'dgVoodoo.conf')
@@ -1034,7 +1034,7 @@ begin
   DgVoodooPath := ExpandConstant('{app}\EXE\dgVoodoo.conf');
 
   // Apply correct settings for the activated dgVoodoo versions
-  if AmdGpu then
+  if GpuManufacturer = AMD then
     ApplyOldDgVoodooOptions(DgVoodooPath)
   else
     ApplyNewDgVoodooOptions(DgVoodooPath);

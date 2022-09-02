@@ -818,7 +818,7 @@ begin
   descDgVoodooAf.Top := DgVoodooAf.Top + ScaleY(25);
 
   // This option is not needed on the newer dgVoodoo version, because it automatically runs at the native refresh rate.
-  if AmdGpu then
+  if GpuManufacturer = AMD then
     begin
     lblDgVoodooRefreshRate := TLabel.Create(DgVoodooPage);
     lblDgVoodooRefreshRate.Parent := DgVoodooPage.Surface;
