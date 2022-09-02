@@ -400,7 +400,7 @@ begin
   except
     // If something has gone wrong, just ask the user what GPU they have
     if (MsgBox('We weren''t able to automatically determine what graphics card is in your system. We use this information to apply the best compatibility options for you.'
-    + #13#10 + 'Please click "Yes" if your computer has an NVIDIA graphics card. Click "No" if otherwise.', mbConfirmation, MB_YESNO) = IDYES) then
+    + #13#10#13#10 + 'Please click "Yes" if your computer has an NVIDIA graphics card. Click "No" if otherwise.', mbConfirmation, MB_YESNO) = IDYES) then
       Result := NVIDIA
     else if (MsgBox('Please click "Yes" if your system uses an AMD graphics card. Click "No" if it''s from another manufacturer like Intel.', mbConfirmation, MB_YESNO) = IDYES) then
       Result := AMD
