@@ -156,6 +156,7 @@ begin
   
   // Disable the MP Rep plugin because it's incompatible with the above patches
   FileReplaceString(ExePath + 'dacom.ini', 'MPRep.dll', ';MPRep.dll')
+  // TODO: Enable modified MPRep
 end;
 
 // Processes the Startup Logo option. Renames files depending on what option is selected
