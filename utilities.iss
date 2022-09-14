@@ -13,6 +13,8 @@ type
 end;
 
 // Enum for GPU manufacturers
+// We need this information about the user's system because AMD GPUs have issues with the newest dgVoodoo versions
+// And on NVIDIA GPUs some textures don't load correctly with DxWrapper Anisotropic Filtering
 type
   TGpuManufacturer = (NVIDIA, AMD, Other);
 
@@ -156,7 +158,7 @@ begin
     Result.Height := GetDeviceCaps(DC, 10); // 10 = VERTRES
 
     if (Result.Width = 0) or (Result.Height = 0) then
-      RaiseException('Display Width and/or Height cannot be 0.');
+      RaiseException('Display Width and/or Height cannot be 0');
   except
     Result.Width := 1920
     Result.Height := 1080
@@ -173,7 +175,7 @@ begin
     Result := GetDeviceCaps(DC, 116); // 116 = VREFRESH
 
     if Result = 0 then
-      RaiseException('Refresh Rate cannot be 0.');
+      RaiseException('Refresh Rate cannot be 0');
   except
     Result := 60
   end;
@@ -220,7 +222,7 @@ begin
     SetLength(Buffer, (Length(Hex) div 4) + 1);
     Size := Length(Hex) div 2;
     if (not ConvertHexToBinary(Hex, Length(Hex), Buffer)) then
-      RaiseException('Could not convert string to binary stream.');
+      RaiseException('Could not convert string to binary stream');
 
     Stream.Seek(Offset, soFromBeginning);
     Stream.WriteBuffer(Buffer, Size);
@@ -364,11 +366,11 @@ var
   ResultCodeGpu, ResultCodeUtf8: integer;
   GpuOutput: TArrayOfString;
 begin
-  SetArrayLength(GpuOutput, 8);
+  SetArrayLength(GpuOutput, 10);
 
   try
     if Wine then
-      RaiseException('The cmd and/or PowerShell calls below don''t work on Wine, so don''t bother.');
+      RaiseException('The cmd and/or PowerShell calls below don''t work on Wine, so don''t bother');
 
     GpuOutputFile := ExpandConstant('{tmp}') + '\gpu_name_output.txt';
     GpuOutputFileUtf8 := ExpandConstant('{tmp}') + '\gpu_name_output_utf8.txt';
@@ -376,18 +378,21 @@ begin
     // Gets the GPU name through a wmic call and write that to a text file
     Exec(ExpandConstant('{cmd}'), '/c wmic path win32_VideoController get name > ' + '"' + GpuOutputFile + '"', '', SW_HIDE, ewWaitUntilTerminated, ResultCodeGpu);
     if ResultCodeGpu <> 0 then
-      RaiseException('Can''t get GPU name and write it to a file.');
+      RaiseException('Can''t get GPU name and write it to a file');
 
     // Convert the text file to UTF-8 because by default it's UTF-16 which is a bit difficult to read
     Exec(ExpandConstant('{cmd}'), '/c powershell -c "Get-Content ''' + GpuOutputFile + ''' | Set-Content -Encoding utf8 ''' + GpuOutputFileUtf8 + '''"', '', SW_HIDE, ewWaitUntilTerminated, ResultCodeUtf8);
     if ResultCodeUtf8 <> 0 then
-      RaiseException('Can''t convert GPU name file to UTF-8.');
+      RaiseException('Can''t convert GPU name file to UTF-8');
 
     // Load the string from the file and check if it's been retrieved successfully
     if (LoadStringsFromFile(GpuOutputFileUtf8, GpuOutput)) and (GetArrayLength(GpuOutput) >= 2) then
       begin
+      if not Pos('Name', GpuOutput[0]) > 0 then
+        RaiseException('The first output line doesn''t contain the word "Name", as it should');
+
       if Length(GpuOutput[1]) < 3 then
-        RaiseException('The retrieved GPU name is less than 3 characters long. Something must have gone wrong here.');
+        RaiseException('The retrieved GPU name is less than 3 characters long. Something must have gone wrong here');
 
       // Determine the GPU manufacturer based on the second output line.
       if Pos('AMD', GpuOutput[1]) > 0 then
@@ -402,7 +407,7 @@ begin
     if (MsgBox('We weren''t able to automatically determine what graphics card is in your system. We use this information to apply the best compatibility options for you.'
     + #13#10#13#10 + 'Please click "Yes" if your computer has an NVIDIA graphics card. Click "No" if otherwise.', mbConfirmation, MB_YESNO) = IDYES) then
       Result := NVIDIA
-    else if (MsgBox('Please click "Yes" if your system uses an AMD graphics card. Click "No" if it''s from another manufacturer like Intel.', mbConfirmation, MB_YESNO) = IDYES) then
+    else if (MsgBox('Please click "Yes" if your system uses an AMD graphics card. Click "No" if the graphics card is from another manufacturer like Intel.', mbConfirmation, MB_YESNO) = IDYES) then
       Result := AMD
     else
       Result := Other;

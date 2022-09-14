@@ -1332,6 +1332,7 @@ begin
     // Make all the custom checkboxes and radio buttons less wide so the clickable area doesn't hide the accompanying labels on Wine.
     CheckBoxWidth := ScaleX(20)
 
+    // TODO: Update when new UI elements have been added
     // Checkboxes
     EnglishImprovements.Width := CheckBoxWidth
     RussianFonts.Width := CheckBoxWidth
