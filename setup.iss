@@ -189,6 +189,10 @@ begin
         RemoveJunkFiles('dll');
         RemoveJunkFiles('msi');
 
+        // Remove additional junk files
+        DeleteFile(ExpandConstant('{app}\UNINSTAL.EXE'));
+        DeleteFile(ExpandConstant('{app}\.gitattributes'));
+
         // Install Complete!
         UpdateProgress(100);
     end;
