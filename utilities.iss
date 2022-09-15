@@ -63,7 +63,7 @@ begin
   begin
     try
       repeat
-        if (FindRec.Name <> '.') and (FindRec.Name <> '..') and (FindRec.Name <> 'UNINSTAL.EXE') then
+        if (FindRec.Name <> '.') and (FindRec.Name <> '..') then
         begin
           SourceFilePath := SourcePath + '\' + FindRec.Name;
           DestFilePath := DestPath + '\' + FindRec.Name;
@@ -359,7 +359,7 @@ begin
   Result := Version.Build >= 19041;
 end;
 
-// Gets the manuacturer of the user's GPU
+// Gets the manufacturer of the user's GPU
 function GetGpuManufacturer(): TGpuManufacturer;
 var
   GpuOutputFile, GpuOutputFileUtf8: string;
