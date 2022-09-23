@@ -333,16 +333,10 @@ begin
       #for {i = 0; i < DimOf(Mirrors); i++} PopMirrors
     # endif
 
-    // Gets the user's desktop resolution for later use
+    // Gets some information about the system for later use
     DesktopRes := Resolution();
-
-    // Gets whether the user is on Wine for later use
     Wine := IsWine;
-
-    // Gets the GPU manufacturer for later use
     GpuManufacturer := GetGpuManufacturer();
-
-    // Gets the GPU manufacturer for later use
     SystemLanguage := GetSystemLanguage();
 
     // Initialize EditedConfigFiles
