@@ -342,6 +342,9 @@ begin
     // Gets the GPU manufacturer for later use
     GpuManufacturer := GetGpuManufacturer();
 
+    // Gets the GPU manufacturer for later use
+    SystemLanguage := GetSystemLanguage();
+
     // Initialize EditedConfigFiles
     EditedConfigFiles := TStringList.Create;
     EditedConfigFiles.Sorted := true;
