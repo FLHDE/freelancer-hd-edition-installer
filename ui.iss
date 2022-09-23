@@ -341,7 +341,8 @@ begin
 
   EnglishImprovements := TCheckBox.Create(PageEnglishImprovements);
   EnglishImprovements.Parent := PageEnglishImprovements.Surface;
-  EnglishImprovements.Checked := True;
+  // Only check the English improvements option if the user's system language is set to English or other
+  EnglishImprovements.Checked := SystemLanguage = EnglishOrOther;
 
   lblRussianFonts := TLabel.Create(PageEnglishImprovements);
   lblRussianFonts.Parent := PageEnglishImprovements.Surface;
@@ -359,6 +360,8 @@ begin
   RussianFonts := TCheckBox.Create(PageEnglishImprovements);
   RussianFonts.Parent := PageEnglishImprovements.Surface;
   RussianFonts.Top := lblRussianFonts.Top;
+  // Only check the Russian fonts option if the user's system language is set to Russian
+  RussianFonts.Checked := SystemLanguage = Russian;
 
 
   // Initialize Single Player page and add content

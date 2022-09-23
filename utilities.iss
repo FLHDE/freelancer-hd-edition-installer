@@ -18,11 +18,15 @@ end;
 type
   TGpuManufacturer = (NVIDIA, AMD, Other);
 
+type
+  TSystemLanguage = (German, French, Russian, EnglishOrOther);
+
 // Used to store values used across numerous files and functions so they don't have to be requested multiple times
 var
   DesktopRes: DesktopResolution;
   Wine: Boolean;
   GpuManufacturer: TGpuManufacturer;
+  SystemLanguage: TSystemLanguage;
 
 function IsWine: boolean;
 var  LibHandle  : THandle;
@@ -416,5 +420,22 @@ begin
     // Cleanup
     DeleteFile(GpuOutputFile);
     DeleteFile(GpuOutputFileUtf8);
+  end;
+end;
+
+// Determine what language the user's system is
+function GetSystemLanguage(): TSystemLanguage;
+var
+  UILanguage: Integer;
+begin
+  UILanguage := GetUILanguage
+
+  // https://renenyffenegger.ch/notes/Windows/development/Internationalization/language
+  case UILanguage of
+    $407, $807, $c07, $1007, $1407: Result := German;
+    $40c, $80c, $c0c, $100c, $140c, $180c, $1c0c, $200c, $240c, $280c, $2c0c, $300c, $340c, $380c, $3c0c: Result := French;
+    $419, $819: Result := Russian;
+  else
+    Result := EnglishOrOther;
   end;
 end;
