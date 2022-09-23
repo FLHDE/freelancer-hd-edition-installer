@@ -876,7 +876,7 @@ begin
   FilePath := ExpandConstant('{app}\DATA\FX\jumpeffect.ini');
 
   // Modify jump in and out tunnel time based on selected option
-  if(JumpTunnel5Sec.Checked) then 
+  if JumpTunnel5Sec.Checked then
     begin 
       FileReplaceString(FilePath, 'jump_out_tunnel_time = 7' + #13#10
                                   'jump_in_tunnel_time = 3'  + #13#10,
@@ -884,7 +884,7 @@ begin
                                   'jump_out_tunnel_time = 3.5' + #13#10
                                   'jump_in_tunnel_time = 1.5'  + #13#10)
   end
-  else if(JumpTunnel2Sec.Checked) then
+  else if JumpTunnel2Sec.Checked then
     begin
       FileReplaceString(FilePath, 'jump_out_tunnel_time = 7' + #13#10
                                   'jump_in_tunnel_time = 3'  + #13#10,
@@ -892,7 +892,7 @@ begin
                                   'jump_out_tunnel_time = 1.75' + #13#10
                                   'jump_in_tunnel_time = 0.75'  + #13#10)
     end
-  else if(JumpTunnelSkip.Checked) then 
+  else if JumpTunnelSkip.Checked then
     begin
       FileReplaceString(FilePath, 'jump_out_tunnel_time = 7' + #13#10
                                   'jump_in_tunnel_time = 3'  + #13#10,
@@ -909,7 +909,7 @@ begin
   FilePath := ExpandConstant('{app}\EXE\freelancer.ini');
 
   // Skip intros if selected
-  if(SkipIntros.Checked) then 
+  if SkipIntros.Checked then
     begin 
       FileReplaceString(FilePath, 'movie_file = movies\MGS_Logo_Final.wmv' + #13#10
                                   'movie_file = movies\DA_Logo_Final.wmv'  + #13#10
@@ -1060,16 +1060,16 @@ begin
   RenameFile(ReShadePath + ReShadeDllName + '_reshade.dll', ReShadePath + ReShadeDllName + '.dll')
 
   // Enable checked ReShade options
-  if (BloomChecked) then
+  if BloomChecked then
     Techniques := Techniques + 'MagicBloom@MagicBloom.fx,';
-  if (HdrChecked) then
+  if HdrChecked then
     Techniques := Techniques + 'HDR@FakeHDR.fx,';
-  if (SaturationChecked) then
+  if SaturationChecked then
     Techniques := Techniques + 'Colourfulness@Colourfulness.fx,';
   if (DisplayMode.ItemIndex = 1) or (DisplayMode.ItemIndex = 2) then
     // Use Tonemap only if windowed or fullscreen windowed have been checked
     Techniques := Techniques + 'Tonemap@Tonemap.fx,';
-  if (SharpeningChecked) then
+  if SharpeningChecked then
     Techniques := Techniques + 'ContrastAdaptiveSharpen@CAS.fx';
 
   // Removes a trailing comma at the end of the techniques if it's there
@@ -1103,7 +1103,7 @@ begin
   if (DisplayMode.ItemIndex = 1) or (DisplayMode.ItemIndex = 2) then // Windowed or borderless windowed selected
     WriteHexToFile(ExePath, $1B16CC, '00'); // Windowed mode
   
-  if (DisplayMode.ItemIndex = 2) then // Borderless windowed selected 
+  if DisplayMode.ItemIndex = 2 then // Borderless windowed selected
   begin
     WriteHexToFile(ExePath, $02477A, '0000'); // Borderless window #1
     WriteHexToFile(ExePath, $02490D, '0000'); // Borderless window #2
@@ -1111,7 +1111,7 @@ begin
 
   if (DoNotPauseOnAltTab.Checked) then
   begin
-    if (DisplayMode.ItemIndex = 0) then // Fullscreen selected   
+    if DisplayMode.ItemIndex = 0 then // Fullscreen selected
       WriteHexToFile(ExePath, $1B2665, 'EB') // Keep Freelancer running in the background when Alt-Tabbed
     else
       WriteHexToFile(ExePath, $1B264C, 'BA0100000090'); // Keep Freelancer and its window running in the background when Alt-Tabbed

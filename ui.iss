@@ -268,7 +268,40 @@ procedure InitializeUi();
 var 
   dir : string;
   CheckBoxWidth: Integer;
+
+  // Strings that are used more than one time
+  txtAa: String;
+  txtAaDesc: String;
+  txtAf: String;
+  txtAfDesc: String;
+  txtEnhancementsPage: String;
+  txtReShade: String;
+  txtReShadeDesc: String;
+  txtSaturation: String;
+  txtSaturationDesc: String;
+  txtSharpening: String;
+  txtSharpeningDesc: String;
+  txtHdr: String;
+  txtHdrDesc: String;
+  txtBloom: String;
+  txtBloomDesc: String;
 begin
+  txtAa := 'Anti-Aliasing';
+  txtAaDesc := 'Anti-Aliasing removes jagged edges in-game, effectively making them appear smoother at a performance cost.';
+  txtAf := 'Anisotropic Filtering';
+  txtAfDesc := 'Anisotropic Filtering improves the quality of textures when viewing them from the side with minimal performance overhead.';
+  txtEnhancementsPage := 'Choose additional graphics enhancements';
+  txtReShade := 'Enable ReShade';
+  txtReShadeDesc := 'This option enables ReShade, which allows for the use of various post-processing effects to improve the game''s appearance. If it''s been enabled, the configuration below can be adjusted at any time by pressing the ''Home'' key in-game.';
+  txtSaturation := 'Add increased saturation (recommended)';
+  txtSaturationDesc := 'Simply gives Freelancer a slightly more-saturated look.';
+  txtSharpening := 'Add adaptive sharpening (recommended)';
+  txtSharpeningDesc := 'Makes the game look slightly more crisp without oversharpening everything.';
+  txtHdr := 'Add Fake HDR (High Dynamic Range)';
+  txtHdrDesc := 'Makes darker areas a bit darker, and brighter areas a bit brighter.';
+  txtBloom := 'Add Bloom';
+  txtBloomDesc := 'Adds glow to brighter areas. May reduce detail.';
+
   # if !AllInOneInstall
   // Read download size
   DownloadSize := IntToStr(StrToInt64(ExpandConstant('{#SizeZip}'))/1048576);
@@ -444,9 +477,9 @@ begin
   StartupRes.Add('4K 16:9 - 3840x2160');
 
   // Determine best default startup resolution based on user's screen size
-  if (DesktopRes.Height >= 2160) then 
+  if DesktopRes.Height >= 2160 then
     StartupRes.Values[8] := True
-  else if (DesktopRes.Height >= 1440) then
+  else if DesktopRes.Height >= 1440 then
     StartupRes.Values[6] := True
   else
     StartupRes.Values[4] := True;
@@ -470,9 +503,9 @@ begin
   LogoRes.Add('4K 16:9 - 3840x2160');
 
   // Determine best default logo resolution based on user's screen size
-  if (DesktopRes.Height >= 2160) then 
+  if DesktopRes.Height >= 2160 then
     LogoRes.Values[9] := True
-  else if (DesktopRes.Height >= 1440) then
+  else if DesktopRes.Height >= 1440 then
     LogoRes.Values[7] := True
   else
     LogoRes.Values[5] := True;
@@ -488,9 +521,9 @@ begin
   SmallText.Add('Yes, apply fix for 3840x2160 screens');
 
   // Determine best small text fix based on user's screen size
-  if (DesktopRes.Height >= 2160) then 
+  if DesktopRes.Height >= 2160 then
     SmallText.Values[2] := True
-  else if (DesktopRes.Height >= 1440) then
+  else if DesktopRes.Height >= 1440 then
     SmallText.Values[1] := True
   else
     SmallText.Values[0] := True;
@@ -518,8 +551,7 @@ begin
   WidescreenHud.Parent := PageWidescreenHud.Surface;
 
   // Only check the wide screen HUD option if the user's aspect ratio is not 4:3
-  if (not IsDesktopRes4By3()) then
-    WidescreenHud.Checked := True;
+  WidescreenHud.Checked := not IsDesktopRes4By3();
 
   lblWeaponGroups := TLabel.Create(PageWidescreenHud);
   lblWeaponGroups.Parent := PageWidescreenHud.Surface;
@@ -539,8 +571,7 @@ begin
   WeaponGroups.Top := lblWeaponGroups.Top;
 
   // Only check the weapon groups option if the user's aspect ratio is 16:9 or 4:3
-  if (IsDesktopRes16By9()) or (IsDesktopRes4By3()) then
-    WeaponGroups.Checked := True;
+  WeaponGroups.Checked := IsDesktopRes16By9() or IsDesktopRes4By3();
 
   // Initialize Dark HUD page and add content
   PageDarkHud := CreateCustomPage(
@@ -628,8 +659,7 @@ begin
   PlanetScape.Parent := PagePlanetScape.Surface;
 
   // Only check the planetscapes fix option if the user's aspect ratio is 16:9
-  if (IsDesktopRes16By9()) then
-    PlanetScape.Checked := True;
+  PlanetScape.Checked := IsDesktopRes16By9();
   
   // Choose Graphics API
   PageGraphicsApi := CreateCustomPage(
@@ -677,7 +707,12 @@ begin
   descDxWrapperGraphicsApi.WordWrap := True;
   descDxWrapperGraphicsApi.Top := DxWrapperGraphicsApi.Top + ScaleY(15);
   descDxWrapperGraphicsApi.Width := PageGraphicsApi.SurfaceWidth;
-  descDxWrapperGraphicsApi.Caption := 'Supports native Anti-Aliasing, Anisotropic Filtering, and ReShade. Not 100% stable.';
+  descDxWrapperGraphicsApi.Caption := 'Supports native Anti-Aliasing';
+
+  // Don't say that the DxWrapper option supports Anisitropic Filtering on NVIDA hardware because it's broken on there
+  if GpuManufacturer <> NVIDIA then
+    descDxWrapperGraphicsApi.Caption := descDxWrapperGraphicsApi.Caption + ', Anisotropic Filtering,';
+  descDxWrapperGraphicsApi.Caption := descDxWrapperGraphicsApi.Caption + ' and ReShade. Not 100% stable.';
 
   lblVanillaGraphicsApi := TLabel.Create(PageGraphicsApi);
   lblVanillaGraphicsApi.Parent := PageGraphicsApi.Surface;
@@ -722,12 +757,12 @@ begin
   DxWrapperPage := CreateCustomPage(
     PageGraphicsApi.ID,
     'DxWrapper options',
-    'Choose additional graphics enhancements'
+    txtEnhancementsPage
   );
 
   lblDxWrapperAa := TLabel.Create(DxWrapperPage);
   lblDxWrapperAa.Parent := DxWrapperPage.Surface;
-  lblDxWrapperAa.Caption := 'Anti-Aliasing';
+  lblDxWrapperAa.Caption := txtAA;
   
   DxWrapperAa := TComboBox.Create(DxWrapperPage);
   DxWrapperAa.Parent := DxWrapperPage.Surface;
@@ -741,7 +776,7 @@ begin
   descDxWrapperAa.Parent := DxWrapperPage.Surface;
   descDxWrapperAa.WordWrap := True;
   descDxWrapperAa.Width := DxWrapperPage.SurfaceWidth;
-  descDxWrapperAa.Caption := 'Anti-Aliasing removes jagged edges in-game, effectively making them appear smoother at a performance cost.';
+  descDxWrapperAa.Caption := txtAaDesc;
   descDxWrapperAa.Top := DxWrapperAa.Top + ScaleY(25);
 
   // Anisotropic Filtering is broken on NVIDIA GPUs, so don't show the option for users who have one
@@ -749,7 +784,7 @@ begin
   begin
     lblDxWrapperAf := TLabel.Create(DxWrapperPage);
     lblDxWrapperAf.Parent := DxWrapperPage.Surface;
-    lblDxWrapperAf.Caption := 'Anisotropic Filtering';
+    lblDxWrapperAf.Caption := TxtAf;
     lblDxWrapperAf.Top := descDxWrapperAa.Top + ScaleY(50);
     
     DxWrapperAf := TComboBox.Create(DxWrapperPage);
@@ -768,7 +803,7 @@ begin
     descDxWrapperAf.Parent := DxWrapperPage.Surface;
     descDxWrapperAf.WordWrap := True;
     descDxWrapperAf.Width := DxWrapperPage.SurfaceWidth;
-    descDxWrapperAf.Caption := 'Anisotropic Filtering improves the quality of textures when viewing them from the side, with minimal performance overhead. "Auto" will automatically use the highest option your graphics card supports.'
+    descDxWrapperAf.Caption := txtAfDesc + ' "Auto" will automatically use the highest option your graphics card supports.'
     descDxWrapperAf.Top := DxWrapperAf.Top + ScaleY(25);
   end;
 
@@ -776,12 +811,12 @@ begin
   DgVoodooPage := CreateCustomPage(
     DxWrapperPage.ID,
     'dgVoodoo options',
-    'Choose additional graphics enhancements'
+    txtEnhancementsPage
   );
 
   lblDgVoodooAa := TLabel.Create(DgVoodooPage);
   lblDgVoodooAa.Parent := DgVoodooPage.Surface;
-  lblDgVoodooAa.Caption := 'Anti-Aliasing';
+  lblDgVoodooAa.Caption := txtAa;
   
   DgVoodooAa := TComboBox.Create(DgVoodooPage);
   DgVoodooAa.Parent := DgVoodooPage.Surface;
@@ -797,12 +832,12 @@ begin
   descDgVoodooAa.Parent := DgVoodooPage.Surface;
   descDgVoodooAa.WordWrap := True;
   descDgVoodooAa.Width := DgVoodooPage.SurfaceWidth;
-  descDgVoodooAa.Caption := 'Anti-Aliasing removes jagged edges in-game, effectively making them appear smoother at a performance cost.';
+  descDgVoodooAa.Caption := txtAaDesc;
   descDgVoodooAa.Top := DgVoodooAa.Top + ScaleY(25);
 
   lblDgVoodooAf := TLabel.Create(DgVoodooPage);
   lblDgVoodooAf.Parent := DgVoodooPage.Surface;
-  lblDgVoodooAf.Caption := 'Anisotropic Filtering';
+  lblDgVoodooAf.Caption := txtAf;
   lblDgVoodooAf.Top := descDgVoodooAa.Top + ScaleY(45);
   
   DgVoodooAf := TComboBox.Create(DgVoodooPage);
@@ -820,12 +855,12 @@ begin
   descDgVoodooAf.Parent := DgVoodooPage.Surface;
   descDgVoodooAf.WordWrap := True;
   descDgVoodooAf.Width := DgVoodooPage.SurfaceWidth;
-  descDgVoodooAf.Caption := 'Anisotropic Filtering improves the quality of textures when viewing them from the side, with minimal performance overhead.';
+  descDgVoodooAf.Caption := txtAfDesc;
   descDgVoodooAf.Top := DgVoodooAf.Top + ScaleY(25);
 
-  // This option is not needed on the newer dgVoodoo version, because it automatically runs at the native refresh rate.
+  // The refresh rate option is not needed on the newer dgVoodoo version, because it automatically runs at the native refresh rate.
   if GpuManufacturer = AMD then
-    begin
+  begin
     lblDgVoodooRefreshRate := TLabel.Create(DgVoodooPage);
     lblDgVoodooRefreshRate.Parent := DgVoodooPage.Surface;
     lblDgVoodooRefreshRate.Caption := 'Refresh Rate';
@@ -849,18 +884,18 @@ begin
     descDgVoodooRefreshRate.Width := DgVoodooPage.SurfaceWidth;
     descDgVoodooRefreshRate.Caption := 'Enter your monitor''s refresh rate here. Freelancer will run at this refresh rate.';
     descDgVoodooRefreshRate.Top := DgVoodooRefreshRate.Top + ScaleY(25);
-    end;
+  end;
 
   // DxWrapper options #2
   DxWrapperPage2 := CreateCustomPage(
     DgVoodooPage.ID,
     'DxWrapper options #2',
-    'Choose additional graphics enhancements'
+    txtEnhancementsPage
   );
 
   lblDxWrapperReShade := TLabel.Create(DxWrapperPage2);
   lblDxWrapperReShade.Parent := DxWrapperPage2.Surface;
-  lblDxWrapperReShade.Caption := 'Enable ReShade';
+  lblDxWrapperReShade.Caption := txtReShade;
   lblDxWrapperReShade.Left := ScaleX(20);
   
   descDxWrapperReShade := TNewStaticText.Create(DxWrapperPage2);
@@ -868,7 +903,7 @@ begin
   descDxWrapperReShade.WordWrap := True;
   descDxWrapperReShade.Top := ScaleY(20);
   descDxWrapperReShade.Width := DxWrapperPage2.SurfaceWidth;
-  descDxWrapperReShade.Caption := 'This option enables ReShade, which allows for the use of various post-processing effects to improve the game''s appearance. If it has been enabled, the configuration below can always be adjusted by pressing the ''Home'' key in-game.'
+  descDxWrapperReShade.Caption := txtReShadeDesc
   
   DxWrapperReShade := TCheckBox.Create(DxWrapperPage2);
   DxWrapperReShade.Parent := DxWrapperPage2.Surface;
@@ -876,7 +911,7 @@ begin
 
   lblDxWrapperSaturation := TLabel.Create(DxWrapperPage2);
   lblDxWrapperSaturation.Parent := DxWrapperPage2.Surface;
-  lblDxWrapperSaturation.Caption := 'Add increased saturation (recommended)';
+  lblDxWrapperSaturation.Caption := txtSaturation;
   lblDxWrapperSaturation.Left := ScaleX(20);
   lblDxWrapperSaturation.Top := descDxWrapperReShade.Top + ScaleY(58);
   
@@ -885,7 +920,7 @@ begin
   descDxWrapperSaturation.WordWrap := True;
   descDxWrapperSaturation.Top := lblDxWrapperSaturation.Top + ScaleY(20);
   descDxWrapperSaturation.Width := DxWrapperPage2.SurfaceWidth;
-  descDxWrapperSaturation.Caption := 'Simply gives Freelancer a slightly more-saturated look.'
+  descDxWrapperSaturation.Caption := txtSaturationDesc
   
   DxWrapperSaturation := TCheckBox.Create(DxWrapperPage2);
   DxWrapperSaturation.Parent := DxWrapperPage2.Surface;
@@ -894,7 +929,7 @@ begin
 
   lblDxWrapperSharpening := TLabel.Create(DxWrapperPage2);
   lblDxWrapperSharpening.Parent := DxWrapperPage2.Surface;
-  lblDxWrapperSharpening.Caption := 'Add adaptive sharpening (recommended)';
+  lblDxWrapperSharpening.Caption := txtSharpening;
   lblDxWrapperSharpening.Left := ScaleX(20);
   lblDxWrapperSharpening.Top := descDxWrapperSaturation.Top + ScaleY(28);
 
@@ -903,7 +938,7 @@ begin
   descDxWrapperSharpening.WordWrap := True;
   descDxWrapperSharpening.Top := lblDxWrapperSharpening.Top + ScaleY(20);
   descDxWrapperSharpening.Width := DxWrapperPage2.SurfaceWidth;
-  descDxWrapperSharpening.Caption := 'Makes the game look slightly more crisp without oversharpening everything.'
+  descDxWrapperSharpening.Caption := txtSharpeningDesc
 
   DxWrapperSharpening := TCheckBox.Create(DxWrapperPage2);
   DxWrapperSharpening.Parent := DxWrapperPage2.Surface;
@@ -912,7 +947,7 @@ begin
 
   lblDxWrapperHdr := TLabel.Create(DxWrapperPage2);
   lblDxWrapperHdr.Parent := DxWrapperPage2.Surface;
-  lblDxWrapperHdr.Caption := 'Add Fake HDR (High Dynamic Range)';
+  lblDxWrapperHdr.Caption := txtHdr;
   lblDxWrapperHdr.Left := ScaleX(20);
   lblDxWrapperHdr.Top := descDxWrapperSharpening.Top + ScaleY(28);
   
@@ -921,7 +956,7 @@ begin
   descDxWrapperHdr.WordWrap := True;
   descDxWrapperHdr.Top := lblDxWrapperHdr.Top + ScaleY(20);
   descDxWrapperHdr.Width := DxWrapperPage2.SurfaceWidth;
-  descDxWrapperHdr.Caption := 'Makes darker areas a bit darker, and brighter areas a bit brighter.'
+  descDxWrapperHdr.Caption := txtHdrDesc
   
   DxWrapperHdr := TCheckBox.Create(DxWrapperPage2);
   DxWrapperHdr.Parent := DxWrapperPage2.Surface;
@@ -929,7 +964,7 @@ begin
 
   lblDxWrapperBloom := TLabel.Create(DxWrapperPage2);
   lblDxWrapperBloom.Parent := DxWrapperPage2.Surface;
-  lblDxWrapperBloom.Caption := 'Add Bloom';
+  lblDxWrapperBloom.Caption := txtBloom;
   lblDxWrapperBloom.Left := ScaleX(20);
   lblDxWrapperBloom.Top := descDxWrapperHdr.Top + ScaleY(28);
   
@@ -938,7 +973,7 @@ begin
   descDxWrapperBloom.WordWrap := True;
   descDxWrapperBloom.Top := lblDxWrapperBloom.Top + ScaleY(20);
   descDxWrapperBloom.Width := DxWrapperPage2.SurfaceWidth;
-  descDxWrapperBloom.Caption := 'Adds glow to brighter areas. May reduce detail.'
+  descDxWrapperBloom.Caption := txtBloomDesc
   
   DxWrapperBloom := TCheckBox.Create(DxWrapperPage2);
   DxWrapperBloom.Parent := DxWrapperPage2.Surface;
@@ -948,12 +983,12 @@ begin
   DgVoodooPage2 := CreateCustomPage(
     DxWrapperPage2.ID,
     'dgVoodoo options #2',
-    'Choose additional graphics enhancements'
+    txtEnhancementsPage
   );
 
   lblDgVoodooReShade := TLabel.Create(DgVoodooPage2);
   lblDgVoodooReShade.Parent := DgVoodooPage2.Surface;
-  lblDgVoodooReShade.Caption := 'Enable ReShade';
+  lblDgVoodooReShade.Caption := txtReShade;
   lblDgVoodooReShade.Left := ScaleX(20);
   
   descDgVoodooReShade := TNewStaticText.Create(DgVoodooPage2);
@@ -961,7 +996,7 @@ begin
   descDgVoodooReShade.WordWrap := True;
   descDgVoodooReShade.Top := ScaleY(20);
   descDgVoodooReShade.Width := DxWrapperPage2.SurfaceWidth;
-  descDgVoodooReShade.Caption := 'This option enables ReShade, which allows for the use of various post-processing effects to improve the game''s appearance. If it has been enabled, the configuration below can always be adjusted by pressing the ''Home'' key in-game.'
+  descDgVoodooReShade.Caption := txtReShadeDesc
   
   DgVoodooReShade := TCheckBox.Create(DgVoodooPage2);
   DgVoodooReShade.Parent := DgVoodooPage2.Surface;
@@ -969,7 +1004,7 @@ begin
 
   lblDgVoodooSaturation := TLabel.Create(DgVoodooPage2);
   lblDgVoodooSaturation.Parent := DgVoodooPage2.Surface;
-  lblDgVoodooSaturation.Caption := 'Add increased saturation (recommended)';
+  lblDgVoodooSaturation.Caption := txtSaturation;
   lblDgVoodooSaturation.Left := ScaleX(20);
   lblDgVoodooSaturation.Top := descDgVoodooReShade.Top + ScaleY(58);
   
@@ -978,7 +1013,7 @@ begin
   descDgVoodooSaturation.WordWrap := True;
   descDgVoodooSaturation.Top := lblDgVoodooSaturation.Top + ScaleY(20);
   descDgVoodooSaturation.Width := DgVoodooPage2.SurfaceWidth;
-  descDgVoodooSaturation.Caption := 'Simply gives Freelancer a slightly more-saturated look.'
+  descDgVoodooSaturation.Caption := txtSaturationDesc
   
   DgVoodooSaturation := TCheckBox.Create(DgVoodooPage2);
   DgVoodooSaturation.Parent := DgVoodooPage2.Surface;
@@ -987,7 +1022,7 @@ begin
 
   lblDgVoodooSharpening := TLabel.Create(DgVoodooPage2);
   lblDgVoodooSharpening.Parent := DgVoodooPage2.Surface;
-  lblDgVoodooSharpening.Caption := 'Add adaptive sharpening (recommended)';
+  lblDgVoodooSharpening.Caption := txtSharpening;
   lblDgVoodooSharpening.Left := ScaleX(20);
   lblDgVoodooSharpening.Top := descDgVoodooSaturation.Top + ScaleY(28);
 
@@ -996,7 +1031,7 @@ begin
   descDgVoodooSharpening.WordWrap := True;
   descDgVoodooSharpening.Top := lblDgVoodooSharpening.Top + ScaleY(20);
   descDgVoodooSharpening.Width := DgVoodooPage2.SurfaceWidth;
-  descDgVoodooSharpening.Caption := 'Makes the game look slightly more crisp without oversharpening everything.'
+  descDgVoodooSharpening.Caption := txtSharpeningDesc
 
   DgVoodooSharpening := TCheckBox.Create(DgVoodooPage2);
   DgVoodooSharpening.Parent := DgVoodooPage2.Surface;
@@ -1005,7 +1040,7 @@ begin
 
   lblDgVoodooHdr := TLabel.Create(DgVoodooPage2);
   lblDgVoodooHdr.Parent := DgVoodooPage2.Surface;
-  lblDgVoodooHdr.Caption := 'Add Fake HDR (High Dynamic Range)';
+  lblDgVoodooHdr.Caption := txtHdr;
   lblDgVoodooHdr.Left := ScaleX(20);
   lblDgVoodooHdr.Top := descDgVoodooSharpening.Top + ScaleY(28);
   
@@ -1014,7 +1049,7 @@ begin
   descDgVoodooHdr.WordWrap := True;
   descDgVoodooHdr.Top := lblDgVoodooHdr.Top + ScaleY(20);
   descDgVoodooHdr.Width := DgVoodooPage2.SurfaceWidth;
-  descDgVoodooHdr.Caption := 'Makes darker areas a bit darker, and brighter areas a bit brighter.'
+  descDgVoodooHdr.Caption := txtHdrDesc
   
   DgVoodooHdr := TCheckBox.Create(DgVoodooPage2);
   DgVoodooHdr.Parent := DgVoodooPage2.Surface;
@@ -1022,7 +1057,7 @@ begin
 
   lblDgVoodooBloom := TLabel.Create(DgVoodooPage2);
   lblDgVoodooBloom.Parent := DgVoodooPage2.Surface;
-  lblDgVoodooBloom.Caption := 'Add Bloom';
+  lblDgVoodooBloom.Caption := txtBloom;
   lblDgVoodooBloom.Left := ScaleX(20);
   lblDgVoodooBloom.Top := descDgVoodooHdr.Top + ScaleY(28);
   
@@ -1031,7 +1066,7 @@ begin
   descDgVoodooBloom.WordWrap := True;
   descDgVoodooBloom.Top := lblDgVoodooBloom.Top + ScaleY(20);
   descDgVoodooBloom.Width := DxWrapperPage2.SurfaceWidth;
-  descDgVoodooBloom.Caption := 'Adds glow to brighter areas. May reduce detail.'
+  descDgVoodooBloom.Caption := txtBloomDesc
   
   DgVoodooBloom := TCheckBox.Create(DgVoodooPage2);
   DgVoodooBloom.Parent := DgVoodooPage2.Surface;
@@ -1301,34 +1336,22 @@ begin
   MusicInBackground := False;
 
   with DxWrapperPage do
-  begin
     OnShouldSkipPage := @PageHandler_ShouldSkipPage;
-  end;
 
   with DgVoodooPage do
-  begin
     OnShouldSkipPage := @PageHandler_ShouldSkipPage;
-  end;
 
   with DxWrapperPage2 do
-  begin
     OnShouldSkipPage := @PageHandler_ShouldSkipPage;
-  end;
 
   with DgVoodooPage2 do
-  begin
     OnShouldSkipPage := @PageHandler_ShouldSkipPage;
-  end;
 
   with DxWrapperReShade do
-  begin
     OnClick := @DxWrapperReShadeCheckBoxClick;
-  end;
 
   with DgVoodooReShade do
-  begin
     OnClick := @DgVoodooReShadeCheckBoxClick;
-  end;
 
   if Wine then
   begin
