@@ -374,7 +374,7 @@ begin
 
   try
     if Wine then
-      RaiseException('The cmd and/or PowerShell calls below don''t work on Wine, so don''t bother');
+      RaiseException('The cmd and/or PowerShell calls below won''t work on Wine, so don''t bother');
 
     GpuOutputFile := ExpandConstant('{tmp}') + '\gpu_name_output.txt';
     GpuOutputFileUtf8 := ExpandConstant('{tmp}') + '\gpu_name_output_utf8.txt';

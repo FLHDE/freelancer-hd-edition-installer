@@ -111,7 +111,7 @@ begin
     if CurStep = ssPostInstall then
     begin
         # if !AllInOneInstall
-          if (OfflineInstall <> 'false') then
+          if OfflineInstall <> 'false' then
             FileCopy(OfflineInstall,ExpandConstant('{tmp}\{#MyZipName}.7z'),false);
         # endif
 

@@ -374,7 +374,7 @@ begin
 
   EnglishImprovements := TCheckBox.Create(PageEnglishImprovements);
   EnglishImprovements.Parent := PageEnglishImprovements.Surface;
-  // Only check the English improvements option if the user's system language is set to English or other
+  // Only check the English improvements option if the user's system language is set to English or other. If otherwise, it's likely the user would want to play FL in a different language.
   EnglishImprovements.Checked := SystemLanguage = EnglishOrOther;
 
   lblRussianFonts := TLabel.Create(PageEnglishImprovements);
