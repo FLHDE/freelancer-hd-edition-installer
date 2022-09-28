@@ -154,9 +154,9 @@ begin
   WriteHexToFile(ExePath + 'Freelancer.exe', $082E95, 'EB'); // Changes the display of equipment below the required level
   WriteHexToFile(ExePath + 'Freelancer.exe', $0B948D, 'EB'); // Allows the purchase of ships below the required level
   
-  // Disable the MP Rep plugin because it's incompatible with the above patches
-  FileReplaceString(ExePath + 'dacom.ini', 'MPRep.dll', ';MPRep.dll')
-  // TODO: Enable modified MPRep
+  // Enable a modified version of the MP Rep plugin because the MP level requirements feature is incompatible with the above patches
+  RenameFile(ExePath + 'MPRep.dll', ExePath + 'MPRep_default.dll');
+  RenameFile(ExePath + 'MPRep_no_level_reqs.dll', ExePath + 'MPRep.dll');
 end;
 
 // Processes the Startup Logo option. Renames files depending on what option is selected
@@ -169,26 +169,27 @@ begin
   FolderPath := ExpandConstant('{app}\DATA\INTERFACE\INTRO\IMAGES\');
   NewFile := FolderPath + 'startupscreen_1280.tga';
   // If not the default
-  if(not StartupRes.Values[2]) then begin
+  if not StartupRes.Values[2] then begin
     // Rename old file away
-    RenameFile(NewFile,FolderPath + 'startupscreen_1280_vanilla.tga');
+    RenameFile(NewFile, FolderPath + 'startupscreen_1280_vanilla.tga');
     // Rename the correct startup res depending on the selected option
-    if(StartupRes.Values[1]) then // 720p 16:9
-      OldFile := FolderPath + 'startupscreen_1280_1280x720.tga'
-    else if(StartupRes.Values[3]) then // 1080p 4:3
-      OldFile := FolderPath + 'startupscreen_1280_1440x1080.tga'
-    else if(StartupRes.Values[4]) then// 1080p 16:9
-      OldFile := FolderPath + 'startupscreen_1280_1920x1080.tga'
-    else if(StartupRes.Values[5]) then// 1440p 4:3
-      OldFile := FolderPath + 'startupscreen_1280_1920x1440.tga'
-    else if(StartupRes.Values[6]) then // 1440p 16:9
-      OldFile := FolderPath + 'startupscreen_1280_2560x1440.tga'
-    else if(StartupRes.Values[7]) then // 2160p 4:3
-      OldFile := FolderPath + 'startupscreen_1280_2880x2160.tga'
-    else if(StartupRes.Values[8]) then // 2160p 16:9
-      OldFile := FolderPath + 'startupscreen_1280_3840x2160.tga';
+    if StartupRes.Values[1] then // 720p 16:9
+      OldFile := 'startupscreen_1280_1280x720.tga'
+    else if StartupRes.Values[3] then // 1080p 4:3
+      OldFile := 'startupscreen_1280_1440x1080.tga'
+    else if StartupRes.Values[4] then // 1080p 16:9
+      OldFile := 'startupscreen_1280_1920x1080.tga'
+    else if StartupRes.Values[5] then // 1440p 4:3
+      OldFile := 'startupscreen_1280_1920x1440.tga'
+    else if StartupRes.Values[6] then // 1440p 16:9
+      OldFile := 'startupscreen_1280_2560x1440.tga'
+    else if StartupRes.Values[7] then // 2160p 4:3
+      OldFile := 'startupscreen_1280_2880x2160.tga'
+    else if StartupRes.Values[8] then // 2160p 16:9
+      OldFile := 'startupscreen_1280_3840x2160.tga';
+
     // Actually rename the file
-    RenameFile(OldFile,NewFile);
+    RenameFile(FolderPath + OldFile, NewFile);
     end
 end;
 
@@ -202,28 +203,29 @@ begin
   FolderPath := ExpandConstant('{app}\DATA\INTERFACE\INTRO\IMAGES\');
   NewFile := FolderPath + 'front_freelancerlogo.tga';
   // If not the default
-  if(not LogoRes.Values[1]) then begin
+  if not LogoRes.Values[1] then begin
     // Rename old file away
-    RenameFile(NewFile,FolderPath + 'front_freelancerlogo_vanilla.tga')
+    RenameFile(NewFile, FolderPath + 'front_freelancerlogo_vanilla.tga')
     // Rename correct logo res depending on option
-    if(LogoRes.Values[2]) then // 720p 4:3
-      OldFile := FolderPath + 'front_freelancerlogo_960x720.tga'
-    else if(LogoRes.Values[3]) then // 720p 16:9
-      OldFile := FolderPath + 'front_freelancerlogo_1280x720.tga'
-    else if(LogoRes.Values[4]) then // 1440p 4:3
-      OldFile := FolderPath + 'front_freelancerlogo_1440x1080.tga'
-    else if(LogoRes.Values[5]) then // 1440p 16:9
-      OldFile := FolderPath + 'front_freelancerlogo_1920x1080.tga'
-    else if(LogoRes.Values[6]) then // 1440p 4:3
-      OldFile := FolderPath + 'front_freelancerlogo_1920x1440.tga'
-    else if(LogoRes.Values[7]) then // 1440p 16:9
-      OldFile := FolderPath + 'front_freelancerlogo_2560x1440.tga'
-    else if(LogoRes.Values[8]) then // 2160p 4:3
-      OldFile := FolderPath + 'front_freelancerlogo_2880x2160.tga'
-    else if(LogoRes.Values[9]) then // 2160p 16:9
-      OldFile := FolderPath + 'front_freelancerlogo_3840x2160.tga';
+    if LogoRes.Values[2] then // 720p 4:3
+      OldFile := 'front_freelancerlogo_960x720.tga'
+    else if LogoRes.Values[3] then // 720p 16:9
+      OldFile := 'front_freelancerlogo_1280x720.tga'
+    else if LogoRes.Values[4] then // 1440p 4:3
+      OldFile := 'front_freelancerlogo_1440x1080.tga'
+    else if LogoRes.Values[5] then // 1440p 16:9
+      OldFile := 'front_freelancerlogo_1920x1080.tga'
+    else if LogoRes.Values[6] then // 1440p 4:3
+      OldFile := 'front_freelancerlogo_1920x1440.tga'
+    else if LogoRes.Values[7] then // 1440p 16:9
+      OldFile := 'front_freelancerlogo_2560x1440.tga'
+    else if LogoRes.Values[8] then // 2160p 4:3
+      OldFile := 'front_freelancerlogo_2880x2160.tga'
+    else if LogoRes.Values[9] then // 2160p 16:9
+      OldFile := 'front_freelancerlogo_3840x2160.tga';
+
     // Actually rename the file
-    RenameFile(OldFile,NewFile);
+    RenameFile(FolderPath + OldFile, NewFile);
   end
 end;
 
@@ -1030,8 +1032,6 @@ end;
 procedure Process_DgVoodoo();
 var
   DgVoodooPath: string;
-  RefreshRateBinary: string;
-  RefreshRateInt: Integer;
 begin
   if not DgVoodooGraphicsApi.Checked then
     exit;
@@ -1059,6 +1059,9 @@ begin
   // Activate ReShade by renaming the file
   RenameFile(ReShadePath + ReShadeDllName + '_reshade.dll', ReShadePath + ReShadeDllName + '.dll')
 
+  // Enable the Deband shader by default because it's crucial for Freelancer
+  Techniques := 'Deband@Deband.fx,'
+
   // Enable checked ReShade options
   if BloomChecked then
     Techniques := Techniques + 'MagicBloom@MagicBloom.fx,';
@@ -1082,13 +1085,13 @@ end;
 
 procedure Process_DxWrapperReShade();
 begin
-  if (DxWrapperGraphicsApi.Checked) and (DxWrapperReShade.Checked) then
+  if DxWrapperGraphicsApi.Checked and DxWrapperReShade.Checked then
     ApplyReShadeOptions('d3d9', DxWrapperBloom.Checked, DxWrapperHdr.Checked, DxWrapperSaturation.Checked, DxWrapperSharpening.Checked); // d3d9 is for DirectX 9 (DxWrapper)
 end;
 
 procedure Process_DgVoodooReShade();
 begin
-  if (DgVoodooGraphicsApi.Checked) and (DgVoodooReShade.Checked) then
+  if DgVoodooGraphicsApi.Checked and DgVoodooReShade.Checked then
     ApplyReShadeOptions('dxgi', DgVoodooBloom.Checked, DgVoodooHdr.Checked, DgVoodooSaturation.Checked, DgVoodooSharpening.Checked); // dxgi is for DirectX 11 (dgVoodoo)
 end;
 
@@ -1109,7 +1112,7 @@ begin
     WriteHexToFile(ExePath, $02490D, '0000'); // Borderless window #2
   end;
 
-  if (DoNotPauseOnAltTab.Checked) then
+  if DoNotPauseOnAltTab.Checked then
   begin
     if DisplayMode.ItemIndex = 0 then // Fullscreen selected
       WriteHexToFile(ExePath, $1B2665, 'EB') // Keep Freelancer running in the background when Alt-Tabbed
