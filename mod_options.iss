@@ -236,7 +236,7 @@ procedure Process_SmallText();
 begin
     FilePath := ExpandConstant('{app}\DATA\FONTS\fonts.ini');
 
-    if (SmallText.Values[1]) or (SmallText.Values[2]) then // Fix for both 2560x1440 and 3840x2160 screens
+    if SmallText.Values[1] or SmallText.Values[2] then // Fix for both 2560x1440 and 3840x2160 screens
       FileReplaceString(FilePath,
       'nickname = NavMap1600' + #13#10 +
       'font = Agency FB' + #13#10 +
@@ -959,7 +959,7 @@ begin
     // Enable AA
     FileReplaceString(DxWrapperPath, 'AntiAliasing               = 0', 'AntiAliasing               = 1');
 
-  // Don't apply AF options on NVIDIA GPUs because they won't work
+  // Don't apply AF options on NVIDIA GPUs because they cause bugs
   if GpuManufacturer <> NVIDIA then
   begin
     if DxWrapperAf.ItemIndex = 1 then
@@ -997,7 +997,7 @@ begin
     // Enable AA 8x
     WriteHexToFile(DgVoodooPath, $6A, '08');
 
-  // It's possible to use AA 16x by setting $6A to '10'. Unfortunately this'll cause the game to crash on AMD GPUs for some reason...
+  // It's possible to use AA 16x by setting $6A to '10'. Unfortunately this'll cause the game to crash on AMD (and also NVIDIA?) GPUs for some reason...
 
   if DgVoodooAf.ItemIndex = 1 then
     // Enable AF 2x

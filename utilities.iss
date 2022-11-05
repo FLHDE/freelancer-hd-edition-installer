@@ -32,7 +32,7 @@ function IsWine: boolean;
 var  LibHandle  : THandle;
 begin
   LibHandle := LoadLibraryA('ntdll.dll');
-  Result:= GetProcAddress(LibHandle, 'wine_get_version')<> 0;
+  Result:= GetProcAddress(LibHandle, 'wine_get_version') <> 0;
 end;
 
 // Gets the attributes for a file or directory (e.g. read and write)
@@ -225,7 +225,7 @@ begin
   try
     SetLength(Buffer, (Length(Hex) div 4) + 1);
     Size := Length(Hex) div 2;
-    if (not ConvertHexToBinary(Hex, Length(Hex), Buffer)) then
+    if not ConvertHexToBinary(Hex, Length(Hex), Buffer) then
       RaiseException('Could not convert string to binary stream');
 
     Stream.Seek(Offset, soFromBeginning);
@@ -415,7 +415,6 @@ begin
       Result := AMD
     else
       Result := Other;
-
   finally
     // Cleanup
     DeleteFile(GpuOutputFile);
