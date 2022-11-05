@@ -269,7 +269,7 @@ var
   dir : string;
   CheckBoxWidth: Integer;
 
-  // Strings that are used more than one time
+  // Strings that are used more than once
   txtAa: String;
   txtAaDesc: String;
   txtAf: String;
@@ -690,7 +690,11 @@ begin
   descDgVoodooGraphicsApi.WordWrap := True;
   descDgVoodooGraphicsApi.Top := DgVoodooGraphicsApi.Top + ScaleY(15);
   descDgVoodooGraphicsApi.Width := PageGraphicsApi.SurfaceWidth;
-  descDgVoodooGraphicsApi.Caption := 'Fixes the major lighting bug on Windows 10 and 11. Supports native Anti-Aliasing, Anisotropic Filtering, and ReShade. Requires manual refresh rate input.';
+  descDgVoodooGraphicsApi.Caption := 'Fixes the major lighting bug on Windows 10 and 11. Supports native Anti-Aliasing, Anisotropic Filtering, and ReShade.';
+
+  // Manual refresh rate input is only required if the user has an AMD GPU
+  if GpuManufacturer = AMD then
+    descDgVoodooGraphicsApi.Caption := descDgVoodooGraphicsApi.Caption + ' Requires manual refresh rate input.';
 
   lblDxWrapperGraphicsApi := TLabel.Create(PageGraphicsApi);
   lblDxWrapperGraphicsApi.Parent := PageGraphicsApi.Surface;
@@ -779,7 +783,7 @@ begin
   descDxWrapperAa.Caption := txtAaDesc;
   descDxWrapperAa.Top := DxWrapperAa.Top + ScaleY(25);
 
-  // Anisotropic Filtering is broken on NVIDIA GPUs, so don't show the option for users who have one
+  // Anisotropic Filtering from DxWrapper is broken on NVIDIA GPUs, so don't show the option for users who have one
   if GpuManufacturer <> NVIDIA then
   begin
     lblDxWrapperAf := TLabel.Create(DxWrapperPage);
