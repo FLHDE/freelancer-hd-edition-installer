@@ -799,7 +799,7 @@ begin
     DxWrapperAf.Items.Add('4x');
     DxWrapperAf.Items.Add('8x');
     DxWrapperAf.Items.Add('16x');
-    DxWrapperAf.Items.Add('Auto');
+    DxWrapperAf.Items.Add('Auto (recommended)');
     DxWrapperAf.ItemIndex := 5;
     DxWrapperAf.Top := lblDxWrapperAf.Top + ScaleY(20);
 

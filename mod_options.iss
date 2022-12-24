@@ -155,8 +155,7 @@ begin
   WriteHexToFile(ExePath + 'Freelancer.exe', $0B948D, 'EB'); // Allows the purchase of ships below the required level
   
   // Enable a modified version of the MP Rep plugin because the MP level requirements feature is incompatible with the above patches
-  RenameFile(ExePath + 'MPRep.dll', ExePath + 'MPRep_default.dll');
-  RenameFile(ExePath + 'MPRep_no_level_reqs.dll', ExePath + 'MPRep.dll');
+  FileReplaceString(ExePath + 'dacom.ini', 'MPRep.dll', 'MPRep_no_level_reqs.dll')
 end;
 
 // Processes the Startup Logo option. Renames files depending on what option is selected
@@ -655,6 +654,7 @@ begin
     RenameFile(HudPath + 'NEURONET\INVENTORY\partitionline.3db', HudPath + 'NEURONET\INVENTORY\partitionline_vanilla.3db')
     RenameFile(HudPath + 'NEURONET\INVENTORY\repair_bakgrnd.cmp', HudPath + 'NEURONET\INVENTORY\repair_bakgrnd_vanilla.cmp')
     RenameFile(HudPath + 'NEURONET\NAVMAP\NEWNAVMAP\navmap_background.cmp', HudPath + 'NEURONET\NAVMAP\NEWNAVMAP\navmap_background_vanilla.cmp')
+    RenameFile(HudPath + 'NEURONET\NAVMAP\NEWNAVMAP\nav_info.cmp', HudPath + 'NEURONET\NAVMAP\NEWNAVMAP\nav_info_vanilla.cmp')
     RenameFile(HudPath + 'NEURONET\NAVMAP\NEWNAVMAP\nav_navmap_left.cmp', HudPath + 'NEURONET\NAVMAP\NEWNAVMAP\nav_navmap_left_vanilla.cmp')
     RenameFile(HudPath + 'NEURONET\NAVMAP\NEWNAVMAP\nav_navmap_right.cmp', HudPath + 'NEURONET\NAVMAP\NEWNAVMAP\nav_navmap_right_vanilla.cmp')
     RenameFile(HudPath + 'NEURONET\NAVMAP\NEWNAVMAP\nav_selector.3db', HudPath + 'NEURONET\NAVMAP\NEWNAVMAP\nav_selector_vanilla.3db')
@@ -717,6 +717,7 @@ begin
     RenameFile(HudPath + 'NEURONET\INVENTORY\partitionline_darkhud.3db', HudPath + 'NEURONET\INVENTORY\partitionline.3db')
     RenameFile(HudPath + 'NEURONET\INVENTORY\repair_bakgrnd_darkhud.cmp', HudPath + 'NEURONET\INVENTORY\repair_bakgrnd.cmp')
     RenameFile(HudPath + 'NEURONET\NAVMAP\NEWNAVMAP\navmap_background_darkhud.cmp', HudPath + 'NEURONET\NAVMAP\NEWNAVMAP\navmap_background.cmp')
+    RenameFile(HudPath + 'NEURONET\NAVMAP\NEWNAVMAP\nav_info_darkhud.cmp', HudPath + 'NEURONET\NAVMAP\NEWNAVMAP\nav_info.cmp')
     RenameFile(HudPath + 'NEURONET\NAVMAP\NEWNAVMAP\nav_navmap_left_darkhud.cmp', HudPath + 'NEURONET\NAVMAP\NEWNAVMAP\nav_navmap_left.cmp')
     RenameFile(HudPath + 'NEURONET\NAVMAP\NEWNAVMAP\nav_navmap_right_darkhud.cmp', HudPath + 'NEURONET\NAVMAP\NEWNAVMAP\nav_navmap_right.cmp')
     RenameFile(HudPath + 'NEURONET\NAVMAP\NEWNAVMAP\nav_selector_darkhud.3db', HudPath + 'NEURONET\NAVMAP\NEWNAVMAP\nav_selector.3db')
@@ -813,16 +814,44 @@ begin
     IconName := 'flaticons'
 
     // Rename vanilla icon files that are only replaced by the flat icons
+    RenameFile(IconsPath + 'HUD\hud_damagebottom.3db', IconsPath + 'HUD\hud_damagebottom_vanilla.3db')
+    RenameFile(IconsPath + 'HUD\hud_damageleft.3db', IconsPath + 'HUD\hud_damageleft_vanilla.3db')
+    RenameFile(IconsPath + 'HUD\hud_damageright.3db', IconsPath + 'HUD\hud_damageright_vanilla.3db')
+    RenameFile(IconsPath + 'HUD\hud_damagetop.3db', IconsPath + 'HUD\hud_damagetop_vanilla.3db')
     RenameFile(IconsPath + 'HUD\hud_grouprequest.3db', IconsPath + 'HUD\hud_grouprequest_vanilla.3db')
     RenameFile(IconsPath + 'HUD\hud_infocard.3db', IconsPath + 'HUD\hud_infocard_vanilla.3db')
     RenameFile(IconsPath + 'HUD\hud_trade.3db', IconsPath + 'HUD\hud_trade_vanilla.3db')
     RenameFile(IconsPath + 'NEURONET\INVENTORY\question.3db', IconsPath + 'NEURONET\INVENTORY\question_vanilla.3db')
+    RenameFile(IconsPath + 'NEURONET\NAVMAP\NEWNAVMAP\nav_allzonefilter.3db', IconsPath + 'NEURONET\NAVMAP\NEWNAVMAP\nav_allzonefilter_vanilla.3db')
+    RenameFile(IconsPath + 'NEURONET\NAVMAP\NEWNAVMAP\nav_filter_physical.3db', IconsPath + 'NEURONET\NAVMAP\NEWNAVMAP\nav_filter_physical_vanilla.3db')
+    RenameFile(IconsPath + 'NEURONET\NAVMAP\NEWNAVMAP\nav_filter_political.3db', IconsPath + 'NEURONET\NAVMAP\NEWNAVMAP\nav_filter_political_vanilla.3db')
+    RenameFile(IconsPath + 'NEURONET\NAVMAP\NEWNAVMAP\nav_friendlyzonefilter.3db', IconsPath + 'NEURONET\NAVMAP\NEWNAVMAP\nav_friendlyzonefilter_vanilla.3db')
+    RenameFile(IconsPath + 'NEURONET\NAVMAP\NEWNAVMAP\nav_hostilezonefilter.3db', IconsPath + 'NEURONET\NAVMAP\NEWNAVMAP\nav_hostilezonefilter_vanilla.3db')
+    RenameFile(IconsPath + 'NEURONET\NAVMAP\NEWNAVMAP\nav_knownbases.3db', IconsPath + 'NEURONET\NAVMAP\NEWNAVMAP\nav_knownbases_vanilla.3db')
+    RenameFile(IconsPath + 'NEURONET\NAVMAP\NEWNAVMAP\nav_labels.3db', IconsPath + 'NEURONET\NAVMAP\NEWNAVMAP\nav_labels_vanilla.3db')
+    RenameFile(IconsPath + 'NEURONET\NAVMAP\NEWNAVMAP\nav_legendtoggle.3db', IconsPath + 'NEURONET\NAVMAP\NEWNAVMAP\nav_legendtoggle_vanilla.3db')
+    RenameFile(IconsPath + 'NEURONET\NAVMAP\NEWNAVMAP\nav_minablezonefilter.3db', IconsPath + 'NEURONET\NAVMAP\NEWNAVMAP\nav_minablezonefilter_vanilla.3db')
+    RenameFile(IconsPath + 'NEURONET\NAVMAP\NEWNAVMAP\nav_patrol.3db', IconsPath + 'NEURONET\NAVMAP\NEWNAVMAP\nav_patrol_vanilla.3db')
 
     // Rename new flat icon files
+    RenameFile(IconsPath + 'HUD\hud_damagebottom_' + IconName + '.3db', IconsPath + 'HUD\hud_damagebottom.3db')
+    RenameFile(IconsPath + 'HUD\hud_damageleft_' + IconName + '.3db', IconsPath + 'HUD\hud_damageleft.3db')
+    RenameFile(IconsPath + 'HUD\hud_damageright_' + IconName + '.3db', IconsPath + 'HUD\hud_damageright.3db')
+    RenameFile(IconsPath + 'HUD\hud_damagetop_' + IconName + '.3db', IconsPath + 'HUD\hud_damagetop.3db')
     RenameFile(IconsPath + 'HUD\hud_grouprequest_' + IconName + '.3db', IconsPath + 'HUD\hud_grouprequest.3db')
     RenameFile(IconsPath + 'HUD\hud_infocard_' + IconName + '.3db', IconsPath + 'HUD\hud_infocard.3db')
     RenameFile(IconsPath + 'HUD\hud_trade_' + IconName + '.3db', IconsPath + 'HUD\hud_trade.3db')
     RenameFile(IconsPath + 'NEURONET\INVENTORY\question_' + IconName + '.3db', IconsPath + 'NEURONET\INVENTORY\question.3db')
+    RenameFile(IconsPath + 'NEURONET\NAVMAP\NEWNAVMAP\nav_allzonefilter_' + IconName + '.3db', IconsPath + 'NEURONET\NAVMAP\NEWNAVMAP\nav_allzonefilter.3db')
+    RenameFile(IconsPath + 'NEURONET\NAVMAP\NEWNAVMAP\nav_filter_physical_' + IconName + '.3db', IconsPath + 'NEURONET\NAVMAP\NEWNAVMAP\nav_filter_physical.3db')
+    RenameFile(IconsPath + 'NEURONET\NAVMAP\NEWNAVMAP\nav_filter_political_' + IconName + '.3db', IconsPath + 'NEURONET\NAVMAP\NEWNAVMAP\nav_filter_political.3db')
+    RenameFile(IconsPath + 'NEURONET\NAVMAP\NEWNAVMAP\nav_friendlyzonefilter_' + IconName + '.3db', IconsPath + 'NEURONET\NAVMAP\NEWNAVMAP\nav_friendlyzonefilter.3db')
+    RenameFile(IconsPath + 'NEURONET\NAVMAP\NEWNAVMAP\nav_hostilezonefilter_' + IconName + '.3db', IconsPath + 'NEURONET\NAVMAP\NEWNAVMAP\nav_hostilezonefilter.3db')
+    RenameFile(IconsPath + 'NEURONET\NAVMAP\NEWNAVMAP\nav_knownbases_' + IconName + '.3db', IconsPath + 'NEURONET\NAVMAP\NEWNAVMAP\nav_knownbases.3db')
+    RenameFile(IconsPath + 'NEURONET\NAVMAP\NEWNAVMAP\nav_labels_' + IconName + '.3db', IconsPath + 'NEURONET\NAVMAP\NEWNAVMAP\nav_labels.3db')
+    RenameFile(IconsPath + 'NEURONET\NAVMAP\NEWNAVMAP\nav_legendtoggle_' + IconName + '.3db', IconsPath + 'NEURONET\NAVMAP\NEWNAVMAP\nav_legendtoggle.3db')
+    RenameFile(IconsPath + 'NEURONET\NAVMAP\NEWNAVMAP\nav_minablezonefilter_' + IconName + '.3db', IconsPath + 'NEURONET\NAVMAP\NEWNAVMAP\nav_minablezonefilter.3db')
+    RenameFile(IconsPath + 'NEURONET\NAVMAP\NEWNAVMAP\nav_patrol_' + IconName + '.3db', IconsPath + 'NEURONET\NAVMAP\NEWNAVMAP\nav_patrol.3db')
 
     // Adjust next and previous target buttons slightly to position them correctly (those flat icons specifically have a slight offset from the vanilla positions.)
     if WidescreenHud.Checked then
