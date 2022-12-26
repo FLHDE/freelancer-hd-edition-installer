@@ -156,7 +156,7 @@ begin
         Process_JumpTunnelDurations();
         Process_DrawDistances();
         Process_Planetscape();
-        Process_Win10(); // Must be caled before Process_DgVoodoo();
+        Process_Win10(); // Must be called before Process_DgVoodoo();
         Process_HUD(); // Must be called before Process_CustomIcons(); and Process_WeaponGroups();
         Process_DarkHUD();
         Process_CustomIcons(); // Must be called after Process_HUD();
@@ -164,7 +164,7 @@ begin
         Process_DxWrapper();
         Process_DxWrapperReShade();
         Process_DgVoodooReShade();
-        Process_DgVoodoo(); // Must be caled after Process_Win10();
+        Process_DgVoodoo(); // Must be called after Process_Win10();
         Process_DisplayMode();
 
         WizardForm.StatusLabel.Caption := 'Cleaning up...';

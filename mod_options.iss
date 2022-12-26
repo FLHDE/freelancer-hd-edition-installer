@@ -778,37 +778,6 @@ begin
   CursorPath := ExpandConstant('{app}\DATA\SCREENS\')
   HudShiftPath := ExpandConstant('{app}\DATA\INTERFACE\HudShift.ini')
 
-  // Rename vanilla icon files that will be replaced by both the alternative and flat icons
-  RenameFile(CursorPath + 'cursor.txm', CursorPath + 'cursor_vanilla.txm')
-  RenameFile(IconsPath + 'buttontextures.txm', IconsPath + 'buttontextures_vanilla.txm')
-  RenameFile(IconsPath + 'BASESIDE\bar.3db', IconsPath + 'BASESIDE\bar_vanilla.3db')
-  RenameFile(IconsPath + 'BASESIDE\cityscape.3db', IconsPath + 'BASESIDE\cityscape_vanilla.3db')
-  RenameFile(IconsPath + 'BASESIDE\commod_trader.3db', IconsPath + 'BASESIDE\commod_trader_vanilla.3db')
-  RenameFile(IconsPath + 'BASESIDE\deck.3db', IconsPath + 'BASESIDE\deck_vanilla.3db')
-  RenameFile(IconsPath + 'BASESIDE\equipment_dealer.3db', IconsPath + 'BASESIDE\equipment_dealer_vanilla.3db')
-  RenameFile(IconsPath + 'BASESIDE\equiproomarrow.3db', IconsPath + 'BASESIDE\equiproomarrow_vanilla.3db')
-  RenameFile(IconsPath + 'BASESIDE\frontdesk.3db', IconsPath + 'BASESIDE\frontdesk_vanilla.3db')
-  RenameFile(IconsPath + 'BASESIDE\mission_vendor.3db', IconsPath + 'BASESIDE\mission_vendor_vanilla.3db')
-  RenameFile(IconsPath + 'BASESIDE\news_vendor.3db', IconsPath + 'BASESIDE\news_vendor_vanilla.3db')
-  RenameFile(IconsPath + 'BASESIDE\repair.3db', IconsPath + 'BASESIDE\repair_vanilla.3db')
-  RenameFile(IconsPath + 'BASESIDE\salesman.3db', IconsPath + 'BASESIDE\salesman_vanilla.3db')
-  RenameFile(IconsPath + 'BASESIDE\ship_dealer.3db', IconsPath + 'BASESIDE\ship_dealer_vanilla.3db')
-  RenameFile(IconsPath + 'BASESIDE\take_off.3db', IconsPath + 'BASESIDE\take_off_vanilla.3db')
-  RenameFile(IconsPath + 'HUD\hud_loot_bw.3db', IconsPath + 'HUD\hud_loot_bw_vanilla.3db')
-  RenameFile(IconsPath + 'HUD\hud_missilealert.3db', IconsPath + 'HUD\hud_missilealert_vanilla.3db')
-  RenameFile(IconsPath + 'HUD\hud_radiationalert.3db', IconsPath + 'HUD\hud_radiationalert_vanilla.3db')
-  RenameFile(IconsPath + 'HUD\hud_shipinfo_button.3db', IconsPath + 'HUD\hud_shipinfo_button_vanilla.3db')
-  RenameFile(IconsPath + 'HUD\hud_shiptarget.3db', IconsPath + 'HUD\hud_shiptarget_vanilla.3db')
-  RenameFile(IconsPath + 'HUD\hud_trailalert.3db', IconsPath + 'HUD\hud_trailalert_vanilla.3db')
-  RenameFile(IconsPath + 'NEURONET\ICONS', IconsPath + 'NEURONET\ICONS_vanilla')
-  RenameFile(IconsPath + 'NEURONET\INVENTORY\ammo.3db', IconsPath + 'NEURONET\INVENTORY\ammo_vanilla.3db')
-  RenameFile(IconsPath + 'NEURONET\INVENTORY\cargobay.3db', IconsPath + 'NEURONET\INVENTORY\cargobay_vanilla.3db')
-  RenameFile(IconsPath + 'NEURONET\INVENTORY\commodities.3db', IconsPath + 'NEURONET\INVENTORY\commodities_vanilla.3db')
-  RenameFile(IconsPath + 'NEURONET\INVENTORY\equipmenticon.3db', IconsPath + 'NEURONET\INVENTORY\equipmenticon_vanilla.3db')
-  RenameFile(IconsPath + 'NEURONET\INVENTORY\inv_dump.3db', IconsPath + 'NEURONET\INVENTORY\inv_dump_vanilla.3db')
-  RenameFile(IconsPath + 'NEURONET\INVENTORY\weaponsicon.3db', IconsPath + 'NEURONET\INVENTORY\weaponsicon_vanilla.3db')
-  RenameFile(IconsPath + 'NEURONET\NAVMAP\NEWNAVMAP\nav_universebutton.3db', IconsPath + 'NEURONET\NAVMAP\NEWNAVMAP\nav_universebutton_vanilla.3db')
-
   if FlatIcons.Checked then
   begin
     IconName := 'flaticons'
@@ -856,17 +825,55 @@ begin
     // Adjust next and previous target buttons slightly to position them correctly (those flat icons specifically have a slight offset from the vanilla positions.)
     if WidescreenHud.Checked then
       begin
-        FileReplaceString(HudShiftPath, 'position = 4e1247, -0.0595, 4e124f, -0.2780		; TargetPreviousButton', 'position = 4e1247, -0.0545, 4e124f, -0.2780		; TargetPreviousButton')
-        FileReplaceString(HudShiftPath, 'position = 4e12b4, -0.0595, 4e12bc, -0.3090		; TargetNextButton', 'position = 4e12b4, -0.0580, 4e12bc, -0.3090		; TargetNextButton')
+        FileReplaceString(HudShiftPath, 'position = 4e1247, -0.0595, 4e124f, -0.2780		; TargetPreviousButton',  'position = 4e1247, -0.0565, 4e124f, -0.2780		; TargetPreviousButton')
+        FileReplaceString(HudShiftPath, 'position = 4e12b4, -0.0595, 4e12bc, -0.3090		; TargetNextButton',      'position = 4e12b4, -0.0555, 4e12bc, -0.3090		; TargetNextButton')
       end
     else
       begin
-        FileReplaceString(HudShiftPath, 'position = 4e1247, -0.2650, 4e124f, -0.2680		; TargetPreviousButton', 'position = 4e1247, -0.2605, 4e124f, -0.2680		; TargetPreviousButton')
-        FileReplaceString(HudShiftPath, 'position = 4e12b4, -0.2650, 4e12bc, -0.2990		; TargetNextButton', 'position = 4e12b4, -0.2640, 4e12bc, -0.2990		; TargetNextButton')
+        FileReplaceString(HudShiftPath, 'position = 4e1247, -0.2650, 4e124f, -0.2680		; TargetPreviousButton',  'position = 4e1247, -0.2620, 4e124f, -0.2680		; TargetPreviousButton')
+        FileReplaceString(HudShiftPath, 'position = 4e12b4, -0.2650, 4e12bc, -0.2990		; TargetNextButton',      'position = 4e12b4, -0.2610, 4e12bc, -0.2990		; TargetNextButton')
       end
   end
   else
+  begin
     IconName := 'alt';
+
+    // Rename icon files only used by the alternative icons
+    RenameFile(IconsPath + 'HUD\hud_radiationalert_' + IconName + '.3db', IconsPath + 'HUD\hud_radiationalert.3db')
+
+    // Rename new alternative icon files
+    RenameFile(IconsPath + 'HUD\hud_radiationalert.3db', IconsPath + 'HUD\hud_radiationalert_vanilla.3db')
+  end;
+
+  // Rename vanilla icon files that will be replaced by both the alternative and flat icons
+  RenameFile(CursorPath + 'cursor.txm', CursorPath + 'cursor_vanilla.txm')
+  RenameFile(IconsPath + 'buttontextures.txm', IconsPath + 'buttontextures_vanilla.txm')
+  RenameFile(IconsPath + 'BASESIDE\bar.3db', IconsPath + 'BASESIDE\bar_vanilla.3db')
+  RenameFile(IconsPath + 'BASESIDE\cityscape.3db', IconsPath + 'BASESIDE\cityscape_vanilla.3db')
+  RenameFile(IconsPath + 'BASESIDE\commod_trader.3db', IconsPath + 'BASESIDE\commod_trader_vanilla.3db')
+  RenameFile(IconsPath + 'BASESIDE\deck.3db', IconsPath + 'BASESIDE\deck_vanilla.3db')
+  RenameFile(IconsPath + 'BASESIDE\equipment_dealer.3db', IconsPath + 'BASESIDE\equipment_dealer_vanilla.3db')
+  RenameFile(IconsPath + 'BASESIDE\equiproomarrow.3db', IconsPath + 'BASESIDE\equiproomarrow_vanilla.3db')
+  RenameFile(IconsPath + 'BASESIDE\frontdesk.3db', IconsPath + 'BASESIDE\frontdesk_vanilla.3db')
+  RenameFile(IconsPath + 'BASESIDE\mission_vendor.3db', IconsPath + 'BASESIDE\mission_vendor_vanilla.3db')
+  RenameFile(IconsPath + 'BASESIDE\news_vendor.3db', IconsPath + 'BASESIDE\news_vendor_vanilla.3db')
+  RenameFile(IconsPath + 'BASESIDE\repair.3db', IconsPath + 'BASESIDE\repair_vanilla.3db')
+  RenameFile(IconsPath + 'BASESIDE\salesman.3db', IconsPath + 'BASESIDE\salesman_vanilla.3db')
+  RenameFile(IconsPath + 'BASESIDE\ship_dealer.3db', IconsPath + 'BASESIDE\ship_dealer_vanilla.3db')
+  RenameFile(IconsPath + 'BASESIDE\take_off.3db', IconsPath + 'BASESIDE\take_off_vanilla.3db')
+  RenameFile(IconsPath + 'HUD\hud_loot_bw.3db', IconsPath + 'HUD\hud_loot_bw_vanilla.3db')
+  RenameFile(IconsPath + 'HUD\hud_missilealert.3db', IconsPath + 'HUD\hud_missilealert_vanilla.3db')
+  RenameFile(IconsPath + 'HUD\hud_shipinfo_button.3db', IconsPath + 'HUD\hud_shipinfo_button_vanilla.3db')
+  RenameFile(IconsPath + 'HUD\hud_shiptarget.3db', IconsPath + 'HUD\hud_shiptarget_vanilla.3db')
+  RenameFile(IconsPath + 'HUD\hud_trailalert.3db', IconsPath + 'HUD\hud_trailalert_vanilla.3db')
+  RenameFile(IconsPath + 'NEURONET\ICONS', IconsPath + 'NEURONET\ICONS_vanilla')
+  RenameFile(IconsPath + 'NEURONET\INVENTORY\ammo.3db', IconsPath + 'NEURONET\INVENTORY\ammo_vanilla.3db')
+  RenameFile(IconsPath + 'NEURONET\INVENTORY\cargobay.3db', IconsPath + 'NEURONET\INVENTORY\cargobay_vanilla.3db')
+  RenameFile(IconsPath + 'NEURONET\INVENTORY\commodities.3db', IconsPath + 'NEURONET\INVENTORY\commodities_vanilla.3db')
+  RenameFile(IconsPath + 'NEURONET\INVENTORY\equipmenticon.3db', IconsPath + 'NEURONET\INVENTORY\equipmenticon_vanilla.3db')
+  RenameFile(IconsPath + 'NEURONET\INVENTORY\inv_dump.3db', IconsPath + 'NEURONET\INVENTORY\inv_dump_vanilla.3db')
+  RenameFile(IconsPath + 'NEURONET\INVENTORY\weaponsicon.3db', IconsPath + 'NEURONET\INVENTORY\weaponsicon_vanilla.3db')
+  RenameFile(IconsPath + 'NEURONET\NAVMAP\NEWNAVMAP\nav_universebutton.3db', IconsPath + 'NEURONET\NAVMAP\NEWNAVMAP\nav_universebutton_vanilla.3db')
 
   // Rename new icon files for either the alternative or flat icons
   RenameFile(CursorPath + 'cursor_' + IconName + '.txm', CursorPath + 'cursor.txm')
@@ -886,7 +893,6 @@ begin
   RenameFile(IconsPath + 'BASESIDE\take_off_' + IconName + '.3db', IconsPath + 'BASESIDE\take_off.3db')
   RenameFile(IconsPath + 'HUD\hud_loot_bw_' + IconName + '.3db', IconsPath + 'HUD\hud_loot_bw.3db')
   RenameFile(IconsPath + 'HUD\hud_missilealert_' + IconName + '.3db', IconsPath + 'HUD\hud_missilealert.3db')
-  RenameFile(IconsPath + 'HUD\hud_radiationalert_' + IconName + '.3db', IconsPath + 'HUD\hud_radiationalert.3db')
   RenameFile(IconsPath + 'HUD\hud_shipinfo_button_' + IconName + '.3db', IconsPath + 'HUD\hud_shipinfo_button.3db')
   RenameFile(IconsPath + 'HUD\hud_shiptarget_' + IconName + '.3db', IconsPath + 'HUD\hud_shiptarget.3db')
   RenameFile(IconsPath + 'HUD\hud_trailalert_' + IconName + '.3db', IconsPath + 'HUD\hud_trailalert.3db')
