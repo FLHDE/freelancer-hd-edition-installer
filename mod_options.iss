@@ -533,16 +533,14 @@ end;
 
 procedure Process_HUD();
 var
+  InterfacePath: string;
   HudShiftPath: string;
-  KeyMapPath: string;
-  NewKeyMapPath: string;
 begin
   if not WidescreenHud.Checked then
     exit;
 
-  HudShiftPath := ExpandConstant('{app}\DATA\INTERFACE\HudShift.ini')
-  KeyMapPath := GetOptionsPath('UserKeyMap')
-  NewKeyMapPath := ExpandConstant('{app}\UserKeyMap.ini')
+  InterfacePath := ExpandConstant('{app}\DATA\INTERFACE\')
+  HudShiftPath := InterfacePath + 'HudShift.ini'
 
   // Enable plugins
   FileReplaceString(
@@ -585,22 +583,39 @@ begin
   )
 
   // Adjust player wireframe and request trade button positions
-  FileReplaceString(HudShiftPath,'position = 4da2fa,  0.4180, 4da30e, -0.2900','position = 4da2fa,  0.1765, 4da30e, -0.3025')
-  FileReplaceString(HudShiftPath,'position = 4e14db, -0.2020, 4e14e3, -0.3700		; TargetTradeButton','position = 4e14db, -0.0180, 4e14e3, -0.3700		; TargetTradeButton')
+  FileReplaceString(HudShiftPath, 'position = 4da2fa,  0.4180, 4da30e, -0.2900', 'position = 4da2fa,  0.1765, 4da30e, -0.3025')
+  FileReplaceString(HudShiftPath, 'position = 4e14db, -0.2020, 4e14e3, -0.3700		; TargetTradeButton', 'position = 4e14db, -0.0180, 4e14e3, -0.3700		; TargetTradeButton')
 
-  // If a key map file already exists, remove the "Target View" (Alt + T) bind. If the key map file doesn't exist yet, copy a pre-existing key map file where this hotkey has already been removed.
-  if FileExists(KeyMapPath) then begin
-    FileReplaceString(KeyMapPath, 
-      '[KeyCmd]' + #13#10
-      'nickname = USER_SWITCH_TO_TARGET' + #13#10
-      'key',
+  // Disable the "Target View" (Alt + T) key because it's obsolete with the Adv Wide HUD
+  FileReplaceString(InterfacePath + 'keylist.ini',
+    '[key]' + #13#10 +
+    'id = USER_SWITCH_TO_TARGET',
 
-      ';[KeyCmd]' + #13#10
-      ';nickname = USER_SWITCH_TO_TARGET' + #13#10
-      ';key')
-  end
-  else
-    FileCopy(NewKeyMapPath, KeyMapPath, false);
+    ';[key]' + #13#10 +
+    ';id = USER_SWITCH_TO_TARGET'
+  )
+
+  FileReplaceString(InterfacePath + 'keymap.ini',
+    '[KeyCmd]' + #13#10 +
+    'nickname = USER_SWITCH_TO_TARGET' + #13#10 +
+    'ids_name = 458757' + #13#10 +
+    'ids_info = 2409' + #13#10 +
+    'state = keydown' + #13#10 +
+    'key = "T", ALT',
+
+    ';[KeyCmd]' + #13#10 +
+    ';nickname = USER_SWITCH_TO_TARGET' + #13#10 +
+    ';ids_name = 458757' + #13#10 +
+    ';ids_info = 2409' + #13#10 +
+    ';state = keydown' + #13#10 +
+    ';key = "T", ALT'
+  )
+
+  // Move the Switch Contact List button off the screen (also obsolete)
+  FileReplaceString(HudShiftPath, 'position = 4e158e, -0.3430, 4e1596, -0.3700		; SwitchToContactList', 'position = 4e158e, -0.3430, 4e1596, -0.8700		; SwitchToContactList')
+  FileReplaceString(HudShiftPath, 'position = 4e31f6, -0.3430, 4e31fe, -0.3700', 'position = 4e31f6, -0.3430, 4e31fe, -0.8700')
+  FileReplaceString(HudShiftPath, 'position = 4e3592, -0.2950, 4e359a, -0.1710', 'position = 4e3592, -0.2950, 4e359a, -0.6710')
+  FileReplaceString(HudShiftPath, 'position = 4e3afc, -0.3430, 4e3b04, -0.3700', 'position = 4e3afc, -0.3430, 4e3b04, -0.8700')
 end;
 
 procedure Process_DarkHud();
