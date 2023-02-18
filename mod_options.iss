@@ -232,6 +232,7 @@ end;
 procedure Process_SmallText();
   var
     FilePath : string;
+    New4KHeight: string;
 begin
     FilePath := ExpandConstant('{app}\DATA\FONTS\fonts.ini');
 
@@ -246,6 +247,12 @@ begin
       'fixed_height = 0.025');
 
     if SmallText.Values[2] then begin // Fix for 3840x2160 screens
+      // On Wine/Luris the lowered fixed_height for HudSmall and Normal is not enough to fix the missing text. Therefore, it has to be lowered even more.
+      if Wine then
+        New4KHeight := '0.024'
+      else
+        New4KHeight := '0.029';
+
       FileReplaceString(FilePath,
         'nickname = HudSmall' + #13#10 +
         'font = Agency FB' + #13#10 +
@@ -253,7 +260,7 @@ begin
 
         'nickname = HudSmall' + #13#10 +
         'font = Agency FB' + #13#10 +
-        'fixed_height = 0.029');
+        'fixed_height = ' + New4KHeight);
       FileReplaceString(FilePath,
         'nickname = Normal' + #13#10 +
         'font = Agency FB' + #13#10 +
@@ -261,7 +268,7 @@ begin
 
         'nickname = Normal' + #13#10 +
         'font = Agency FB' + #13#10 +
-        'fixed_height = 0.029');
+        'fixed_height = ' + New4KHeight);
     end;
 end;
 
@@ -357,10 +364,10 @@ var
   MissilePath : string;
   ExplosionsPath : string;
 begin
-MissilePath := ExpandConstant('{app}\DATA\FX\WEAPONS\')
-ExplosionsPath := ExpandConstant('{app}\DATA\FX\')
+  MissilePath := ExpandConstant('{app}\DATA\FX\WEAPONS\')
+  ExplosionsPath := ExpandConstant('{app}\DATA\FX\')
 
-if MissileEffects.Checked then
+  if MissileEffects.Checked then
   begin
     // Rename vanilla ones
     RenameFile(MissilePath + 'br_empmissile.ale',MissilePath + 'br_empmissile_vanilla.ale')
