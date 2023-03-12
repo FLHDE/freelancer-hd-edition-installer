@@ -290,7 +290,7 @@ begin
   txtAaDesc := 'Anti-Aliasing removes jagged edges in-game, effectively making them appear smoother at a performance cost. Disable this option if you''re running low-end hardware.';
   txtAf := 'Anisotropic Filtering';
   txtAfDesc := 'Anisotropic Filtering improves the quality of textures when viewing them from the side with minimal performance overhead.';
-  txtEnhancementsPage := 'Choose additional graphics enhancements';
+  txtEnhancementsPage := 'Choose additional graphics enhancements.';
   txtReShade := 'Enable ReShade';
   txtReShadeDesc := 'This option enables ReShade, which allows for the use of various post-processing effects to improve the game''s appearance. If it''s been enabled, the configuration below can be adjusted at any time by pressing the ''Home'' key in-game.';
   txtSaturation := 'Add increased saturation (recommended)';
@@ -347,7 +347,7 @@ begin
 
   // Initialize PitchVariations page and add content
   PitchVariations := CreateInputOptionPage(CallSign.ID,
-  'More NPC voices', 'Check to install',
+  'More NPC voices', 'Check to install.',
   'NPCs from a faction talking in space usually only have one or two different voices. This option adds more pitches to the NPC voices so there''s more variety. Only affects Single Player and local Multiplayer games.',
   False, False);
 
@@ -356,7 +356,7 @@ begin
 
   // Initialize English Improvements page and add content
   PageEnglishImprovements := CreateCustomPage(PitchVariations.ID,
-  'Localization', 'Apply English improvements and other fixes');
+  'Localization', 'Apply English improvements and other fixes.');
 
   lblEnglishImprovements := TLabel.Create(PageEnglishImprovements);
   lblEnglishImprovements.Parent := PageEnglishImprovements.Surface;
@@ -399,7 +399,7 @@ begin
 
   // Initialize Single Player page and add content
   PageSinglePlayer := CreateCustomPage(PageEnglishImprovements.ID, 
-  'Single Player options', 'Choose how you''d like to play Single Player');
+  'Single Player options', 'Choose how you''d like to play Single Player.');
 
   StoryMode := TComboBox.Create(PageSinglePlayer);
   StoryMode.Parent := PageSinglePlayer.Surface;
@@ -461,7 +461,7 @@ begin
 
   // Initialize StartupRes page and add content
   StartupRes := CreateInputOptionPage(PageSinglePlayer.ID,
-  'Startup Screen Resolution', 'Choose your native resolution',
+  'Startup Screen Resolution', 'Choose your native resolution.',
   'By default, the "Freelancer" splash screen you see when you start the game has a resolution of 1280x960. This makes it appear stretched and a bit blurry on HD 16:9 resolutions. ' +
   'We recommend setting this option to your monitor''s native resolution. ' +
   'Please note that a higher resolution option may negatively impact the game''s start-up speed.',
@@ -486,7 +486,7 @@ begin
   
   // Initialize LogoRes page and add content
   LogoRes := CreateInputOptionPage(StartupRes.ID,
-  'Freelancer Logo Resolution', 'In the game''s main menu',
+  'Freelancer Logo Resolution', 'In the game''s main menu.',
   'The main menu Freelancer logo has a resolution of 800x600 by default, which makes it look stretched and pixelated/blurry on HD widescreen monitors. ' +
   'Setting this to a higher resolution with the correct aspect ratio makes the logo look nice and sharp and not stretched-out. Hence we recommend setting this option to your monitor''s native resolution. ' +
   'Please note that a higher resolution option may negatively impact the game''s start-up speed.',
@@ -512,7 +512,7 @@ begin
   
   // Fix Small Text on 1440p/4K resolutions
   SmallText := CreateInputOptionPage(LogoRes.ID,
-  'Fix small text on 1440p/4K resolutions', 'Check to install',
+  'Fix small text on 1440p/4K resolutions', 'Check to install.',
   'Many high-resolution Freelancer players have reported missing HUD text and misaligned buttons in menus. In 4K, the nav map text is too small and there are many missing text elements in the HUD. For 1440p screens, the only apparent issue is the small nav map text.' + #13#10 + #13#10 +
   'Select the option corresponding to the resolution you''re going to play Freelancer in. If you play in 1920x1080 or lower, the "No" option is fine as the elements are configured correctly already.',
   True, False);
@@ -537,7 +537,7 @@ begin
   PageWidescreenHud := CreateCustomPage(
     SmallText.ID,
     'Advanced Widescreen HUD',
-    'Check to install'
+    'Check to install.'
   );
   
   lblWidescreenHud := TLabel.Create(PageWidescreenHud);
@@ -582,7 +582,7 @@ begin
   PageDarkHud := CreateCustomPage(
     PageWidescreenHud.ID,
     'Custom HUD and Icons',
-    'Check to install'
+    'Check to install.'
   );
   
   lblDarkHud := TLabel.Create(PageDarkHud);
@@ -643,7 +643,7 @@ begin
   PagePlanetScape := CreateCustomPage(
     PageDarkHud.ID,
     'Fix clipping with 16:9 resolution planetscapes',
-    'Check to install'
+    'Check to install.'
   );
   
   lblPlanetScape := TLabel.Create(PagePlanetScape);
@@ -670,7 +670,7 @@ begin
   PageGraphicsApi := CreateCustomPage(
     PagePlanetScape.ID,
     'Graphics API',
-    'Choose the one that suits your needs'
+    'Choose the one that suits your needs.'
   );
 
   descGraphicsApi := TNewStaticText.Create(PageGraphicsApi);
@@ -1085,7 +1085,7 @@ begin
   PageEffects := CreateCustomPage(
     DgVoodooPage2.ID,
     'Add custom effects',
-    'Check to install'
+    'Check to install.'
   );
   
   lblVanillaReflections := TLabel.Create(PageEffects);
@@ -1173,7 +1173,7 @@ begin
 
   // Draw distances
   PageDrawDistances := CreateInputOptionPage(PageEffects.ID,
-  'Set Draw Distances', 'Check to install',
+  'Set Draw Distances', 'Check to install.',
   'This option sets the draw distances scale; changing it to a higher value allows you to see things in space from further away. 1x will give you the same draw distances as vanilla Freelancer. Every option after that scales the vanilla values by a multiplier (2x, 3x, etc). The Maximized option sets all draw distances to the highest possible values, which includes the jump hole visibility distances.',
   True, False);
   PageDrawDistances.Add('1x (Vanilla)');
@@ -1264,7 +1264,7 @@ begin
   PageMiscOptions := CreateCustomPage(
     PageSkips.ID,
     'Misc options',
-    'Check to install'
+    'Check to install.'
   );
   
   lblSinglePlayer := TLabel.Create(PageMiscOptions);
