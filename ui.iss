@@ -520,9 +520,14 @@ begin
   SmallText.Add('Yes, apply fix for 2560x1440 screens');
   SmallText.Add('Yes, apply fix for 3840x2160 screens');
 
+  if Wine then
+    SmallText.Add('Yes, apply fix for 3840x1600 screens');
+
   // Determine best small text fix based on user's screen size
   if DesktopRes.Height >= 2160 then
     SmallText.Values[2] := True
+  else if Wine and (DesktopRes.Height >= 1600) then
+    SmallText.Values[3] := True
   else if DesktopRes.Height >= 1440 then
     SmallText.Values[1] := True
   else
