@@ -49,6 +49,7 @@ var
  Attr : DWord;
 begin
   Attr := GetFileAttributes(FileName);
+
   if (Attr and 1) = 1 then          
   begin
     Attr := Attr -1;
@@ -80,7 +81,8 @@ begin
             end;
 
             // Delete the source file if it's been moved successfully
-            if(Move) then DeleteFile(SourceFilePath);
+            if Move then
+              DeleteFile(SourceFilePath);
 
             // We want to ensure every file has write access so we can properly overwrite them later.
             // Presumably these permissions aren't an issue on Wine.
@@ -225,6 +227,7 @@ begin
   try
     SetLength(Buffer, (Length(Hex) div 4) + 1);
     Size := Length(Hex) div 2;
+
     if not ConvertHexToBinary(Hex, Length(Hex), Buffer) then
       RaiseException('Could not convert string to binary stream');
 
