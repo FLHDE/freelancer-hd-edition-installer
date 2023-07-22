@@ -1142,7 +1142,7 @@ begin
   descMissileEffects.WordWrap := True;
   descMissileEffects.Top := lblMissleEffects.Top + ScaleY(20);
   descMissileEffects.Width := PageEffects.SurfaceWidth;
-  descMissileEffects.Caption := 'These options add missile, torpedo, and ship explosion effects that have a different look. The torpedo and ship explosion effects are a lot larger than the normal ones.';
+  descMissileEffects.Caption := 'These options add missile, torpedo, and ship explosion effects that have a different look. The torpedo effects are a lot larger than the normal ones.';
   
   ExplosionEffects := TCheckBox.Create(PageEffects);
   ExplosionEffects.Parent := PageEffects.Surface;
