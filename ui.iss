@@ -1418,6 +1418,7 @@ begin
       + #13#10#13#10 + 'If you experience crashes, bad colors, or other compatibility issues during gameplay, you may need to remove/replace/override any of the following DLLs in the EXE folder:'
       + #13#10 + 'd3d8.dll (dgVoodoo or DxWrapper)'
       + #13#10 + 'd3d9.dll (DxWrapper ReShade)'
-      + #13#10 + 'dxgi.dll (dgVoodoo ReShade)'), mbError, MB_OK);
+      + #13#10 + 'dxgi.dll (dgVoodoo ReShade)'
+      + #13#10 + 'dinput8.dll (DirectInput)'), mbError, MB_OK);
   end;
 end;
