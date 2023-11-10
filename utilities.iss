@@ -27,6 +27,7 @@ var
   Wine: Boolean;
   GpuManufacturer: TGpuManufacturer;
   SystemLanguage: TSystemLanguage;
+  EDD_GET_DEVICE_INTERFACE_NAME, DISPLAY_DEVICE_PRIMARY_DEVICE: integer;
 
 function IsWine: boolean;
 var  LibHandle  : THandle;
@@ -366,62 +367,98 @@ begin
   Result := Version.Build >= 19041;
 end;
 
+type
+DISPLAY_DEVICEA = record
+  cb: DWORD;
+  DeviceName: array [0 .. 31] of AnsiChar;
+  DeviceString: array [0 .. 127] of AnsiChar;
+  StateFlags: DWORD;
+  DeviceID, DeviceKey: array [0..127] of AnsiChar;
+end;
+
+// Used to retrieve information about display devices
+function EnumDisplayDevices(lpDevice: DWORD; iDevNum: DWORD; var lpDisplayDevice: DISPLAY_DEVICEA; dwFlags: DWORD) : BOOL;
+  external 'EnumDisplayDevicesA@user32.dll stdcall';
+
+// Convert a char array to string (both Ansi)
+function CharArrayToStringAnsi(charArray: array of AnsiChar): AnsiString;
+var
+  i: integer;
+begin
+  for i := Low(charArray) to High(charArray) do
+  begin
+    if charArray[i] = #0 then
+      break;
+
+    Result := Result + charArray[i];
+  end;
+end;
+
 // Gets the manufacturer of the user's GPU
 function GetGpuManufacturer(): TGpuManufacturer;
 var
-  GpuOutputFile, GpuOutputFileUtf8: string;
-  ResultCodeGpu, ResultCodeUtf8: integer;
-  GpuOutput: TArrayOfString;
+  i: integer;
+  device: DISPLAY_DEVICEA;
+  isAmdMain, isNvidiaMain, isOtherMain, hasAmd, hasNvidia, hasOther: bool;
+  deviceString: AnsiString;
 begin
-  SetArrayLength(GpuOutput, 10);
-
   try
     if Wine then
-      RaiseException('The cmd and/or PowerShell calls below won''t work on Wine, so don''t bother');
+      RaiseException('The calls below may not work on Wine'); // TODO: Test
 
-    GpuOutputFile := ExpandConstant('{tmp}') + '\gpu_name_output.txt';
-    GpuOutputFileUtf8 := ExpandConstant('{tmp}') + '\gpu_name_output_utf8.txt';
+    device.cb := SizeOf(device)
 
-    // Gets the GPU name through a wmic call and write that to a text file
-    Exec(ExpandConstant('{cmd}'), '/c wmic path win32_VideoController get name > ' + '"' + GpuOutputFile + '"', '', SW_HIDE, ewWaitUntilTerminated, ResultCodeGpu);
-    if ResultCodeGpu <> 0 then
-      RaiseException('Can''t get GPU name and write it to a file');
+    // Loop over all display devices in the system
+    while EnumDisplayDevices(0, i, device, EDD_GET_DEVICE_INTERFACE_NAME) do
+    begin
+      deviceString := CharArrayToStringAnsi(device.DeviceString);
 
-    // Convert the text file to UTF-8 because by default it's UTF-16 which is a bit difficult to read
-    Exec(ExpandConstant('{cmd}'), '/c powershell -c "Get-Content ''' + GpuOutputFile + ''' | Set-Content -Encoding utf8 ''' + GpuOutputFileUtf8 + '''"', '', SW_HIDE, ewWaitUntilTerminated, ResultCodeUtf8);
-    if ResultCodeUtf8 <> 0 then
-      RaiseException('Can''t convert GPU name file to UTF-8');
-
-    // Load the string from the file and check if it's been retrieved successfully
-    if (LoadStringsFromFile(GpuOutputFileUtf8, GpuOutput)) and (GetArrayLength(GpuOutput) >= 2) then
+      // Main GPU?
+      if (device.StateFlags and DISPLAY_DEVICE_PRIMARY_DEVICE) = DISPLAY_DEVICE_PRIMARY_DEVICE then
       begin
-      if not Pos('Name', GpuOutput[0]) > 0 then
-        RaiseException('The first output line doesn''t contain the word "Name", as it should');
-
-      if Length(GpuOutput[1]) < 3 then
-        RaiseException('The retrieved GPU name is less than 3 characters long. Something must have gone wrong here');
-
-      // Determine the GPU manufacturer based on the second output line.
-      if Pos('AMD', GpuOutput[1]) > 0 then
-        Result := AMD
-      else if Pos('NVIDIA', GpuOutput[1]) > 0 then
-        Result := NVIDIA
+        if Pos('AMD', deviceString) > 0 then
+          isAmdMain := true
+        else if Pos('NVIDIA', deviceString) > 0 then
+          isNvidiaMain := true
+        else
+          isOtherMain := true
+      end
+      // Secondary GPU?
       else
-        Result := Other;
+      begin
+        if Pos('AMD', deviceString) > 0 then
+          hasAmd := true
+        else if Pos('NVIDIA', deviceString) > 0 then
+          hasNvidia := true
+        else
+          hasOther := true;
       end;
+
+      i := i + 1;
+    end;
+
+    // Determine what the most likely primary GPU is
+    if isAmdMain then
+      Result := AMD
+    else if isNvidiaMain then
+      Result := NVIDIA
+    else if isOtherMain and hasAmd and not hasNvidia then
+      Result := AMD
+    else if isOtherMain and not hasAmd and hasNvidia then
+      Result := NVIDIA
+    else if isOtherMain and not hasAmd and not hasNvidia then
+      Result := Other
+    else
+      RaiseException('Couldn''t determine GPU manufacturer');
   except
     // If something has gone wrong, just ask the user what GPU they have
-    if MsgBox('We weren''t able to automatically determine what graphics card is in your system. We use this information to apply the best compatibility options for you.'
+    if MsgBox('We weren''t able to automatically determine what graphics card is in your system. We use this information to apply the best compatibility options.'
     + #13#10#13#10 + 'Please click "Yes" if your computer has an NVIDIA graphics card. Click "No" if otherwise.', mbConfirmation, MB_YESNO) = IDYES then
       Result := NVIDIA
     else if MsgBox('Please click "Yes" if your system uses an AMD graphics card. Click "No" if the graphics card is from another manufacturer like Intel.', mbConfirmation, MB_YESNO) = IDYES then
       Result := AMD
     else
       Result := Other;
-  finally
-    // Cleanup
-    DeleteFile(GpuOutputFile);
-    DeleteFile(GpuOutputFileUtf8);
   end;
 end;
 
