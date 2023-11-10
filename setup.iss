@@ -317,6 +317,9 @@ end;
 // Run when the wizard is opened.
 procedure InitializeWizard;
 begin
+    EDD_GET_DEVICE_INTERFACE_NAME := 1; // TODO: Initialize constants somewhere else
+    DISPLAY_DEVICE_PRIMARY_DEVICE := 4;
+
     # if !AllInOneInstall
       // Offline install
       OfflineInstall := ExpandConstant('{param:sourcefile|false}')
