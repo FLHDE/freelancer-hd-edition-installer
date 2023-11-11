@@ -13,6 +13,7 @@ type
 end;
 
 // Enum for GPU manufacturers
+// TODO for next update: Information below
 // We need this information about the user's system because AMD GPUs have issues with the newest dgVoodoo versions
 // And on NVIDIA GPUs some textures don't load correctly with DxWrapper Anisotropic Filtering
 type
@@ -81,7 +82,7 @@ begin
                 SourceFilePath, DestFilePath]));
             end;
 
-            // Delete the source file if it's been moved successfully
+            // Delete the source file if we just want to move instead of copy
             if Move then
               DeleteFile(SourceFilePath);
 
