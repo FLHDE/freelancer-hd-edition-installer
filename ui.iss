@@ -1399,7 +1399,8 @@ begin
     DxWrapperGraphicsApi.Width := CheckBoxWidth
     DgVoodooGraphicsApi.Width := CheckBoxWidth
     VanillaGraphicsApi.Width := CheckBoxWidth
-    LightingFixGraphicsApi.Width := CheckBoxWidth
+    if HasLightingBug() then
+      LightingFixGraphicsApi.Width := CheckBoxWidth;
     VanillaReflections.Width := CheckBoxWidth
     ShinyReflections.Width := CheckBoxWidth
     ShiniestReflections.Width := CheckBoxWidth

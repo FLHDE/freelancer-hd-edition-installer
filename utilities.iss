@@ -380,6 +380,10 @@ end;
 function EnumDisplayDevices(lpDevice: DWORD; iDevNum: DWORD; var lpDisplayDevice: DISPLAY_DEVICEA; dwFlags: DWORD) : BOOL;
   external 'EnumDisplayDevicesA@user32.dll stdcall';
 
+// Wtf?
+procedure ZeroMemory(var Destination: DISPLAY_DEVICEA; Length: integer);
+  external 'RtlZeroMemory@kernel32.dll stdcall';
+
 // Convert a char array to string (both Ansi)
 function CharArrayToStringAnsi(charArray: array of AnsiChar): AnsiString;
 var
@@ -404,13 +408,20 @@ var
 begin
   try
     if Wine then
-      RaiseException('The calls below may not work on Wine'); // TODO: Test
-
-    device.cb := SizeOf(device)
+      RaiseException('Wine just returns ''Wine Adapter'', so don''t bother');
 
     // Loop over all display devices in the system
-    while EnumDisplayDevices(0, i, device, EDD_GET_DEVICE_INTERFACE_NAME) do
+    while true do
     begin
+      // Zero the display device prior to retrieving the data
+      ZeroMemory(device, SizeOf(device));
+      device.cb := SizeOf(device);
+
+      // Continue until there are no more devices left to check
+      if not EnumDisplayDevices(0, i, device, EDD_GET_DEVICE_INTERFACE_NAME) then
+        break;
+
+      deviceString := '' // The string needs to be made empty first, otherwise bad things will happen
       deviceString := CharArrayToStringAnsi(device.DeviceString);
 
       // Main GPU?
