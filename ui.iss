@@ -370,7 +370,9 @@ begin
   descEnglishImprovements.Width := PageEnglishImprovements.SurfaceWidth;
   descEnglishImprovements.Caption := 
   'This option fixes many typos, grammar mistakes, inconsistencies, and more, in the English Freelancer text and audio resources. It also adds a higher quality Freelancer intro (1440x960 instead of 720x480), which is only available in English.' + #13#10#13#10 +  
-  'NOTE: This option will set all of Freelancer''s text, a few voice lines, and the intro to English. Disable this option if you''d like to play Freelancer in a different language like German, French, or Russian.';
+  'NOTE: This option will set all of Freelancer''s text, a few voice lines, and the intro to English. Disable this option if you''d like to play Freelancer in a different language like German, French, or Russian.'
+  + #13#10#13#10 + 'NOTE 2: If this option is disabled, several ship control option names from the settings menu will be blank.';
+  // TODO for next update: Remove NOTE 2 above
 
   EnglishImprovements := TCheckBox.Create(PageEnglishImprovements);
   EnglishImprovements.Parent := PageEnglishImprovements.Surface;
@@ -697,9 +699,10 @@ begin
   descDgVoodooGraphicsApi.Width := PageGraphicsApi.SurfaceWidth;
   descDgVoodooGraphicsApi.Caption := 'Fixes the major lighting bug on Windows 10 and 11. Supports native Anti-Aliasing, Anisotropic Filtering, and ReShade.';
 
+  // TODO next update: Re-add
   // Manual refresh rate input is only required if the user has an AMD GPU
-  if GpuManufacturer = AMD then
-    descDgVoodooGraphicsApi.Caption := descDgVoodooGraphicsApi.Caption + ' Requires manual refresh rate input.';
+  //if GpuManufacturer = AMD then
+  descDgVoodooGraphicsApi.Caption := descDgVoodooGraphicsApi.Caption + ' Requires manual refresh rate input.';
 
   lblDxWrapperGraphicsApi := TLabel.Create(PageGraphicsApi);
   lblDxWrapperGraphicsApi.Parent := PageGraphicsApi.Surface;
@@ -718,6 +721,7 @@ begin
   descDxWrapperGraphicsApi.Width := PageGraphicsApi.SurfaceWidth;
   descDxWrapperGraphicsApi.Caption := 'Supports native Anti-Aliasing';
 
+  // TODO next update: Remove
   // Don't say that the DxWrapper option supports Anisitropic Filtering on NVIDA hardware because it's broken on there
   if GpuManufacturer <> NVIDIA then
     descDxWrapperGraphicsApi.Caption := descDxWrapperGraphicsApi.Caption + ', Anisotropic Filtering,';
@@ -759,7 +763,8 @@ begin
     descLightingFixGraphicsApi.WordWrap := True;
     descLightingFixGraphicsApi.Top := lblLightingFixGraphicsApi.Top + ScaleY(15);
     descLightingFixGraphicsApi.Width := PageGraphicsApi.SurfaceWidth;
-    descLightingFixGraphicsApi.Caption := 'About the same as the Vanilla Freelancer option but fixes the major lighting bug on Windows 10 and 11.';
+    // TODO for next update: Update caption with info about the updated d3d8.dll
+    descLightingFixGraphicsApi.Caption := 'About the same as the Vanilla Freelancer option but fixes the major lighting bug on Windows 10 and 11. NOTE: This option only works on Windows 10 and 11!';
   end;
   
   // DxWrapper options
@@ -789,6 +794,7 @@ begin
   descDxWrapperAa.Top := DxWrapperAa.Top + ScaleY(25);
 
   // Anisotropic Filtering from DxWrapper is broken on NVIDIA GPUs, so don't show the option for users who have one
+  // TODO next update: Remove
   if GpuManufacturer <> NVIDIA then
   begin
     lblDxWrapperAf := TLabel.Create(DxWrapperPage);
@@ -867,33 +873,34 @@ begin
   descDgVoodooAf.Caption := txtAfDesc;
   descDgVoodooAf.Top := DgVoodooAf.Top + ScaleY(25);
 
+  // TODO next upate: Re-add if statement
   // The refresh rate option is not needed on the newer dgVoodoo version, because it automatically runs at the native refresh rate.
-  if GpuManufacturer = AMD then
-  begin
-    lblDgVoodooRefreshRate := TLabel.Create(DgVoodooPage);
-    lblDgVoodooRefreshRate.Parent := DgVoodooPage.Surface;
-    lblDgVoodooRefreshRate.Caption := 'Refresh Rate';
-    lblDgVoodooRefreshRate.Top := descDgVoodooAf.Top + ScaleY(45);
+  //if GpuManufacturer = AMD then
+  //begin
+  lblDgVoodooRefreshRate := TLabel.Create(DgVoodooPage);
+  lblDgVoodooRefreshRate.Parent := DgVoodooPage.Surface;
+  lblDgVoodooRefreshRate.Caption := 'Refresh Rate';
+  lblDgVoodooRefreshRate.Top := descDgVoodooAf.Top + ScaleY(45);
 
-    lblDgVoodooRefreshRateHz := TLabel.Create(DgVoodooPage);
-    lblDgVoodooRefreshRateHz.Parent := DgVoodooPage.Surface;
-    lblDgVoodooRefreshRateHz.Caption := 'Hz';
-    lblDgVoodooRefreshRateHz.Top := lblDgVoodooRefreshRate.Top + ScaleY(23);
-    lblDgVoodooRefreshRateHz.Left := ScaleX(125);
+  lblDgVoodooRefreshRateHz := TLabel.Create(DgVoodooPage);
+  lblDgVoodooRefreshRateHz.Parent := DgVoodooPage.Surface;
+  lblDgVoodooRefreshRateHz.Caption := 'Hz';
+  lblDgVoodooRefreshRateHz.Top := lblDgVoodooRefreshRate.Top + ScaleY(23);
+  lblDgVoodooRefreshRateHz.Left := ScaleX(125);
 
-    DgVoodooRefreshRate := TNewEdit.Create(DgVoodooPage);
-    DgVoodooRefreshRate.Parent := DgVoodooPage.Surface;;
-    DgVoodooRefreshRate.Top := lblDgVoodooRefreshRateHz.Top - ScaleY(3);
-    DgVoodooRefreshRate.Text := IntToStr(RefreshRate());
-    DgVoodooRefreshRate.OnKeyPress := @DigitFieldKeyPress;
+  DgVoodooRefreshRate := TNewEdit.Create(DgVoodooPage);
+  DgVoodooRefreshRate.Parent := DgVoodooPage.Surface;;
+  DgVoodooRefreshRate.Top := lblDgVoodooRefreshRateHz.Top - ScaleY(3);
+  DgVoodooRefreshRate.Text := IntToStr(RefreshRate());
+  DgVoodooRefreshRate.OnKeyPress := @DigitFieldKeyPress;
 
-    descDgVoodooRefreshRate := TNewStaticText.Create(DgVoodooPage);
-    descDgVoodooRefreshRate.Parent := DgVoodooPage.Surface;
-    descDgVoodooRefreshRate.WordWrap := True;
-    descDgVoodooRefreshRate.Width := DgVoodooPage.SurfaceWidth;
-    descDgVoodooRefreshRate.Caption := 'Enter your monitor''s refresh rate here. Freelancer will run at this refresh rate.';
-    descDgVoodooRefreshRate.Top := DgVoodooRefreshRate.Top + ScaleY(25);
-  end;
+  descDgVoodooRefreshRate := TNewStaticText.Create(DgVoodooPage);
+  descDgVoodooRefreshRate.Parent := DgVoodooPage.Surface;
+  descDgVoodooRefreshRate.WordWrap := True;
+  descDgVoodooRefreshRate.Width := DgVoodooPage.SurfaceWidth;
+  descDgVoodooRefreshRate.Caption := 'Enter your monitor''s refresh rate here. Freelancer will run at this refresh rate.';
+  descDgVoodooRefreshRate.Top := DgVoodooRefreshRate.Top + ScaleY(25);
+  //end;
 
   // DxWrapper options #2
   DxWrapperPage2 := CreateCustomPage(
@@ -1142,7 +1149,8 @@ begin
   descMissileEffects.WordWrap := True;
   descMissileEffects.Top := lblMissleEffects.Top + ScaleY(20);
   descMissileEffects.Width := PageEffects.SurfaceWidth;
-  descMissileEffects.Caption := 'These options add missile, torpedo, and ship explosion effects that have a different look. The torpedo effects are a lot larger than the normal ones.';
+  // TODO for next update: Remove "and ship explosion" in last sentence below
+  descMissileEffects.Caption := 'These options add missile, torpedo, and ship explosion effects that have a different look. The torpedo and ship explosion effects are a lot larger than the normal ones.';
   
   ExplosionEffects := TCheckBox.Create(PageEffects);
   ExplosionEffects.Parent := PageEffects.Surface;
@@ -1419,7 +1427,8 @@ begin
       + #13#10#13#10 + 'If you experience crashes, bad colors, or other compatibility issues during gameplay, you may need to remove/replace/override any of the following DLLs in the EXE folder:'
       + #13#10 + 'd3d8.dll (dgVoodoo or DxWrapper)'
       + #13#10 + 'd3d9.dll (DxWrapper ReShade)'
-      + #13#10 + 'dxgi.dll (dgVoodoo ReShade)'
-      + #13#10 + 'dinput8.dll (DirectInput)'), mbError, MB_OK);
+      + #13#10 + 'dxgi.dll (dgVoodoo ReShade)'), mbError, MB_OK);
+      // TODO for next update: Uncomment line below
+      //+ #13#10 + 'dinput8.dll (DirectInput)'), mbError, MB_OK);
   end;
 end;
