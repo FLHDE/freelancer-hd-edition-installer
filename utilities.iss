@@ -392,6 +392,7 @@ var
 begin
   for i := Low(charArray) to High(charArray) do
   begin
+    // If we've reached a null-character, that means we're at the end of the string
     if charArray[i] = #0 then
       break;
 
@@ -481,12 +482,13 @@ var
 begin
   UILanguage := GetUILanguage
 
-  // https://renenyffenegger.ch/notes/Windows/development/Internationalization/language
-  case UILanguage of
-    $407, $807, $c07, $1007, $1407: Result := German;
-    $40c, $80c, $c0c, $100c, $140c, $180c, $1c0c, $200c, $240c, $280c, $2c0c, $300c, $340c, $380c, $3c0c: Result := French;
-    $419, $819: Result := Russian;
+  // $3FF is used to extract the primary language identifer
+  if UILanguage and $3FF = $07 then // $07 = German primary language identifier
+    Result := German
+  else if UILanguage and $3FF = $0C then // $07 = French primary language identifier
+    Result := French
+  else if UILanguage and $3FF = $19 then // $19 = Russian primary language identifier
+    Result := Russian
   else
     Result := EnglishOrOther;
-  end;
 end;

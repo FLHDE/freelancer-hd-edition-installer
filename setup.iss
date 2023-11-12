@@ -169,7 +169,7 @@ begin
         WizardForm.StatusLabel.Caption := 'Cleaning up...';
         UpdateProgress(95);
 
-        if not IsWine then
+        if not Wine then
         begin
           // Delete potential UTF-8 BOM headers in all edited config files. May not work properly on Wine.
           for i := 0 to EditedConfigFiles.Count - 1 do
