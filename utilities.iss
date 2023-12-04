@@ -34,7 +34,7 @@ function IsWine: boolean;
 var  LibHandle  : THandle;
 begin
   LibHandle := LoadLibraryA('ntdll.dll');
-  Result:= GetProcAddress(LibHandle, 'wine_get_version') <> 0;
+  Result := GetProcAddress(LibHandle, 'wine_get_version') <> 0;
 end;
 
 // Gets the attributes for a file or directory (e.g. read and write)
@@ -410,7 +410,7 @@ var
 begin
   try
     if Wine then
-      RaiseException('Wine just returns ''Wine Adapter'', so don''t bother');
+      RaiseException('Wine just returns "Wine Adapter", so don''t bother');
 
     // Loop over all display devices in the system
     while true do
@@ -482,7 +482,7 @@ var
 begin
   UILanguage := GetUILanguage
 
-  // $3FF is used to extract the primary language identifer
+  // $3FF is used to extract the primary language identifier
   if UILanguage and $3FF = $07 then // $07 = German primary language identifier
     Result := German
   else if UILanguage and $3FF = $0C then // $07 = French primary language identifier

@@ -625,12 +625,6 @@ begin
   )
 
   FileReplaceString(InterfacePath + 'keymap.ini', 'key = USER_SWITCH_TO_TARGET', ';key = USER_SWITCH_TO_TARGET')
-
-  // Move the Switch Contact List button off the screen (also obsolete)
-  FileReplaceString(HudShiftPath, 'position = 4e158e, -0.3430, 4e1596, -0.3700		; SwitchToContactList', 'position = 4e158e, -0.3430, 4e1596, -0.8700		; SwitchToContactList')
-  FileReplaceString(HudShiftPath, 'position = 4e31f6, -0.3430, 4e31fe, -0.3700', 'position = 4e31f6, -0.3430, 4e31fe, -0.8700')
-  FileReplaceString(HudShiftPath, 'position = 4e3592, -0.2950, 4e359a, -0.1710', 'position = 4e3592, -0.2950, 4e359a, -0.6710')
-  FileReplaceString(HudShiftPath, 'position = 4e3afc, -0.3430, 4e3b04, -0.3700', 'position = 4e3afc, -0.3430, 4e3b04, -0.8700')
 end;
 
 procedure Process_DarkHud();
