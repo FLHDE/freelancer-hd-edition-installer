@@ -205,7 +205,8 @@ var
 begin
     Result := True;
 
-    if (PageId = DgVoodooPage.ID) and (GpuManufacturer = AMD) then
+    // TODO next update: add 'and (GpuManufacturer = AMD)' as additional condition to the if-statement below
+    if (PageId = DgVoodooPage.ID) then
     begin
       RefreshRateError := 'Refresh rate must be a valid number between 30 and 3840. If you don''t know how to find your monitor''s refresh rate, look it up on the internet.'
         + #13#10#13#10 + 'Keep in mind that the DxWrapper graphics API from the previous page does not require you to set a refresh rate manually.'
