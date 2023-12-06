@@ -290,6 +290,10 @@ begin
 
     // Replace all 6 occurrences of Agency FB with Agency FB Cyrillic in rich_fonts.ini
     FileReplaceString(FontsPath + 'rich_fonts.ini', 'Agency FB', 'Agency FB Cyrillic');
+
+    // TODO next update: uncomment
+    //FileReplaceString(FontsPath + 'fonts.ini', 'path = FONTS/AGENCYR.ttf', ';path = FONTS/AGENCYR.ttf')
+    //FileReplaceString(FontsPath + 'fonts.ini', ';path = FONTS/AGENCYR_CR.ttf', 'path = FONTS/AGENCYR_CR.ttf')
 end;
 
 // SinglePlayer console processing logic
@@ -489,6 +493,7 @@ begin
   FilePath := ExpandConstant('{app}\EXE\flplusplus.ini');
 
   // Set draw distances
+  // TODO next update: change lod_scale = 9 to 0
   if(PageDrawDistances.Values[0]) then // 1x (Vanilla)
     FileReplaceString(FilePath, 'lod_scale = 9', 'lod_scale = 0')
   else if(PageDrawDistances.Values[1]) then // 2x 
