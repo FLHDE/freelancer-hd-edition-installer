@@ -46,7 +46,7 @@ SolidCompression=yes
 UninstallDisplayIcon={#SourcePath}\Assets\Images\icon.ico
 UninstallDisplayName={#MyAppName}
 WizardImageFile={#SourcePath}\Assets\Images\backgroundpattern.bmp
-WizardSmallImageFile={#SourcePath}\Assets\Images\icon.bmp
+WizardSmallImageFile={#SourcePath}\Assets\Images\icon*.bmp
 WizardSizePercent=105
 VersionInfoVersion=1.0.0.0
 
@@ -318,6 +318,8 @@ end;
 // Run when the wizard is opened.
 procedure InitializeWizard;
 begin
+    WizardForm.WizardSmallBitmapImage.Stretch := false;
+
     EDD_GET_DEVICE_INTERFACE_NAME := 1; // TODO: Initialize constants somewhere else
     DISPLAY_DEVICE_PRIMARY_DEVICE := 4;
 
