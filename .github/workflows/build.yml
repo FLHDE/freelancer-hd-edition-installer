@@ -12,6 +12,11 @@ jobs:
         - name: Install Inno
           run: |
             choco install innosetup
+
+        - name: Add mod zip
+          run: |
+            type NUL > ${{ github.workspace }}\Assets\Mod\freelancerhd.7z
+          shell: cmd
             
         - name: Compile script
           run: |
