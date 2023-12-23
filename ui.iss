@@ -320,7 +320,7 @@ begin
   DataDirPage.Add('');
   
   // If the Reg key exists, use its content to populate the folder location box. Use the default path if otherwise.
-  RegQueryStringValue(HKEY_LOCAL_MACHINE, 'SOFTWARE\Wow6432Node\Microsoft\Microsoft Games\Freelancer\1.0', 'AppPath', dir)
+  RegQueryStringValue(HKEY_LOCAL_MACHINE, 'SOFTWARE\Microsoft\Microsoft Games\Freelancer\1.0', 'AppPath', dir)
   DataDirPage.Values[0] := dir
   
   // Initialize CallSign page and add content

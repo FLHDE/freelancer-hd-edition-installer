@@ -190,7 +190,9 @@ begin
 
         // Remove additional junk files
         DeleteFile(ExpandConstant('{app}\UNINSTAL.EXE'));
-        DeleteFile(ExpandConstant('{app}\.gitattributes'));
+        // TODO next update: uncomment
+        //DeleteFile(ExpandConstant('{app}\.gitattributes'));
+        //DelTree(ExpandConstant('{app}\.github'), True, True, True);
 
         // Install Complete!
         UpdateProgress(100);
