@@ -4,7 +4,8 @@
 
 #define MyAppVersion "0.6"
 #define MyAppName "Freelancer: HD Edition v" + MyAppVersion
-#define MyAppFileName "Freelancer HD Edition" ; Name without the colon to prevent file/explorer-related issues
+; Name without the colon to prevent file/explorer-related issues
+#define MyAppFileName "Freelancer HD Edition"
 #define MyAppPublisher "Freelancer: HD Edition Development Team"
 #define MyAppURL "https://github.com/BC46/freelancer-hd-edition"
 #define MyAppExeName "Freelancer.exe"
