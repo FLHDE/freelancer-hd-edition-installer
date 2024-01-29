@@ -29,11 +29,12 @@ AppId={{F40FDCDA-3A45-4CC3-9FDA-167EE480A1E0}
 AppName={#MyAppName}
 AppVersion={#MyAppVersion}
 AppPublisher={#MyAppPublisher}
+AppCopyright={#MyAppPublisher}
 AppPublisherURL={#MyAppURL}
 AppSupportURL={#MyAppURL}
 AppUpdatesURL={#MyAppURL}
 ChangesAssociations=yes
-Compression=lzma
+Compression=lzma2/normal
 DefaultDirName={sd}\Games\Freelancer HD Edition
 DefaultGroupName=Freelancer HD Edition
 DisableWelcomePage=False
@@ -106,6 +107,8 @@ var
 procedure CurStepChanged(CurStep: TSetupStep);
 var
   ResultCode, i: Integer;
+  // TODO next update: remove
+  OptListFilePath : string;
 begin
     if CurStep = ssPostInstall then
     begin
@@ -193,6 +196,11 @@ begin
         // TODO next update: uncomment
         //DeleteFile(ExpandConstant('{app}\.gitattributes'));
         //DelTree(ExpandConstant('{app}\.github'), True, True, True);
+
+        // TODO next update: remove (this is a temporary bug fix)
+        OptListFilePath := ExpandConstant('{app}\DATA\INTERFACE\optlist.ini');
+        FileReplaceString(OptListFilePath, 'option = 1411, 2454, 100, false, true, 33, 100', ';option = 1411, 2454, 100, false, true, 33, 100')
+        FileReplaceString(OptListFilePath, 'option = 1412, 2455, 100, false, true, 33, 100', ';option = 1412, 2455, 100, false, true, 33, 100')
 
         // Install Complete!
         UpdateProgress(100);
