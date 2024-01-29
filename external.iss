@@ -26,28 +26,6 @@ function GetDeviceCaps (hDC, nIndex: Integer): Integer;
 function ConvertHexToBinary(hexString: string; hexLength: LongWord; binaryString: string): Boolean;
   external 'ConvertHexToBinary@files:HexToBinary.dll cdecl setuponly delayload';
 
-// Define type for SYSTEMTIME. We only care about the year here really.
-type  
-SYSTEMTIME = record 
-  Year:         WORD; 
-  Month:        WORD; 
-  DayOfWeek:    WORD; 
-  Day:          WORD; 
-  Hour:         WORD; 
-  Minute:       WORD; 
-  Second:       WORD; 
-  Milliseconds: WORD; 
-end;
-
-type
-DISPLAY_DEVICEA = record
-  cb: DWORD;
-  DeviceName: array [0 .. 31] of AnsiChar;
-  DeviceString: array [0 .. 127] of AnsiChar;
-  StateFlags: DWORD;
-  DeviceID, DeviceKey: array [0..127] of AnsiChar;
-end;
-
 // Use Windows function to convert date modified to a useable format
 function FileTimeToSystemTime(
 FileTime:        TFileTime; 
