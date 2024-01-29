@@ -1,21 +1,4 @@
 [Code]
-// Data type for a desktop resolution (stores the width and height of the display in pixels)
-type
-	DesktopResolution = record
-		Width: Integer;
-		Height: Integer;
-end;
-
-// Enum for GPU manufacturers
-// TODO for next update: Information below
-// We need this information about the user's system because AMD GPUs have issues with the newest dgVoodoo versions
-// And on NVIDIA GPUs some textures don't load correctly with DxWrapper Anisotropic Filtering
-type
-  TGpuManufacturer = (NVIDIA, AMD, Other);
-
-type
-  TSystemLanguage = (German, French, Russian, EnglishOrOther);
-
 // Used to store values used across numerous files and functions so they don't have to be requested multiple times
 var
   DesktopRes: DesktopResolution;
