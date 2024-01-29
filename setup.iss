@@ -4,6 +4,7 @@
 
 #define MyAppVersion "0.6"
 #define MyAppName "Freelancer: HD Edition v" + MyAppVersion
+#define MyAppFileName "Freelancer HD Edition" ; Name without the colon to prevent file/explorer-related issues
 #define MyAppPublisher "Freelancer: HD Edition Development Team"
 #define MyAppURL "https://github.com/BC46/freelancer-hd-edition"
 #define MyAppExeName "Freelancer.exe"
@@ -35,13 +36,13 @@ AppSupportURL={#MyAppURL}
 AppUpdatesURL={#MyAppURL}
 ChangesAssociations=yes
 Compression=lzma2/normal
-DefaultDirName={sd}\Games\Freelancer HD Edition
-DefaultGroupName=Freelancer HD Edition
+DefaultDirName={sd}\Games\{#MyAppFileName}
+DefaultGroupName={#MyAppFileName}
 DisableWelcomePage=False
 DisableDirPage=False
 ExtraDiskSpaceRequired = {#SizeAll}
 InfoBeforeFile={#SourcePath}\Assets\Text\installinfo.txt
-OutputBaseFilename=FreelancerHDSetup
+OutputBaseFilename=FreelancerHDESetup
 SetupIconFile={#SourcePath}\Assets\Images\icon.ico
 SolidCompression=yes
 UninstallDisplayIcon={#SourcePath}\Assets\Images\icon.ico
@@ -58,8 +59,8 @@ Name: "english"; MessagesFile: "compiler:Default.isl"
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}";
 
 [Icons]
-Name: "{group}\{#MyAppName}"; Filename: "{app}\EXE\{#MyAppExeName}"
-Name: "{commondesktop}\Freelancer HD Edition"; Filename: "{app}\EXE\{#MyAppExeName}"; Tasks: desktopicon
+Name: "{group}\{#MyAppFileName}"; Filename: "{app}\EXE\{#MyAppExeName}"
+Name: "{commondesktop}\{#MyAppFileName}"; Filename: "{app}\EXE\{#MyAppExeName}"; Tasks: desktopicon
 
 [Files]
 Source: "Assets\Text\installinfo.txt"; DestDir: "{app}"; Flags: ignoreversion deleteafterinstall
@@ -74,6 +75,7 @@ Source: "Assets\External\HexToBinary.dll"; Flags: dontcopy;
 # if AllInOneInstall
 Source: "Assets\Mod\freelancerhd.7z"; DestDir: "{tmp}"; Flags: nocompression deleteafterinstall
 #endif
+Source: "Assets\Images\icon.ico"; DestDir: "{app}\EXE"; DestName: "{#MyAppExeName}"; Flags: ignoreversion
 
 [Run]
 Filename: "{app}\EXE\{#MyAppExeName}"; Description: "{cm:LaunchProgram,{#StringChange(MyAppName, '&', '&&')}}"; Flags: nowait postinstall skipifsilent
