@@ -359,7 +359,7 @@ begin
   StoryMode := TComboBox.Create(PageSinglePlayer);
   StoryMode.Parent := PageSinglePlayer.Surface;
   StoryMode.Style := csDropDownList;
-  StoryMode.Width := 180;
+  StoryMode.Width := 200;
   StoryMode.Items.Add('Story Mode (default)');
   StoryMode.Items.Add('Open Single Player (Normal)');
   StoryMode.Items.Add('Open Single Player (Pirate)');
@@ -368,7 +368,7 @@ begin
   lblSinglePlayerMode := TLabel.Create(PageSinglePlayer);
   lblSinglePlayerMode.Parent := PageSinglePlayer.Surface;
   lblSinglePlayerMode.Caption := 'Single Player mode';
-  lblSinglePlayerMode.Left := ScaleX(190);
+  lblSinglePlayerMode.Left := ScaleX(210);
   
   descSinglePlayerMode := TNewStaticText.Create(PageSinglePlayer);
   descSinglePlayerMode.Parent := PageSinglePlayer.Surface;
@@ -690,6 +690,7 @@ begin
   DxWrapperAa.Items.Add('On (recommended)');
   DxWrapperAa.ItemIndex := 1;
   DxWrapperAa.Top := ScaleY(20);
+  DxWrapperAa.Width := 155;
 
   descDxWrapperAa := TNewStaticText.Create(DxWrapperPage);
   descDxWrapperAa.Parent := DxWrapperPage.Surface;
@@ -705,7 +706,7 @@ begin
     lblDxWrapperAf := TLabel.Create(DxWrapperPage);
     lblDxWrapperAf.Parent := DxWrapperPage.Surface;
     lblDxWrapperAf.Caption := TxtAf;
-    lblDxWrapperAf.Top := descDxWrapperAa.Top + ScaleY(50);
+    lblDxWrapperAf.Top := descDxWrapperAa.Top + ScaleY(60);
     
     DxWrapperAf := TComboBox.Create(DxWrapperPage);
     DxWrapperAf.Parent := DxWrapperPage.Surface;
@@ -718,6 +719,7 @@ begin
     DxWrapperAf.Items.Add('Auto (recommended)');
     DxWrapperAf.ItemIndex := 5;
     DxWrapperAf.Top := lblDxWrapperAf.Top + ScaleY(20);
+    DxWrapperAf.Width := 155;
 
     descDxWrapperAf := TNewStaticText.Create(DxWrapperPage);
     descDxWrapperAf.Parent := DxWrapperPage.Surface;
@@ -747,6 +749,7 @@ begin
   DgVoodooAa.Items.Add('8x (recommended)');;
   DgVoodooAa.ItemIndex := 3;
   DgVoodooAa.Top := ScaleY(20);
+  DgVoodooAa.Width := 155;
 
   descDgVoodooAa := TNewStaticText.Create(DgVoodooPage);
   descDgVoodooAa.Parent := DgVoodooPage.Surface;
@@ -758,7 +761,7 @@ begin
   lblDgVoodooAf := TLabel.Create(DgVoodooPage);
   lblDgVoodooAf.Parent := DgVoodooPage.Surface;
   lblDgVoodooAf.Caption := txtAf;
-  lblDgVoodooAf.Top := descDgVoodooAa.Top + ScaleY(45);
+  lblDgVoodooAf.Top := descDgVoodooAa.Top + ScaleY(55);
   
   DgVoodooAf := TComboBox.Create(DgVoodooPage);
   DgVoodooAf.Parent := DgVoodooPage.Surface;
@@ -770,6 +773,7 @@ begin
   DgVoodooAf.Items.Add('16x (recommended)');
   DgVoodooAf.ItemIndex := 4;
   DgVoodooAf.Top := lblDgVoodooAf.Top + ScaleY(20);
+  DgVoodooAf.Width := 155;
 
   descDgVoodooAf := TNewStaticText.Create(DgVoodooPage);
   descDgVoodooAf.Parent := DgVoodooPage.Surface;
@@ -1131,7 +1135,7 @@ begin
   DisplayMode := TComboBox.Create(PageMiscOptions);
   DisplayMode.Parent := PageMiscOptions.Surface;
   DisplayMode.Style := csDropDownList;
-  DisplayMode.Width := 210;
+  DisplayMode.Width := 230;
   DisplayMode.Items.Add('Fullscreen (default, recommended)');
   DisplayMode.Items.Add('Windowed');
   DisplayMode.Items.Add('Borderless Windowed');
@@ -1150,7 +1154,7 @@ begin
   lblDisplayMode.Parent := PageMiscOptions.Surface;
   lblDisplayMode.Caption := 'Display Mode';
   lblDisplayMode.Top := DisplayMode.Top;
-  lblDisplayMode.Left := ScaleX(220);
+  lblDisplayMode.Left := ScaleX(240);
 
   descDisplayMode := TNewStaticText.Create(PageMiscOptions);
   descDisplayMode.Parent := PageMiscOptions.Surface;
