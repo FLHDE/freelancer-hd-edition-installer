@@ -228,7 +228,6 @@ end;
 procedure InitializeUi();
 var 
   dir : string;
-  CheckBoxWidth: Integer;
 
   // Strings that are used more than once
   txtAa: String;
@@ -1187,54 +1186,6 @@ begin
 
   if Wine then
   begin
-    // Make all the custom checkboxes and radio buttons less wide so the clickable area doesn't hide the accompanying labels on Wine.
-    CheckBoxWidth := ScaleX(20)
-
-    // TODO: Update when new UI elements have been added
-    // Checkboxes
-    EnglishImprovements.Width := CheckBoxWidth
-    RussianFonts.Width := CheckBoxWidth
-    LevelRequirements.Width := CheckBoxWidth
-    NewSaveFolder.Width := CheckBoxWidth
-    WidescreenHud.Width := CheckBoxWidth
-    WeaponGroups.Width := CheckBoxWidth
-    DarkHud.Width := CheckBoxWidth
-    PlanetScape.Width := CheckBoxWidth
-    DxWrapperReShade.Width := CheckBoxWidth
-    DxWrapperSaturation.Width := CheckBoxWidth
-    DxWrapperSharpening.Width := CheckBoxWidth
-    DxWrapperHdr.Width := CheckBoxWidth
-    DxWrapperBloom.Width := CheckBoxWidth
-    DgVoodooReShade.Width := CheckBoxWidth
-    DgVoodooSaturation.Width := CheckBoxWidth
-    DgVoodooSharpening.Width := CheckBoxWidth
-    DgVoodooHdr.Width := CheckBoxWidth
-    DgVoodooBloom.Width := CheckBoxWidth
-    MissileEffects.Width := CheckBoxWidth
-    ExplosionEffects.Width := CheckBoxWidth
-    EngineTrails.Width := CheckBoxWidth
-    SkipIntros.Width := CheckBoxWidth
-    SinglePlayer.Width := CheckBoxWidth
-    BestOptions.Width := CheckBoxWidth
-    DoNotPauseOnAltTab.Width := CheckBoxWidth
-
-    // Radio buttons
-    DxWrapperGraphicsApi.Width := CheckBoxWidth
-    DgVoodooGraphicsApi.Width := CheckBoxWidth
-    VanillaGraphicsApi.Width := CheckBoxWidth
-    if HasLightingBug() then
-      LightingFixGraphicsApi.Width := CheckBoxWidth;
-    VanillaReflections.Width := CheckBoxWidth
-    ShinyReflections.Width := CheckBoxWidth
-    ShiniestReflections.Width := CheckBoxWidth
-    JumpTunnel10Sec.Width := CheckBoxWidth
-    JumpTunnel5Sec.Width := CheckBoxWidth
-    JumpTunnel2Sec.Width := CheckBoxWidth
-    JumpTunnelSkip.Width := CheckBoxWidth
-    VanillaIcons.Width := CheckBoxWidth
-    FlatIcons.Width := CheckBoxWidth
-    AlternativeIcons.Width := CheckBoxWidth
-
     // Give Wine users some tips on how to avoid compatibility issues; could be useful.
     MsgBox(ExpandConstant(
       'It seems you''re using Wine. It''s possible that {#MyAppName} won''t run out of the box on your setup due to incompatibilities. From our testing, {#MyAppName} works best on Linux when the mod is installed and launched with Lutris.'
