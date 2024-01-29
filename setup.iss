@@ -102,6 +102,7 @@ var
 #endif
 
 // Imports from other .iss files
+#include "external.iss"
 #include "utilities.iss"
 #include "ui.iss"
 #include "mod_options.iss"
