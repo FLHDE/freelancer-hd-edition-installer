@@ -29,12 +29,10 @@ var
   DgVoodooPage2: TWizardPage;
 
   // Localization
-  lblEnglishImprovements: TLabel;
   EnglishImprovements: TCheckBox;
   descEnglishImprovements: TNewStaticText;
 
   // Russian fonts
-  lblRussianFonts: TLabel;
   RussianFonts: TCheckBox;
   descRussianFonts: TNewStaticText;
 
@@ -44,49 +42,36 @@ var
   descSinglePlayerMode: TNewStaticText;
 
   // Level requirements
-  lblLevelRequirements: TLabel;
   LevelRequirements: TCheckBox;
   descLevelRequirements: TNewStaticText;
 
   // New save folder
-  lblNewSaveFolder: TLabel;
   NewSaveFolder: TCheckBox;
   descNewSaveFolder: TNewStaticText;
 
   // Advanced Widescreen HUD
-  lblWidescreenHud: TLabel;
   WidescreenHud: TCheckBox;
   descWidescreenHud: TNewStaticText;
 
   // Weapon Groups
-  lblWeaponGroups: TLabel;
   WeaponGroups: TCheckBox;
   descWeaponGroups: TNewStaticText;
 
   // Dark HUD
-  lblDarkHud: TLabel;
   DarkHud: TCheckBox;
   descDarkHud: TNewStaticText;
 
   // Custom Icons
-  lblVanillaIcons: TLabel;
-  lblAlternativeIcons: TLabel;
-  lblFlatIcons: TLabel;
   VanillaIcons: TRadioButton;
   AlternativeIcons: TRadioButton;
   FlatIcons: TRadioButton;
   descCustomIcons: TNewStaticText;
 
   // Fix clipping with 16:9 resolution planetscapes
-  lblPlanetScape: TLabel;
   PlanetScape: TCheckBox;
   descPlanetScape: TNewStaticText;
 
   // Graphics API
-  lblDxWrapperGraphicsApi: TLabel;
-  lblDgVoodooGraphicsApi: TLabel;
-  lblVanillaGraphicsApi: TLabel;
-  lblLightingFixGraphicsApi: TLabel;
   DxWrapperGraphicsApi: TRadioButton;
   DgVoodooGraphicsApi: TRadioButton;
   VanillaGraphicsApi: TRadioButton;
@@ -106,11 +91,6 @@ var
   descDxWrapperAa: TNewStaticText;
 
   // DxWrapper #2
-  lblDxWrapperReShade: TLabel;
-  lblDxWrapperSaturation: TLabel;
-  lblDxWrapperSharpening: TLabel;
-  lblDxWrapperHdr: TLabel;
-  lblDxWrapperBloom: TLabel;
   DxWrapperReShade: TCheckBox;
   DxWrapperSaturation: TCheckBox;
   DxWrapperSharpening: TCheckBox;
@@ -135,11 +115,6 @@ var
   descDgVoodooRefreshRate: TNewStaticText;
 
   // dgVoodoo #2
-  lblDgVoodooReShade: TLabel;
-  lblDgVoodooSaturation: TLabel;
-  lblDgVoodooSharpening: TLabel;
-  lblDgVoodooHdr: TLabel;
-  lblDgVoodooBloom: TLabel;
   DgVoodooReShade: TCheckBox;
   DgVoodooSaturation: TCheckBox;
   DgVoodooSharpening: TCheckBox;
@@ -152,36 +127,25 @@ var
   descDgVoodooBloom: TNewStaticText;
 
   // Add improved reflections
-  lblVanillaReflections: TLabel;
-  lblShinyReflections: TLabel;
-  lblShiniestReflections: TLabel;
   VanillaReflections: TRadioButton;
   ShinyReflections: TRadioButton;
   ShiniestReflections: TRadioButton;
   descReflections: TNewStaticText;
 
   // Add new missile and explosion effects
-  lblMissleEffects: TLabel;
-  lblExplosionEffects: TLabel;
   MissileEffects: TCheckBox;
   ExplosionEffects: TCheckBox;
   descMissileEffects: TNewStaticText;
 
   // Add player ship engine trails
-  lblEngineTrails: TLabel;
   EngineTrails: TCheckBox;
   descEngineTrails: TNewStaticText;
 
   // Skip intros
-  lblSkipIntros: TLabel;
   SkipIntros: TCheckBox;
   descSkipIntros: TNewStaticText;
 
   // Jump tunnel duration
-  lblJumpTunnel10Sec: TLabel;
-  lblJumpTunnel5Sec: TLabel;
-  lblJumpTunnel2Sec: TLabel;
-  lblJumpTunnelSkip: TLabel;
   JumpTunnel10Sec: TRadioButton;
   JumpTunnel5Sec: TRadioButton;
   JumpTunnel2Sec: TRadioButton;
@@ -189,12 +153,10 @@ var
   descJumpTunnelDuration: TNewStaticText;
 
   // Single Player Command Console
-  lblSinglePlayer: TLabel;
   SinglePlayer: TCheckBox;
   descSinglePlayer: TNewStaticText;
 
   // Apply best options
-  lblBestOptions: TLabel;
   BestOptions: TCheckBox;
   descBestOptions: TNewStaticText;
 
@@ -204,7 +166,6 @@ var
   descDisplayMode: TNewStaticText;
 
   // Do not pause on alt tab
-  lblDoNotPauseOnAltTab: TLabel;
   DoNotPauseOnAltTab: TCheckBox;
   MusicInBackground: Boolean;
 
@@ -357,11 +318,6 @@ begin
   // Initialize English Improvements page and add content
   PageEnglishImprovements := CreateCustomPage(PitchVariations.ID,
   'Localization', 'Apply English improvements and other fixes.');
-
-  lblEnglishImprovements := TLabel.Create(PageEnglishImprovements);
-  lblEnglishImprovements.Parent := PageEnglishImprovements.Surface;
-  lblEnglishImprovements.Caption := 'Apply English Freelancer improvements';
-  lblEnglishImprovements.Left := ScaleX(20);
   
   descEnglishImprovements := TNewStaticText.Create(PageEnglishImprovements);
   descEnglishImprovements.Parent := PageEnglishImprovements.Surface;
@@ -378,12 +334,8 @@ begin
   EnglishImprovements.Parent := PageEnglishImprovements.Surface;
   // Only check the English improvements option if the user's system language is set to English or other. If otherwise, it's likely the user would want to play FL in a different language.
   EnglishImprovements.Checked := SystemLanguage = EnglishOrOther;
-
-  lblRussianFonts := TLabel.Create(PageEnglishImprovements);
-  lblRussianFonts.Parent := PageEnglishImprovements.Surface;
-  lblRussianFonts.Caption := 'Use Russian fonts';
-  lblRussianFonts.Left := ScaleX(20);
-  lblRussianFonts.Top := descEnglishImprovements.Top + ScaleY(160);
+  EnglishImprovements.Caption := 'Apply English Freelancer improvements';
+  EnglishImprovements.Width := PageEnglishImprovements.SurfaceWidth - ScaleX(8);
   
   descRussianFonts := TNewStaticText.Create(PageEnglishImprovements);
   descRussianFonts.Parent := PageEnglishImprovements.Surface;
@@ -394,9 +346,11 @@ begin
 
   RussianFonts := TCheckBox.Create(PageEnglishImprovements);
   RussianFonts.Parent := PageEnglishImprovements.Surface;
-  RussianFonts.Top := lblRussianFonts.Top;
+  RussianFonts.Top := descEnglishImprovements.Top + ScaleY(160);
   // Only check the Russian fonts option if the user's system language is set to Russian
   RussianFonts.Checked := SystemLanguage = Russian;
+  RussianFonts.Caption := 'Use Russian fonts';
+  RussianFonts.Width := PageEnglishImprovements.SurfaceWidth - ScaleX(8);
 
 
   // Initialize Single Player page and add content
@@ -425,15 +379,11 @@ begin
   descSinglePlayerMode.Top := ScaleY(25);
   
   // Level requirements
-  lblLevelRequirements := TLabel.Create(PageSinglePlayer);
-  lblLevelRequirements.Parent := PageSinglePlayer.Surface;
-  lblLevelRequirements.Caption := 'Remove level requirements';
-  lblLevelRequirements.Left := ScaleX(20);
-  lblLevelRequirements.Top := descSinglePlayerMode.Top + ScaleY(108);
-
-  LevelRequirements := TCheckBox.Create(PageWidescreenHud);
+  LevelRequirements := TCheckBox.Create(PageSinglePlayer);
   LevelRequirements.Parent := PageSinglePlayer.Surface;
-  LevelRequirements.Top := lblLevelRequirements.Top;
+  LevelRequirements.Top := descSinglePlayerMode.Top + ScaleY(108);
+  LevelRequirements.Caption := 'Remove level requirements';
+  LevelRequirements.Width := PageSinglePlayer.SurfaceWidth - ScaleX(8);
   
   descLevelRequirements := TNewStaticText.Create(PageSinglePlayer);
   descLevelRequirements.Parent := PageSinglePlayer.Surface;
@@ -442,24 +392,19 @@ begin
   descLevelRequirements.Width := PageSinglePlayer.SurfaceWidth;
   descLevelRequirements.Caption := 'This option removes the level requirements for ships and equipment in Single Player.';
 
-  // New save folder
-  lblNewSaveFolder := TLabel.Create(PageSinglePlayer);
-  lblNewSaveFolder.Parent := PageSinglePlayer.Surface;
-  lblNewSaveFolder.Caption := 'Store save game files in a different folder';
-  lblNewSaveFolder.Top := descLevelRequirements.Top + ScaleY(30);
-  lblNewSaveFolder.Left := ScaleX(20);
-  
+  // New save folder  
   descNewSaveFolder := TNewStaticText.Create(PageSinglePlayer);
   descNewSaveFolder.Parent := PageSinglePlayer.Surface;
   descNewSaveFolder.WordWrap := True;
-  descNewSaveFolder.Top := lblNewSaveFolder.Top + ScaleY(20);
+  descNewSaveFolder.Top := descLevelRequirements.Top + ScaleY(50);
   descNewSaveFolder.Width := PageSinglePlayer.SurfaceWidth;
   descNewSaveFolder.Caption := 'Normally Freelancer save games are stored in "Documents/My Games/Freelancer". This option ensures save games will be stored in "Documents/My Games/FreelancerHD" instead, which may help avoid conflicts when having multiple mods installed simultaneously.';
   
   NewSaveFolder := TCheckBox.Create(PageSinglePlayer);
   NewSaveFolder.Parent := PageSinglePlayer.Surface;
-  NewSaveFolder.Top := lblNewSaveFolder.Top;
-
+  NewSaveFolder.Top := descLevelRequirements.Top + ScaleY(30);
+  NewSaveFolder.Caption := 'Store save game files in a different folder';
+  NewSaveFolder.Width := PageSinglePlayer.SurfaceWidth - ScaleX(8);
 
   // Initialize StartupRes page and add content
   StartupRes := CreateInputOptionPage(PageSinglePlayer.ID,
@@ -542,11 +487,6 @@ begin
     'Check to install.'
   );
   
-  lblWidescreenHud := TLabel.Create(PageWidescreenHud);
-  lblWidescreenHud.Parent := PageWidescreenHud.Surface;
-  lblWidescreenHud.Caption := 'Enable Advanced Widescreen HUD';
-  lblWidescreenHud.Left := ScaleX(20);
-  
   descWidescreenHud := TNewStaticText.Create(PageWidescreenHud);
   descWidescreenHud.Parent := PageWidescreenHud.Surface;
   descWidescreenHud.WordWrap := True;
@@ -556,26 +496,24 @@ begin
   
   WidescreenHud := TCheckBox.Create(PageWidescreenHud);
   WidescreenHud.Parent := PageWidescreenHud.Surface;
+  WidescreenHud.Caption := 'Enable Advanced Widescreen HUD';
+  WidescreenHud.Width := PageWidescreenHud.SurfaceWidth - ScaleX(8);
 
   // Only check the wide screen HUD option if the user's aspect ratio is not 4:3
   WidescreenHud.Checked := not IsDesktopRes4By3();
-
-  lblWeaponGroups := TLabel.Create(PageWidescreenHud);
-  lblWeaponGroups.Parent := PageWidescreenHud.Surface;
-  lblWeaponGroups.Caption := 'Add Weapon Group buttons';
-  lblWeaponGroups.Left := ScaleX(20);
-  lblWeaponGroups.Top := descWidescreenHud.Top + ScaleY(65);
   
   descWeaponGroups := TNewStaticText.Create(PageWidescreenHud);
   descWeaponGroups.Parent := PageWidescreenHud.Surface;
   descWeaponGroups.WordWrap := True;
-  descWeaponGroups.Top := lblWeaponGroups.Top + ScaleY(20);
+  descWeaponGroups.Top := descWidescreenHud.Top + ScaleY(85);
   descWeaponGroups.Width := PageWidescreenHud.SurfaceWidth;
   descWeaponGroups.Caption := 'This option adds buttons for selecting 3 different weapon groups in your ship info panel. NOTE: These buttons may not be positioned correctly on aspect ratios other than 16:9 and 4:3.';
   
   WeaponGroups := TCheckBox.Create(PageWidescreenHud);
   WeaponGroups.Parent := PageWidescreenHud.Surface;
-  WeaponGroups.Top := lblWeaponGroups.Top;
+  WeaponGroups.Top := descWidescreenHud.Top + ScaleY(65);
+  WeaponGroups.Caption := 'Add Weapon Group buttons';
+  WeaponGroups.Width := PageWidescreenHud.SurfaceWidth - ScaleX(8);
 
   // Only check the weapon groups option if the user's aspect ratio is 16:9 or 4:3
   WeaponGroups.Checked := IsDesktopRes16By9() or IsDesktopRes4By3();
@@ -587,10 +525,7 @@ begin
     'Check to install.'
   );
   
-  lblDarkHud := TLabel.Create(PageDarkHud);
-  lblDarkHud.Parent := PageDarkHud.Surface;
-  lblDarkHud.Caption := 'Enable Dark HUD';
-  lblDarkHud.Left := ScaleX(20);
+
   
   descDarkHud := TNewStaticText.Create(PageDarkHud);
   descDarkHud.Parent := PageDarkHud.Surface;
@@ -601,42 +536,32 @@ begin
   
   DarkHud := TCheckBox.Create(PageDarkHud);
   DarkHud.Parent := PageDarkHud.Surface;
-
-  lblVanillaIcons := TLabel.Create(PageDarkHud);
-  lblVanillaIcons.Parent := PageDarkHud.Surface;
-  lblVanillaIcons.Caption := 'HD Vanilla Icons';
-  lblVanillaIcons.Left := ScaleX(20);
-  lblVanillaIcons.Top := descDarkHud.Top + ScaleY(50);
+  DarkHud.Caption := 'Enable Dark HUD';
+  DarkHud.Width := PageDarkHud.SurfaceWidth - ScaleX(8);
 
   VanillaIcons := TRadioButton.Create(PageDarkHud);
   VanillaIcons.Parent := PageDarkHud.Surface;
-  VanillaIcons.Top := lblVanillaIcons.Top;
+  VanillaIcons.Top := descDarkHud.Top + ScaleY(50);
   VanillaIcons.Checked := True;
-
-  lblAlternativeIcons := TLabel.Create(PageDarkHud);
-  lblAlternativeIcons.Parent := PageDarkHud.Surface;
-  lblAlternativeIcons.Caption := 'Custom Alternative Icons';
-  lblAlternativeIcons.Left := ScaleX(20);
-  lblAlternativeIcons.Top := VanillaIcons.Top + ScaleY(20);
+  VanillaIcons.Caption := 'HD Vanilla Icons';
+  VanillaIcons.Width := PageDarkHud.SurfaceWidth - ScaleX(8);
 
   AlternativeIcons := TRadioButton.Create(PageDarkHud);
   AlternativeIcons.Parent := PageDarkHud.Surface;
-  AlternativeIcons.Top := lblAlternativeIcons.Top;
-
-  lblFlatIcons := TLabel.Create(PageDarkHud);
-  lblFlatIcons.Parent := PageDarkHud.Surface;
-  lblFlatIcons.Caption := 'Custom Flat Icons';
-  lblFlatIcons.Left := ScaleX(20);
-  lblFlatIcons.Top := AlternativeIcons.Top + ScaleY(20);
+  AlternativeIcons.Top := VanillaIcons.Top + ScaleY(20);
+  AlternativeIcons.Caption := 'Custom Alternative Icons';
+  AlternativeIcons.Width := PageDarkHud.SurfaceWidth - ScaleX(8);
 
   FlatIcons := TRadioButton.Create(PageDarkHud);
   FlatIcons.Parent := PageDarkHud.Surface;
-  FlatIcons.Top := lblFlatIcons.Top;
+  FlatIcons.Top := AlternativeIcons.Top + ScaleY(20);
+  FlatIcons.Caption := 'Custom Flat Icons';
+  FlatIcons.Width := PageDarkHud.SurfaceWidth - ScaleX(8);
 
   descCustomIcons := TNewStaticText.Create(PageDarkHud);
   descCustomIcons.Parent := PageDarkHud.Surface;
   descCustomIcons.WordWrap := True;
-  descCustomIcons.Top := lblFlatIcons.Top + ScaleY(20);
+  descCustomIcons.Top := AlternativeIcons.Top + ScaleY(40);
   descCustomIcons.Width := PageDarkHud.SurfaceWidth;
   descCustomIcons.Caption := 'This option allows you to choose a set of icons for Freelancer. The HD Vanilla Icons option adds an HD version of the default Freelancer icons. The Custom Alternative Icons have a different look but a style similar to the vanilla icons. Lastly, the Custom Flat Icons option adds new icons that have a more flat and simple look.';
 
@@ -647,11 +572,6 @@ begin
     'Fix clipping with 16:9 resolution planetscapes',
     'Check to install.'
   );
-  
-  lblPlanetScape := TLabel.Create(PagePlanetScape);
-  lblPlanetScape.Parent := PagePlanetScape.Surface;
-  lblPlanetScape.Caption := 'Fix clipping with 16:9 resolution planetscapes';
-  lblPlanetScape.Left := ScaleX(20);
   
   descPlanetScape := TNewStaticText.Create(PagePlanetScape);
   descPlanetScape.Parent := PagePlanetScape.Surface;
@@ -664,6 +584,8 @@ begin
   
   PlanetScape := TCheckBox.Create(PagePlanetScape);
   PlanetScape.Parent := PagePlanetScape.Surface;
+  PlanetScape.Caption := 'Fix clipping with 16:9 resolution planetscapes';
+  PlanetScape.Width := PagePlanetScape.SurfaceWidth - ScaleX(8);
 
   // Only check the planetscapes fix option if the user's aspect ratio is 16:9
   PlanetScape.Checked := IsDesktopRes16By9();
@@ -681,16 +603,12 @@ begin
   descGraphicsApi.Width := PageGraphicsApi.SurfaceWidth;
   descGraphicsApi.Caption := 'This page allows you to choose the graphics API. If you have no idea what this means, just go with the first option, since it offer additional graphics enhancements and fixes. If it''s causing issues for you, choose one of the other options.';
 
-  lblDgVoodooGraphicsApi := TLabel.Create(PageGraphicsApi);
-  lblDgVoodooGraphicsApi.Parent := PageGraphicsApi.Surface;
-  lblDgVoodooGraphicsApi.Caption := 'dgVoodoo (DirectX 11, recommended)';
-  lblDgVoodooGraphicsApi.Left := ScaleX(20);
-  lblDgVoodooGraphicsApi.Top := ScaleY(50);
-
   DgVoodooGraphicsApi := TRadioButton.Create(PageGraphicsApi);
   DgVoodooGraphicsApi.Parent := PageGraphicsApi.Surface;
   DgVoodooGraphicsApi.Checked := True;
-  DgVoodooGraphicsApi.Top := lblDgVoodooGraphicsApi.Top;
+  DgVoodooGraphicsApi.Top := ScaleY(50);
+  DgVoodooGraphicsApi.Caption := 'dgVoodoo (DirectX 11, recommended)';
+  DgVoodooGraphicsApi.Width := PageGraphicsApi.SurfaceWidth - ScaleX(8);
 
   descDgVoodooGraphicsApi := TNewStaticText.Create(PageGraphicsApi);
   descDgVoodooGraphicsApi.Parent := PageGraphicsApi.Surface;
@@ -704,15 +622,11 @@ begin
   //if GpuManufacturer = AMD then
   descDgVoodooGraphicsApi.Caption := descDgVoodooGraphicsApi.Caption + ' Requires manual refresh rate input.';
 
-  lblDxWrapperGraphicsApi := TLabel.Create(PageGraphicsApi);
-  lblDxWrapperGraphicsApi.Parent := PageGraphicsApi.Surface;
-  lblDxWrapperGraphicsApi.Caption := 'DxWrapper + d3d8to9 (DirectX 9)';
-  lblDxWrapperGraphicsApi.Left := ScaleX(20);
-  lblDxWrapperGraphicsApi.Top := descDgVoodooGraphicsApi.Top + ScaleY(40);
-
   DxWrapperGraphicsApi := TRadioButton.Create(PageGraphicsApi);
   DxWrapperGraphicsApi.Parent := PageGraphicsApi.Surface;
-  DxWrapperGraphicsApi.Top := lblDxWrapperGraphicsApi.Top;
+  DxWrapperGraphicsApi.Top := descDgVoodooGraphicsApi.Top + ScaleY(40);
+  DxWrapperGraphicsApi.Caption := 'DxWrapper + d3d8to9 (DirectX 9)';
+  DxWrapperGraphicsApi.Width := PageGraphicsApi.SurfaceWidth - ScaleX(8);
 
   descDxWrapperGraphicsApi := TNewStaticText.Create(PageGraphicsApi);
   descDxWrapperGraphicsApi.Parent := PageGraphicsApi.Surface;
@@ -727,15 +641,11 @@ begin
     descDxWrapperGraphicsApi.Caption := descDxWrapperGraphicsApi.Caption + ', Anisotropic Filtering,';
   descDxWrapperGraphicsApi.Caption := descDxWrapperGraphicsApi.Caption + ' and ReShade. Not 100% stable.';
 
-  lblVanillaGraphicsApi := TLabel.Create(PageGraphicsApi);
-  lblVanillaGraphicsApi.Parent := PageGraphicsApi.Surface;
-  lblVanillaGraphicsApi.Caption := 'Vanilla Freelancer (DirectX 8)';
-  lblVanillaGraphicsApi.Left := ScaleX(20);
-  lblVanillaGraphicsApi.Top := descDxWrapperGraphicsApi.Top + ScaleY(30);
-
   VanillaGraphicsApi := TRadioButton.Create(PageGraphicsApi);
   VanillaGraphicsApi.Parent := PageGraphicsApi.Surface;
-  VanillaGraphicsApi.Top := lblVanillaGraphicsApi.Top;
+  VanillaGraphicsApi.Top := descDxWrapperGraphicsApi.Top + ScaleY(30);
+  VanillaGraphicsApi.Caption := 'Vanilla Freelancer (DirectX 8)';
+  VanillaGraphicsApi.Width := PageGraphicsApi.SurfaceWidth - ScaleX(8);
 
   descVanillaGraphicsApi := TNewStaticText.Create(PageGraphicsApi);
   descVanillaGraphicsApi.Parent := PageGraphicsApi.Surface;
@@ -748,20 +658,16 @@ begin
   // On top of that, the Lighting Bug isn't present on such operating systems anyway.
   if HasLightingBug() then
   begin
-    lblLightingFixGraphicsApi := TLabel.Create(PageGraphicsApi);
-    lblLightingFixGraphicsApi.Parent := PageGraphicsApi.Surface;
-    lblLightingFixGraphicsApi.Caption := 'Vanilla Freelancer + Lighting Bug Fix (DirectX 8)';
-    lblLightingFixGraphicsApi.Left := ScaleX(20);
-    lblLightingFixGraphicsApi.Top := descVanillaGraphicsApi.Top + ScaleY(40);
-
     LightingFixGraphicsApi := TRadioButton.Create(PageGraphicsApi);
     LightingFixGraphicsApi.Parent := PageGraphicsApi.Surface;
-    LightingFixGraphicsApi.Top := lblLightingFixGraphicsApi.Top;
+    LightingFixGraphicsApi.Top := descVanillaGraphicsApi.Top + ScaleY(40);
+    LightingFixGraphicsApi.Caption := 'Vanilla Freelancer + Lighting Bug Fix (DirectX 8)';
+    LightingFixGraphicsApi.Width := PageGraphicsApi.SurfaceWidth - ScaleX(8);
 
     descLightingFixGraphicsApi := TNewStaticText.Create(PageGraphicsApi);
     descLightingFixGraphicsApi.Parent := PageGraphicsApi.Surface;
     descLightingFixGraphicsApi.WordWrap := True;
-    descLightingFixGraphicsApi.Top := lblLightingFixGraphicsApi.Top + ScaleY(15);
+    descLightingFixGraphicsApi.Top := descVanillaGraphicsApi.Top + ScaleY(55);
     descLightingFixGraphicsApi.Width := PageGraphicsApi.SurfaceWidth;
     // TODO for next update: Update caption with info about the updated d3d8.dll
     descLightingFixGraphicsApi.Caption := 'About the same as the Vanilla Freelancer option but fixes the major lighting bug on Windows 10 and 11. NOTE: This option only works on Windows 10 and 11!';
@@ -908,92 +814,73 @@ begin
     'DxWrapper options #2',
     txtEnhancementsPage
   );
-
-  lblDxWrapperReShade := TLabel.Create(DxWrapperPage2);
-  lblDxWrapperReShade.Parent := DxWrapperPage2.Surface;
-  lblDxWrapperReShade.Caption := txtReShade;
-  lblDxWrapperReShade.Left := ScaleX(20);
   
   descDxWrapperReShade := TNewStaticText.Create(DxWrapperPage2);
   descDxWrapperReShade.Parent := DxWrapperPage2.Surface;
   descDxWrapperReShade.WordWrap := True;
   descDxWrapperReShade.Top := ScaleY(20);
   descDxWrapperReShade.Width := DxWrapperPage2.SurfaceWidth;
-  descDxWrapperReShade.Caption := txtReShadeDesc
+  descDxWrapperReShade.Caption := txtReShadeDesc;
   
   DxWrapperReShade := TCheckBox.Create(DxWrapperPage2);
   DxWrapperReShade.Parent := DxWrapperPage2.Surface;
   DxWrapperReShade.Checked := True;
-
-  lblDxWrapperSaturation := TLabel.Create(DxWrapperPage2);
-  lblDxWrapperSaturation.Parent := DxWrapperPage2.Surface;
-  lblDxWrapperSaturation.Caption := txtSaturation;
-  lblDxWrapperSaturation.Left := ScaleX(20);
-  lblDxWrapperSaturation.Top := descDxWrapperReShade.Top + ScaleY(58);
+  DxWrapperReShade.Caption := txtReShade;
+  DxWrapperReShade.Width := DxWrapperPage2.SurfaceWidth - ScaleX(8);
   
   descDxWrapperSaturation := TNewStaticText.Create(DxWrapperPage2);
   descDxWrapperSaturation.Parent := DxWrapperPage2.Surface;
   descDxWrapperSaturation.WordWrap := True;
-  descDxWrapperSaturation.Top := lblDxWrapperSaturation.Top + ScaleY(20);
+  descDxWrapperSaturation.Top := descDxWrapperReShade.Top + ScaleY(78);
   descDxWrapperSaturation.Width := DxWrapperPage2.SurfaceWidth;
   descDxWrapperSaturation.Caption := txtSaturationDesc
   
   DxWrapperSaturation := TCheckBox.Create(DxWrapperPage2);
   DxWrapperSaturation.Parent := DxWrapperPage2.Surface;
   DxWrapperSaturation.Checked := True;
-  DxWrapperSaturation.Top := lblDxWrapperSaturation.Top;
-
-  lblDxWrapperSharpening := TLabel.Create(DxWrapperPage2);
-  lblDxWrapperSharpening.Parent := DxWrapperPage2.Surface;
-  lblDxWrapperSharpening.Caption := txtSharpening;
-  lblDxWrapperSharpening.Left := ScaleX(20);
-  lblDxWrapperSharpening.Top := descDxWrapperSaturation.Top + ScaleY(28);
+  DxWrapperSaturation.Top := descDxWrapperReShade.Top + ScaleY(58);
+  DxWrapperSaturation.Caption := txtSaturation;
+  DxWrapperSaturation.Width := DxWrapperPage2.SurfaceWidth - ScaleX(8);
 
   descDxWrapperSharpening := TNewStaticText.Create(DxWrapperPage2);
   descDxWrapperSharpening.Parent := DxWrapperPage2.Surface;
   descDxWrapperSharpening.WordWrap := True;
-  descDxWrapperSharpening.Top := lblDxWrapperSharpening.Top + ScaleY(20);
+  descDxWrapperSharpening.Top := descDxWrapperSaturation.Top + ScaleY(48);
   descDxWrapperSharpening.Width := DxWrapperPage2.SurfaceWidth;
   descDxWrapperSharpening.Caption := txtSharpeningDesc
 
   DxWrapperSharpening := TCheckBox.Create(DxWrapperPage2);
   DxWrapperSharpening.Parent := DxWrapperPage2.Surface;
   DxWrapperSharpening.Checked := True;
-  DxWrapperSharpening.Top := lblDxWrapperSharpening.Top;
-
-  lblDxWrapperHdr := TLabel.Create(DxWrapperPage2);
-  lblDxWrapperHdr.Parent := DxWrapperPage2.Surface;
-  lblDxWrapperHdr.Caption := txtHdr;
-  lblDxWrapperHdr.Left := ScaleX(20);
-  lblDxWrapperHdr.Top := descDxWrapperSharpening.Top + ScaleY(28);
+  DxWrapperSharpening.Top := descDxWrapperSaturation.Top + ScaleY(28);
+  DxWrapperSharpening.Caption := txtSharpening;
+  DxWrapperSharpening.Width := DxWrapperPage2.SurfaceWidth - ScaleX(8);
   
   descDxWrapperHdr := TNewStaticText.Create(DxWrapperPage2);
   descDxWrapperHdr.Parent := DxWrapperPage2.Surface;
   descDxWrapperHdr.WordWrap := True;
-  descDxWrapperHdr.Top := lblDxWrapperHdr.Top + ScaleY(20);
+  descDxWrapperHdr.Top := descDxWrapperSharpening.Top + ScaleY(48);
   descDxWrapperHdr.Width := DxWrapperPage2.SurfaceWidth;
   descDxWrapperHdr.Caption := txtHdrDesc
   
   DxWrapperHdr := TCheckBox.Create(DxWrapperPage2);
   DxWrapperHdr.Parent := DxWrapperPage2.Surface;
-  DxWrapperHdr.Top := lblDxWrapperHdr.Top;
+  DxWrapperHdr.Top := descDxWrapperSharpening.Top + ScaleY(28);
+  DxWrapperHdr.Caption := txtHdr;
+  DxWrapperHdr.Width := DxWrapperPage2.SurfaceWidth - ScaleX(8);
 
-  lblDxWrapperBloom := TLabel.Create(DxWrapperPage2);
-  lblDxWrapperBloom.Parent := DxWrapperPage2.Surface;
-  lblDxWrapperBloom.Caption := txtBloom;
-  lblDxWrapperBloom.Left := ScaleX(20);
-  lblDxWrapperBloom.Top := descDxWrapperHdr.Top + ScaleY(28);
-  
   descDxWrapperBloom := TNewStaticText.Create(DxWrapperPage2);
   descDxWrapperBloom.Parent := DxWrapperPage2.Surface;
   descDxWrapperBloom.WordWrap := True;
-  descDxWrapperBloom.Top := lblDxWrapperBloom.Top + ScaleY(20);
+  descDxWrapperBloom.Top := descDxWrapperHdr.Top + ScaleY(48);
   descDxWrapperBloom.Width := DxWrapperPage2.SurfaceWidth;
   descDxWrapperBloom.Caption := txtBloomDesc
   
   DxWrapperBloom := TCheckBox.Create(DxWrapperPage2);
   DxWrapperBloom.Parent := DxWrapperPage2.Surface;
-  DxWrapperBloom.Top := lblDxWrapperBloom.Top;
+  DxWrapperBloom.Top := descDxWrapperHdr.Top + ScaleY(28);
+  DxWrapperBloom.Caption := txtBloom;
+  DxWrapperBloom.Width := DxWrapperPage2.SurfaceWidth - ScaleX(8);
 
   // dgVoodoo options #2
   DgVoodooPage2 := CreateCustomPage(
@@ -1002,91 +889,72 @@ begin
     txtEnhancementsPage
   );
 
-  lblDgVoodooReShade := TLabel.Create(DgVoodooPage2);
-  lblDgVoodooReShade.Parent := DgVoodooPage2.Surface;
-  lblDgVoodooReShade.Caption := txtReShade;
-  lblDgVoodooReShade.Left := ScaleX(20);
-  
   descDgVoodooReShade := TNewStaticText.Create(DgVoodooPage2);
   descDgVoodooReShade.Parent := DgVoodooPage2.Surface;
   descDgVoodooReShade.WordWrap := True;
   descDgVoodooReShade.Top := ScaleY(20);
-  descDgVoodooReShade.Width := DxWrapperPage2.SurfaceWidth;
-  descDgVoodooReShade.Caption := txtReShadeDesc
+  descDgVoodooReShade.Width := DgVoodooPage2.SurfaceWidth;
+  descDgVoodooReShade.Caption := txtReShadeDesc;
   
   DgVoodooReShade := TCheckBox.Create(DgVoodooPage2);
   DgVoodooReShade.Parent := DgVoodooPage2.Surface;
   DgVoodooReShade.Checked := True;
-
-  lblDgVoodooSaturation := TLabel.Create(DgVoodooPage2);
-  lblDgVoodooSaturation.Parent := DgVoodooPage2.Surface;
-  lblDgVoodooSaturation.Caption := txtSaturation;
-  lblDgVoodooSaturation.Left := ScaleX(20);
-  lblDgVoodooSaturation.Top := descDgVoodooReShade.Top + ScaleY(58);
+  DgVoodooReShade.Caption := txtReShade;
+  DgVoodooReShade.Width := DgVoodooPage2.SurfaceWidth - ScaleX(8);
   
   descDgVoodooSaturation := TNewStaticText.Create(DgVoodooPage2);
   descDgVoodooSaturation.Parent := DgVoodooPage2.Surface;
   descDgVoodooSaturation.WordWrap := True;
-  descDgVoodooSaturation.Top := lblDgVoodooSaturation.Top + ScaleY(20);
+  descDgVoodooSaturation.Top := descDgVoodooReShade.Top + ScaleY(78);
   descDgVoodooSaturation.Width := DgVoodooPage2.SurfaceWidth;
   descDgVoodooSaturation.Caption := txtSaturationDesc
   
   DgVoodooSaturation := TCheckBox.Create(DgVoodooPage2);
   DgVoodooSaturation.Parent := DgVoodooPage2.Surface;
   DgVoodooSaturation.Checked := True;
-  DgVoodooSaturation.Top := lblDgVoodooSaturation.Top;
-
-  lblDgVoodooSharpening := TLabel.Create(DgVoodooPage2);
-  lblDgVoodooSharpening.Parent := DgVoodooPage2.Surface;
-  lblDgVoodooSharpening.Caption := txtSharpening;
-  lblDgVoodooSharpening.Left := ScaleX(20);
-  lblDgVoodooSharpening.Top := descDgVoodooSaturation.Top + ScaleY(28);
+  DgVoodooSaturation.Top := descDgVoodooReShade.Top + ScaleY(58);
+  DgVoodooSaturation.Caption := txtSaturation;
+  DgVoodooSaturation.Width := DgVoodooPage2.SurfaceWidth - ScaleX(8);
 
   descDgVoodooSharpening := TNewStaticText.Create(DgVoodooPage2);
   descDgVoodooSharpening.Parent := DgVoodooPage2.Surface;
   descDgVoodooSharpening.WordWrap := True;
-  descDgVoodooSharpening.Top := lblDgVoodooSharpening.Top + ScaleY(20);
+  descDgVoodooSharpening.Top := descDgVoodooSaturation.Top + ScaleY(48);
   descDgVoodooSharpening.Width := DgVoodooPage2.SurfaceWidth;
   descDgVoodooSharpening.Caption := txtSharpeningDesc
 
   DgVoodooSharpening := TCheckBox.Create(DgVoodooPage2);
   DgVoodooSharpening.Parent := DgVoodooPage2.Surface;
   DgVoodooSharpening.Checked := True;
-  DgVoodooSharpening.Top := lblDgVoodooSharpening.Top;
-
-  lblDgVoodooHdr := TLabel.Create(DgVoodooPage2);
-  lblDgVoodooHdr.Parent := DgVoodooPage2.Surface;
-  lblDgVoodooHdr.Caption := txtHdr;
-  lblDgVoodooHdr.Left := ScaleX(20);
-  lblDgVoodooHdr.Top := descDgVoodooSharpening.Top + ScaleY(28);
+  DgVoodooSharpening.Top := descDgVoodooSaturation.Top + ScaleY(28);
+  DgVoodooSharpening.Caption := txtSharpening;
+  DgVoodooSharpening.Width := DgVoodooPage2.SurfaceWidth - ScaleX(8);
   
   descDgVoodooHdr := TNewStaticText.Create(DgVoodooPage2);
   descDgVoodooHdr.Parent := DgVoodooPage2.Surface;
   descDgVoodooHdr.WordWrap := True;
-  descDgVoodooHdr.Top := lblDgVoodooHdr.Top + ScaleY(20);
+  descDgVoodooHdr.Top := descDgVoodooSharpening.Top + ScaleY(48);
   descDgVoodooHdr.Width := DgVoodooPage2.SurfaceWidth;
   descDgVoodooHdr.Caption := txtHdrDesc
   
   DgVoodooHdr := TCheckBox.Create(DgVoodooPage2);
   DgVoodooHdr.Parent := DgVoodooPage2.Surface;
-  DgVoodooHdr.Top := lblDgVoodooHdr.Top;
-
-  lblDgVoodooBloom := TLabel.Create(DgVoodooPage2);
-  lblDgVoodooBloom.Parent := DgVoodooPage2.Surface;
-  lblDgVoodooBloom.Caption := txtBloom;
-  lblDgVoodooBloom.Left := ScaleX(20);
-  lblDgVoodooBloom.Top := descDgVoodooHdr.Top + ScaleY(28);
+  DgVoodooHdr.Top := descDgVoodooSharpening.Top + ScaleY(28);
+  DgVoodooHdr.Caption := txtHdr;
+  DgVoodooHdr.Width := DgVoodooPage2.SurfaceWidth - ScaleX(8);
   
   descDgVoodooBloom := TNewStaticText.Create(DgVoodooPage2);
   descDgVoodooBloom.Parent := DgVoodooPage2.Surface;
   descDgVoodooBloom.WordWrap := True;
-  descDgVoodooBloom.Top := lblDgVoodooBloom.Top + ScaleY(20);
-  descDgVoodooBloom.Width := DxWrapperPage2.SurfaceWidth;
+  descDgVoodooBloom.Top := descDgVoodooHdr.Top + ScaleY(48);
+  descDgVoodooBloom.Width := DgVoodooPage2.SurfaceWidth;
   descDgVoodooBloom.Caption := txtBloomDesc
   
   DgVoodooBloom := TCheckBox.Create(DgVoodooPage2);
   DgVoodooBloom.Parent := DgVoodooPage2.Surface;
-  DgVoodooBloom.Top := lblDgVoodooBloom.Top;
+  DgVoodooBloom.Top := descDgVoodooHdr.Top + ScaleY(28);
+  DgVoodooBloom.Caption := txtBloom;
+  DgVoodooBloom.Width := DgVoodooPage2.SurfaceWidth - ScaleX(8);
 
   // Add improved reflections
   PageEffects := CreateCustomPage(
@@ -1095,34 +963,23 @@ begin
     'Check to install.'
   );
   
-  lblVanillaReflections := TLabel.Create(PageEffects);
-  lblVanillaReflections.Parent := PageEffects.Surface;
-  lblVanillaReflections.Caption := 'Use vanilla reflections';
-  lblVanillaReflections.Left := ScaleX(20);
-  
   VanillaReflections := TRadioButton.Create(PageEffects);
   VanillaReflections.Parent := PageEffects.Surface;
-  
-  lblShinyReflections := TLabel.Create(PageEffects);
-  lblShinyReflections.Parent := PageEffects.Surface;
-  lblShinyReflections.Caption := 'Use shiny reflections (recommended)';
-  lblShinyReflections.Left := ScaleX(20);
-  lblShinyReflections.Top := ScaleY(20);
-  
+  VanillaReflections.Caption := 'Use vanilla reflections';
+  VanillaReflections.Width := PageEffects.SurfaceWidth - ScaleX(8);
+
   ShinyReflections := TRadioButton.Create(PageEffects);
   ShinyReflections.Parent := PageEffects.Surface;
-  ShinyReflections.Top := lblShinyReflections.Top;
+  ShinyReflections.Top := ScaleY(20);
   ShinyReflections.Checked := True;
-  
-  lblShiniestReflections := TLabel.Create(PageEffects);
-  lblShiniestReflections.Parent := PageEffects.Surface;
-  lblShiniestReflections.Caption := 'Use shiniest reflections';
-  lblShiniestReflections.Left := ScaleX(20);
-  lblShiniestReflections.Top := lblShinyReflections.Top + ScaleY(20);
+  ShinyReflections.Caption := 'Use shiny reflections (recommended)';
+  ShinyReflections.Width := PageEffects.SurfaceWidth - ScaleX(8);
   
   ShiniestReflections := TRadioButton.Create(PageEffects);
   ShiniestReflections.Parent := PageEffects.Surface;
-  ShiniestReflections.Top := lblShiniestReflections.Top;
+  ShiniestReflections.Top := ShinyReflections.Top + ScaleY(20);
+  ShiniestReflections.Caption := 'Use shiniest reflections';
+  ShiniestReflections.Width := PageEffects.SurfaceWidth - ScaleX(8);
   
   descReflections := TNewStaticText.Create(PageEffects);
   descReflections.Parent := PageEffects.Surface;
@@ -1132,52 +989,40 @@ begin
   descReflections.Top := ShiniestReflections.Top + ScaleY(20);
   
   // Add new missile effects
-  lblExplosionEffects := TLabel.Create(PageEffects);
-  lblExplosionEffects.Parent := PageEffects.Surface;
-  lblExplosionEffects.Caption := 'Add custom ship explosion effects';
-  lblExplosionEffects.Top := descReflections.Top + ScaleY(60);
-  lblExplosionEffects.Left := ScaleX(20);
-
-  lblMissleEffects := TLabel.Create(PageEffects);
-  lblMissleEffects.Parent := PageEffects.Surface;
-  lblMissleEffects.Caption := 'Add custom missile and torpedo effects';
-  lblMissleEffects.Top := lblExplosionEffects.Top + ScaleY(20);
-  lblMissleEffects.Left := ScaleX(20);
-  
   descMissileEffects := TNewStaticText.Create(PageEffects);
   descMissileEffects.Parent := PageEffects.Surface;
   descMissileEffects.WordWrap := True;
-  descMissileEffects.Top := lblMissleEffects.Top + ScaleY(20);
+  descMissileEffects.Top := descReflections.Top + ScaleY(100);
   descMissileEffects.Width := PageEffects.SurfaceWidth;
   // TODO for next update: Remove "and ship explosion" in last sentence below
   descMissileEffects.Caption := 'These options add missile, torpedo, and ship explosion effects that have a different look. The torpedo and ship explosion effects are a lot larger than the normal ones.';
   
   ExplosionEffects := TCheckBox.Create(PageEffects);
   ExplosionEffects.Parent := PageEffects.Surface;
-  ExplosionEffects.Top := lblExplosionEffects.Top;
+  ExplosionEffects.Top := descReflections.Top + ScaleY(60);
+  ExplosionEffects.Caption := 'Add custom ship explosion effects';
+  ExplosionEffects.Width := PageEffects.SurfaceWidth - ScaleX(8);
 
   MissileEffects := TCheckBox.Create(PageEffects);
   MissileEffects.Parent := PageEffects.Surface;
-  MissileEffects.Top := lblMissleEffects.Top;
+  MissileEffects.Top := descReflections.Top + ScaleY(80);
+  MissileEffects.Caption := 'Add custom missile and torpedo effects';
+  MissileEffects.Width := PageEffects.SurfaceWidth - ScaleX(8);
   
   // Add player ship engine trails
-  lblEngineTrails := TLabel.Create(PageEffects);
-  lblEngineTrails.Parent := PageEffects.Surface;
-  lblEngineTrails.Caption := 'Add player ship engine trails';
-  lblEngineTrails.Top := descMissileEffects.Top + ScaleY(47);
-  lblEngineTrails.Left := ScaleX(20);
-  
   descEngineTrails := TNewStaticText.Create(PageEffects);
   descEngineTrails.Parent := PageEffects.Surface;
   descEngineTrails.WordWrap := True;
-  descEngineTrails.Top := lblEngineTrails.Top + ScaleY(20);
+  descEngineTrails.Top := descMissileEffects.Top + ScaleY(67);
   descEngineTrails.Width := PageEffects.SurfaceWidth;
   descEngineTrails.Caption := 'In vanilla Freelancer, NPC ships have engine trials while player ships don''t. This option adds engine trails to all player ships.';
   
   EngineTrails := TCheckBox.Create(PageEffects);
   EngineTrails.Parent := PageEffects.Surface;
-  EngineTrails.Top := lblEngineTrails.Top;
+  EngineTrails.Top := descMissileEffects.Top + ScaleY(47);
   EngineTrails.Checked := True;
+  EngineTrails.Caption := 'Add player ship engine trails';
+  EngineTrails.Width := PageEffects.SurfaceWidth - ScaleX(8);
 
   // Draw distances
   PageDrawDistances := CreateInputOptionPage(PageEffects.ID,
@@ -1202,71 +1047,52 @@ begin
     'Want to save time?'
   );
 
-  // Skip intros
-  lblJumpTunnel10Sec := TLabel.Create(PageSkips);
-  lblJumpTunnel10Sec.Parent := PageSkips.Surface;
-  lblJumpTunnel10Sec.Caption := '10 second jump tunnels (Vanilla)';
-  lblJumpTunnel10Sec.Left := ScaleX(20);
-  
+  // Skip intros  
   JumpTunnel10Sec := TRadioButton.Create(PageSkips);
   JumpTunnel10Sec.Parent := PageSkips.Surface;
-  
-  lblJumpTunnel5Sec := TLabel.Create(PageSkips);
-  lblJumpTunnel5Sec.Parent := PageSkips.Surface;
-  lblJumpTunnel5Sec.Caption := '5 second jump tunnels';
-  lblJumpTunnel5Sec.Left := ScaleX(20);
-  lblJumpTunnel5Sec.Top := ScaleY(20);
-  
+  JumpTunnel10Sec.Caption := '10 second jump tunnels (Vanilla)';
+  JumpTunnel10Sec.Width := PageSkips.SurfaceWidth - ScaleX(8);
+
   JumpTunnel5Sec := TRadioButton.Create(PageSkips);
   JumpTunnel5Sec.Parent := PageSkips.Surface;
-  JumpTunnel5Sec.Top := lblJumpTunnel5Sec.Top;
+  JumpTunnel5Sec.Top := ScaleY(20);
   JumpTunnel5Sec.Checked := True;
-  
-  lblJumpTunnel2Sec := TLabel.Create(PageSkips);
-  lblJumpTunnel2Sec.Parent := PageSkips.Surface;
-  lblJumpTunnel2Sec.Caption := '2.5 second jump tunnels';
-  lblJumpTunnel2Sec.Left := ScaleX(20);
-  lblJumpTunnel2Sec.Top := JumpTunnel5Sec.Top + ScaleY(20);
+  JumpTunnel5Sec.Caption := '5 second jump tunnels';
+  JumpTunnel5Sec.Width := PageSkips.SurfaceWidth - ScaleX(8);
   
   JumpTunnel2Sec := TRadioButton.Create(PageSkips);
   JumpTunnel2Sec.Parent := PageSkips.Surface;
-  JumpTunnel2Sec.Top := lblJumpTunnel2Sec.Top;
+  JumpTunnel2Sec.Top := JumpTunnel5Sec.Top + ScaleY(20);
+  JumpTunnel2Sec.Caption := '2.5 second jump tunnels';
+  JumpTunnel2Sec.Width := PageSkips.SurfaceWidth - ScaleX(8);
 
-  lblJumpTunnelSkip := TLabel.Create(PageSkips);
-  lblJumpTunnelSkip.Parent := PageSkips.Surface;
-  lblJumpTunnelSkip.Caption := '0 second jump tunnels (skip them entirely)';
-  lblJumpTunnelSkip.Left := ScaleX(20);
-  lblJumpTunnelSkip.Top := JumpTunnel2Sec.Top + ScaleY(20);
-  
   JumpTunnelSkip := TRadioButton.Create(PageSkips);
   JumpTunnelSkip.Parent := PageSkips.Surface;
-  JumpTunnelSkip.Top := lblJumpTunnelSkip.Top
+  JumpTunnelSkip.Top := JumpTunnel2Sec.Top + ScaleY(20);
+  JumpTunnelSkip.Caption := '0 second jump tunnels (skip them entirely)';
+  JumpTunnelSkip.Width := PageSkips.SurfaceWidth - ScaleX(8);
   
   descJumpTunnelDuration := TNewStaticText.Create(PageSkips);
   descJumpTunnelDuration.Parent := PageSkips.Surface;
   descJumpTunnelDuration.WordWrap := True;
   descJumpTunnelDuration.Width := PageSkips.SurfaceWidth;
   descJumpTunnelDuration.Caption := 'This option allows you to change the duration of the jump tunnels which you go through when using any jump hole or jump gate.';
-  descJumpTunnelDuration.Top := lblJumpTunnelSkip.Top + ScaleY(20);
+  descJumpTunnelDuration.Top := JumpTunnelSkip.Top + ScaleY(20);
   
-  // Jump tunnel duration
-  lblSkipIntros := TLabel.Create(PageSkips);
-  lblSkipIntros.Parent := PageSkips.Surface;
-  lblSkipIntros.Caption := 'Skip startup intros';
-  lblSkipIntros.Top := descJumpTunnelDuration.Top + ScaleY(80);
-  lblSkipIntros.Left := ScaleX(20);
-  
+  // Jump tunnel duration  
   descSkipIntros := TNewStaticText.Create(PageSkips);
   descSkipIntros.Parent := PageSkips.Surface;
   descSkipIntros.WordWrap := True;
-  descSkipIntros.Top := lblSkipIntros.Top + ScaleY(20);
+  descSkipIntros.Top := descJumpTunnelDuration.Top + ScaleY(100);
   descSkipIntros.Width := PageSkips.SurfaceWidth;
   descSkipIntros.Caption := 'This option skips the 3 movies that play when the game starts, which include the Microsoft logo, Digital Anvil logo, and Freelancer intro.';
   
   SkipIntros := TCheckBox.Create(PageSkips);
   SkipIntros.Parent := PageSkips.Surface;
-  SkipIntros.Top := lblSkipIntros.Top;
+  SkipIntros.Top := descJumpTunnelDuration.Top + ScaleY(80);
   SkipIntros.Checked := True;
+  SkipIntros.Caption := 'Skip startup intros';
+  SkipIntros.Width := PageSkips.SurfaceWidth - ScaleX(8);
   
   // Single Player Command Console
   PageMiscOptions := CreateCustomPage(
@@ -1274,11 +1100,6 @@ begin
     'Misc options',
     'Check to install.'
   );
-  
-  lblSinglePlayer := TLabel.Create(PageMiscOptions);
-  lblSinglePlayer.Parent := PageMiscOptions.Surface;
-  lblSinglePlayer.Caption := 'Single Player Command Console';
-  lblSinglePlayer.Left := ScaleX(20);
   
   descSinglePlayer := TNewStaticText.Create(PageMiscOptions);
   descSinglePlayer.Parent := PageMiscOptions.Surface;
@@ -1290,17 +1111,13 @@ begin
   SinglePlayer := TCheckBox.Create(PageMiscOptions);
   SinglePlayer.Parent := PageMiscOptions.Surface;
   SinglePlayer.Checked := True;
-
-  lblBestOptions := TLabel.Create(PageMiscOptions);
-  lblBestOptions.Parent := PageMiscOptions.Surface;
-  lblBestOptions.Caption := 'Apply Best Video Options';
-  lblBestOptions.Left := ScaleX(20);
-  lblBestOptions.Top := descSinglePlayer.Top + ScaleY(55);
+  SinglePlayer.Caption := 'Single Player Command Console';
+  SinglePlayer.Width := PageMiscOptions.SurfaceWidth - ScaleX(8);
   
   descBestOptions := TNewStaticText.Create(PageMiscOptions);
   descBestOptions.Parent := PageMiscOptions.Surface;
   descBestOptions.WordWrap := True;
-  descBestOptions.Top := lblBestOptions.Top + ScaleY(20);
+  descBestOptions.Top := descSinglePlayer.Top + ScaleY(75);
   descBestOptions.Width := PageMiscOptions.SurfaceWidth;
   descBestOptions.Caption := 'Automatically applies the highest video options available in Freelancer. Additionally, it''ll select your monitor''s native resolution ('
     + IntToStr(DesktopRes.Width) + 'x' + IntToStr(DesktopRes.Height) + '). Freelancer usually doesn''t do any of this by default.';
@@ -1308,7 +1125,9 @@ begin
   BestOptions := TCheckBox.Create(PageMiscOptions);
   BestOptions.Parent := PageMiscOptions.Surface;
   BestOptions.Checked := True;
-  BestOptions.Top := lblBestOptions.Top;
+  BestOptions.Top := descSinglePlayer.Top + ScaleY(55);
+  BestOptions.Caption := 'Apply Best Video Options';
+  BestOptions.Width := PageMiscOptions.SurfaceWidth - ScaleX(8);
 
   DisplayMode := TComboBox.Create(PageMiscOptions);
   DisplayMode.Parent := PageMiscOptions.Surface;
@@ -1340,16 +1159,12 @@ begin
   descDisplayMode.Width := PageMiscOptions.SurfaceWidth;
   descDisplayMode.Caption := 'In both Windowed modes, the Gamma slider from the options menu won''t work. To remedy this, Gamma will be applied using ReShade, if it''s been enabled. Also, both windowed options are experimental and may be buggy, so try them at your own risk.';
   descDisplayMode.Top := lblDisplayMode.Top + ScaleY(25);
-
-  lblDoNotPauseOnAltTab := TLabel.Create(PageMiscOptions);
-  lblDoNotPauseOnAltTab.Parent := PageMiscOptions.Surface;
-  lblDoNotPauseOnAltTab.Caption := 'Keep Freelancer running in the background when Alt-Tabbed';
-  lblDoNotPauseOnAltTab.Top := descDisplayMode.Top + ScaleY(55);
-  lblDoNotPauseOnAltTab.Left := ScaleX(20);
   
   DoNotPauseOnAltTab := TCheckBox.Create(PageMiscOptions);
   DoNotPauseOnAltTab.Parent := PageMiscOptions.Surface;
-  DoNotPauseOnAltTab.Top := lblDoNotPauseOnAltTab.Top;
+  DoNotPauseOnAltTab.Top := descDisplayMode.Top + ScaleY(55);
+  DoNotPauseOnAltTab.Caption := 'Keep Freelancer running in the background when Alt-Tabbed';
+  DoNotPauseOnAltTab.Width := PageMiscOptions.SurfaceWidth - ScaleX(8);
   MusicInBackground := False;
 
   with DxWrapperPage do
