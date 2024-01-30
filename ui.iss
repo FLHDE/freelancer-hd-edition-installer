@@ -332,7 +332,7 @@ begin
   EnglishImprovements := TCheckBox.Create(PageEnglishImprovements);
   EnglishImprovements.Parent := PageEnglishImprovements.Surface;
   // Only check the English improvements option if the user's system language is set to English or other. If otherwise, it's likely the user would want to play FL in a different language.
-  EnglishImprovements.Checked := SystemLanguage = EnglishOrOther;
+  EnglishImprovements.Checked := SystemLanguage = S_EnglishOrOther;
   EnglishImprovements.Caption := 'Apply English Freelancer improvements';
   EnglishImprovements.Width := PageEnglishImprovements.SurfaceWidth - ScaleX(8);
   
@@ -347,7 +347,7 @@ begin
   RussianFonts.Parent := PageEnglishImprovements.Surface;
   RussianFonts.Top := descEnglishImprovements.Top + ScaleY(160);
   // Only check the Russian fonts option if the user's system language is set to Russian
-  RussianFonts.Checked := SystemLanguage = Russian;
+  RussianFonts.Checked := SystemLanguage = S_Russian;
   RussianFonts.Caption := 'Use Russian fonts';
   RussianFonts.Width := PageEnglishImprovements.SurfaceWidth - ScaleX(8);
 
