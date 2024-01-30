@@ -2,6 +2,7 @@
 // Used to store values used across numerous files and functions so they don't have to be requested multiple times
 var
   DesktopRes: DesktopResolution;
+  RefreshRate: Integer;
   IsWine: Boolean;
   HasLightingBug: Boolean;
   GpuManufacturer: TGpuManufacturer;

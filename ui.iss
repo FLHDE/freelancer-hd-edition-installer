@@ -800,7 +800,7 @@ begin
   DgVoodooRefreshRate := TNewEdit.Create(DgVoodooPage);
   DgVoodooRefreshRate.Parent := DgVoodooPage.Surface;;
   DgVoodooRefreshRate.Top := lblDgVoodooRefreshRateHz.Top - ScaleY(3);
-  DgVoodooRefreshRate.Text := IntToStr(RefreshRate());
+  DgVoodooRefreshRate.Text := IntToStr(RefreshRate);
   DgVoodooRefreshRate.OnKeyPress := @DigitFieldKeyPress;
 
   descDgVoodooRefreshRate := TNewStaticText.Create(DgVoodooPage);
