@@ -466,13 +466,13 @@ begin
   SmallText.Add('Yes, apply fix for 2560x1440 screens');
   SmallText.Add('Yes, apply fix for 3840x2160 screens');
 
-  if Wine then
+  if IsWine then
     SmallText.Add('Yes, apply fix for 3840x1600 screens');
 
   // Determine best small text fix based on user's screen size
   if DesktopRes.Height >= 2160 then
     SmallText.Values[2] := True
-  else if Wine and (DesktopRes.Height >= 1600) then
+  else if IsWine and (DesktopRes.Height >= 1600) then
     SmallText.Values[3] := True
   else if DesktopRes.Height >= 1440 then
     SmallText.Values[1] := True
@@ -655,7 +655,7 @@ begin
 
   // Only display the Lighting Bug Fix option if the current operating system could potentially suffer from it. If it won't, enabling this option may cause the game to not launch.
   // On top of that, the Lighting Bug isn't present on such operating systems anyway.
-  if HasLightingBug() then
+  if HasLightingBug then
   begin
     LightingFixGraphicsApi := TRadioButton.Create(PageGraphicsApi);
     LightingFixGraphicsApi.Parent := PageGraphicsApi.Surface;
@@ -1143,7 +1143,7 @@ begin
   DisplayMode.Top := BestOptions.Top + ScaleY(80);
 
   // Make Borderless Windowed the recommended and selected option on Wine to fix the Alt-Tab bug
-  if Wine then
+  if IsWine then
   begin
     DisplayMode.Items[0] := 'Fullscreen (default)';
     DisplayMode.Items[2] := 'Borderless Windowed (recommended)';
@@ -1188,7 +1188,7 @@ begin
   with DgVoodooReShade do
     OnClick := @DgVoodooReShadeCheckBoxClick;
 
-  if Wine then
+  if IsWine then
   begin
     // Give Wine users some tips on how to avoid compatibility issues; could be useful.
     MsgBox(ExpandConstant(

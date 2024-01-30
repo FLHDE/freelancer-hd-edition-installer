@@ -36,7 +36,7 @@ AppPublisherURL={#MyAppURL}
 AppSupportURL={#MyAppURL}
 AppUpdatesURL={#MyAppURL}
 ChangesAssociations=yes
-Compression=lzma2/normal
+Compression=lzma2
 DefaultDirName={sd}\Games\{#MyAppFileName}
 DefaultGroupName={#MyAppFileName}
 DisableWelcomePage=False
@@ -104,6 +104,7 @@ var
 // Imports from other .iss files
 #include "types.iss"
 #include "external.iss"
+#include "globals.iss"
 #include "utilities.iss"
 #include "ui.iss"
 #include "mod_options.iss"
@@ -177,7 +178,7 @@ begin
         WizardForm.StatusLabel.Caption := 'Cleaning up...';
         UpdateProgress(95);
 
-        if not Wine then
+        if not IsWine then
         begin
           // Delete potential UTF-8 BOM headers in all edited config files. May not work properly on Wine.
           for i := 0 to EditedConfigFiles.Count - 1 do
@@ -335,9 +336,6 @@ procedure InitializeWizard;
 begin
     WizardForm.WizardSmallBitmapImage.Stretch := false;
 
-    EDD_GET_DEVICE_INTERFACE_NAME := 1; // TODO: Initialize constants somewhere else
-    DISPLAY_DEVICE_PRIMARY_DEVICE := 4;
-
     # if !AllInOneInstall
       // Offline install
       OfflineInstall := ExpandConstant('{param:sourcefile|false}')
@@ -353,9 +351,12 @@ begin
       #for {i = 0; i < DimOf(Mirrors); i++} PopMirrors
     # endif
 
+    InitConstants();
+
     // Gets some information about the system for later use
     DesktopRes := Resolution();
-    Wine := IsWine;
+    IsWine := GetIsWine();
+    HasLightingBug := GetHasLightingBug();
     GpuManufacturer := GetGpuManufacturer();
     SystemLanguage := GetSystemLanguage();
 
