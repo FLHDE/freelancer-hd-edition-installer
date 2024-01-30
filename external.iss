@@ -19,7 +19,7 @@ function GetDC(HWND: DWord): DWord;
   external 'GetDC@user32.dll stdcall';
 
 // Used to retrieve information about a device 
-function GetDeviceCaps (hDC, nIndex: Integer): Integer;
+function GetDeviceCaps(hDC, nIndex: Integer): Integer;
  external 'GetDeviceCaps@GDI32 stdcall';
 
 // Used to convert a binary expression in string format to an actual binary stream
