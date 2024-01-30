@@ -140,16 +140,14 @@ begin
   end;
 end;
 
-// Whether or not the desktop resolution has an aspect ratio of 16:9
-function IsDesktopRes16By9(): Boolean;
+// Whether or not the desktop resolution is within the specified range of factors
+function IsResWithinAspectRatioRange(MinFactor: Single; MaxFactor: Single): Boolean;
+var
+  ResolutionFactor: Single;
 begin
-  Result := Trunc(Single(DesktopRes.Width) / DesktopRes.Height * 100.0) / 100.0 = 1.77
-end;
+  ResolutionFactor := Single(DesktopRes.Width) / Single(DesktopRes.Height);
 
-// Whether or not the desktop resolution has an aspect ratio of 4:3
-function IsDesktopRes4By3(): Boolean;
-begin
-  Result := Trunc(Single(DesktopRes.Width) / DesktopRes.Height * 100.0) / 100.0 = 1.33
+  Result := (ResolutionFactor >= MinFactor) and (ResolutionFactor <= MaxFactor)
 end;
 
 // Converts an int to hex

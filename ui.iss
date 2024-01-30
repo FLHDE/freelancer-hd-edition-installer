@@ -491,31 +491,31 @@ begin
   descWidescreenHud.WordWrap := True;
   descWidescreenHud.Top := ScaleY(20);
   descWidescreenHud.Width := PageWidescreenHud.SurfaceWidth;
-  descWidescreenHud.Caption := 'This option adds two new useful widgets to your HUD. Next to your contact list, you will have a wireframe representation of your selected target. Next to your weapons list, you will have a wireframe of your own ship. Disable this option if you play in 4:3.';
+  descWidescreenHud.Caption := 'This option adds two new useful widgets to your HUD. Next to your contact list, you will have a wireframe representation of your selected target. Next to your weapons list, you will have a wireframe of your own ship. Disable this option if you play in an aspect ratio narrower than 16:9.';
   
   WidescreenHud := TCheckBox.Create(PageWidescreenHud);
   WidescreenHud.Parent := PageWidescreenHud.Surface;
   WidescreenHud.Caption := 'Enable Advanced Widescreen HUD';
   WidescreenHud.Width := PageWidescreenHud.SurfaceWidth - ScaleX(8);
 
-  // Only check the wide screen HUD option if the user's aspect ratio is not 4:3
-  WidescreenHud.Checked := not IsDesktopRes4By3();
+  // Only check the wide screen HUD option if the user's aspect ratio is 16:9 or wider
+  WidescreenHud.Checked := IsResWithinAspectRatioRange(Min16by9Factor, MaxGeneralFactor);
   
   descWeaponGroups := TNewStaticText.Create(PageWidescreenHud);
   descWeaponGroups.Parent := PageWidescreenHud.Surface;
   descWeaponGroups.WordWrap := True;
-  descWeaponGroups.Top := descWidescreenHud.Top + ScaleY(85);
+  descWeaponGroups.Top := descWidescreenHud.Top + ScaleY(105);
   descWeaponGroups.Width := PageWidescreenHud.SurfaceWidth;
   descWeaponGroups.Caption := 'This option adds buttons for selecting 3 different weapon groups in your ship info panel. NOTE: These buttons may not be positioned correctly on aspect ratios other than 16:9 and 4:3.';
   
   WeaponGroups := TCheckBox.Create(PageWidescreenHud);
   WeaponGroups.Parent := PageWidescreenHud.Surface;
-  WeaponGroups.Top := descWidescreenHud.Top + ScaleY(65);
+  WeaponGroups.Top := descWidescreenHud.Top + ScaleY(85);
   WeaponGroups.Caption := 'Add Weapon Group buttons';
   WeaponGroups.Width := PageWidescreenHud.SurfaceWidth - ScaleX(8);
 
-  // Only check the weapon groups option if the user's aspect ratio is 16:9 or 4:3
-  WeaponGroups.Checked := IsDesktopRes16By9() or IsDesktopRes4By3();
+  // Only check the weapon groups option if the user's aspect ratio is 4:3 or 16:9
+  WeaponGroups.Checked := IsResWithinAspectRatioRange(Min4by3Factor, Max4By3Factor) or IsResWithinAspectRatioRange(Min16by9Factor, Max16by9Factor);
 
   // Initialize Dark HUD page and add content
   PageDarkHud := CreateCustomPage(
@@ -587,7 +587,7 @@ begin
   PlanetScape.Width := PagePlanetScape.SurfaceWidth - ScaleX(8);
 
   // Only check the planetscapes fix option if the user's aspect ratio is 16:9
-  PlanetScape.Checked := IsDesktopRes16By9();
+  PlanetScape.Checked := IsResWithinAspectRatioRange(Min16by9Factor, Max16by9Factor);
   
   // Choose Graphics API
   PageGraphicsApi := CreateCustomPage(
