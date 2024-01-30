@@ -1,13 +1,6 @@
 [Code]
-// Used to store values used across numerous files and functions so they don't have to be requested multiple times
-var
-  DesktopRes: DesktopResolution;
-  Wine: Boolean;
-  GpuManufacturer: TGpuManufacturer;
-  SystemLanguage: TSystemLanguage;
-  EDD_GET_DEVICE_INTERFACE_NAME, DISPLAY_DEVICE_PRIMARY_DEVICE: integer;
 
-function IsWine: boolean;
+function GetIsWine: boolean;
 var  LibHandle  : THandle;
 begin
   LibHandle := LoadLibraryA('ntdll.dll');
@@ -57,7 +50,7 @@ begin
 
             // We want to ensure every file has write access so we can properly overwrite them later.
             // Presumably these permissions aren't an issue on Wine.
-            if not Wine then
+            if not IsWine then
               RemoveReadOnly(DestFilePath);
           end
             else
@@ -78,10 +71,6 @@ begin
     RaiseException(Format('Failed to list %s', [SourcePath]));
   end;
 end;
-
-// Used to store the names of all edited config files
-var
-  EditedConfigFiles: TStringList;
 
 // Used to replace strings in files. This replaces FLMM functions
 function FileReplaceString(const FileName, SearchString, ReplaceString: string):boolean;
@@ -124,8 +113,8 @@ var
 begin
   try
     DC := GetDC(0);
-    Result.Width := GetDeviceCaps(DC, 8); // 8 = HORZRES
-    Result.Height := GetDeviceCaps(DC, 10); // 10 = VERTRES
+    Result.Width := GetDeviceCaps(DC, HORZRES);
+    Result.Height := GetDeviceCaps(DC, VERTRES);
 
     if (Result.Width = 0) or (Result.Height = 0) then
       RaiseException('Display Width and/or Height cannot be 0');
@@ -142,7 +131,7 @@ var
 begin
   try
     DC := GetDC(0);
-    Result := GetDeviceCaps(DC, 116); // 116 = VREFRESH
+    Result := GetDeviceCaps(DC, VREFRESH);
 
     if Result = 0 then
       RaiseException('Refresh Rate cannot be 0');
@@ -275,12 +264,12 @@ begin
 end;
 
 // Whether or not the current operating system could suffer from the major lighting bug in Freelancer
-function HasLightingBug(): Boolean;
+function GetHasLightingBug(): Boolean;
 var
   Version: TWindowsVersion;
 begin
   // We're assuming there's no issues on Wine.
-  if Wine then
+  if IsWine then
   begin
     Result := false
     exit
@@ -330,7 +319,7 @@ var
   deviceString: AnsiString;
 begin
   try
-    if Wine then
+    if IsWine then
       RaiseException('Wine just returns "Wine Adapter", so don''t bother');
 
     // Loop over all display devices in the system

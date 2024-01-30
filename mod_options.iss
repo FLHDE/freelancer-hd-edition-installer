@@ -250,9 +250,9 @@ begin
       'font = Agency FB' + #13#10 +
       'fixed_height = 0.025');
 
-    if SmallText.Values[2] or (Wine and SmallText.Values[3]) then begin // Fix for 3840x2160 screens and 1600p screens on Wine
+    if SmallText.Values[2] or (IsWine and SmallText.Values[3]) then begin // Fix for 3840x2160 screens and 1600p screens on Wine
       // On Wine/Luris the lowered fixed_height for HudSmall and Normal is not enough to fix the missing text. Therefore, it has to be lowered even more.
-      if Wine and SmallText.Values[2] then
+      if IsWine and SmallText.Values[2] then
         New4KHeight := '0.024'
       else
         New4KHeight := '0.029';
@@ -545,7 +545,7 @@ begin
       //RenameFile(EXEPath + 'dgVoodooCpl_old.exe', EXEPath + 'dgVoodooCpl_old_exe') // Remove extension from other exe so people don't get confused with the 2 exes
       //end;
   end
-  else if HasLightingBug() and LightingFixGraphicsApi.Checked then
+  else if HasLightingBug and LightingFixGraphicsApi.Checked then
     RenameFile(EXEPath + 'd3d8_legacy.dll', EXEPath + 'd3d8.dll')
 end;
 
