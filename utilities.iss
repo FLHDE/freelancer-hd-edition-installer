@@ -107,7 +107,7 @@ begin
 end;
 
 // Gets the user's main monitor resolution
-function Resolution(): DesktopResolution;
+function GetResolution(): DesktopResolution;
 var 
   DC: DWord;
 begin
@@ -125,7 +125,7 @@ begin
 end;
 
 // Gets the user's main monitor refresh rate
-function RefreshRate(): Integer;
+function GetRefreshRate(): Integer;
 var 
   DC: DWord;
 begin

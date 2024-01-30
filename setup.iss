@@ -354,7 +354,8 @@ begin
     InitConstants();
 
     // Gets some information about the system for later use
-    DesktopRes := Resolution();
+    DesktopRes := GetResolution();
+    RefreshRate := GetRefreshRate();
     IsWine := GetIsWine();
     HasLightingBug := GetHasLightingBug();
     GpuManufacturer := GetGpuManufacturer();
