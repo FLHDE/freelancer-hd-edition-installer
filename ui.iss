@@ -463,7 +463,7 @@ begin
   'Select the option corresponding to the resolution you''re going to play Freelancer in. If you play in 1920x1080 or lower, the "No" option is fine as the elements are configured correctly already.',
   True, False);
   SmallText.Add('No');
-  SmallText.Add('Yes, apply fix for 2560x1440 screens');
+  SmallText.Add('Yes, apply fix for 2560x1440 and 1920x1200 screens');
   SmallText.Add('Yes, apply fix for 3840x2160 screens');
 
   if IsWine then
@@ -474,7 +474,7 @@ begin
     SmallText.Values[2] := True
   else if IsWine and (DesktopRes.Height >= 1600) then
     SmallText.Values[3] := True
-  else if DesktopRes.Height >= 1440 then
+  else if DesktopRes.Height >= 1200 then
     SmallText.Values[1] := True
   else
     SmallText.Values[0] := True;
