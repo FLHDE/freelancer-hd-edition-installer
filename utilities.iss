@@ -392,11 +392,49 @@ begin
 
   // $3FF is used to extract the primary language identifier
   if UILanguage and $3FF = $07 then // $07 = German primary language identifier
-    Result := German
+    Result := S_German
   else if UILanguage and $3FF = $0C then // $07 = French primary language identifier
-    Result := French
+    Result := S_French
   else if UILanguage and $3FF = $19 then // $19 = Russian primary language identifier
-    Result := Russian
+    Result := S_Russian
   else
-    Result := EnglishOrOther;
+    Result := S_EnglishOrOther;
+end;
+
+// Determine what language the user's Freelancer installation is based on the OfferBribeResourecs.dll file
+// The reason we use OfferBribeResourecs.dll is because this file is rarely touched by different variations of a translation, also the file size is smaller
+function GetFreelancerLanguage(FreelancerPath: string): FlLanguage;
+var
+  OfferBribeResourcesFile: string;
+  OfferBribeResourcesMD5: string;
+begin
+  OfferBribeResourcesFile := + FreelancerPath + '\EXE\offerbriberesources.dll';
+
+  // Check if the OfferBribeResourecses file exists
+  if not FileExists(OfferBribeResourcesFile) then
+  begin
+    Result := FL_Unknown;
+    exit;
+  end;
+
+  // GetMD5OfFile throws an exception if it fails, so we put it in a try statement just to be sure
+  try
+    OfferBribeResourcesMD5 := GetMD5OfFile(OfferBribeResourcesFile);
+  except
+    Result := FL_Unknown;
+    exit;
+  end;
+
+  // Compare the MD5 hash to a list of known MD5 hashes from different language files
+  case OfferBribeResourcesMD5 of
+    '9fb0c85a1f88e516762d71cbfbb69fa7', '801c5c314887e43de8f04dbeee921a31', 'f002ba64816723cb96d82af2c7af988a': Result := FL_English; // Vanilla English (official), JFLP v1.27 English, TSR v1.2 English
+    '403c420f051dc3ce14fcd2f7b63cf0c8': Result := FL_German; // German (official)
+    '78a283161a7aa6c91756733a4b456ab1': Result := FL_French; // French (official)
+    '6ed61e8db874b5b8bae72d3689ac1f43', '1c5736b9c808538ff77174c29a2ffa08': Result := FL_Russian; // Russian translation by Elite-Games
+    '17933dcced8a8faa0c1f2316f8289c35': Result := FL_Spanish; // Spanish translation by Clan DLAN
+    'eaeab5c42d6d6a4d54dd1927a1351a6d': Result := FL_Mandarin; // Mandarin/Taiwanese translation
+    'fad76d9880579e841b98d018e8dbde6c': Result := FL_Czech; // Czech translation by Spider
+  else
+    Result := FL_Unknown;
+  end;
 end;

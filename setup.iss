@@ -218,6 +218,7 @@ function NextButtonClick(PageId: Integer): Boolean;
 var
   i : Integer;
   RefreshRateError: String;
+  DetectedFlLanguage: FlLanguage;
 begin
     Result := True;
 
@@ -284,6 +285,18 @@ begin
         Result := False;
         exit;
       end;
+
+      DetectedFlLanguage := GetFreelancerLanguage(DataDirPage.Values[0]);
+
+      if DetectedFlLanguage = FL_English then
+        EnglishImprovements.Checked := true
+      else if DetectedFlLanguage <> FL_Unknown then
+        EnglishImprovements.Checked := false;
+
+      if DetectedFlLanguage = FL_Russian then
+        RussianFonts.Checked := true
+      else if DetectedFlLanguage <> FL_Unknown then
+        RussianFonts.Checked := false;
     end;
 
     // Validate install location
