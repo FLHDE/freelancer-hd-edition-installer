@@ -458,8 +458,8 @@ begin
   
   // Fix Small Text on 1440p/4K resolutions
   SmallText := CreateInputOptionPage(LogoRes.ID,
-  'Fix small text on 1440p/4K resolutions', 'Check to install.',
-  'Many high-resolution Freelancer players have reported missing HUD text and misaligned buttons in menus. In 4K, the nav map text is too small and there are many missing text elements in the HUD. For 1440p screens, the only apparent issue is the small nav map text.' + #13#10 + #13#10 +
+  'Fix small text on larger resolutions', 'Check to install.',
+  'Many high-resolution Freelancer players have reported missing HUD text and misaligned buttons in menus. In 4K, the nav map text is too small and there are many missing text elements in the HUD. For 1440p and some 16:10 screens, the only apparent issue is the small nav map text.' + #13#10 + #13#10 +
   'Select the option corresponding to the resolution you''re going to play Freelancer in. If you play in 1920x1080 or lower, the "No" option is fine as the elements are configured correctly already.',
   True, False);
   SmallText.Add('No');
@@ -523,8 +523,6 @@ begin
     'Custom HUD and Icons',
     'Check to install.'
   );
-  
-
   
   descDarkHud := TNewStaticText.Create(PageDarkHud);
   descDarkHud.Parent := PageDarkHud.Surface;
@@ -1029,7 +1027,7 @@ begin
 
   // Draw distances
   PageDrawDistances := CreateInputOptionPage(PageEffects.ID,
-  'Set Draw Distances', 'Check to install.',
+  'Set draw distances', 'Check to install.',
   'This option sets the draw distances scale; changing it to a higher value allows you to see things in space from further away. 1x will give you the same draw distances as vanilla Freelancer. Every option after that scales the vanilla values by a multiplier (2x, 3x, etc). The Maximized option sets all draw distances to the highest possible values, which includes the jump hole visibility distances.',
   True, False);
   PageDrawDistances.Add('1x (Vanilla)');
