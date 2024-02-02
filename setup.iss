@@ -107,6 +107,7 @@ var
 #include "globals.iss"
 #include "utilities.iss"
 #include "ui.iss"
+#include "silent_options.iss"
 #include "mod_options.iss"
 
 // Checks which step we are on when it changed. If its the postinstall step then start the actual installing
@@ -380,4 +381,8 @@ begin
 
     // Initialize UI. This populates all our ui elements with text, size and other properties
     InitializeUi();
+
+    // If the user wants to do a silent install, parse all selected options from the given command line args
+    if WizardSilent then
+      SetSilentOptions();
  end;
