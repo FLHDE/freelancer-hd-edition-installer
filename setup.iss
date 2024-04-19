@@ -380,6 +380,9 @@ begin
     EditedConfigFiles := TStringList.Create;
     EditedConfigFiles.Sorted := true;
 
+    // Get the debug options before initializing the UI
+    SetDebugOptions();
+
     // Initialize UI. This populates all our ui elements with text, size and other properties
     InitializeUi();
 

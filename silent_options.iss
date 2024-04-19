@@ -12,6 +12,38 @@ begin
   Result := ExpandConstant('{param:' + Name + '|' + DefaultValue + '}');
 end;
 
+function CmdLineParamExists(const Value: string): Boolean;
+var
+  I: Integer;
+begin
+  Result := False;
+  for I := 1 to ParamCount do
+    if CompareText(ParamStr(I), Value) = 0 then
+    begin
+      Result := True;
+      Exit;
+    end;
+end;
+
+// These options are mostly for debugging
+procedure SetDebugOptions();
+begin
+  if CmdLineParamExists('/ForceWineOff') then
+    IsWine := false;
+  if CmdLineParamExists('/ForceWineOn') then
+    IsWine := true;
+
+  if CmdLineParamExists('/ForceNoLightingBug') then
+    HasLightingBug := false;
+  if CmdLineParamExists('/ForceHasLightingBug') then
+    HasLightingBug := true;
+
+  if CmdLineParamExists('/ForceNVIDIA') then
+    GpuManufacturer := NVIDIAOrOther;
+  if CmdLineParamExists('/ForceAMD') then
+    GpuManufacturer := AMD;
+end;
+
 // Parses all selected options from the command line arguments and sets them directly in the UI elements
 procedure SetSilentOptions();
 var

@@ -328,7 +328,7 @@ begin
   descEnglishImprovements.Caption := 
   'This option fixes many typos, grammar mistakes, inconsistencies, and more, in the English Freelancer text and audio resources. It also adds a higher quality Freelancer intro (1440x960 instead of 720x480), which is only available in English.' + #13#10#13#10 +  
   'NOTE: This option will set all of Freelancer''s text, a few voice lines, and the intro to English. Disable this option if you''d like to play Freelancer in a different language like German, French, or Russian.'
-  + #13#10#13#10 + 'NOTE 2: If this option is disabled, several ship control option names from the settings menu will be blank.';
+  + #13#10#13#10 + 'NOTE 2: A few things will remain English.';
   // TODO for next update: Remove NOTE 2 above
 
   EnglishImprovements := TCheckBox.Create(PageEnglishImprovements);
