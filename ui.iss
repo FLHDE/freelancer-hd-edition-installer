@@ -245,6 +245,7 @@ var
   txtHdrDesc: String;
   txtBloom: String;
   txtBloomDesc: String;
+  txtAuto: String;
 begin
   txtAa := 'Anti-Aliasing';
   txtAaDesc := 'Anti-Aliasing removes jagged edges in-game, effectively making them appear smoother at a performance cost. Disable this option if you''re running low-end hardware.';
@@ -261,6 +262,7 @@ begin
   txtHdrDesc := 'Makes darker areas a bit darker, and brighter areas a bit brighter.';
   txtBloom := 'Add Bloom';
   txtBloomDesc := 'Adds glow to brighter areas. May reduce detail.';
+  txtAuto := ' "Auto" will automatically use the highest option your graphics card supports.'
 
   # if !AllInOneInstall
   // Read download size
@@ -598,11 +600,11 @@ begin
   descGraphicsApi.Parent := PageGraphicsApi.Surface;
   descGraphicsApi.WordWrap := True;
   descGraphicsApi.Width := PageGraphicsApi.SurfaceWidth;
-  descGraphicsApi.Caption := 'This page allows you to choose the graphics API. If you have no idea what this means, just go with the first option, since it offer additional graphics enhancements and fixes. If it''s causing issues for you, choose one of the other options.';
+  descGraphicsApi.Caption := 'This page allows you to choose the graphics API. If you have no idea what this means, just go with the first or second option, since those offer the best graphics enhancements and fixes. If they cause issues for you, choose a different option.';
 
   DgVoodooGraphicsApi := TRadioButton.Create(PageGraphicsApi);
   DgVoodooGraphicsApi.Parent := PageGraphicsApi.Surface;
-  DgVoodooGraphicsApi.Checked := True;
+  DgVoodooGraphicsApi.Checked := GpuManufacturer = NVIDIAOrOther;
   DgVoodooGraphicsApi.Top := ScaleY(50);
   DgVoodooGraphicsApi.Caption := 'dgVoodoo (DirectX 11, recommended)';
   DgVoodooGraphicsApi.Width := PageGraphicsApi.SurfaceWidth - ScaleX(8);
@@ -612,17 +614,17 @@ begin
   descDgVoodooGraphicsApi.WordWrap := True;
   descDgVoodooGraphicsApi.Top := DgVoodooGraphicsApi.Top + ScaleY(15);
   descDgVoodooGraphicsApi.Width := PageGraphicsApi.SurfaceWidth;
-  descDgVoodooGraphicsApi.Caption := 'Fixes the major lighting bug on Windows 10 and 11. Supports native Anti-Aliasing, Anisotropic Filtering, and ReShade.';
+  descDgVoodooGraphicsApi.Caption := 'Fixes the lighting, stuttering, and glass bugs on Windows 10 and 11. Supports native Anti-Aliasing, Anisotropic Filtering, and ReShade.';
 
-  // TODO next update: Re-add
   // Manual refresh rate input is only required if the user has an AMD GPU
-  //if GpuManufacturer = AMD then
-  descDgVoodooGraphicsApi.Caption := descDgVoodooGraphicsApi.Caption + ' Requires manual refresh rate input.';
+  if GpuManufacturer = AMD then
+    descDgVoodooGraphicsApi.Caption := descDgVoodooGraphicsApi.Caption + ' Requires manual refresh rate input.';
 
   DxWrapperGraphicsApi := TRadioButton.Create(PageGraphicsApi);
   DxWrapperGraphicsApi.Parent := PageGraphicsApi.Surface;
-  DxWrapperGraphicsApi.Top := descDgVoodooGraphicsApi.Top + ScaleY(40);
-  DxWrapperGraphicsApi.Caption := 'DxWrapper + d3d8to9 (DirectX 9)';
+  DxWrapperGraphicsApi.Checked := GpuManufacturer = AMD;
+  DxWrapperGraphicsApi.Top := descDgVoodooGraphicsApi.Top + ScaleY(37);
+  DxWrapperGraphicsApi.Caption := 'DxWrapper + d3d8to9 (DirectX 9, recommended)';
   DxWrapperGraphicsApi.Width := PageGraphicsApi.SurfaceWidth - ScaleX(8);
 
   descDxWrapperGraphicsApi := TNewStaticText.Create(PageGraphicsApi);
@@ -630,17 +632,11 @@ begin
   descDxWrapperGraphicsApi.WordWrap := True;
   descDxWrapperGraphicsApi.Top := DxWrapperGraphicsApi.Top + ScaleY(15);
   descDxWrapperGraphicsApi.Width := PageGraphicsApi.SurfaceWidth;
-  descDxWrapperGraphicsApi.Caption := 'Supports native Anti-Aliasing';
-
-  // TODO next update: Remove
-  // Don't say that the DxWrapper option supports Anisitropic Filtering on NVIDA hardware because it's broken on there
-  if GpuManufacturer <> NVIDIA then
-    descDxWrapperGraphicsApi.Caption := descDxWrapperGraphicsApi.Caption + ', Anisotropic Filtering,';
-  descDxWrapperGraphicsApi.Caption := descDxWrapperGraphicsApi.Caption + ' and ReShade. Not 100% stable.';
+  descDxWrapperGraphicsApi.Caption := 'Fixes the lighting and stuttering bugs on Windows 10 and 11. Supports native Anti-Aliasing, Anisotropic Filtering, and ReShade.';
 
   VanillaGraphicsApi := TRadioButton.Create(PageGraphicsApi);
   VanillaGraphicsApi.Parent := PageGraphicsApi.Surface;
-  VanillaGraphicsApi.Top := descDxWrapperGraphicsApi.Top + ScaleY(30);
+  VanillaGraphicsApi.Top := descDxWrapperGraphicsApi.Top + ScaleY(37);
   VanillaGraphicsApi.Caption := 'Vanilla Freelancer (DirectX 8)';
   VanillaGraphicsApi.Width := PageGraphicsApi.SurfaceWidth - ScaleX(8);
 
@@ -657,17 +653,16 @@ begin
   begin
     LightingFixGraphicsApi := TRadioButton.Create(PageGraphicsApi);
     LightingFixGraphicsApi.Parent := PageGraphicsApi.Surface;
-    LightingFixGraphicsApi.Top := descVanillaGraphicsApi.Top + ScaleY(40);
-    LightingFixGraphicsApi.Caption := 'Vanilla Freelancer + Lighting Bug Fix (DirectX 8)';
+    LightingFixGraphicsApi.Top := descVanillaGraphicsApi.Top + ScaleY(37);
+    LightingFixGraphicsApi.Caption := 'Vanilla Freelancer + Lighting and Stuttering fix (DirectX 8)';
     LightingFixGraphicsApi.Width := PageGraphicsApi.SurfaceWidth - ScaleX(8);
 
     descLightingFixGraphicsApi := TNewStaticText.Create(PageGraphicsApi);
     descLightingFixGraphicsApi.Parent := PageGraphicsApi.Surface;
     descLightingFixGraphicsApi.WordWrap := True;
-    descLightingFixGraphicsApi.Top := descVanillaGraphicsApi.Top + ScaleY(55);
+    descLightingFixGraphicsApi.Top := LightingFixGraphicsApi.Top + ScaleY(15);
     descLightingFixGraphicsApi.Width := PageGraphicsApi.SurfaceWidth;
-    // TODO for next update: Update caption with info about the updated d3d8.dll
-    descLightingFixGraphicsApi.Caption := 'About the same as the Vanilla Freelancer option but fixes the major lighting bug on Windows 10 and 11. NOTE: This option only works on Windows 10 and 11!';
+    descLightingFixGraphicsApi.Caption := 'The same as the Vanilla Freelancer option but also fixes the lighting and stuttering bugs. NOTE: This option only works on Windows 10 and 11!';
   end;
   
   // DxWrapper options
@@ -685,8 +680,12 @@ begin
   DxWrapperAa.Parent := DxWrapperPage.Surface;
   DxWrapperAa.Style := csDropDownList;
   DxWrapperAa.Items.Add('Off');
-  DxWrapperAa.Items.Add('On (recommended)');
-  DxWrapperAa.ItemIndex := 1;
+  DxWrapperAa.Items.Add('2x');
+  DxWrapperAa.Items.Add('4x');
+  DxWrapperAa.Items.Add('8x');
+  DxWrapperAa.Items.Add('16x');
+  DxWrapperAa.Items.Add('Auto (recommended)');
+  DxWrapperAa.ItemIndex := 5;
   DxWrapperAa.Top := ScaleY(20);
   DxWrapperAa.Width := 155;
 
@@ -694,38 +693,33 @@ begin
   descDxWrapperAa.Parent := DxWrapperPage.Surface;
   descDxWrapperAa.WordWrap := True;
   descDxWrapperAa.Width := DxWrapperPage.SurfaceWidth;
-  descDxWrapperAa.Caption := txtAaDesc;
+  descDxWrapperAa.Caption := txtAaDesc + txtAuto;
   descDxWrapperAa.Top := DxWrapperAa.Top + ScaleY(25);
 
-  // Anisotropic Filtering from DxWrapper is broken on NVIDIA GPUs, so don't show the option for users who have one
-  // TODO next update: Remove
-  if GpuManufacturer <> NVIDIA then
-  begin
-    lblDxWrapperAf := TLabel.Create(DxWrapperPage);
-    lblDxWrapperAf.Parent := DxWrapperPage.Surface;
-    lblDxWrapperAf.Caption := TxtAf;
-    lblDxWrapperAf.Top := descDxWrapperAa.Top + ScaleY(60);
-    
-    DxWrapperAf := TComboBox.Create(DxWrapperPage);
-    DxWrapperAf.Parent := DxWrapperPage.Surface;
-    DxWrapperAf.Style := csDropDownList;
-    DxWrapperAf.Items.Add('Off');
-    DxWrapperAf.Items.Add('2x');
-    DxWrapperAf.Items.Add('4x');
-    DxWrapperAf.Items.Add('8x');
-    DxWrapperAf.Items.Add('16x');
-    DxWrapperAf.Items.Add('Auto (recommended)');
-    DxWrapperAf.ItemIndex := 5;
-    DxWrapperAf.Top := lblDxWrapperAf.Top + ScaleY(20);
-    DxWrapperAf.Width := 155;
+  lblDxWrapperAf := TLabel.Create(DxWrapperPage);
+  lblDxWrapperAf.Parent := DxWrapperPage.Surface;
+  lblDxWrapperAf.Caption := TxtAf;
+  lblDxWrapperAf.Top := descDxWrapperAa.Top + ScaleY(80);
 
-    descDxWrapperAf := TNewStaticText.Create(DxWrapperPage);
-    descDxWrapperAf.Parent := DxWrapperPage.Surface;
-    descDxWrapperAf.WordWrap := True;
-    descDxWrapperAf.Width := DxWrapperPage.SurfaceWidth;
-    descDxWrapperAf.Caption := txtAfDesc + ' "Auto" will automatically use the highest option your graphics card supports.'
-    descDxWrapperAf.Top := DxWrapperAf.Top + ScaleY(25);
-  end;
+  DxWrapperAf := TComboBox.Create(DxWrapperPage);
+  DxWrapperAf.Parent := DxWrapperPage.Surface;
+  DxWrapperAf.Style := csDropDownList;
+  DxWrapperAf.Items.Add('Off');
+  DxWrapperAf.Items.Add('2x');
+  DxWrapperAf.Items.Add('4x');
+  DxWrapperAf.Items.Add('8x');
+  DxWrapperAf.Items.Add('16x');
+  DxWrapperAf.Items.Add('Auto (recommended)');
+  DxWrapperAf.ItemIndex := 5;
+  DxWrapperAf.Top := lblDxWrapperAf.Top + ScaleY(20);
+  DxWrapperAf.Width := 155;
+
+  descDxWrapperAf := TNewStaticText.Create(DxWrapperPage);
+  descDxWrapperAf.Parent := DxWrapperPage.Surface;
+  descDxWrapperAf.WordWrap := True;
+  descDxWrapperAf.Width := DxWrapperPage.SurfaceWidth;
+  descDxWrapperAf.Caption := txtAfDesc + txtAuto;
+  descDxWrapperAf.Top := DxWrapperAf.Top + ScaleY(25);
 
   // dgVoodoo options
   DgVoodooPage := CreateCustomPage(

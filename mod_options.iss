@@ -1035,29 +1035,36 @@ begin
   DxWrapperPath := ExpandConstant('{app}\EXE\dxwrapper.ini');
 
   if DxWrapperAa.ItemIndex = 1 then
-    // Enable AA
+    // Enable 2x AA
+    FileReplaceString(DxWrapperPath, 'AntiAliasing               = 0', 'AntiAliasing               = 2');
+  if DxWrapperAa.ItemIndex = 2 then
+    // Enable 4x AA
+    FileReplaceString(DxWrapperPath, 'AntiAliasing               = 0', 'AntiAliasing               = 4');
+  if DxWrapperAa.ItemIndex = 3 then
+    // Enable 8x AA
+    FileReplaceString(DxWrapperPath, 'AntiAliasing               = 0', 'AntiAliasing               = 8');
+  if DxWrapperAa.ItemIndex = 4 then
+    // Enable 16x AA
+    FileReplaceString(DxWrapperPath, 'AntiAliasing               = 0', 'AntiAliasing               = 16');
+  if DxWrapperAa.ItemIndex = 5 then
+    // Enable auto AA
     FileReplaceString(DxWrapperPath, 'AntiAliasing               = 0', 'AntiAliasing               = 1');
 
-  // Don't apply AF options on NVIDIA GPUs because they cause bugs
-  // TODO next update: Remove
-  if GpuManufacturer <> NVIDIA then
-  begin
-    if DxWrapperAf.ItemIndex = 1 then
-      // Enable 2x AF
-      FileReplaceString(DxWrapperPath, 'AnisotropicFiltering       = 0', 'AnisotropicFiltering       = 2');
-    if DxWrapperAf.ItemIndex = 2 then
-      // Enable 4x AF
-      FileReplaceString(DxWrapperPath, 'AnisotropicFiltering       = 0', 'AnisotropicFiltering       = 4');
-    if DxWrapperAf.ItemIndex = 3 then
-      // Enable 8x AF
-      FileReplaceString(DxWrapperPath, 'AnisotropicFiltering       = 0', 'AnisotropicFiltering       = 8');
-    if DxWrapperAf.ItemIndex = 4 then
-      // Enable 16x AF
-      FileReplaceString(DxWrapperPath, 'AnisotropicFiltering       = 0', 'AnisotropicFiltering       = 16');
-    if DxWrapperAf.ItemIndex = 5 then
-      // Enable auto AF
-      FileReplaceString(DxWrapperPath, 'AnisotropicFiltering       = 0', 'AnisotropicFiltering       = 1');
-  end;
+  if DxWrapperAf.ItemIndex = 1 then
+    // Enable 2x AF
+    FileReplaceString(DxWrapperPath, 'AnisotropicFiltering       = 0', 'AnisotropicFiltering       = 2');
+  if DxWrapperAf.ItemIndex = 2 then
+    // Enable 4x AF
+    FileReplaceString(DxWrapperPath, 'AnisotropicFiltering       = 0', 'AnisotropicFiltering       = 4');
+  if DxWrapperAf.ItemIndex = 3 then
+    // Enable 8x AF
+    FileReplaceString(DxWrapperPath, 'AnisotropicFiltering       = 0', 'AnisotropicFiltering       = 8');
+  if DxWrapperAf.ItemIndex = 4 then
+    // Enable 16x AF
+    FileReplaceString(DxWrapperPath, 'AnisotropicFiltering       = 0', 'AnisotropicFiltering       = 16');
+  if DxWrapperAf.ItemIndex = 5 then
+    // Enable auto AF
+    FileReplaceString(DxWrapperPath, 'AnisotropicFiltering       = 0', 'AnisotropicFiltering       = 1');
 end;
 
 procedure ApplyOldDgVoodooOptions(DgVoodooPath: string);

@@ -109,8 +109,7 @@ begin
   // DxWrapper options
   DxWrapperAa.ItemIndex := GetParamInt('DxWrapperAa', Integer(DxWrapperAa.ItemIndex));
 
-  if GpuManufacturer <> NVIDIA then
-    DxWrapperAf.ItemIndex := GetParamInt('DxWrapperAf', Integer(DxWrapperAf.ItemIndex));
+  DxWrapperAf.ItemIndex := GetParamInt('DxWrapperAf', Integer(DxWrapperAf.ItemIndex));
 
   // DxWrapper options #2
   DxWrapperReShade.Checked := GetParamInt('DxWrapperReShade', Integer(DxWrapperReShade.Checked)) = 1;

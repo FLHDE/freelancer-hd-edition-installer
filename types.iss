@@ -29,11 +29,10 @@ type
 end;
 
 // Enum for GPU manufacturers
-// TODO for next update: Information below
-// We need this information about the user's system because AMD GPUs have issues with the newest dgVoodoo versions
-// And on NVIDIA GPUs some textures don't load correctly with DxWrapper Anisotropic Filtering
 type
-  TGpuManufacturer = (NVIDIA, AMD, Other);
+  // NVIDIA and Other are currently not distinguished
+  // TGpuManufacturer = (NVIDIA, AMD, Other);
+  TGpuManufacturer = (NVIDIAOrOther, AMD);
 
 type
   TSystemLanguage = (S_German, S_French, S_Russian, S_EnglishOrOther);

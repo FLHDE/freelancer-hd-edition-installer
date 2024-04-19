@@ -359,27 +359,37 @@ begin
     end;
 
     // Determine what the most likely primary GPU is
+    // In the installer we currently do the same thing for NVIDIA GPUs and any GPU other than AMD, hence they don't need to be distinguishable.
     if isAmdMain then
       Result := AMD
     else if isNvidiaMain then
-      Result := NVIDIA
+      //Result := NVIDIA
+      Result := NVIDIAOrOther
     else if isOtherMain and hasAmd and not hasNvidia then
       Result := AMD
     else if isOtherMain and not hasAmd and hasNvidia then
-      Result := NVIDIA
+      //Result := NVIDIA
+      Result := NVIDIAOrOther
     else if isOtherMain and not hasAmd and not hasNvidia then
-      Result := Other
+      //Result := Other
+      Result := NVIDIAOrOther
     else
       RaiseException('Couldn''t determine GPU manufacturer');
   except
     // If something has gone wrong, just ask the user what GPU they have
+    //if MsgBox('We weren''t able to automatically determine what graphics card is in your system. We use this information to apply the best compatibility options.'
+    //+ #13#10#13#10 + 'Please click "Yes" if your computer has an NVIDIA graphics card. Click "No" if otherwise.', mbConfirmation, MB_YESNO) = IDYES then
+    //  Result := NVIDIA
+    //else if MsgBox('Please click "Yes" if your system uses an AMD graphics card. Click "No" if the graphics card is from another manufacturer like Intel.', mbConfirmation, MB_YESNO) = IDYES then
+    //  Result := AMD
+    //else
+    //  Result := Other;
+
     if MsgBox('We weren''t able to automatically determine what graphics card is in your system. We use this information to apply the best compatibility options.'
-    + #13#10#13#10 + 'Please click "Yes" if your computer has an NVIDIA graphics card. Click "No" if otherwise.', mbConfirmation, MB_YESNO) = IDYES then
-      Result := NVIDIA
-    else if MsgBox('Please click "Yes" if your system uses an AMD graphics card. Click "No" if the graphics card is from another manufacturer like Intel.', mbConfirmation, MB_YESNO) = IDYES then
+    + #13#10#13#10 + 'Please click "Yes" if your computer has an AMD graphics card. Click "No" if the graphics card is from another manufacturer like Intel or AMD.', mbConfirmation, MB_YESNO) = IDYES then
       Result := AMD
     else
-      Result := Other;
+      Result := NVIDIAOrOther;
   end;
 end;
 
