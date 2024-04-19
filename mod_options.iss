@@ -1034,37 +1034,37 @@ begin
 
   DxWrapperPath := ExpandConstant('{app}\EXE\dxwrapper.ini');
 
+  if DxWrapperAa.ItemIndex = 0 then
+    // Disable AA
+    FileReplaceString(DxWrapperPath, 'AntiAliasing               = 1', 'AntiAliasing               = 0');
   if DxWrapperAa.ItemIndex = 1 then
     // Enable 2x AA
-    FileReplaceString(DxWrapperPath, 'AntiAliasing               = 0', 'AntiAliasing               = 2');
+    FileReplaceString(DxWrapperPath, 'AntiAliasing               = 1', 'AntiAliasing               = 2');
   if DxWrapperAa.ItemIndex = 2 then
     // Enable 4x AA
-    FileReplaceString(DxWrapperPath, 'AntiAliasing               = 0', 'AntiAliasing               = 4');
+    FileReplaceString(DxWrapperPath, 'AntiAliasing               = 1', 'AntiAliasing               = 4');
   if DxWrapperAa.ItemIndex = 3 then
     // Enable 8x AA
-    FileReplaceString(DxWrapperPath, 'AntiAliasing               = 0', 'AntiAliasing               = 8');
+    FileReplaceString(DxWrapperPath, 'AntiAliasing               = 1', 'AntiAliasing               = 8');
   if DxWrapperAa.ItemIndex = 4 then
     // Enable 16x AA
-    FileReplaceString(DxWrapperPath, 'AntiAliasing               = 0', 'AntiAliasing               = 16');
-  if DxWrapperAa.ItemIndex = 5 then
-    // Enable auto AA
-    FileReplaceString(DxWrapperPath, 'AntiAliasing               = 0', 'AntiAliasing               = 1');
+    FileReplaceString(DxWrapperPath, 'AntiAliasing               = 1', 'AntiAliasing               = 16');
 
+  if DxWrapperAf.ItemIndex = 0 then
+    // Disable AF
+    FileReplaceString(DxWrapperPath, 'AnisotropicFiltering       = 1', 'AnisotropicFiltering       = 0');
   if DxWrapperAf.ItemIndex = 1 then
     // Enable 2x AF
-    FileReplaceString(DxWrapperPath, 'AnisotropicFiltering       = 0', 'AnisotropicFiltering       = 2');
+    FileReplaceString(DxWrapperPath, 'AnisotropicFiltering       = 1', 'AnisotropicFiltering       = 2');
   if DxWrapperAf.ItemIndex = 2 then
     // Enable 4x AF
-    FileReplaceString(DxWrapperPath, 'AnisotropicFiltering       = 0', 'AnisotropicFiltering       = 4');
+    FileReplaceString(DxWrapperPath, 'AnisotropicFiltering       = 1', 'AnisotropicFiltering       = 4');
   if DxWrapperAf.ItemIndex = 3 then
     // Enable 8x AF
-    FileReplaceString(DxWrapperPath, 'AnisotropicFiltering       = 0', 'AnisotropicFiltering       = 8');
+    FileReplaceString(DxWrapperPath, 'AnisotropicFiltering       = 1', 'AnisotropicFiltering       = 8');
   if DxWrapperAf.ItemIndex = 4 then
     // Enable 16x AF
-    FileReplaceString(DxWrapperPath, 'AnisotropicFiltering       = 0', 'AnisotropicFiltering       = 16');
-  if DxWrapperAf.ItemIndex = 5 then
-    // Enable auto AF
-    FileReplaceString(DxWrapperPath, 'AnisotropicFiltering       = 0', 'AnisotropicFiltering       = 1');
+    FileReplaceString(DxWrapperPath, 'AnisotropicFiltering       = 1', 'AnisotropicFiltering       = 16');
 end;
 
 procedure ApplyOldDgVoodooOptions(DgVoodooPath: string);
