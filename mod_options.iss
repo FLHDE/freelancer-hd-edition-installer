@@ -1163,6 +1163,8 @@ begin
 
   // Set the techniques
   FileReplaceString(ReShadePath + 'ReShadePreset.ini', 'Techniques=', 'Techniques=' + Techniques);
+
+  // TODO: Decrease sharpness if ReShadeDllName == 'd3d9'
 end;
 
 procedure Process_DxWrapperReShade();

@@ -2,11 +2,12 @@
 ; GitHub: https://github.com/oliverpechey/Freelancer-hd-edition-install-script
 ; Main GitHub: https://github.com/BC46/Freelancer-hd-edition
 
-#define MyAppVersion "0.6"
-#define MyAppName "Freelancer: HD Edition v" + MyAppVersion
+#define MyAppVersion "0.7"
+#define MyModName "Freelancer: HD Edition"
 ; Name without the colon to prevent file/explorer-related issues
 #define MyAppFileName "Freelancer HD Edition"
-#define MyAppPublisher "Freelancer: HD Edition Development Team"
+#define MyAppName MyModName + " v" + MyAppVersion
+#define MyAppPublisher MyModName + " Development Team"
 #define MyAppURL "https://github.com/BC46/freelancer-hd-edition"
 #define MyAppExeName "Freelancer.exe"
 #define MyFolderName "freelancer-hd-edition-" + MyAppVersion
@@ -22,7 +23,7 @@
 #endif
 #define SizeExtracted 4646719488
 #define SizeVanilla 985624576
-#define SizeBuffer 100000
+#define SizeBuffer 200000
 #define SizeAll SizeZip + SizeExtracted + SizeVanilla + SizeBuffer
 
 [Setup]
@@ -46,7 +47,7 @@ InfoBeforeFile={#SourcePath}\Assets\Text\installinfo.txt
 OutputBaseFilename=FreelancerHDESetup
 SetupIconFile={#SourcePath}\Assets\Images\icon.ico
 SolidCompression=yes
-UninstallDisplayIcon={#SourcePath}\Assets\Images\icon.ico
+UninstallDisplayIcon={app}\EXE\{#MyAppExeName}
 UninstallDisplayName={#MyAppName}
 WizardImageFile={#SourcePath}\Assets\Images\backgroundpattern.bmp
 WizardSmallImageFile={#SourcePath}\Assets\Images\icon*.bmp
@@ -85,7 +86,7 @@ Filename: "{app}\EXE\{#MyAppExeName}"; Description: "{cm:LaunchProgram,{#StringC
 Type: filesandordirs; Name: "{app}"
 
 [Messages]
-WelcomeLabel2=Freelancer: HD Edition is a mod that aims to improve every aspect of the game Freelancer (2003) while keeping the look and feel as close to vanilla as possible. It also serves as an all-in-one package for players so they don't have to worry about installing countless patches and mods to create the perfect HD and bug-free install.%n%nThis installer requires a clean, freshly installed Freelancer directory.
+WelcomeLabel2={#MyModName} is a mod that aims to improve every aspect of the game Freelancer (2003) while keeping the look and feel as close to vanilla as possible. It also serves as an all-in-one package for players so they don't have to worry about installing countless patches and mods to create the perfect HD and bug-free install.%n%nThis installer requires a clean, freshly installed Freelancer directory.
 FinishedLabel=Setup has finished installing [name] on your computer. The application may be launched by selecting the installed shortcut.%n%nNOTE: [name] has been installed as a separate application. Therefore, your vanilla Freelancer installation has not been modified and can still be played at any time.
 
 [Code]
@@ -304,13 +305,13 @@ begin
     if (PageId = 6) then begin
       // Needs to be in a seperate if statement since it tries to expand {app} even if not on PageID 6. Pascal what are you doing!
       if(Pos(AddBackslash(DataDirPage.Values[0]),ExpandConstant('{app}')) > 0) then begin
-        MsgBox('Freelancer: HD Edition cannot be installed to the same location as your vanilla install. Please select a new location.', mbError, MB_OK);
+        MsgBox('{#MyModName} cannot be installed to the same location as your vanilla install. Please select a new location.', mbError, MB_OK);
         Result := False;
         exit;
       end;
       // Check the install directory is empty
       if(not isEmptyDir(ExpandConstant('{app}'))) then begin
-        MsgBox('Freelancer: HD Edition cannot be installed to a directory that is not empty. Please empty this directory or choose another one.', mbError, MB_OK);
+        MsgBox('{#MyModName} cannot be installed to a directory that is not empty. Please empty this directory or choose another one.', mbError, MB_OK);
         Result := False;
         exit;
       end;
@@ -331,7 +332,7 @@ begin
           i := mirrors.Count - 1;
         except
           if(i = mirrors.Count - 1) then
-            SuppressibleMsgBox('All downloads failed. Please contact us on Discord: https://discord.gg/ScqgYuFqmU', mbError, MB_OK, IDOK)
+            SuppressibleMsgBox('All downloads failed. Please use the all-in-one installer.', mbError, MB_OK, IDOK)
           else
             if SuppressibleMsgBox('Download failed. Do you want to try downloading with an alternate mirror?', mbError, MB_RETRYCANCEL, IDRETRY) = IDCANCEL then
               i := mirrors.Count - 1;
@@ -367,7 +368,7 @@ begin
 
     InitConstants();
 
-    // Gets some information about the system for later use
+    // Get some information about the system for later use
     DesktopRes := GetResolution();
     RefreshRate := GetRefreshRate();
     IsWine := GetIsWine();
