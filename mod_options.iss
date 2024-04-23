@@ -1163,6 +1163,12 @@ begin
   if FileExists(ReShadePath + ReShadeDllName + '.dll') then
     RenameFile(ReShadePath + ReShadeDllName + '.dll', ReShadePath + ReShadeDllName + '_vanilla.dll');
 
+  // Rename the other DLL if it already exists because they can cause conflicts
+  if (CompareText(ReshadeDllName, 'd3d9') = 0) and FileExists(ReShadePath + 'dxgi.dll') then
+    RenameFile(ReShadePath + 'dxgi.dll', ReShadePath + 'dxgi_vanilla.dll')
+  else if (CompareText(ReshadeDllName, 'dxgi') = 0) and FileExists(ReShadePath + 'd3d9.dll') then
+    RenameFile(ReShadePath + 'd3d9.dll', ReShadePath + 'd3d9_vanilla.dll');
+
   // Activate ReShade by renaming the file
   RenameFile(ReShadePath + ReShadeDllName + '_reshade.dll', ReShadePath + ReShadeDllName + '.dll')
 
