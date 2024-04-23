@@ -1,14 +1,8 @@
 Thank you for downloading Freelancer: HD Edition!
 
-Make sure you join our Discord server at https://discord.gg/ScqgYuFqmU so you always stay up to date with the latest news and information regarding the mod!
+If you encounter any issues related to this mod during installation or gameplay, please refer to the wiki at https://github.com/BC46/freelancer-hd-edition/wiki for potential solutions.
 
-If you encounter any issues related to this mod during installation or gameplay, please refer to the wiki at https://github.com/BC46/freelancer-hd-edition/wiki for potential solutions. In case none of these work, join our Discord server https://discord.gg/ScqgYuFqmU and we'll help you out. You may also create an issue related to the mod or installer here:
-Mod: https://github.com/BC46/freelancer-hd-edition/issues
-Installer: https://github.com/oliverpechey/Freelancer-hd-edition-install-script/issues
-
-To continue the installation process, click "Next".
-
-Mod key features:
+Mod Key Features:
 HD Space Stations
 HD Ships
 HD Planets
@@ -40,4 +34,4 @@ Full vanilla Multiplayer support
 Mod files: https://github.com/BC46/freelancer-hd-edition
 Installer source code: https://github.com/oliverpechey/Freelancer-hd-edition-install-script
 
-Have something to contribute to make the mod or the installer even better? Feel free to create a pull request at either of the two GitHub repositories! We are always open to new suggestions and improvements. Making the mod files public has allowed us as a community to create the best possible HD mod for Freelancer out there since many modders from around the world have contributed to this project.
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
