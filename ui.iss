@@ -310,7 +310,7 @@ begin
   // Initialize PitchVariations page and add content
   PitchVariations := CreateInputOptionPage(CallSign.ID,
   'More NPC voices', 'Check to install.',
-  'NPCs from a faction talking in space usually only have one or two different voices. This option adds more pitches to the NPC voices so there''s more variety. Only affects Single Player and local Multiplayer games.',
+  'NPCs from a faction talking in space usually only have one or two different voices. This option adds more pitches to the NPC voices so there''s more variety. Only affects Single Player and self-hosted Multiplayer games.',
   False, False);
 
   PitchVariations.Add('Add more voices for the NPCs');

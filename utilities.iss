@@ -386,7 +386,7 @@ begin
     //  Result := Other;
 
     if MsgBox('We weren''t able to automatically determine what graphics card is in your system. We use this information to apply the best compatibility options.'
-    + #13#10#13#10 + 'Please click "Yes" if your computer has an AMD graphics card. Click "No" if the graphics card is from another manufacturer like Intel or AMD.', mbConfirmation, MB_YESNO) = IDYES then
+    + #13#10#13#10 + 'Please click "Yes" if your computer has an AMD graphics card. Click "No" if the graphics card is from another manufacturer like Intel or NVIDIA.', mbConfirmation, MB_YESNO) = IDYES then
       Result := AMD
     else
       Result := NVIDIAOrOther;
