@@ -299,7 +299,7 @@ end;
 // SinglePlayer console processing logic
 procedure Process_Console();
 begin
-  if SinglePlayer.Checked then FileReplaceString(ExpandConstant('{app}\EXE\dacom.ini'),';console.dll','console.dll')
+  if not SinglePlayer.Checked then FileReplaceString(ExpandConstant('{app}\EXE\dacom.ini'), 'console.dll', ';console.dll')
 end;
 
 // Gets the path of a file in the My Games\Freelancer(HD) directory
