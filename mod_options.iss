@@ -528,22 +528,21 @@ begin
   else if dgVoodooGraphicsApi.Checked then
   begin
     RenameFile(EXEPath + 'd3d8_dgvoodoo.dll', EXEPath + 'd3d8.dll')
-    // TODO next update: Add if and else below
     // Rename correct dgVoodoo files based on whether or not the user has an AMD GPU for the best compatibility
-    //if GpuManufacturer = AMD then
-      //begin
-      //RenameFile(EXEPath + 'd3d8_dgvoodoo_old.dll', EXEPath + 'd3d8.dll')
-      //RenameFile(EXEPath + 'dgVoodoo_old.conf', EXEPath + 'dgVoodoo.conf')
-      //RenameFile(EXEPath + 'dgVoodooCpl_old.exe', EXEPath + 'dgVoodooCpl.exe')
-      //RenameFile(EXEPath + 'dgVoodooCpl_new.exe', EXEPath + 'dgVoodooCpl_new_exe') // Remove extension from other exe so people don't get confused with the 2 exes
-      //end
-    //else
-      //begin
-      //RenameFile(EXEPath + 'd3d8_dgvoodoo_new.dll', EXEPath + 'd3d8.dll')
-      //RenameFile(EXEPath + 'dgVoodoo_new.conf', EXEPath + 'dgVoodoo.conf')
-      //RenameFile(EXEPath + 'dgVoodooCpl_new.exe', EXEPath + 'dgVoodooCpl.exe')
-      //RenameFile(EXEPath + 'dgVoodooCpl_old.exe', EXEPath + 'dgVoodooCpl_old_exe') // Remove extension from other exe so people don't get confused with the 2 exes
-      //end;
+    if GpuManufacturer = AMD then
+      begin
+      RenameFile(EXEPath + 'd3d8_dgvoodoo_old.dll', EXEPath + 'd3d8.dll')
+      RenameFile(EXEPath + 'dgVoodoo_old.conf', EXEPath + 'dgVoodoo.conf')
+      RenameFile(EXEPath + 'dgVoodooCpl_old.exe', EXEPath + 'dgVoodooCpl.exe')
+      RenameFile(EXEPath + 'dgVoodooCpl_new.exe', EXEPath + 'dgVoodooCpl_new_exe') // Remove extension from other exe so people don't get confused with the 2 exes
+      end
+    else
+      begin
+      RenameFile(EXEPath + 'd3d8_dgvoodoo_new.dll', EXEPath + 'd3d8.dll')
+      RenameFile(EXEPath + 'dgVoodoo_new.conf', EXEPath + 'dgVoodoo.conf')
+      RenameFile(EXEPath + 'dgVoodooCpl_new.exe', EXEPath + 'dgVoodooCpl.exe')
+      RenameFile(EXEPath + 'dgVoodooCpl_old.exe', EXEPath + 'dgVoodooCpl_old_exe') // Remove extension from other exe so people don't get confused with the 2 exes
+    end;
   end
   else if HasLightingBug and LightingFixGraphicsApi.Checked then
     RenameFile(EXEPath + 'd3d8_legacy.dll', EXEPath + 'd3d8.dll')
@@ -1113,7 +1112,28 @@ end;
 
 procedure ApplyNewDgVoodooOptions(DgVoodooPath: string);
 begin
-  // TODO: Implement
+  if DgVoodooAa.ItemIndex = 1 then
+    // Enable AA 2x
+    FileReplaceString(DgVoodooPath, 'Antialiasing                        = appdriven', 'Antialiasing                        = 2');
+  if DgVoodooAa.ItemIndex = 2 then
+    // Enable AA 4x
+    FileReplaceString(DgVoodooPath, 'Antialiasing                        = appdriven', 'Antialiasing                        = 4');
+  if DgVoodooAa.ItemIndex = 3 then
+    // Enable AA 8x
+    FileReplaceString(DgVoodooPath, 'Antialiasing                        = appdriven', 'Antialiasing                        = 8');
+
+  if DgVoodooAf.ItemIndex = 1 then
+    // Enable AF 2x
+    FileReplaceString(DgVoodooPath, 'Filtering                           = appdriven', 'Filtering                           = 2');
+  if DgVoodooAf.ItemIndex = 2 then
+    // Enable AF 4x
+    FileReplaceString(DgVoodooPath, 'Filtering                           = appdriven', 'Filtering                           = 4');
+  if DgVoodooAf.ItemIndex = 3 then
+    // Enable AF 8x
+    FileReplaceString(DgVoodooPath, 'Filtering                           = appdriven', 'Filtering                           = 8');
+  if DgVoodooAf.ItemIndex = 4 then
+    // Enable AF 16x
+    FileReplaceString(DgVoodooPath, 'Filtering                           = appdriven', 'Filtering                           = 16');
 end;
 
 procedure Process_DgVoodoo();
@@ -1125,12 +1145,11 @@ begin
 
   DgVoodooPath := ExpandConstant('{app}\EXE\dgVoodoo.conf');
 
-  // TODO next update: Re-add if statement
   // Apply correct settings for the activated dgVoodoo versions
-  //if GpuManufacturer = AMD then
-  ApplyOldDgVoodooOptions(DgVoodooPath)
-  //else
-  //ApplyNewDgVoodooOptions(DgVoodooPath);
+  if GpuManufacturer = AMD then
+    ApplyOldDgVoodooOptions(DgVoodooPath)
+  else
+    ApplyNewDgVoodooOptions(DgVoodooPath);
 end;
 
 procedure ApplyReShadeOptions(ReShadeDllName: string; BloomChecked: Boolean; HdrChecked: Boolean; SaturationChecked: Boolean; SharpeningChecked: Boolean);

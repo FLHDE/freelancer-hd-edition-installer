@@ -129,7 +129,9 @@ begin
   // dgVoodoo options
   DgVoodooAa.ItemIndex := GetParamInt('DgVoodooAa', Integer(DgVoodooAa.ItemIndex));
   DgVoodooAf.ItemIndex := GetParamInt('DgVoodooAf', Integer(DgVoodooAf.ItemIndex));
-  DgVoodooRefreshRate.Text := IntToStr(GetParamInt('DgVoodooRefreshRate', StrToIntDef(DgVoodooRefreshRate.Text, RefreshRate)));
+
+  if GpuManufacturer = AMD then
+    DgVoodooRefreshRate.Text := IntToStr(GetParamInt('DgVoodooRefreshRate', StrToIntDef(DgVoodooRefreshRate.Text, RefreshRate)));
 
   // dgVoodoo options #2
   DgVoodooReShade.Checked := GetParamInt('DgVoodooReShade', Integer(DgVoodooReShade.Checked)) = 1;

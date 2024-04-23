@@ -328,7 +328,7 @@ begin
   descEnglishImprovements.Caption := 
   'This option fixes many typos, grammar mistakes, inconsistencies, and more, in the English Freelancer text and audio resources. It also adds a higher quality Freelancer intro (1440x960 instead of 720x480), which is only available in English.' + #13#10#13#10 +  
   'NOTE: This option will set all of Freelancer''s text, a few voice lines, and the intro to English. Disable this option if you''d like to play Freelancer in a different language like German, French, or Russian.'
-  + #13#10#13#10 + 'NOTE 2: A few things will remain English.';
+  + #13#10#13#10 + 'NOTE 2: A few text resources will remain English.';
   // TODO for next update: Remove NOTE 2 above
 
   EnglishImprovements := TCheckBox.Create(PageEnglishImprovements);
@@ -774,34 +774,32 @@ begin
   descDgVoodooAf.Caption := txtAfDesc;
   descDgVoodooAf.Top := DgVoodooAf.Top + ScaleY(25);
 
-  // TODO next upate: Re-add if statement
-  // The refresh rate option is not needed on the newer dgVoodoo version, because it automatically runs at the native refresh rate.
-  //if GpuManufacturer = AMD then
-  //begin
-  lblDgVoodooRefreshRate := TLabel.Create(DgVoodooPage);
-  lblDgVoodooRefreshRate.Parent := DgVoodooPage.Surface;
-  lblDgVoodooRefreshRate.Caption := 'Refresh Rate';
-  lblDgVoodooRefreshRate.Top := descDgVoodooAf.Top + ScaleY(45);
+  if GpuManufacturer = AMD then
+  begin
+    lblDgVoodooRefreshRate := TLabel.Create(DgVoodooPage);
+    lblDgVoodooRefreshRate.Parent := DgVoodooPage.Surface;
+    lblDgVoodooRefreshRate.Caption := 'Refresh Rate';
+    lblDgVoodooRefreshRate.Top := descDgVoodooAf.Top + ScaleY(45);
 
-  lblDgVoodooRefreshRateHz := TLabel.Create(DgVoodooPage);
-  lblDgVoodooRefreshRateHz.Parent := DgVoodooPage.Surface;
-  lblDgVoodooRefreshRateHz.Caption := 'Hz';
-  lblDgVoodooRefreshRateHz.Top := lblDgVoodooRefreshRate.Top + ScaleY(23);
-  lblDgVoodooRefreshRateHz.Left := ScaleX(125);
+    lblDgVoodooRefreshRateHz := TLabel.Create(DgVoodooPage);
+    lblDgVoodooRefreshRateHz.Parent := DgVoodooPage.Surface;
+    lblDgVoodooRefreshRateHz.Caption := 'Hz';
+    lblDgVoodooRefreshRateHz.Top := lblDgVoodooRefreshRate.Top + ScaleY(23);
+    lblDgVoodooRefreshRateHz.Left := ScaleX(125);
 
-  DgVoodooRefreshRate := TNewEdit.Create(DgVoodooPage);
-  DgVoodooRefreshRate.Parent := DgVoodooPage.Surface;;
-  DgVoodooRefreshRate.Top := lblDgVoodooRefreshRateHz.Top - ScaleY(3);
-  DgVoodooRefreshRate.Text := IntToStr(RefreshRate);
-  DgVoodooRefreshRate.OnKeyPress := @DigitFieldKeyPress;
+    DgVoodooRefreshRate := TNewEdit.Create(DgVoodooPage);
+    DgVoodooRefreshRate.Parent := DgVoodooPage.Surface;;
+    DgVoodooRefreshRate.Top := lblDgVoodooRefreshRateHz.Top - ScaleY(3);
+    DgVoodooRefreshRate.Text := IntToStr(RefreshRate);
+    DgVoodooRefreshRate.OnKeyPress := @DigitFieldKeyPress;
 
-  descDgVoodooRefreshRate := TNewStaticText.Create(DgVoodooPage);
-  descDgVoodooRefreshRate.Parent := DgVoodooPage.Surface;
-  descDgVoodooRefreshRate.WordWrap := True;
-  descDgVoodooRefreshRate.Width := DgVoodooPage.SurfaceWidth;
-  descDgVoodooRefreshRate.Caption := 'Enter your monitor''s refresh rate here. Freelancer will run at this refresh rate.';
-  descDgVoodooRefreshRate.Top := DgVoodooRefreshRate.Top + ScaleY(25);
-  //end;
+    descDgVoodooRefreshRate := TNewStaticText.Create(DgVoodooPage);
+    descDgVoodooRefreshRate.Parent := DgVoodooPage.Surface;
+    descDgVoodooRefreshRate.WordWrap := True;
+    descDgVoodooRefreshRate.Width := DgVoodooPage.SurfaceWidth;
+    descDgVoodooRefreshRate.Caption := 'Enter your monitor''s refresh rate here. Freelancer will run at this refresh rate.';
+    descDgVoodooRefreshRate.Top := DgVoodooRefreshRate.Top + ScaleY(25);
+  end;
 
   // DxWrapper options #2
   DxWrapperPage2 := CreateCustomPage(
