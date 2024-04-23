@@ -115,8 +115,6 @@ var
 procedure CurStepChanged(CurStep: TSetupStep);
 var
   ResultCode, i: Integer;
-  // TODO next update: remove
-  OptListFilePath : string;
 begin
     if CurStep = ssPostInstall then
     begin
@@ -201,14 +199,8 @@ begin
 
         // Remove additional junk files
         DeleteFile(ExpandConstant('{app}\UNINSTAL.EXE'));
-        // TODO next update: uncomment
-        //DeleteFile(ExpandConstant('{app}\.gitattributes'));
-        //DelTree(ExpandConstant('{app}\.github'), True, True, True);
-
-        // TODO next update: remove (this is a temporary bug fix)
-        OptListFilePath := ExpandConstant('{app}\DATA\INTERFACE\optlist.ini');
-        FileReplaceString(OptListFilePath, 'option = 1411, 2454, 100, false, true, 33, 100', ';option = 1411, 2454, 100, false, true, 33, 100')
-        FileReplaceString(OptListFilePath, 'option = 1412, 2455, 100, false, true, 33, 100', ';option = 1412, 2455, 100, false, true, 33, 100')
+        DeleteFile(ExpandConstant('{app}\.gitattributes'));
+        DelTree(ExpandConstant('{app}\.github'), True, True, True);
 
         // Install Complete!
         UpdateProgress(100);
