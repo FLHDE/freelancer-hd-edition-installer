@@ -276,7 +276,7 @@ begin
   // Initialize DataDirPage and add content
   DataDirPage := CreateInputDirPage(wpInfoBefore,
   'Select Freelancer installation', 'Where is Freelancer installed?',
-  'Select the folder in which a fresh and completely unmodded copy of Freelancer is installed. This is usually ' + dir + '.' + #13#10 +
+  'Select the folder in which a fresh and completely unmodded copy of Freelancer is installed. This is usually "' + dir + '".' + #13#10 +
   'The folder you select here will be copied without modification.',
   False, '');
   DataDirPage.Add('');
@@ -327,9 +327,8 @@ begin
   descEnglishImprovements.Width := PageEnglishImprovements.SurfaceWidth;
   descEnglishImprovements.Caption := 
   'This option fixes many typos, grammar mistakes, inconsistencies, and more, in the English Freelancer text and audio resources. It also adds a higher quality Freelancer intro (1440x960 instead of 720x480), which is only available in English.' + #13#10#13#10 +  
-  'NOTE: This option will set all of Freelancer''s text, a few voice lines, and the intro to English. Disable this option if you''d like to play Freelancer in a different language like German, French, or Russian.'
+  'NOTE: This option will set all of Freelancer''s text, voice lines, and the intro to English. Disable this option if you''d like to play Freelancer in a different language like German, French, or Russian.'
   + #13#10#13#10 + 'NOTE 2: A few text resources will remain English.';
-  // TODO for next update: Remove NOTE 2 above
 
   EnglishImprovements := TCheckBox.Create(PageEnglishImprovements);
   EnglishImprovements.Parent := PageEnglishImprovements.Surface;
@@ -508,7 +507,7 @@ begin
   descWeaponGroups.WordWrap := True;
   descWeaponGroups.Top := descWidescreenHud.Top + ScaleY(105);
   descWeaponGroups.Width := PageWidescreenHud.SurfaceWidth;
-  descWeaponGroups.Caption := 'This option adds buttons for selecting 3 different weapon groups in your ship info panel. NOTE: These buttons may not be positioned correctly on aspect ratios other than 16:9 and 4:3.';
+  descWeaponGroups.Caption := 'This option adds buttons for selecting 3 different weapon groups in your ship info panel. NOTE: These buttons will not be positioned correctly on aspect ratios other than 16:9 and 4:3.';
   
   WeaponGroups := TCheckBox.Create(PageWidescreenHud);
   WeaponGroups.Parent := PageWidescreenHud.Surface;
@@ -648,7 +647,7 @@ begin
   descVanillaGraphicsApi.Caption := 'Uses your PC''s default DirectX 8 API for Freelancer. You may experience compatibility issues when using it.';
 
   // Only display the Lighting Bug Fix option if the current operating system could potentially suffer from it. If it won't, enabling this option may cause the game to not launch.
-  // On top of that, the Lighting Bug isn't present on such operating systems anyway.
+  // On top of that, the Lighting Bug isn't present on such operating systems anyway (but the stuttering bug may be).
   if HasLightingBug then
   begin
     LightingFixGraphicsApi := TRadioButton.Create(PageGraphicsApi);
@@ -987,8 +986,7 @@ begin
   descMissileEffects.WordWrap := True;
   descMissileEffects.Top := descReflections.Top + ScaleY(100);
   descMissileEffects.Width := PageEffects.SurfaceWidth;
-  // TODO for next update: Remove "and ship explosion" in last sentence below
-  descMissileEffects.Caption := 'These options add missile, torpedo, and ship explosion effects that have a different look. The torpedo and ship explosion effects are a lot larger than the normal ones.';
+  descMissileEffects.Caption := 'These options add missile, torpedo, and ship explosion effects that have a different look. The torpedo effects are a lot larger than the normal ones.';
   
   ExplosionEffects := TCheckBox.Create(PageEffects);
   ExplosionEffects.Parent := PageEffects.Surface;
@@ -1187,8 +1185,7 @@ begin
       + #13#10#13#10 + 'If you experience crashes, bad colors, or other compatibility issues during gameplay, you may need to remove/replace/override any of the following DLLs in the EXE folder:'
       + #13#10 + 'd3d8.dll (dgVoodoo or DxWrapper)'
       + #13#10 + 'd3d9.dll (DxWrapper ReShade)'
-      + #13#10 + 'dxgi.dll (dgVoodoo ReShade)'), mbError, MB_OK);
-      // TODO for next update: Uncomment line below
-      //+ #13#10 + 'dinput8.dll (DirectInput)'), mbError, MB_OK);
+      + #13#10 + 'dxgi.dll (dgVoodoo ReShade)'
+      + #13#10 + 'dinput8.dll (DirectInput)'), mbError, MB_OK);
   end;
 end;

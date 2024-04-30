@@ -88,6 +88,7 @@ Type: filesandordirs; Name: "{app}"
 [Messages]
 WelcomeLabel2=Freelancer: HD Edition is a mod that aims to improve every aspect of the game Freelancer (2003) while keeping the look and feel as close to vanilla as possible. Experience enhanced visuals with HD textures, high-quality soundtracks, and seamless gameplay with bug fixes and quality of life improvements. The mod is fully compatible with the original game, allowing for seamless integration into vanilla servers. Easy to install and customize, it revitalizes the beloved Freelancer experience for modern systems.%n%nThis installer requires a clean, freshly installed copy of Freelancer.
 FinishedLabel=Setup has finished installing [name] on your computer. The application may be launched by selecting the installed shortcut.%n%nNOTE: [name] has been installed as a separate application. Therefore, your vanilla Freelancer installation has not been modified and can still be played at any time.
+SelectDirBrowseLabel=To continue, click Next. If you would like to select a different folder, click Browse. Installing in the Program Files folder is not recommended because it may cause permission-related issues.
 
 [Code]
 # if !AllInOneInstall
@@ -111,7 +112,7 @@ var
 #include "silent_options.iss"
 #include "mod_options.iss"
 
-// Checks which step we are on when it changed. If its the postinstall step then start the actual installing
+// Checks which step we are on when it changed. If it's the postinstall step then start the actual installing
 procedure CurStepChanged(CurStep: TSetupStep);
 var
   ResultCode, i: Integer;
@@ -189,7 +190,7 @@ begin
           RegWriteStringValue(HKEY_CURRENT_USER, 'Software\Wine\DllOverrides', 'd3d8', 'native,builtin');
         end;
 
-        // Delete restart.fl to stop crashes
+        // Delete Restart.fl to stop crashes
         DeleteFile(ExpandConstant('{userdocs}\My Games\Freelancer\Accts\SinglePlayer\Restart.fl'));
         DeleteFile(ExpandConstant('{userdocs}\My Games\FreelancerHD\Accts\SinglePlayer\Restart.fl'));
 
@@ -200,6 +201,7 @@ begin
         // Remove additional junk files
         DeleteFile(ExpandConstant('{app}\UNINSTAL.EXE'));
         DeleteFile(ExpandConstant('{app}\.gitattributes'));
+        DeleteFile(ExpandConstant('{app}\EBUSetup.sem'));
         DelTree(ExpandConstant('{app}\.github'), True, True, True);
 
         // Install Complete!
@@ -281,6 +283,7 @@ begin
 
       DetectedFlLanguage := GetFreelancerLanguage(DataDirPage.Values[0]);
 
+      // Select the best options based on the detected FL language, which in this case is more appropriate than the system language check
       if DetectedFlLanguage = FL_English then
         EnglishImprovements.Checked := true
       else if DetectedFlLanguage <> FL_Unknown then
@@ -294,7 +297,7 @@ begin
 
     // Validate install location
     if (PageId = 6) then begin
-      // Needs to be in a seperate if statement since it tries to expand {app} even if not on PageID 6. Pascal what are you doing!
+      // Needs to be in a seperate if statement since it tries to expand {app} even if not on PageID 6. Pascal what are you doing?!
       if(Pos(AddBackslash(DataDirPage.Values[0]),ExpandConstant('{app}')) > 0) then begin
         MsgBox('{#MyModName} cannot be installed to the same location as your vanilla install. Please select a new location.', mbError, MB_OK);
         Result := False;
@@ -314,7 +317,7 @@ begin
       begin
         DownloadPage.Clear;
         DownloadPage.Add(mirrors[i], ExpandConstant('{#MyZipName}.7z'), '');
-        DownloadPage.SetText('Downloading mod...', '');
+        DownloadPage.SetText('Downloading {#MyModName}...', '');
         DownloadPage.Show;
         DownloadPage.ProgressBar.Style := npbstNormal;
         try
