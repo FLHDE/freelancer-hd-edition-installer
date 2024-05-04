@@ -7,7 +7,7 @@ begin
   Result := GetProcAddress(LibHandle, 'wine_get_version') <> 0;
 end;
 
-// Removes a read only attribute from a file
+// Removes a read-only attribute from a file
 procedure RemoveReadOnly(FileName : String);
 var
  Attr : DWord;
@@ -21,7 +21,7 @@ begin
   end;
 end;
 
-// Used to copy the vanilla install to {app} also the extracted .zip file back to {app}
+// Used to copy the vanilla install to {app}, also the extracted .zip file back to {app}
 procedure DirectoryCopy(SourcePath, DestPath: string; Move: Boolean);
 var
   FindRec: TFindRec;
@@ -403,7 +403,7 @@ begin
   // $3FF is used to extract the primary language identifier
   if UILanguage and $3FF = $07 then // $07 = German primary language identifier
     Result := S_German
-  else if UILanguage and $3FF = $0C then // $07 = French primary language identifier
+  else if UILanguage and $3FF = $0C then // $0C = French primary language identifier
     Result := S_French
   else if UILanguage and $3FF = $19 then // $19 = Russian primary language identifier
     Result := S_Russian
@@ -411,8 +411,8 @@ begin
     Result := S_EnglishOrOther;
 end;
 
-// Determine what language the user's Freelancer installation is based on the OfferBribeResourecs.dll file
-// The reason we use OfferBribeResourecs.dll is because this file is rarely touched by different variations of a translation, also the file size is smaller
+// Determine what language the user's Freelancer installation is based on the OfferBribeResources.dll file
+// The reason we use OfferBribeResources.dll is because this file is rarely touched by different variations of a translation, also the file size is smaller
 function GetFreelancerLanguage(FreelancerPath: string): FlLanguage;
 var
   OfferBribeResourcesFile: string;

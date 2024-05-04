@@ -153,13 +153,9 @@ begin
   WriteHexToFile(ExePath + 'Freelancer.exe', $080499, 'EB'); // Allows the purchase of equipment below the required level
   WriteHexToFile(ExePath + 'Freelancer.exe', $082E95, 'EB'); // Changes the display of equipment below the required level
   WriteHexToFile(ExePath + 'Freelancer.exe', $0B948D, 'EB'); // Allows the purchase of ships below the required level
-  
-  // TODO next update: replace this with code below
-  // Enable a modified version of the MP Rep plugin because the MP level requirements feature is incompatible with the above patches
-  //FileReplaceString(ExePath + 'dacom.ini', 'MPRep.dll', 'MPRep_no_level_reqs.dll')
 
-  // Disable the MP Rep plugin because it's incompatible with the above patches
-  FileReplaceString(ExePath + 'dacom.ini', 'MPRep.dll', ';MPRep.dll')
+  // Enable a modified version of the MP Rep plugin because the MP level requirements feature is incompatible with the above patches
+  FileReplaceString(ExePath + 'dacom.ini', 'MPRep.dll', 'MPRep_no_level_reqs.dll')
 end;
 
 // Processes the Startup Logo option. Renames files depending on what option is selected
@@ -291,9 +287,8 @@ begin
     // Replace all 6 occurrences of Agency FB with Agency FB Cyrillic in rich_fonts.ini
     FileReplaceString(FontsPath + 'rich_fonts.ini', 'Agency FB', 'Agency FB Cyrillic');
 
-    // TODO next update: uncomment
-    //FileReplaceString(FontsPath + 'fonts.ini', 'path = FONTS/AGENCYR.ttf', ';path = FONTS/AGENCYR.ttf')
-    //FileReplaceString(FontsPath + 'fonts.ini', ';path = FONTS/AGENCYR_CR.ttf', 'path = FONTS/AGENCYR_CR.ttf')
+    FileReplaceString(FontsPath + 'fonts.ini', 'path = FONTS/AGENCYR.ttf', ';path = FONTS/AGENCYR.ttf')
+    FileReplaceString(FontsPath + 'fonts.ini', ';path = FONTS/AGENCYR_CR.ttf', 'path = FONTS/AGENCYR_CR.ttf')
 end;
 
 // SinglePlayer console processing logic
@@ -493,23 +488,22 @@ begin
   FilePath := ExpandConstant('{app}\EXE\flplusplus.ini');
 
   // Set draw distances
-  // TODO next update: change lod_scale = 9 to 0
   if(PageDrawDistances.Values[0]) then // 1x (Vanilla)
-    FileReplaceString(FilePath, 'lod_scale = 9', 'lod_scale = 0')
+    FileReplaceString(FilePath, 'lod_scale = 0', 'lod_scale = 1')
   else if(PageDrawDistances.Values[1]) then // 2x 
-    FileReplaceString(FilePath, 'lod_scale = 9', 'lod_scale = 2')
+    FileReplaceString(FilePath, 'lod_scale = 0', 'lod_scale = 2')
   else if(PageDrawDistances.Values[2]) then // 3x 
-    FileReplaceString(FilePath, 'lod_scale = 9', 'lod_scale = 3')
+    FileReplaceString(FilePath, 'lod_scale = 0', 'lod_scale = 3')
   else if(PageDrawDistances.Values[3]) then // 4x 
-    FileReplaceString(FilePath, 'lod_scale = 9', 'lod_scale = 4')
+    FileReplaceString(FilePath, 'lod_scale = 0', 'lod_scale = 4')
   else if(PageDrawDistances.Values[4]) then // 5x 
-    FileReplaceString(FilePath, 'lod_scale = 9', 'lod_scale = 5')
+    FileReplaceString(FilePath, 'lod_scale = 0', 'lod_scale = 5')
   else if(PageDrawDistances.Values[5]) then // 6x 
-    FileReplaceString(FilePath, 'lod_scale = 9', 'lod_scale = 6')
+    FileReplaceString(FilePath, 'lod_scale = 0', 'lod_scale = 6')
   else if(PageDrawDistances.Values[6]) then // 7x 
-    FileReplaceString(FilePath, 'lod_scale = 9', 'lod_scale = 7')
+    FileReplaceString(FilePath, 'lod_scale = 0', 'lod_scale = 7')
   else if(PageDrawDistances.Values[7]) then // 8x 
-    FileReplaceString(FilePath, 'lod_scale = 9', 'lod_scale = 8')
+    FileReplaceString(FilePath, 'lod_scale = 0', 'lod_scale = 8')
 end;
 
 procedure Process_Win10();
@@ -682,8 +676,7 @@ begin
     RenameFile(HudPath + 'NEURONET\INVENTORY\partitionline.3db', HudPath + 'NEURONET\INVENTORY\partitionline_vanilla.3db')
     RenameFile(HudPath + 'NEURONET\INVENTORY\repair_bakgrnd.cmp', HudPath + 'NEURONET\INVENTORY\repair_bakgrnd_vanilla.cmp')
     RenameFile(HudPath + 'NEURONET\NAVMAP\NEWNAVMAP\navmap_background.cmp', HudPath + 'NEURONET\NAVMAP\NEWNAVMAP\navmap_background_vanilla.cmp')
-    // TODO for next update: uncomment
-    //RenameFile(HudPath + 'NEURONET\NAVMAP\NEWNAVMAP\nav_info.cmp', HudPath + 'NEURONET\NAVMAP\NEWNAVMAP\nav_info_vanilla.cmp')
+    RenameFile(HudPath + 'NEURONET\NAVMAP\NEWNAVMAP\nav_info.cmp', HudPath + 'NEURONET\NAVMAP\NEWNAVMAP\nav_info_vanilla.cmp')
     RenameFile(HudPath + 'NEURONET\NAVMAP\NEWNAVMAP\nav_navmap_left.cmp', HudPath + 'NEURONET\NAVMAP\NEWNAVMAP\nav_navmap_left_vanilla.cmp')
     RenameFile(HudPath + 'NEURONET\NAVMAP\NEWNAVMAP\nav_navmap_right.cmp', HudPath + 'NEURONET\NAVMAP\NEWNAVMAP\nav_navmap_right_vanilla.cmp')
     RenameFile(HudPath + 'NEURONET\NAVMAP\NEWNAVMAP\nav_selector.3db', HudPath + 'NEURONET\NAVMAP\NEWNAVMAP\nav_selector_vanilla.3db')
@@ -746,8 +739,7 @@ begin
     RenameFile(HudPath + 'NEURONET\INVENTORY\partitionline_darkhud.3db', HudPath + 'NEURONET\INVENTORY\partitionline.3db')
     RenameFile(HudPath + 'NEURONET\INVENTORY\repair_bakgrnd_darkhud.cmp', HudPath + 'NEURONET\INVENTORY\repair_bakgrnd.cmp')
     RenameFile(HudPath + 'NEURONET\NAVMAP\NEWNAVMAP\navmap_background_darkhud.cmp', HudPath + 'NEURONET\NAVMAP\NEWNAVMAP\navmap_background.cmp')
-    // TODO for next update: uncomment
-    //RenameFile(HudPath + 'NEURONET\NAVMAP\NEWNAVMAP\nav_info_darkhud.cmp', HudPath + 'NEURONET\NAVMAP\NEWNAVMAP\nav_info.cmp')
+    RenameFile(HudPath + 'NEURONET\NAVMAP\NEWNAVMAP\nav_info_darkhud.cmp', HudPath + 'NEURONET\NAVMAP\NEWNAVMAP\nav_info.cmp')
     RenameFile(HudPath + 'NEURONET\NAVMAP\NEWNAVMAP\nav_navmap_left_darkhud.cmp', HudPath + 'NEURONET\NAVMAP\NEWNAVMAP\nav_navmap_left.cmp')
     RenameFile(HudPath + 'NEURONET\NAVMAP\NEWNAVMAP\nav_navmap_right_darkhud.cmp', HudPath + 'NEURONET\NAVMAP\NEWNAVMAP\nav_navmap_right.cmp')
     RenameFile(HudPath + 'NEURONET\NAVMAP\NEWNAVMAP\nav_selector_darkhud.3db', HudPath + 'NEURONET\NAVMAP\NEWNAVMAP\nav_selector.3db')
@@ -813,75 +805,66 @@ begin
     IconName := 'flaticons'
 
     // Rename vanilla icon files that are only replaced by the flat icons
-    // TODO for next update: uncomment
-    //RenameFile(IconsPath + 'HUD\hud_damagebottom.3db', IconsPath + 'HUD\hud_damagebottom_vanilla.3db')
-    //RenameFile(IconsPath + 'HUD\hud_damageleft.3db', IconsPath + 'HUD\hud_damageleft_vanilla.3db')
-    //RenameFile(IconsPath + 'HUD\hud_damageright.3db', IconsPath + 'HUD\hud_damageright_vanilla.3db')
-    //RenameFile(IconsPath + 'HUD\hud_damagetop.3db', IconsPath + 'HUD\hud_damagetop_vanilla.3db')
+    RenameFile(IconsPath + 'HUD\hud_damagebottom.3db', IconsPath + 'HUD\hud_damagebottom_vanilla.3db')
+    RenameFile(IconsPath + 'HUD\hud_damageleft.3db', IconsPath + 'HUD\hud_damageleft_vanilla.3db')
+    RenameFile(IconsPath + 'HUD\hud_damageright.3db', IconsPath + 'HUD\hud_damageright_vanilla.3db')
+    RenameFile(IconsPath + 'HUD\hud_damagetop.3db', IconsPath + 'HUD\hud_damagetop_vanilla.3db')
     RenameFile(IconsPath + 'HUD\hud_grouprequest.3db', IconsPath + 'HUD\hud_grouprequest_vanilla.3db')
     RenameFile(IconsPath + 'HUD\hud_infocard.3db', IconsPath + 'HUD\hud_infocard_vanilla.3db')
     RenameFile(IconsPath + 'HUD\hud_trade.3db', IconsPath + 'HUD\hud_trade_vanilla.3db')
     RenameFile(IconsPath + 'NEURONET\INVENTORY\question.3db', IconsPath + 'NEURONET\INVENTORY\question_vanilla.3db')
-    //RenameFile(IconsPath + 'NEURONET\NAVMAP\NEWNAVMAP\nav_allzonefilter.3db', IconsPath + 'NEURONET\NAVMAP\NEWNAVMAP\nav_allzonefilter_vanilla.3db')
-    //RenameFile(IconsPath + 'NEURONET\NAVMAP\NEWNAVMAP\nav_filter_physical.3db', IconsPath + 'NEURONET\NAVMAP\NEWNAVMAP\nav_filter_physical_vanilla.3db')
-    //RenameFile(IconsPath + 'NEURONET\NAVMAP\NEWNAVMAP\nav_filter_political.3db', IconsPath + 'NEURONET\NAVMAP\NEWNAVMAP\nav_filter_political_vanilla.3db')
-    //RenameFile(IconsPath + 'NEURONET\NAVMAP\NEWNAVMAP\nav_friendlyzonefilter.3db', IconsPath + 'NEURONET\NAVMAP\NEWNAVMAP\nav_friendlyzonefilter_vanilla.3db')
-    //RenameFile(IconsPath + 'NEURONET\NAVMAP\NEWNAVMAP\nav_hostilezonefilter.3db', IconsPath + 'NEURONET\NAVMAP\NEWNAVMAP\nav_hostilezonefilter_vanilla.3db')
-    //RenameFile(IconsPath + 'NEURONET\NAVMAP\NEWNAVMAP\nav_knownbases.3db', IconsPath + 'NEURONET\NAVMAP\NEWNAVMAP\nav_knownbases_vanilla.3db')
-    //RenameFile(IconsPath + 'NEURONET\NAVMAP\NEWNAVMAP\nav_labels.3db', IconsPath + 'NEURONET\NAVMAP\NEWNAVMAP\nav_labels_vanilla.3db')
-    //RenameFile(IconsPath + 'NEURONET\NAVMAP\NEWNAVMAP\nav_legendtoggle.3db', IconsPath + 'NEURONET\NAVMAP\NEWNAVMAP\nav_legendtoggle_vanilla.3db')
-    //RenameFile(IconsPath + 'NEURONET\NAVMAP\NEWNAVMAP\nav_minablezonefilter.3db', IconsPath + 'NEURONET\NAVMAP\NEWNAVMAP\nav_minablezonefilter_vanilla.3db')
-    //RenameFile(IconsPath + 'NEURONET\NAVMAP\NEWNAVMAP\nav_patrol.3db', IconsPath + 'NEURONET\NAVMAP\NEWNAVMAP\nav_patrol_vanilla.3db')
+    RenameFile(IconsPath + 'NEURONET\NAVMAP\NEWNAVMAP\nav_allzonefilter.3db', IconsPath + 'NEURONET\NAVMAP\NEWNAVMAP\nav_allzonefilter_vanilla.3db')
+    RenameFile(IconsPath + 'NEURONET\NAVMAP\NEWNAVMAP\nav_filter_physical.3db', IconsPath + 'NEURONET\NAVMAP\NEWNAVMAP\nav_filter_physical_vanilla.3db')
+    RenameFile(IconsPath + 'NEURONET\NAVMAP\NEWNAVMAP\nav_filter_political.3db', IconsPath + 'NEURONET\NAVMAP\NEWNAVMAP\nav_filter_political_vanilla.3db')
+    RenameFile(IconsPath + 'NEURONET\NAVMAP\NEWNAVMAP\nav_friendlyzonefilter.3db', IconsPath + 'NEURONET\NAVMAP\NEWNAVMAP\nav_friendlyzonefilter_vanilla.3db')
+    RenameFile(IconsPath + 'NEURONET\NAVMAP\NEWNAVMAP\nav_hostilezonefilter.3db', IconsPath + 'NEURONET\NAVMAP\NEWNAVMAP\nav_hostilezonefilter_vanilla.3db')
+    RenameFile(IconsPath + 'NEURONET\NAVMAP\NEWNAVMAP\nav_knownbases.3db', IconsPath + 'NEURONET\NAVMAP\NEWNAVMAP\nav_knownbases_vanilla.3db')
+    RenameFile(IconsPath + 'NEURONET\NAVMAP\NEWNAVMAP\nav_labels.3db', IconsPath + 'NEURONET\NAVMAP\NEWNAVMAP\nav_labels_vanilla.3db')
+    RenameFile(IconsPath + 'NEURONET\NAVMAP\NEWNAVMAP\nav_legendtoggle.3db', IconsPath + 'NEURONET\NAVMAP\NEWNAVMAP\nav_legendtoggle_vanilla.3db')
+    RenameFile(IconsPath + 'NEURONET\NAVMAP\NEWNAVMAP\nav_minablezonefilter.3db', IconsPath + 'NEURONET\NAVMAP\NEWNAVMAP\nav_minablezonefilter_vanilla.3db')
+    RenameFile(IconsPath + 'NEURONET\NAVMAP\NEWNAVMAP\nav_patrol.3db', IconsPath + 'NEURONET\NAVMAP\NEWNAVMAP\nav_patrol_vanilla.3db')
 
     // Rename new flat icon files
-    //RenameFile(IconsPath + 'HUD\hud_damagebottom_' + IconName + '.3db', IconsPath + 'HUD\hud_damagebottom.3db')
-    //RenameFile(IconsPath + 'HUD\hud_damageleft_' + IconName + '.3db', IconsPath + 'HUD\hud_damageleft.3db')
-    //RenameFile(IconsPath + 'HUD\hud_damageright_' + IconName + '.3db', IconsPath + 'HUD\hud_damageright.3db')
-    //RenameFile(IconsPath + 'HUD\hud_damagetop_' + IconName + '.3db', IconsPath + 'HUD\hud_damagetop.3db')
+    RenameFile(IconsPath + 'HUD\hud_damagebottom_' + IconName + '.3db', IconsPath + 'HUD\hud_damagebottom.3db')
+    RenameFile(IconsPath + 'HUD\hud_damageleft_' + IconName + '.3db', IconsPath + 'HUD\hud_damageleft.3db')
+    RenameFile(IconsPath + 'HUD\hud_damageright_' + IconName + '.3db', IconsPath + 'HUD\hud_damageright.3db')
+    RenameFile(IconsPath + 'HUD\hud_damagetop_' + IconName + '.3db', IconsPath + 'HUD\hud_damagetop.3db')
     RenameFile(IconsPath + 'HUD\hud_grouprequest_' + IconName + '.3db', IconsPath + 'HUD\hud_grouprequest.3db')
     RenameFile(IconsPath + 'HUD\hud_infocard_' + IconName + '.3db', IconsPath + 'HUD\hud_infocard.3db')
     RenameFile(IconsPath + 'HUD\hud_trade_' + IconName + '.3db', IconsPath + 'HUD\hud_trade.3db')
     RenameFile(IconsPath + 'NEURONET\INVENTORY\question_' + IconName + '.3db', IconsPath + 'NEURONET\INVENTORY\question.3db')
-    //RenameFile(IconsPath + 'NEURONET\NAVMAP\NEWNAVMAP\nav_allzonefilter_' + IconName + '.3db', IconsPath + 'NEURONET\NAVMAP\NEWNAVMAP\nav_allzonefilter.3db')
-    //RenameFile(IconsPath + 'NEURONET\NAVMAP\NEWNAVMAP\nav_filter_physical_' + IconName + '.3db', IconsPath + 'NEURONET\NAVMAP\NEWNAVMAP\nav_filter_physical.3db')
-    //RenameFile(IconsPath + 'NEURONET\NAVMAP\NEWNAVMAP\nav_filter_political_' + IconName + '.3db', IconsPath + 'NEURONET\NAVMAP\NEWNAVMAP\nav_filter_political.3db')
-    //RenameFile(IconsPath + 'NEURONET\NAVMAP\NEWNAVMAP\nav_friendlyzonefilter_' + IconName + '.3db', IconsPath + 'NEURONET\NAVMAP\NEWNAVMAP\nav_friendlyzonefilter.3db')
-    //RenameFile(IconsPath + 'NEURONET\NAVMAP\NEWNAVMAP\nav_hostilezonefilter_' + IconName + '.3db', IconsPath + 'NEURONET\NAVMAP\NEWNAVMAP\nav_hostilezonefilter.3db')
-    //RenameFile(IconsPath + 'NEURONET\NAVMAP\NEWNAVMAP\nav_knownbases_' + IconName + '.3db', IconsPath + 'NEURONET\NAVMAP\NEWNAVMAP\nav_knownbases.3db')
-    //RenameFile(IconsPath + 'NEURONET\NAVMAP\NEWNAVMAP\nav_labels_' + IconName + '.3db', IconsPath + 'NEURONET\NAVMAP\NEWNAVMAP\nav_labels.3db')
-    //RenameFile(IconsPath + 'NEURONET\NAVMAP\NEWNAVMAP\nav_legendtoggle_' + IconName + '.3db', IconsPath + 'NEURONET\NAVMAP\NEWNAVMAP\nav_legendtoggle.3db')
-    //RenameFile(IconsPath + 'NEURONET\NAVMAP\NEWNAVMAP\nav_minablezonefilter_' + IconName + '.3db', IconsPath + 'NEURONET\NAVMAP\NEWNAVMAP\nav_minablezonefilter.3db')
-    //RenameFile(IconsPath + 'NEURONET\NAVMAP\NEWNAVMAP\nav_patrol_' + IconName + '.3db', IconsPath + 'NEURONET\NAVMAP\NEWNAVMAP\nav_patrol.3db')
+    RenameFile(IconsPath + 'NEURONET\NAVMAP\NEWNAVMAP\nav_allzonefilter_' + IconName + '.3db', IconsPath + 'NEURONET\NAVMAP\NEWNAVMAP\nav_allzonefilter.3db')
+    RenameFile(IconsPath + 'NEURONET\NAVMAP\NEWNAVMAP\nav_filter_physical_' + IconName + '.3db', IconsPath + 'NEURONET\NAVMAP\NEWNAVMAP\nav_filter_physical.3db')
+    RenameFile(IconsPath + 'NEURONET\NAVMAP\NEWNAVMAP\nav_filter_political_' + IconName + '.3db', IconsPath + 'NEURONET\NAVMAP\NEWNAVMAP\nav_filter_political.3db')
+    RenameFile(IconsPath + 'NEURONET\NAVMAP\NEWNAVMAP\nav_friendlyzonefilter_' + IconName + '.3db', IconsPath + 'NEURONET\NAVMAP\NEWNAVMAP\nav_friendlyzonefilter.3db')
+    RenameFile(IconsPath + 'NEURONET\NAVMAP\NEWNAVMAP\nav_hostilezonefilter_' + IconName + '.3db', IconsPath + 'NEURONET\NAVMAP\NEWNAVMAP\nav_hostilezonefilter.3db')
+    RenameFile(IconsPath + 'NEURONET\NAVMAP\NEWNAVMAP\nav_knownbases_' + IconName + '.3db', IconsPath + 'NEURONET\NAVMAP\NEWNAVMAP\nav_knownbases.3db')
+    RenameFile(IconsPath + 'NEURONET\NAVMAP\NEWNAVMAP\nav_labels_' + IconName + '.3db', IconsPath + 'NEURONET\NAVMAP\NEWNAVMAP\nav_labels.3db')
+    RenameFile(IconsPath + 'NEURONET\NAVMAP\NEWNAVMAP\nav_legendtoggle_' + IconName + '.3db', IconsPath + 'NEURONET\NAVMAP\NEWNAVMAP\nav_legendtoggle.3db')
+    RenameFile(IconsPath + 'NEURONET\NAVMAP\NEWNAVMAP\nav_minablezonefilter_' + IconName + '.3db', IconsPath + 'NEURONET\NAVMAP\NEWNAVMAP\nav_minablezonefilter.3db')
+    RenameFile(IconsPath + 'NEURONET\NAVMAP\NEWNAVMAP\nav_patrol_' + IconName + '.3db', IconsPath + 'NEURONET\NAVMAP\NEWNAVMAP\nav_patrol.3db')
 
     // Adjust next and previous target buttons slightly to position them correctly (those flat icons specifically have a slight offset from the vanilla positions.)
     if WidescreenHud.Checked then
       begin
-        FileReplaceString(HudShiftPath, 'position = 4e1247, -0.0595, 4e124f, -0.2780		; TargetPreviousButton', 'position = 4e1247, -0.0545, 4e124f, -0.2780		; TargetPreviousButton')
-        FileReplaceString(HudShiftPath, 'position = 4e12b4, -0.0595, 4e12bc, -0.3090		; TargetNextButton', 'position = 4e12b4, -0.0580, 4e12bc, -0.3090		; TargetNextButton')
-        // TODO for next update: Replace with above
-        //FileReplaceString(HudShiftPath, 'position = 4e1247, -0.0595, 4e124f, -0.2780		; TargetPreviousButton',  'position = 4e1247, -0.0565, 4e124f, -0.2780		; TargetPreviousButton')
-        //FileReplaceString(HudShiftPath, 'position = 4e12b4, -0.0595, 4e12bc, -0.3090		; TargetNextButton',      'position = 4e12b4, -0.0555, 4e12bc, -0.3090		; TargetNextButton')
+        FileReplaceString(HudShiftPath, 'position = 4e1247, -0.0595, 4e124f, -0.2780		; TargetPreviousButton',  'position = 4e1247, -0.0565, 4e124f, -0.2780		; TargetPreviousButton')
+        FileReplaceString(HudShiftPath, 'position = 4e12b4, -0.0595, 4e12bc, -0.3090		; TargetNextButton',      'position = 4e12b4, -0.0555, 4e12bc, -0.3090		; TargetNextButton')
       end
     else
       begin
-        FileReplaceString(HudShiftPath, 'position = 4e1247, -0.2650, 4e124f, -0.2680		; TargetPreviousButton', 'position = 4e1247, -0.2605, 4e124f, -0.2680		; TargetPreviousButton')
-        FileReplaceString(HudShiftPath, 'position = 4e12b4, -0.2650, 4e12bc, -0.2990		; TargetNextButton', 'position = 4e12b4, -0.2640, 4e12bc, -0.2990		; TargetNextButton')
-        // TODO for next update: Replace with above
-        //FileReplaceString(HudShiftPath, 'position = 4e1247, -0.2650, 4e124f, -0.2680		; TargetPreviousButton',  'position = 4e1247, -0.2620, 4e124f, -0.2680		; TargetPreviousButton')
-        //FileReplaceString(HudShiftPath, 'position = 4e12b4, -0.2650, 4e12bc, -0.2990		; TargetNextButton',      'position = 4e12b4, -0.2610, 4e12bc, -0.2990		; TargetNextButton')
+        FileReplaceString(HudShiftPath, 'position = 4e1247, -0.2650, 4e124f, -0.2680		; TargetPreviousButton',  'position = 4e1247, -0.2620, 4e124f, -0.2680		; TargetPreviousButton')
+        FileReplaceString(HudShiftPath, 'position = 4e12b4, -0.2650, 4e12bc, -0.2990		; TargetNextButton',      'position = 4e12b4, -0.2610, 4e12bc, -0.2990		; TargetNextButton')
       end
   end
   else
   begin
     IconName := 'alt';
 
-    // Rename icon files only used by the alternative icons
-    // TODO for next update: uncomment
-    //RenameFile(IconsPath + 'HUD\hud_radiationalert_' + IconName + '.3db', IconsPath + 'HUD\hud_radiationalert.3db')
+    // Rename vanilla icon files only replaced by the alternative icons
+    RenameFile(IconsPath + 'HUD\hud_radiationalert.3db', IconsPath + 'HUD\hud_radiationalert_vanilla.3db')
 
-    // Rename new alternative icon files
-    // TODO for next update: uncomment
-    //RenameFile(IconsPath + 'HUD\hud_radiationalert.3db', IconsPath + 'HUD\hud_radiationalert_vanilla.3db')
+    // Rename icon files only used by the alternative icons
+    RenameFile(IconsPath + 'HUD\hud_radiationalert_' + IconName + '.3db', IconsPath + 'HUD\hud_radiationalert.3db')
   end;
 
   // Rename vanilla icon files that will be replaced by both the alternative and flat icons
@@ -902,8 +885,6 @@ begin
   RenameFile(IconsPath + 'BASESIDE\take_off.3db', IconsPath + 'BASESIDE\take_off_vanilla.3db')
   RenameFile(IconsPath + 'HUD\hud_loot_bw.3db', IconsPath + 'HUD\hud_loot_bw_vanilla.3db')
   RenameFile(IconsPath + 'HUD\hud_missilealert.3db', IconsPath + 'HUD\hud_missilealert_vanilla.3db')
-  // TODO for next update: Remove this line
-  RenameFile(IconsPath + 'HUD\hud_radiationalert.3db', IconsPath + 'HUD\hud_radiationalert_vanilla.3db')
   RenameFile(IconsPath + 'HUD\hud_shipinfo_button.3db', IconsPath + 'HUD\hud_shipinfo_button_vanilla.3db')
   RenameFile(IconsPath + 'HUD\hud_shiptarget.3db', IconsPath + 'HUD\hud_shiptarget_vanilla.3db')
   RenameFile(IconsPath + 'HUD\hud_trailalert.3db', IconsPath + 'HUD\hud_trailalert_vanilla.3db')
@@ -934,8 +915,6 @@ begin
   RenameFile(IconsPath + 'BASESIDE\take_off_' + IconName + '.3db', IconsPath + 'BASESIDE\take_off.3db')
   RenameFile(IconsPath + 'HUD\hud_loot_bw_' + IconName + '.3db', IconsPath + 'HUD\hud_loot_bw.3db')
   RenameFile(IconsPath + 'HUD\hud_missilealert_' + IconName + '.3db', IconsPath + 'HUD\hud_missilealert.3db')
-  // TODO for next update: Remove this line
-  RenameFile(IconsPath + 'HUD\hud_radiationalert_' + IconName + '.3db', IconsPath + 'HUD\hud_radiationalert.3db')
   RenameFile(IconsPath + 'HUD\hud_shipinfo_button_' + IconName + '.3db', IconsPath + 'HUD\hud_shipinfo_button.3db')
   RenameFile(IconsPath + 'HUD\hud_shiptarget_' + IconName + '.3db', IconsPath + 'HUD\hud_shiptarget.3db')
   RenameFile(IconsPath + 'HUD\hud_trailalert_' + IconName + '.3db', IconsPath + 'HUD\hud_trailalert.3db')
@@ -1011,8 +990,8 @@ begin
 
       // The position of the Weapon Group buttons is hardcoded. Currently we only support the correct position for 4:3 and 16:9 aspect ratios.
       // By default it's set to 4:3, and by changing HudWeaponGroups in HudShift.ini to true, it'll be set to 16:9.
-      // The 16:9 position will only be set if the resolution is NOT 4:3, because it's possible that people with other aspect ratios will disregard the warning (about it only being supported for two aspect ratios).
-      if not IsResWithinAspectRatioRange(Min4by3Factor, Max4by3Factor) then
+      // The 16:9 position will only be set if the aspect ratio is anything wider than 4:3, because it's possible that people with other aspect ratios will disregard the warning (about it only being supported for two aspect ratios).
+      if not IsResWithinAspectRatioRange(MinGeneralFactor, Max4by3Factor) then
         FileReplaceString(HudShiftPath, ';HudWeaponGroups = true', 'HudWeaponGroups = true');
 
       // Enable weapon groups
@@ -1173,8 +1152,7 @@ begin
   RenameFile(ReShadePath + ReShadeDllName + '_reshade.dll', ReShadePath + ReShadeDllName + '.dll')
 
   // Enable the Deband shader by default because it's crucial for Freelancer
-  // TODO for next update: uncomment
-  //Techniques := 'Deband@Deband.fx,'
+  Techniques := 'Deband@Deband.fx,'
 
   // Enable checked ReShade options
   if BloomChecked then
@@ -1196,7 +1174,7 @@ begin
   // Set the techniques
   FileReplaceString(ReShadePath + 'ReShadePreset.ini', 'Techniques=', 'Techniques=' + Techniques);
 
-  // TODO: Decrease sharpness if ReShadeDllName == 'd3d9'
+  // TODO: Decrease sharpness if ReShadeDllName == 'd3d9'!
 end;
 
 procedure Process_DxWrapperReShade();
