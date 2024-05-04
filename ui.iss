@@ -342,14 +342,14 @@ begin
   descRussianFonts.WordWrap := True;
   descRussianFonts.Top := descEnglishImprovements.Top + ScaleY(180);
   descRussianFonts.Width := PageEnglishImprovements.SurfaceWidth;
-  descRussianFonts.Caption := 'This option will use a Cyrillic version of the Agency FB font for Freelancer. Users with a Russian Freelancer installation may want to enable this.';
+  descRussianFonts.Caption := 'This option adds a Cyrillic version of the Agency FB font for Freelancer.' + #13#10 + 'It also adds support for typing Cyrillic characters in the chat. Users with a Russian Freelancer installation may want to enable this option.';
 
   RussianFonts := TCheckBox.Create(PageEnglishImprovements);
   RussianFonts.Parent := PageEnglishImprovements.Surface;
   RussianFonts.Top := descEnglishImprovements.Top + ScaleY(160);
-  // Only check the Russian fonts option if the user's system language is set to Russian
+  // Only check the Russian fonts + Rus Chat option if the user's system language is set to Russian
   RussianFonts.Checked := SystemLanguage = S_Russian;
-  RussianFonts.Caption := 'Use Russian fonts';
+  RussianFonts.Caption := 'Use Russian fonts + Rus Chat';
   RussianFonts.Width := PageEnglishImprovements.SurfaceWidth - ScaleX(8);
 
 

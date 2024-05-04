@@ -290,6 +290,9 @@ begin
     // Make sure the Cyrillic version of the font gets auto-loaded instead of the normal one
     FileReplaceString(FontsPath + 'fonts.ini', 'path = FONTS/AGENCYR.ttf', ';path = FONTS/AGENCYR.ttf')
     FileReplaceString(FontsPath + 'fonts.ini', ';path = FONTS/AGENCYR_CR.ttf', 'path = FONTS/AGENCYR_CR.ttf')
+
+    // Enable Rus Chat plugin
+    FileReplaceString(ExpandConstant('{app}\EXE\dacom.ini'), ';rus_chat.dll', 'rus_chat.dll')
 end;
 
 // SinglePlayer console processing logic
