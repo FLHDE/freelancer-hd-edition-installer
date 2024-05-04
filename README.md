@@ -2,15 +2,15 @@
 [![Discord](https://badgen.net/badge/icon/discord?icon=discord&label)](https://discord.gg/ScqgYuFqmU)
 [![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://GitHub.com/ollieraikkonen/Freelancer-hd-edition-install-script/graphs/commit-activity)
 
-This is a setup script for [Freelancer: HD Edition](https://github.com/BC46/freelancer-hd-edition). It was created using Inno Setup and uses custom Pascal scripting.
+This is a setup script for [Freelancer: HD Edition](https://github.com/BC46/freelancer-hd-edition). It was created using Inno Setup with the help of custom Pascal scripting.
 
 ## Build instructions
 ### All-in-one installer (default)
 1. Clone the [Freelancer: HD Edition GitHub repository](https://github.com/BC46/freelancer-hd-edition).
-2. Place all the mod files (DATA & EXE directories, etc.) in a folder named `freelancer-hd-edition-0.6`.
-3. Compress the `freelancer-hd-edition-0.6` folder using an archiver like [7-Zip](https://www.7-zip.org/). NOTE: The zip must NOT be larger than 2.05 GB!
+2. Place all the mod files (DATA & EXE directories, etc.) in a folder named `freelancer-hd-edition-0.7`.
+3. Compress the `freelancer-hd-edition-0.7` folder using an archiver like [7-Zip](https://www.7-zip.org/). NOTE: The zip must NOT be larger than 2.05 GB!
     1. Compressing the folder using LZMA2 is highly recommended.
-4. Alternatively to step 1, 2, and 3, you may download a pre-packaged zip here: https://archive.org/download/freelancer-hd-edition-0.6/freelancer-hd-edition-0.6.7z. Keep in mind that this zip may not contain the most recent mod changes.
+4. Alternatively to step 1, 2, and 3, you may download a pre-packaged zip here: https://archive.org/download/freelancer-hd-edition-0.7/freelancer-hd-edition-0.7.7z.
 5. Name the zip `freelancerhd.7z` and place it in `Assets/Mod`.
 6. Build `setup.iss` using [Inno Setup's standard IDE](https://jrsoftware.org/isinfo.php), or use the [Command Line Compiler](https://jrsoftware.org/ishelp/index.php?topic=compilercmdline).
 
