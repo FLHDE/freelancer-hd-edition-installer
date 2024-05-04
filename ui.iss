@@ -328,7 +328,7 @@ begin
   descEnglishImprovements.Caption := 
   'This option fixes many typos, grammar mistakes, inconsistencies, and more, in the English Freelancer text and audio resources. It also adds a higher quality Freelancer intro (1440x960 instead of 720x480), which is only available in English.' + #13#10#13#10 +  
   'NOTE: This option will set all of Freelancer''s text, voice lines, and the intro to English. Disable this option if you''d like to play Freelancer in a different language like German, French, or Russian.'
-  + #13#10#13#10 + 'NOTE 2: A few text resources will remain English.';
+  + #13#10#13#10 + 'NOTE 2: Some text resources will remain English.';
 
   EnglishImprovements := TCheckBox.Create(PageEnglishImprovements);
   EnglishImprovements.Parent := PageEnglishImprovements.Surface;
@@ -615,9 +615,9 @@ begin
   descDgVoodooGraphicsApi.Width := PageGraphicsApi.SurfaceWidth;
   descDgVoodooGraphicsApi.Caption := 'Fixes the lighting, stuttering, and glass bugs on Windows 10 and 11. Supports native Anti-Aliasing, Anisotropic Filtering, and ReShade.';
 
-  // Manual refresh rate input is only required if the user has an AMD GPU
+  // Refresh rate input is only required if the user has an AMD GPU
   if GpuManufacturer = AMD then
-    descDgVoodooGraphicsApi.Caption := descDgVoodooGraphicsApi.Caption + ' Requires manual refresh rate input.';
+    descDgVoodooGraphicsApi.Caption := descDgVoodooGraphicsApi.Caption + ' Requires refresh rate input.';
 
   DxWrapperGraphicsApi := TRadioButton.Create(PageGraphicsApi);
   DxWrapperGraphicsApi.Parent := PageGraphicsApi.Surface;
@@ -682,9 +682,8 @@ begin
   DxWrapperAa.Items.Add('2x');
   DxWrapperAa.Items.Add('4x');
   DxWrapperAa.Items.Add('8x');
-  DxWrapperAa.Items.Add('16x');
   DxWrapperAa.Items.Add('Auto (recommended)');
-  DxWrapperAa.ItemIndex := 5;
+  DxWrapperAa.ItemIndex := 4;
   DxWrapperAa.Top := ScaleY(20);
   DxWrapperAa.Width := 155;
 
@@ -1123,37 +1122,43 @@ begin
   DisplayMode := TComboBox.Create(PageMiscOptions);
   DisplayMode.Parent := PageMiscOptions.Surface;
   DisplayMode.Style := csDropDownList;
-  DisplayMode.Width := 230;
-  DisplayMode.Items.Add('Fullscreen (default, recommended)');
+  DisplayMode.Width := 160;
+  DisplayMode.Items.Add('Fullscreen (default)');
   DisplayMode.Items.Add('Windowed');
   DisplayMode.Items.Add('Borderless Windowed');
   DisplayMode.ItemIndex := 0;
-  DisplayMode.Top := BestOptions.Top + ScaleY(80);
-
-  // Make Borderless Windowed the recommended and selected option on Wine to fix the Alt-Tab bug
-  if IsWine then
-  begin
-    DisplayMode.Items[0] := 'Fullscreen (default)';
-    DisplayMode.Items[2] := 'Borderless Windowed (recommended)';
-    DisplayMode.ItemIndex := 2;
-  end;
+  DisplayMode.Top := BestOptions.Top + ScaleY(75);
 
   lblDisplayMode := TLabel.Create(PageMiscOptions);
   lblDisplayMode.Parent := PageMiscOptions.Surface;
   lblDisplayMode.Caption := 'Display Mode';
   lblDisplayMode.Top := DisplayMode.Top;
-  lblDisplayMode.Left := ScaleX(240);
+  lblDisplayMode.Left := ScaleX(170);
+
+  // Make Borderless Windowed the recommended and selected option on Wine to fix the Alt-Tab bug
+  if IsWine then
+  begin
+    lblDisplayMode.Left := ScaleX(240);
+    DisplayMode.Width := 230;
+    DisplayMode.Items[2] := 'Borderless Windowed (recommended)';
+    DisplayMode.ItemIndex := 2;
+  end;
 
   descDisplayMode := TNewStaticText.Create(PageMiscOptions);
   descDisplayMode.Parent := PageMiscOptions.Surface;
   descDisplayMode.WordWrap := True;
   descDisplayMode.Width := PageMiscOptions.SurfaceWidth;
-  descDisplayMode.Caption := 'In both Windowed modes, the Gamma slider from the options menu won''t work. To remedy this, Gamma will be applied using ReShade, if it''s been enabled. Also, both windowed options are experimental and may be buggy, so try them at your own risk.';
+  descDisplayMode.Caption := 'In both Windowed modes, the Gamma slider from the options menu won''t work. To remedy this, Gamma will be applied using ReShade, if it''s been enabled.';
   descDisplayMode.Top := lblDisplayMode.Top + ScaleY(25);
+
+  // Windowed and borderless windowed mode should work fine on Windows due to the snapping fix
+  // On Linux/Wine however, there may be issues. At the same time though, there is an Alt-Tab bug with fullscreen windowed mode
+  if IsWine then
+    descDisplayMode.Caption := descDisplayMode.Caption + ' On Wine there is an Alt-Tab bug when playing in Fullscreen mode. The Windowed mode options may help, but they could also cause other issues.';
   
   DoNotPauseOnAltTab := TCheckBox.Create(PageMiscOptions);
   DoNotPauseOnAltTab.Parent := PageMiscOptions.Surface;
-  DoNotPauseOnAltTab.Top := descDisplayMode.Top + ScaleY(55);
+  DoNotPauseOnAltTab.Top := descDisplayMode.Top + ScaleY(60);
   DoNotPauseOnAltTab.Caption := 'Keep Freelancer running in the background when Alt-Tabbed';
   DoNotPauseOnAltTab.Width := PageMiscOptions.SurfaceWidth - ScaleX(8);
   MusicInBackground := False;

@@ -287,6 +287,7 @@ begin
     // Replace all 6 occurrences of Agency FB with Agency FB Cyrillic in rich_fonts.ini
     FileReplaceString(FontsPath + 'rich_fonts.ini', 'Agency FB', 'Agency FB Cyrillic');
 
+    // Make sure the Cyrillic version of the font gets auto-loaded instead of the normal one
     FileReplaceString(FontsPath + 'fonts.ini', 'path = FONTS/AGENCYR.ttf', ';path = FONTS/AGENCYR.ttf')
     FileReplaceString(FontsPath + 'fonts.ini', ';path = FONTS/AGENCYR_CR.ttf', 'path = FONTS/AGENCYR_CR.ttf')
 end;
@@ -1024,9 +1025,6 @@ begin
   if DxWrapperAa.ItemIndex = 3 then
     // Enable 8x AA
     FileReplaceString(DxWrapperPath, 'AntiAliasing               = 1', 'AntiAliasing               = 8');
-  if DxWrapperAa.ItemIndex = 4 then
-    // Enable 16x AA
-    FileReplaceString(DxWrapperPath, 'AntiAliasing               = 1', 'AntiAliasing               = 16');
 
   if DxWrapperAf.ItemIndex = 0 then
     // Disable AF
@@ -1093,13 +1091,13 @@ procedure ApplyNewDgVoodooOptions(DgVoodooPath: string);
 begin
   if DgVoodooAa.ItemIndex = 1 then
     // Enable AA 2x
-    FileReplaceString(DgVoodooPath, 'Antialiasing                        = appdriven', 'Antialiasing                        = 2');
+    FileReplaceString(DgVoodooPath, 'Antialiasing                        = appdriven', 'Antialiasing                        = 2x');
   if DgVoodooAa.ItemIndex = 2 then
     // Enable AA 4x
-    FileReplaceString(DgVoodooPath, 'Antialiasing                        = appdriven', 'Antialiasing                        = 4');
+    FileReplaceString(DgVoodooPath, 'Antialiasing                        = appdriven', 'Antialiasing                        = 4x');
   if DgVoodooAa.ItemIndex = 3 then
     // Enable AA 8x
-    FileReplaceString(DgVoodooPath, 'Antialiasing                        = appdriven', 'Antialiasing                        = 8');
+    FileReplaceString(DgVoodooPath, 'Antialiasing                        = appdriven', 'Antialiasing                        = 8x');
 
   if DgVoodooAf.ItemIndex = 1 then
     // Enable AF 2x
@@ -1173,8 +1171,6 @@ begin
 
   // Set the techniques
   FileReplaceString(ReShadePath + 'ReShadePreset.ini', 'Techniques=', 'Techniques=' + Techniques);
-
-  // TODO: Decrease sharpness if ReShadeDllName == 'd3d9'!
 end;
 
 procedure Process_DxWrapperReShade();
