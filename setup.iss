@@ -193,6 +193,7 @@ begin
         // Delete Restart.fl to stop crashes
         DeleteFile(ExpandConstant('{userdocs}\My Games\Freelancer\Accts\SinglePlayer\Restart.fl'));
         DeleteFile(ExpandConstant('{userdocs}\My Games\FreelancerHD\Accts\SinglePlayer\Restart.fl'));
+        DeleteFile(ExpandConstant('{app}\SAVE\Accts\SinglePlayer\Restart.fl'));
 
         // Remove 2003 junk files
         RemoveJunkFiles('dll');

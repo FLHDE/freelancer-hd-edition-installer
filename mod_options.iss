@@ -320,19 +320,10 @@ begin
   Result := MyGamesFolder + OptionsFolder + '\' + FileName + '.ini'
 end;
 
-// Best options processing logic
-procedure Process_BestOptions();
-var
-  OptionsPath: string;
-  NewOptionsPath: string;
+procedure SetBestOptions(OptionsPath: string; PreDefinedOptionsPath: string);
 begin
-  if not BestOptions.Checked then
-    exit;
-
-  OptionsPath := GetOptionsPath('PerfOptions')
-  NewOptionsPath := ExpandConstant('{app}\PerfOptions.ini')
-
   // If the options file exists, apply all the best known options in that file. If it doesn't exist, copy a pre-existing file with the best options already applied.
+  // When modifying the existing values, every replacement effectively comments out the previous value, causing FL to ignore it
   if FileExists(OptionsPath) then begin
     FileReplaceString(OptionsPath, 'SkipMachineWarnings=',       'SkipMachineWarnings=TRUE;')
     FileReplaceString(OptionsPath, 'DitherControl =',            'DitherControl = 1.00;')
@@ -359,10 +350,31 @@ begin
     FileReplaceString(OptionsPath, 'depth_bpp=',                 'depth_bpp= 32;')
   end
   else
-    FileCopy(NewOptionsPath, OptionsPath, false);
+    FileCopy(PreDefinedOptionsPath, OptionsPath, false);
 
   // Set the user's desktop resolution as the display size in the options file
   FileReplaceString(OptionsPath, 'size=', 'size= ' + IntToStr(DesktopRes.Width) + ', ' + IntToStr(DesktopRes.Height) + ';')
+end;
+
+// Best options processing logic
+procedure Process_BestOptions();
+var
+  OptionsPath: string;
+  InDirectoryOptionsPath: string;
+  PreDefinedOptionsPath: string;
+begin
+  if not BestOptions.Checked then
+    exit;
+
+  CreateDirIfNotExists(ExpandConstant('{app}\SAVE'))
+
+  OptionsPath := GetOptionsPath('PerfOptions')
+  InDirectoryOptionsPath := ExpandConstant('{app}\SAVE\PerfOptions.ini')
+  PreDefinedOptionsPath := ExpandConstant('{app}\PerfOptions.ini')
+
+  // Set the best options in both PerfOptions.ini's from the regular save folder and the in-directory save folder
+  SetBestOptions(OptionsPath, PreDefinedOptionsPath);
+  SetBestOptions(InDirectoryOptionsPath, PreDefinedOptionsPath);
 end;
 
 // Effects processing logic
