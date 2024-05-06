@@ -418,7 +418,7 @@ var
   OfferBribeResourcesFile: string;
   OfferBribeResourcesMD5: string;
 begin
-  OfferBribeResourcesFile := + FreelancerPath + '\EXE\offerbriberesources.dll';
+  OfferBribeResourcesFile := FreelancerPath + '\EXE\offerbriberesources.dll';
 
   // Check if the OfferBribeResourecses file exists
   if not FileExists(OfferBribeResourcesFile) then
@@ -440,7 +440,7 @@ begin
     '9fb0c85a1f88e516762d71cbfbb69fa7', '801c5c314887e43de8f04dbeee921a31', 'f002ba64816723cb96d82af2c7af988a': Result := FL_English; // Vanilla English (official), JFLP v1.27 English, TSR v1.2 English
     '403c420f051dc3ce14fcd2f7b63cf0c8': Result := FL_German; // German (official)
     '78a283161a7aa6c91756733a4b456ab1': Result := FL_French; // French (official)
-    '6ed61e8db874b5b8bae72d3689ac1f43', '1c5736b9c808538ff77174c29a2ffa08': Result := FL_Russian; // Russian translation by Elite-Games
+    '6ed61e8db874b5b8bae72d3689ac1f43', '1c5736b9c808538ff77174c29a2ffa08': Result := FL_Russian; // Russian translations by Elite-Games and Noviy Disk
     '17933dcced8a8faa0c1f2316f8289c35': Result := FL_Spanish; // Spanish translation by Clan DLAN
     'eaeab5c42d6d6a4d54dd1927a1351a6d': Result := FL_Mandarin; // Mandarin/Taiwanese translation
     'fad76d9880579e841b98d018e8dbde6c': Result := FL_Czech; // Czech translation by Spider
