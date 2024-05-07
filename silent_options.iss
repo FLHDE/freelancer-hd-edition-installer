@@ -179,6 +179,8 @@ begin
   // Skippable options
   SkipIntros.Checked := GetParamInt('SkipIntros', Integer(SkipIntros.Checked)) = 1;
 
+  SkippableCutscenes.Checked := GetParamInt('SkippableCutscenes', Integer(SkippableCutscenes.Checked)) = 1;
+
   if JumpTunnel10Sec.Checked then
     DefaultJumpTunnel := 0
   else if JumpTunnel5Sec.Checked then

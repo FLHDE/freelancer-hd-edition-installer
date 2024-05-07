@@ -1013,6 +1013,17 @@ begin
   end
 end;
 
+procedure Process_SkippableCutscenes();
+var
+  ExePath : string;
+begin
+  ExePath := ExpandConstant('{app}\EXE\freelancer.exe');
+
+  // Make story cutscenes skippable if selected
+  if SkippableCutscenes.Checked then
+    WriteHexToFile(ExePath, $05685F, 'EB0C');
+end;
+
 procedure Process_WeaponGroups();
 var
   HudShiftPath: string;

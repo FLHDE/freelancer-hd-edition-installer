@@ -163,6 +163,7 @@ begin
         Process_BestOptions();
         Process_Effects();
         Process_SkipIntros();
+        Process_SkippableCutscenes();
         Process_JumpTunnelDurations();
         Process_DrawDistances();
         Process_Planetscape();

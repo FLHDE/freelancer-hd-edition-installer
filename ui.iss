@@ -28,10 +28,11 @@ var
   DgVoodooPage: TWizardPage;
   DgVoodooPage2: TWizardPage;
 
-  // Gameplay options
+  // Pitch variations
   PitchVariations: TCheckBox;
   descPitchVariations: TNewStaticText;
 
+  // Regeneratable shields
   RegeneratableShields: TCheckBox;
   descRegeneratableShields: TNewStaticText;
 
@@ -151,6 +152,10 @@ var
   // Skip intros
   SkipIntros: TCheckBox;
   descSkipIntros: TNewStaticText;
+
+  // Skipable cutscenes
+  SkippableCutscenes: TCheckBox;
+  descSkippableCutscenes: TNewStaticText;
 
   // Jump tunnel duration
   JumpTunnel10Sec: TRadioButton;
@@ -428,7 +433,7 @@ begin
   descNewSaveFolder.WordWrap := True;
   descNewSaveFolder.Top := descLevelRequirements.Top + ScaleY(50);
   descNewSaveFolder.Width := PageSinglePlayer.SurfaceWidth;
-  descNewSaveFolder.Caption := 'Normally Freelancer save games are stored in "Documents/My Games/Freelancer". This option ensures save games will be stored in "Documents/My Games/FreelancerHD" instead, which may help avoid conflicts when having multiple mods installed simultaneously.';
+  descNewSaveFolder.Caption := 'Normally, Freelancer save games are stored in "Documents/My Games/Freelancer". This option ensures save games will be stored in "Documents/My Games/FreelancerHD" instead, which may help avoid conflicts when having multiple mods installed simultaneously.';
   
   NewSaveFolder := TCheckBox.Create(PageSinglePlayer);
   NewSaveFolder.Parent := PageSinglePlayer.Surface;
@@ -1067,7 +1072,7 @@ begin
     'Want to save time?'
   );
 
-  // Skip intros  
+  // Jump tunnel duration
   JumpTunnel10Sec := TRadioButton.Create(PageSkips);
   JumpTunnel10Sec.Parent := PageSkips.Surface;
   JumpTunnel10Sec.Caption := '10 second jump tunnels (Vanilla)';
@@ -1099,20 +1104,35 @@ begin
   descJumpTunnelDuration.Caption := 'This option allows you to change the duration of the jump tunnels which you go through when using any jump hole or jump gate.';
   descJumpTunnelDuration.Top := JumpTunnelSkip.Top + ScaleY(20);
   
-  // Jump tunnel duration  
+  // Skip intros
   descSkipIntros := TNewStaticText.Create(PageSkips);
   descSkipIntros.Parent := PageSkips.Surface;
   descSkipIntros.WordWrap := True;
-  descSkipIntros.Top := descJumpTunnelDuration.Top + ScaleY(100);
+  descSkipIntros.Top := descJumpTunnelDuration.Top + ScaleY(60);
   descSkipIntros.Width := PageSkips.SurfaceWidth;
   descSkipIntros.Caption := 'This option skips the 3 movies that play when the game starts, which include the Microsoft logo, Digital Anvil logo, and Freelancer intro.';
   
   SkipIntros := TCheckBox.Create(PageSkips);
   SkipIntros.Parent := PageSkips.Surface;
-  SkipIntros.Top := descJumpTunnelDuration.Top + ScaleY(80);
+  SkipIntros.Top := descJumpTunnelDuration.Top + ScaleY(40);
   SkipIntros.Checked := True;
   SkipIntros.Caption := 'Skip startup intros';
   SkipIntros.Width := PageSkips.SurfaceWidth - ScaleX(8);
+
+  descSkippableCutscenes := TNewStaticText.Create(PageSkips);
+  descSkippableCutscenes.Parent := PageSkips.Surface;
+  descSkippableCutscenes.WordWrap := True;
+  descSkippableCutscenes.Top := descSkipIntros.Top + ScaleY(60);
+  descSkippableCutscenes.Width := PageSkips.SurfaceWidth;
+  descSkippableCutscenes.Caption := 'Normally, the cinematics you see during the storyline cannot be skipped. This option allows you to skip them by pressing the Esc key.'
+  + #13#10 + 'NOTE: This does not apply to space cutscenes; it is not possible to skip those.';
+
+  SkippableCutscenes := TCheckBox.Create(PageSkips);
+  SkippableCutscenes.Parent := PageSkips.Surface;
+  SkippableCutscenes.Top := descSkipIntros.Top + ScaleY(40);
+  SkippableCutscenes.Checked := True;
+  SkippableCutscenes.Caption := 'Skip story cutscenes with Esc key';
+  SkippableCutscenes.Width := PageSkips.SurfaceWidth - ScaleX(8);
   
   // Single Player Command Console
   PageMiscOptions := CreateCustomPage(
