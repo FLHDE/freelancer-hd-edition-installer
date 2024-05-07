@@ -3,7 +3,7 @@ var
   // Custom Pages
   DataDirPage: TInputDirWizardPage;
   CallSign: TInputOptionWizardPage;
-  PitchVariations: TInputOptionWizardPage;
+  GameplayOptions: TWizardPage;
   PageEnglishImprovements: TWizardPage;
   PageSinglePlayer: TWizardPage;
   StartupRes: TInputOptionWizardPage;
@@ -27,6 +27,13 @@ var
   DxWrapperPage2: TWizardPage;
   DgVoodooPage: TWizardPage;
   DgVoodooPage2: TWizardPage;
+
+  // Gameplay options
+  PitchVariations: TCheckBox;
+  descPitchVariations: TNewStaticText;
+
+  RegeneratableShields: TCheckBox;
+  descRegeneratableShields: TNewStaticText;
 
   // Localization
   EnglishImprovements: TCheckBox;
@@ -308,16 +315,39 @@ begin
   CallSign.Values[0] := True;
 
   // Initialize PitchVariations page and add content
-  PitchVariations := CreateInputOptionPage(CallSign.ID,
-  'More NPC voices', 'Check to install.',
-  'NPCs from a faction talking in space usually only have one or two different voices. This option adds more pitches to the NPC voices so there''s more variety. Only affects Single Player and self-hosted Multiplayer games.',
-  False, False);
+  GameplayOptions := CreateCustomPage(CallSign.ID,
+  'Gameplay customization', 'These options only affect Single Player and self-hosted Multiplayer games.');
 
-  PitchVariations.Add('Add more voices for the NPCs');
-  PitchVariations.Values[0] := True;
+  descPitchVariations := TNewStaticText.Create(GameplayOptions);
+  descPitchVariations.Parent := GameplayOptions.Surface;
+  descPitchVariations.WordWrap := True;
+  descPitchVariations.Top := ScaleY(20);
+  descPitchVariations.Width := GameplayOptions.SurfaceWidth;
+  descPitchVariations.Caption :=
+  'NPCs from a faction talking in space usually only have one or two different voices. This option adds more pitches to the NPC voices so there''s more variety.';
+
+  PitchVariations := TCheckBox.Create(GameplayOptions);
+  PitchVariations.Parent := GameplayOptions.Surface;
+  PitchVariations.Checked := True;
+  PitchVariations.Caption := 'Add more voices for the NPCs';
+  PitchVariations.Width := GameplayOptions.SurfaceWidth - ScaleX(8);
+
+  descRegeneratableShields := TNewStaticText.Create(GameplayOptions);
+  descRegeneratableShields.Parent := GameplayOptions.Surface;
+  descRegeneratableShields.WordWrap := True;
+  descRegeneratableShields.Top := descPitchVariations.Top + ScaleY(70);
+  descRegeneratableShields.Width := GameplayOptions.SurfaceWidth;
+  descRegeneratableShields.Caption := 'Generally NPC shields have a very low regeneration rate. As an extra challenge, this option makes it so that all NPCs use normal regeneratable shields.';
+
+  RegeneratableShields := TCheckBox.Create(GameplayOptions);
+  RegeneratableShields.Parent := GameplayOptions.Surface;
+  RegeneratableShields.Top := descPitchVariations.Top + ScaleY(50);
+  RegeneratableShields.Caption := 'Regeneratable NPC shields';
+  RegeneratableShields.Width := GameplayOptions.SurfaceWidth - ScaleX(8);
+
 
   // Initialize English Improvements page and add content
-  PageEnglishImprovements := CreateCustomPage(PitchVariations.ID,
+  PageEnglishImprovements := CreateCustomPage(GameplayOptions.ID,
   'Localization', 'Apply English improvements and other fixes.');
   
   descEnglishImprovements := TNewStaticText.Create(PageEnglishImprovements);

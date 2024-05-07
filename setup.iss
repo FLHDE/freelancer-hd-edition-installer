@@ -150,6 +150,7 @@ begin
         WizardForm.StatusLabel.Caption := 'Processing your options...';
         Process_CallSign();
         Process_PitchVariations();
+        Process_RegeneratableShields();
         Process_EnglishImprovements();
         Process_SinglePlayerMode();
         Process_NewSaveFolder();

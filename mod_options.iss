@@ -43,13 +43,30 @@ begin
   FactionPropPath := ExpandConstant('{app}\DATA\MISSIONS\');
 
   // Option is checked
-  if PitchVariations.Values[0] then
+  if PitchVariations.Checked then
     begin
     // Rename vanilla faction properties file
     RenameFile(FactionPropPath + 'faction_prop.ini', FactionPropPath + 'faction_prop_vanilla.ini')
 
     // Rename extended voices faction properties file
     RenameFile(FactionPropPath + 'faction_prop_extended_voices.ini', FactionPropPath + 'faction_prop.ini')
+    end;
+end;
+
+procedure Process_RegeneratableShields();
+var
+  LoadoutsPath : string;
+begin
+  LoadoutsPath := ExpandConstant('{app}\DATA\SHIPS\');
+
+  // Option is checked
+  if RegeneratableShields.Checked then
+    begin
+    // Rename vanilla loadouts file
+    RenameFile(LoadoutsPath + 'loadouts.ini', LoadoutsPath + 'loadouts_vanilla.ini')
+
+    // Rename regen loadouts file
+    RenameFile(LoadoutsPath + 'loadouts_regen.ini', LoadoutsPath + 'loadouts.ini')
     end;
 end;
 

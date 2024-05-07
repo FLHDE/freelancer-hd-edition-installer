@@ -59,7 +59,7 @@ begin
   CallSign.SelectedValueIndex := GetParamInt('CallSign', CallSign.SelectedValueIndex);
 
   // More NPC voices
-  PitchVariations.Values[0] := GetParamInt('PitchVariations', Integer(PitchVariations.Values[0])) = 1;
+  PitchVariations.Checked := GetParamInt('PitchVariations', Integer(PitchVariations.Checked)) = 1;
 
   // Localization
   EnglishImprovements.Checked := GetParamInt('EnglishImprovements', Integer(EnglishImprovements.Checked)) = 1;
