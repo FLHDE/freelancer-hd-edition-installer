@@ -36,7 +36,6 @@ AppCopyright={#MyAppPublisher}
 AppPublisherURL={#MyAppURL}
 AppSupportURL={#MyAppURL}
 AppUpdatesURL={#MyAppURL}
-ChangesAssociations=yes
 Compression=lzma2
 DefaultDirName={sd}\Games\{#MyAppFileName}
 DefaultGroupName={#MyAppFileName}
@@ -286,7 +285,8 @@ begin
 
       DetectedFlLanguage := GetFreelancerLanguage(DataDirPage.Values[0]);
 
-      // Select the best options based on the detected FL language, which in this case is more appropriate than the system language check
+      // Select the best default checked values based on the detected FL language, which in this case is more appropriate than the system language check
+      // If the detected language is unknown, leave the checked properties as they are (the values determined based on the system language will be used instead)
       if DetectedFlLanguage = FL_English then
         EnglishImprovements.Checked := true
       else if DetectedFlLanguage <> FL_Unknown then
