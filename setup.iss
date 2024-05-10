@@ -150,6 +150,7 @@ begin
         Process_CallSign();
         Process_PitchVariations();
         Process_RegeneratableShields();
+        Process_NoCountermeasureRightClick();
         Process_EnglishImprovements();
         Process_SinglePlayerMode();
         Process_NewSaveFolder();
