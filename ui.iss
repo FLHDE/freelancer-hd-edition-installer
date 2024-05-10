@@ -27,6 +27,7 @@ var
   DxWrapperPage2: TWizardPage;
   DgVoodooPage: TWizardPage;
   DgVoodooPage2: TWizardPage;
+  VanillaPage: TWizardPage;
 
   // Pitch variations
   PitchVariations: TCheckBox;
@@ -97,6 +98,11 @@ var
   descVanillaGraphicsApi: TNewStaticText;
   descLightingFixGraphicsApi: TNewStaticText;
   descGraphicsApi: TNewStaticText;
+
+  // Vanilla
+  lblVanillaAf: TLabel;
+  VanillaAf: TComboBox;
+  descVanillaAf: TNewStaticText;
 
   // DxWrapper
   lblDxWrapperAf: TLabel;
@@ -227,6 +233,8 @@ begin
     Result := not DxWrapperGraphicsApi.Checked
   else if (Page.Id = DgVoodooPage.Id) or (Page.Id = DgVoodooPage2.Id) then
     Result := not DgVoodooGraphicsApi.Checked
+  else if (Page.Id = VanillaPage.Id) then
+    Result := not (VanillaGraphicsApi.Checked or LightingFixGraphicsApi.Checked);
 end;
 
 procedure DxWrapperReShadeCheckBoxClick(Sender: TObject);
@@ -714,7 +722,7 @@ begin
   descVanillaGraphicsApi.WordWrap := True;
   descVanillaGraphicsApi.Top := VanillaGraphicsApi.Top + ScaleY(15);
   descVanillaGraphicsApi.Width := PageGraphicsApi.SurfaceWidth;
-  descVanillaGraphicsApi.Caption := 'Uses your PC''s default DirectX 8 API for Freelancer. You may experience compatibility issues when using it.';
+  descVanillaGraphicsApi.Caption := 'Uses your PC''s default DirectX 8 API for Freelancer. You may experience compatibility issues when using it. Supports Anisotropic Filtering.';
 
   // Only display the Lighting Bug Fix option if the current operating system could potentially suffer from it. If it won't, enabling this option may cause the game to not launch.
   // On top of that, the Lighting Bug isn't present on such operating systems anyway (but the stuttering bug may be).
@@ -1017,9 +1025,39 @@ begin
   DgVoodooBloom.Caption := txtBloom;
   DgVoodooBloom.Width := DgVoodooPage2.SurfaceWidth - ScaleX(8);
 
+  // Vanilla Graphics options
+  VanillaPage := CreateCustomPage(
+    DgVoodooPage2.ID,
+    'Vanilla Graphics options',
+    txtEnhancementsPage
+  );
+
+  lblVanillaAf := TLabel.Create(VanillaPage);
+  lblVanillaAf.Parent := VanillaPage.Surface;
+  lblVanillaAf.Caption := txtAf;
+
+  VanillaAf := TComboBox.Create(VanillaPage);
+  VanillaAf.Parent := VanillaPage.Surface;
+  VanillaAf.Style := csDropDownList;
+  VanillaAf.Items.Add('Off');
+  VanillaAf.Items.Add('2x');
+  VanillaAf.Items.Add('4x');
+  VanillaAf.Items.Add('8x');
+  VanillaAf.Items.Add('16x (recommended)');
+  VanillaAf.ItemIndex := 4;
+  VanillaAf.Top := lblVanillaAf.Top + ScaleY(20);
+  VanillaAf.Width := 155;
+
+  descVanillaAf := TNewStaticText.Create(VanillaPage);
+  descVanillaAf.Parent := VanillaPage.Surface;
+  descVanillaAf.WordWrap := True;
+  descVanillaAf.Width := VanillaPage.SurfaceWidth;
+  descVanillaAf.Caption := txtAfDesc;
+  descVanillaAf.Top := VanillaAf.Top + ScaleY(25);
+
   // Add improved reflections
   PageEffects := CreateCustomPage(
-    DgVoodooPage2.ID,
+    VanillaPage.ID,
     'Add custom effects',
     'Check to install.'
   );
@@ -1258,6 +1296,9 @@ begin
     OnShouldSkipPage := @PageHandler_ShouldSkipPage;
 
   with DgVoodooPage2 do
+    OnShouldSkipPage := @PageHandler_ShouldSkipPage;
+
+  with VanillaPage do
     OnShouldSkipPage := @PageHandler_ShouldSkipPage;
 
   with DxWrapperReShade do

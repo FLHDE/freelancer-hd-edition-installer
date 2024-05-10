@@ -177,6 +177,7 @@ begin
         Process_DxWrapperReShade();
         Process_DgVoodooReShade();
         Process_DgVoodoo(); // Must be called after Process_Win10();
+        Process_VanillaGraphics();
         Process_DisplayMode();
 
         WizardForm.StatusLabel.Caption := 'Cleaning up...';

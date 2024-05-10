@@ -1259,6 +1259,38 @@ begin
     ApplyReShadeOptions('dxgi', DgVoodooBloom.Checked, DgVoodooHdr.Checked, DgVoodooSaturation.Checked, DgVoodooSharpening.Checked); // dxgi is for DirectX 11 (dgVoodoo)
 end;
 
+procedure Process_VanillaGraphics();
+var
+  Rp8Path: string;
+begin
+  // Do not apply anything if neither the Vanilla graphics API nor the Lighting fix graphics API has been selected
+  if (not VanillaGraphicsApi.Checked) and (not LightingFixGraphicsApi.Checked) then
+    exit;
+
+  // Do not apply anything if the "Off" option has been selected
+  if VanillaAf.ItemIndex = 0 then
+    exit;
+
+  Rp8Path := ExpandConstant('{app}\EXE\rp8.dll');
+
+  WriteHexToFile(Rp8Path, $01A48C, '03'); // Magnification filtering mode = "anisotropic"
+  WriteHexToFile(Rp8Path, $01A4C5, '03'); // Minification filtering mode = "anisotropic"
+  WriteHexToFile(Rp8Path, $01A4FE, '03'); // Mipmap filtering mode = "anisotropic"
+
+  if VanillaAf.ItemIndex = 1 then
+    // Maximum anisotropy = 2x
+    WriteHexToFile(Rp8Path, $01A5B8, '02');
+  if VanillaAf.ItemIndex = 2 then
+    // Maximum anisotropy = 4x
+    WriteHexToFile(Rp8Path, $01A5B8, '04');
+  if VanillaAf.ItemIndex = 3 then
+    // Maximum anisotropy = 8x
+    WriteHexToFile(Rp8Path, $01A5B8, '08');
+  if VanillaAf.ItemIndex = 4 then
+    // Maximum anisotropy = 16x
+    WriteHexToFile(Rp8Path, $01A5B8, '10');
+end;
+
 procedure Process_DisplayMode();
 var
   ExeFolderPath: string;
