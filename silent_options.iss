@@ -61,6 +61,12 @@ begin
   // More NPC voices
   PitchVariations.Checked := GetParamInt('PitchVariations', Integer(PitchVariations.Checked)) = 1;
 
+  // Regeneratable NPC shields
+  RegeneratableShields.Checked := GetParamInt('RegeneratableShields', Integer(RegeneratableShields.Checked)) = 1;
+
+  // No Countermeasure activation on right-click
+  NoCountermeasureRightClick.Checked := GetParamInt('NoCountermeasureRightClick', Integer(NoCountermeasureRightClick.Checked)) = 1;
+
   // Localization
   EnglishImprovements.Checked := GetParamInt('EnglishImprovements', Integer(EnglishImprovements.Checked)) = 1;
   RussianFonts.Checked := GetParamInt('RussianFonts', Integer(RussianFonts.Checked)) = 1;
@@ -83,7 +89,7 @@ begin
   WidescreenHud.Checked := GetParamInt('WidescreenHud', Integer(WidescreenHud.Checked)) = 1;
   WeaponGroups.Checked := GetParamInt('WeaponGroups', Integer(WeaponGroups.Checked)) = 1;
 
-  // Custom HUD and Icons
+  // Custom HUD, Icons and NavMap
   DarkHud.Checked := GetParamInt('DarkHud', Integer(DarkHud.Checked)) = 1;
 
   if VanillaIcons.Checked then
@@ -101,6 +107,8 @@ begin
     AlternativeIcons.Checked := True
   else if SelectedIcons = 2 then
     FlatIcons.Checked := True;
+
+  CustomNavMap.Checked := GetParamInt('CustomNavMap', Integer(CustomNavMap.Checked)) = 1;
 
   // Fix clipping with 16:9 resolution planetspaces
   PlanetScape.Checked := GetParamInt('PlanetScape', Integer(PlanetScape.Checked)) = 1;

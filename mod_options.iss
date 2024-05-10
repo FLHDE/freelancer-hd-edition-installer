@@ -1048,7 +1048,7 @@ procedure Process_SkippableCutscenes();
 var
   ExePath : string;
 begin
-  ExePath := ExpandConstant('{app}\EXE\freelancer.exe');
+  ExePath := ExpandConstant('{app}\EXE\Freelancer.exe');
 
   // Make story cutscenes skippable if selected
   if SkippableCutscenes.Checked then
