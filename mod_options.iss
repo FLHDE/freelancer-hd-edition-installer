@@ -961,6 +961,23 @@ begin
   RenameFile(IconsPath + 'NEURONET\NAVMAP\NEWNAVMAP\nav_universebutton_' + IconName + '.3db', IconsPath + 'NEURONET\NAVMAP\NEWNAVMAP\nav_universebutton.3db')
 end;
 
+procedure Process_CustomNavMap();
+var
+  NavMapPath : string;
+begin
+  NavMapPath := ExpandConstant('{app}\DATA\INTERFACE\NEURONET\NAVMAP\NEWNAVMAP\');
+
+  // Option is checked
+  if CustomNavMap.Checked then
+    begin
+    // Rename vanilla nav map file
+    RenameFile(NavMapPath + 'nav_prettymap.3db', NavMapPath + 'nav_prettymap_vanilla.3db')
+
+    // Rename custom nav map file
+    RenameFile(NavMapPath + 'nav_prettymap_custom.3db', NavMapPath + 'nav_prettymap.3db')
+    end;
+end;
+
 procedure Process_JumpTunnelDurations();
 var
   FilePath : string;

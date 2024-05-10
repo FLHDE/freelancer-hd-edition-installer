@@ -75,6 +75,10 @@ var
   FlatIcons: TRadioButton;
   descCustomIcons: TNewStaticText;
 
+  // Custom Nav Map
+  CustomNavMap: TCheckBox;
+  descCustomNavMap: TNewStaticText;
+
   // Fix clipping with 16:9 resolution planetscapes
   PlanetScape: TCheckBox;
   descPlanetScape: TNewStaticText;
@@ -556,7 +560,7 @@ begin
   // Initialize Dark HUD page and add content
   PageDarkHud := CreateCustomPage(
     PageWidescreenHud.ID,
-    'Custom HUD and Icons',
+    'Custom HUD, Icons, and Nav Map',
     'Check to install.'
   );
   
@@ -574,7 +578,7 @@ begin
 
   VanillaIcons := TRadioButton.Create(PageDarkHud);
   VanillaIcons.Parent := PageDarkHud.Surface;
-  VanillaIcons.Top := descDarkHud.Top + ScaleY(50);
+  VanillaIcons.Top := descDarkHud.Top + ScaleY(45);
   VanillaIcons.Checked := True;
   VanillaIcons.Caption := 'HD Vanilla Icons';
   VanillaIcons.Width := PageDarkHud.SurfaceWidth - ScaleX(8);
@@ -597,6 +601,19 @@ begin
   descCustomIcons.Top := AlternativeIcons.Top + ScaleY(40);
   descCustomIcons.Width := PageDarkHud.SurfaceWidth;
   descCustomIcons.Caption := 'This option allows you to choose a set of icons for Freelancer. The HD Vanilla Icons option adds an HD version of the default Freelancer icons. The Custom Alternative Icons have a different look but a style similar to the vanilla icons. Lastly, the Custom Flat Icons option adds new icons that have a more flat and simple look.';
+
+  descCustomNavMap := TNewStaticText.Create(PageDarkHud);
+  descCustomNavMap.Parent := PageDarkHud.Surface;
+  descCustomNavMap.WordWrap := True;
+  descCustomNavMap.Top := FlatIcons.Top + ScaleY(112);
+  descCustomNavMap.Width := PageDarkHud.SurfaceWidth;
+  descCustomNavMap.Caption := 'Replaces the background of the in-game Nav Map with an alternative version. If this option is disabled, an HD version of the original Nav Map background will be used.';
+
+  CustomNavMap := TCheckBox.Create(PageDarkHud);
+  CustomNavMap.Parent := PageDarkHud.Surface;
+  CustomNavMap.Caption := 'Use Custom Nav Map background';
+  CustomNavMap.Top := FlatIcons.Top + ScaleY(92);
+  CustomNavMap.Width := PageDarkHud.SurfaceWidth - ScaleX(8);
 
   
   // Fix clipping with 16:9 resolution planetscapes

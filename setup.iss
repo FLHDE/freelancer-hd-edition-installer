@@ -170,6 +170,7 @@ begin
         Process_HUD(); // Must be called before Process_CustomIcons(); and Process_WeaponGroups();
         Process_DarkHUD();
         Process_CustomIcons(); // Must be called after Process_HUD();
+        Process_CustomNavMap();
         Process_WeaponGroups(); // Must be called after Process_HUD();
         Process_DxWrapper();
         Process_DxWrapperReShade();
