@@ -7,6 +7,7 @@ This is a setup script for [Freelancer: HD Edition](https://github.com/BC46/free
 ## Build instructions
 ### All-in-one installer (default)
 1. Clone the [Freelancer: HD Edition GitHub repository](https://github.com/BC46/freelancer-hd-edition).
+    1. NOTE: Do not download the mod zip from GitHub's "Download ZIP" feature under the green "Code" button (on the mod's homepage). This may result in an incomplete download. Use the `git clone` command instead.
 2. Place all the mod files (DATA & EXE directories, etc.) in a folder named `freelancer-hd-edition-0.7`.
 3. Compress the `freelancer-hd-edition-0.7` folder using an archiver like [7-Zip](https://www.7-zip.org/). NOTE: The zip must NOT be larger than 2.05 GB!
     1. Compressing the folder using LZMA2 is highly recommended.
