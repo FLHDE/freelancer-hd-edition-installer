@@ -160,6 +160,9 @@ begin
   DxWrapperHdr.Checked := GetParamInt('DxWrapperHdr', Integer(DxWrapperHdr.Checked)) = 1;
   DxWrapperBloom.Checked := GetParamInt('DxWrapperBloom', Integer(DxWrapperBloom.Checked)) = 1;
 
+  // Vanilla graphics options
+  VanillaAf.ItemIndex := GetParamInt('VanillaAf', Integer(VanillaAf.ItemIndex));
+
   // Add custom effects
   if VanillaReflections.Checked then
     DefaultReflections := 0
