@@ -15,8 +15,12 @@ function SetFileAttributes(lpFileName: string; dwFileAttributes: DWORD): BOOL;
   external 'SetFileAttributesW@kernel32.dll stdcall';
 
 // Gets the device context
-function GetDC(HWND: DWord): DWord;
+function GetDC(hWnd: DWord): DWord;
   external 'GetDC@user32.dll stdcall';
+
+// Releases the device context
+function ReleaseDC(hWnd: DWord; hDC: DWord): Integer;
+  external 'ReleaseDC@user32.dll stdcall';
 
 // Used to retrieve information about a device 
 function GetDeviceCaps(hDC, nIndex: Integer): Integer;

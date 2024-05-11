@@ -113,8 +113,14 @@ var
 begin
   try
     DC := GetDC(0);
+
+    if DC = 0 then
+      RaiseException('Couldn''t get the device context');
+
     Result.Width := GetDeviceCaps(DC, HORZRES);
     Result.Height := GetDeviceCaps(DC, VERTRES);
+
+    ReleaseDC(0, DC);
 
     if (Result.Width = 0) or (Result.Height = 0) then
       RaiseException('Display Width and/or Height cannot be 0');
@@ -131,7 +137,13 @@ var
 begin
   try
     DC := GetDC(0);
+
+    if DC = 0 then
+      RaiseException('Couldn''t get the device context');
+
     Result := GetDeviceCaps(DC, VREFRESH);
+
+    ReleaseDC(0, DC);
 
     if Result = 0 then
       RaiseException('Refresh Rate cannot be 0');
