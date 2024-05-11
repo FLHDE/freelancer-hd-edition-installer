@@ -16,7 +16,7 @@ This is a setup script for [Freelancer: HD Edition](https://github.com/BC46/free
 6. Build `setup.iss` using [Inno Setup's standard IDE](https://jrsoftware.org/isinfo.php), or use the [Command Line Compiler](https://jrsoftware.org/ishelp/index.php?topic=compilercmdline).
 
 ### Online and offline installer
-1. Open `setup.iss` and find line 13. It should look like `#define AllInOneInstall true`.
+1. Open `setup.iss` and find line 16. It should look like `#define AllInOneInstall true`.
 2. Change this line to `#define AllInOneInstall false`.
 3. Build `setup.iss` using [Inno Setup's standard IDE](https://jrsoftware.org/isinfo.php), or use the [Command Line Compiler](https://jrsoftware.org/ishelp/index.php?topic=compilercmdline).
 

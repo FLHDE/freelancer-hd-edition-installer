@@ -460,3 +460,92 @@ begin
     Result := FL_Unknown;
   end;
 end;
+
+// Compares two version strings
+function CompareVersion(V1, V2: string): Integer;
+var
+  P, N1, N2: Integer;
+begin
+  Result := 0;
+  while (Result = 0) and ((V1 <> '') or (V2 <> '')) do
+  begin
+    P := Pos('.', V1);
+    if P > 0 then
+    begin
+      N1 := StrToInt(Copy(V1, 1, P - 1));
+      Delete(V1, 1, P);
+    end
+      else
+    if V1 <> '' then
+    begin
+      N1 := StrToInt(V1);
+      V1 := '';
+    end
+      else
+    begin
+      N1 := 0;
+    end;
+
+    P := Pos('.', V2);
+    if P > 0 then
+    begin
+      N2 := StrToInt(Copy(V2, 1, P - 1));
+      Delete(V2, 1, P);
+    end
+      else
+    if V2 <> '' then
+    begin
+      N2 := StrToInt(V2);
+      V2 := '';
+    end
+      else
+    begin
+      N2 := 0;
+    end;
+
+    if N1 < N2 then Result := -1
+      else
+    if N1 > N2 then Result := 1;
+  end;
+end;
+
+function VcRedistNeedsInstall: Boolean;
+var
+  InstalledVersion: String;
+begin
+  // Assume it's not needed on Wine
+  if IsWine then
+  begin
+    Result := False
+    exit;
+  end;
+
+  // Get the currently installed VC Runtime version
+  if RegQueryStringValue(HKEY_LOCAL_MACHINE,
+       'SOFTWARE\Microsoft\VisualStudio\14.0\VC\Runtimes\x86', 'Version',
+       InstalledVersion) then
+  begin
+    // Trim first 'v' character because it may cause issues
+    if (Length(InstalledVersion) > 0) and (InstalledVersion[1] = 'v') then
+      Delete(InstalledVersion, 1, 1);
+
+    try
+      // Is the installed version lower than the packaged version?
+      Result := (CompareVersion(InstalledVersion, '{#VcRedistVersionStr}') < 0);
+    except
+      // If something went wrong, just assume it needs to be installed
+      Result := True;
+      exit;
+    end;
+  end
+  else
+  begin
+    // Not even an old version installed
+    Result := True;
+  end;
+
+  if Result then
+  begin
+    ExtractTemporaryFile('{#VcRedistName}');
+  end;
+end;

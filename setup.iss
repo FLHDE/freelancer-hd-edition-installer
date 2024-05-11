@@ -12,6 +12,8 @@
 #define MyAppExeName "Freelancer.exe"
 #define MyFolderName "freelancer-hd-edition-" + MyAppVersion
 #define MyZipName "freelancerhd"
+#define VcRedistName "VC_redist.x86.exe"
+#define VcRedistVersionStr "14.38.33135.00" ; Make sure to not include the "v" at the start
 ; This variable controls whether the zip is shipped with the exe or downloaded from a mirror
 #define AllInOneInstall true
 #dim Mirrors[2] {"https://archive.org/download/freelancer-hd-edition-" + MyAppVersion + "/freelancer-hd-edition-" + MyAppVersion + ".7z", "https://github.com/BC46/freelancer-hd-edition/archive/refs/tags/" + MyAppVersion + ".zip"}
@@ -24,7 +26,8 @@
 #define SizeExtracted 4646719488
 #define SizeVanilla 985624576
 #define SizeBuffer 200000
-#define SizeAll SizeZip + SizeExtracted + SizeVanilla + SizeBuffer
+#define SizeMsvcRedist 500000
+#define SizeAll SizeZip + SizeExtracted + SizeVanilla + SizeBuffer + SizeMsvcRedist
 
 [Setup]
 AllowNoIcons=yes
@@ -46,6 +49,7 @@ InfoBeforeFile={#SourcePath}\Assets\Text\installinfo.txt
 OutputBaseFilename=FreelancerHDESetup
 SetupIconFile={#SourcePath}\Assets\Images\icon.ico
 SolidCompression=yes
+RestartIfNeededByRun=no
 UninstallDisplayIcon={app}\EXE\{#MyAppExeName}
 UninstallDisplayName={#MyAppName}
 WizardImageFile={#SourcePath}\Assets\Images\backgroundpattern.bmp
@@ -73,6 +77,7 @@ Source: "Assets\Fonts\ARIALUNI.TTF"; DestDir: "{autofonts}"; FontInstall: "Arial
 Source: "Assets\External\7za.exe"; DestDir: "{tmp}"; Flags: deleteafterinstall;
 Source: "Assets\External\utf-8-bom-remover.exe"; DestDir: "{tmp}"; Flags: deleteafterinstall;
 Source: "Assets\External\HexToBinary.dll"; Flags: dontcopy;
+Source: "Assets\External\{#VcRedistName}"; DestDir: {tmp}; Flags: dontcopy
 # if AllInOneInstall
 Source: "Assets\Mod\freelancerhd.7z"; DestDir: "{tmp}"; Flags: nocompression deleteafterinstall
 #endif
@@ -80,6 +85,7 @@ Source: "Assets\Images\icon.ico"; DestDir: "{app}\EXE"; DestName: "{#MyAppExeNam
 
 [Run]
 Filename: "{app}\EXE\{#MyAppExeName}"; Description: "{cm:LaunchProgram,{#StringChange(MyAppName, '&', '&&')}}"; Flags: nowait postinstall skipifsilent
+Filename: "{tmp}\{#VcRedistName}"; StatusMsg: "Installing Microsoft Visual C++ Redistributable..."; Parameters: "/install /quiet /norestart"; Check: VcRedistNeedsInstall; Flags: waituntilterminated
 
 [UninstallDelete]
 Type: filesandordirs; Name: "{app}"
