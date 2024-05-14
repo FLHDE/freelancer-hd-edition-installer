@@ -175,7 +175,7 @@ begin
 end;
 
 // Used to perform a hex edit in a file at a specific location
-procedure WriteHexToFile(FileName: string; Offset: longint; Hex: string);
+function WriteHexToFile(FileName: string; Offset: longint; Hex: string): Boolean;
 var
   Stream: TFileStream;
   Buffer: string;
@@ -187,7 +187,9 @@ begin
     SetLength(Buffer, (Length(Hex) div 4) + 1);
     Size := Length(Hex) div 2;
 
-    if not ConvertHexToBinary(Hex, Length(Hex), Buffer) then
+    Result := ConvertHexToBinary(Hex, Length(Hex), Buffer);
+
+    if not Result then
       RaiseException('Could not convert string to binary stream');
 
     Stream.Seek(Offset, soFromBeginning);
@@ -432,7 +434,7 @@ var
 begin
   OfferBribeResourcesFile := FreelancerPath + '\EXE\offerbriberesources.dll';
 
-  // Check if the OfferBribeResourecses file exists
+  // Check if the OfferBribeResources file exists
   if not FileExists(OfferBribeResourcesFile) then
   begin
     Result := FL_Unknown;
