@@ -157,6 +157,7 @@ begin
         Process_PitchVariations();
         Process_RegeneratableShields();
         Process_NoCountermeasureRightClick();
+        Process_AdvancedAudioOptions();
         Process_EnglishImprovements();
         Process_SinglePlayerMode();
         Process_NewSaveFolder();

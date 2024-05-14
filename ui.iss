@@ -41,6 +41,10 @@ var
   NoCountermeasureRightClick: TCheckBox;
   descNoCountermeasureRightClick: TNewStaticText;
 
+  // Advanced audio options
+  AdvancedAudioOptions: TCheckBox;
+  descAdvancedAudioOptions: TNewStaticText;
+
   // Localization
   EnglishImprovements: TCheckBox;
   descEnglishImprovements: TNewStaticText;
@@ -337,7 +341,7 @@ begin
 
   // Initialize PitchVariations page and add content
   GameplayOptions := CreateCustomPage(CallSign.ID,
-  'Gameplay customization', 'Check to install.');
+  'Gameplay customization', 'The NPC voices and shields options only affect Single Player and self-hosted Multiplayer games.');
 
   descPitchVariations := TNewStaticText.Create(GameplayOptions);
   descPitchVariations.Parent := GameplayOptions.Surface;
@@ -345,7 +349,7 @@ begin
   descPitchVariations.Top := ScaleY(20);
   descPitchVariations.Width := GameplayOptions.SurfaceWidth;
   descPitchVariations.Caption :=
-  'NPCs from a faction talking in space usually only have one or two different voices. This option adds more pitches to the NPC voices so there''s more variety (only affects Single Player and self-hosted Multiplayer games).';
+  'NPCs from a faction talking in space usually only have one or two different voices. This option adds more pitches to the NPC voices so there''s more variety.';
 
   PitchVariations := TCheckBox.Create(GameplayOptions);
   PitchVariations.Parent := GameplayOptions.Surface;
@@ -356,29 +360,42 @@ begin
   descRegeneratableShields := TNewStaticText.Create(GameplayOptions);
   descRegeneratableShields.Parent := GameplayOptions.Surface;
   descRegeneratableShields.WordWrap := True;
-  descRegeneratableShields.Top := descPitchVariations.Top + ScaleY(80);
+  descRegeneratableShields.Top := descPitchVariations.Top + ScaleY(65);
   descRegeneratableShields.Width := GameplayOptions.SurfaceWidth;
-  descRegeneratableShields.Caption := 'Generally NPC shields have a very low regeneration rate. As an extra challenge, this option makes it so that all NPCs use normal regeneratable shields (only affects Single Player and self-hosted Multiplayer games).';
+  descRegeneratableShields.Caption := 'Generally NPC shields have a very low regeneration rate. As an extra challenge, this option makes it so that all NPCs use normal regeneratable shields.';
 
   RegeneratableShields := TCheckBox.Create(GameplayOptions);
   RegeneratableShields.Parent := GameplayOptions.Surface;
-  RegeneratableShields.Top := descPitchVariations.Top + ScaleY(60);
+  RegeneratableShields.Top := descPitchVariations.Top + ScaleY(45);
   RegeneratableShields.Caption := 'Regeneratable NPC shields';
   RegeneratableShields.Width := GameplayOptions.SurfaceWidth - ScaleX(8);
 
   descNoCountermeasureRightClick := TNewStaticText.Create(GameplayOptions);
   descNoCountermeasureRightClick.Parent := GameplayOptions.Surface;
   descNoCountermeasureRightClick.WordWrap := True;
-  descNoCountermeasureRightClick.Top := descRegeneratableShields.Top + ScaleY(80);
+  descNoCountermeasureRightClick.Top := descRegeneratableShields.Top + ScaleY(65);
   descNoCountermeasureRightClick.Width := GameplayOptions.SurfaceWidth;
-  descNoCountermeasureRightClick.Caption := 'When a Countermeasure dropper is active, it automatically activates whenever a missile is fired at your ship. It will also activate together with your active weapons when right-clicking. To prevent unintentional activations, this option disables Countermeasure droppers from activating on right-click.';
+  descNoCountermeasureRightClick.Caption := 'When a Countermeasure dropper is active, it automatically activates whenever a missile is fired at your ship. It will also activate together with your active weapons when right-clicking. To prevent unintentional activations, this option makes Countermeasure droppers not activate when right-clicking.';
 
   NoCountermeasureRightClick := TCheckBox.Create(GameplayOptions);
   NoCountermeasureRightClick.Parent := GameplayOptions.Surface;
   NoCountermeasureRightClick.Checked := True;
-  NoCountermeasureRightClick.Top := descRegeneratableShields.Top + ScaleY(60);
+  NoCountermeasureRightClick.Top := descRegeneratableShields.Top + ScaleY(45);
   NoCountermeasureRightClick.Caption := 'Prevent Countermeasure dropper activation on right-click';
   NoCountermeasureRightClick.Width := GameplayOptions.SurfaceWidth - ScaleX(8);
+
+  descAdvancedAudioOptions := TNewStaticText.Create(GameplayOptions);
+  descAdvancedAudioOptions.Parent := GameplayOptions.Surface;
+  descAdvancedAudioOptions.WordWrap := True;
+  descAdvancedAudioOptions.Top := descNoCountermeasureRightClick.Top + ScaleY(90);
+  descAdvancedAudioOptions.Width := GameplayOptions.SurfaceWidth;
+  descAdvancedAudioOptions.Caption := 'Adds controls to the audio options for adjusting the interface and ambience volume.';
+
+  AdvancedAudioOptions := TCheckBox.Create(GameplayOptions);
+  AdvancedAudioOptions.Parent := GameplayOptions.Surface;
+  AdvancedAudioOptions.Top := descNoCountermeasureRightClick.Top + ScaleY(70);
+  AdvancedAudioOptions.Caption := 'Advanced audio options';
+  AdvancedAudioOptions.Width := GameplayOptions.SurfaceWidth - ScaleX(8);
 
 
   // Initialize English Improvements page and add content

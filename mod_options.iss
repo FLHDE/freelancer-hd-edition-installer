@@ -84,6 +84,26 @@ begin
   end;
 end;
 
+procedure Process_AdvancedAudioOptions();
+var
+  ExePath : string;
+  OptListPath : string;
+begin
+  if not AdvancedAudioOptions.Checked then
+    exit;
+
+  ExePath := ExpandConstant('{app}\EXE\Freelancer.exe');
+  OptListPath := ExpandConstant('{app}\DATA\INTERFACE\optlist.ini');
+
+  // The hex edits must succeed, otherwise a crash will occur when adjusting the added sliders
+
+  if WriteHexToFile(ExePath, $0B1503, '83') then // Interface volume can be controlled independently
+    FileReplaceString(OptListPath, ';option = 1411, 2454, 50, true, false', 'option = 1411, 2454, 50, true, false'); // Add interface volume slider
+
+  if WriteHexToFile(ExePath, $0B1554, '84') then // Ambient volume can be controlled independently
+    FileReplaceString(OptListPath, ';option = 1412, 2455, 50, true, false', 'option = 1412, 2455, 50, true, false'); // Add ambient volume slider
+end;
+
 procedure Process_EnglishImprovements();
 var
   FreelancerIntroPath: string;

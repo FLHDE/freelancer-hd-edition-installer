@@ -67,6 +67,9 @@ begin
   // No Countermeasure activation on right-click
   NoCountermeasureRightClick.Checked := GetParamInt('NoCountermeasureRightClick', Integer(NoCountermeasureRightClick.Checked)) = 1;
 
+  // Advanced audio options
+  AdvancedAudioOptions.Checked := GetParamInt('AdvancedAudioOptions', Integer(AdvancedAudioOptions.Checked)) = 1;
+
   // Localization
   EnglishImprovements.Checked := GetParamInt('EnglishImprovements', Integer(EnglishImprovements.Checked)) = 1;
   RussianFonts.Checked := GetParamInt('RussianFonts', Integer(RussianFonts.Checked)) = 1;
