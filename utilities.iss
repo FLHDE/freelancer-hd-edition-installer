@@ -22,7 +22,7 @@ begin
 end;
 
 // Used to copy the vanilla install to {app}, also the extracted .zip file back to {app}
-procedure DirectoryCopy(SourcePath, DestPath: string; Move: Boolean);
+procedure DirectoryCopy(SourcePath, DestPath: string; Move: Boolean; SkipFlExe: Boolean);
 var
   FindRec: TFindRec;
   SourceFilePath: string;
@@ -32,7 +32,7 @@ begin
   begin
     try
       repeat
-        if (FindRec.Name <> '.') and (FindRec.Name <> '..') then
+        if (FindRec.Name <> '.') and (FindRec.Name <> '..') and not (SkipFlExe and (FindRec.Name = 'Freelancer.exe')) then
         begin
           SourceFilePath := SourcePath + '\' + FindRec.Name;
           DestFilePath := DestPath + '\' + FindRec.Name;
@@ -56,7 +56,7 @@ begin
             else
           begin
             if DirExists(DestFilePath) or CreateDir(DestFilePath) then
-              DirectoryCopy(SourceFilePath, DestFilePath, Move)
+              DirectoryCopy(SourceFilePath, DestFilePath, Move, SkipFlExe)
               else
               RaiseException(Format('Failed to create %s', [DestFilePath]));
           end;

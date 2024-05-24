@@ -135,7 +135,7 @@ begin
         // Copy Vanilla game to directory
         UpdateProgress(0);
         WizardForm.StatusLabel.Caption := 'Copying vanilla Freelancer directory...';
-        DirectoryCopy(DataDirPage.Values[0],ExpandConstant('{app}'),False);
+        DirectoryCopy(DataDirPage.Values[0],ExpandConstant('{app}'), False, True);
         UpdateProgress(30);
 
         // Unzip
@@ -149,7 +149,7 @@ begin
         // Copy mod files
         WizardForm.StatusLabel.Caption := ExpandConstant('Relocating {#MyAppName}...');
 
-        DirectoryCopy(ExpandConstant('{app}\{#MyFolderName}'),ExpandConstant('{app}'),True);
+        DirectoryCopy(ExpandConstant('{app}\{#MyFolderName}'),ExpandConstant('{app}'), True, False);
 
         DelTree(ExpandConstant('{app}\{#MyFolderName}'), True, True, True);
         UpdateProgress(90);
