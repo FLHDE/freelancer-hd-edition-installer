@@ -6,6 +6,7 @@
 #define MyModName "Freelancer: HD Edition"
 ; Name without the colon to prevent file/explorer-related issues
 #define MyAppFileName "Freelancer HD Edition"
+#define MyServerFileName "FLServer HD Edition"
 #define MyAppName MyModName + " v" + MyAppVersion
 #define MyAppPublisher MyModName + " Development Team"
 #define MyAppURL "https://github.com/BC46/freelancer-hd-edition"
@@ -65,6 +66,7 @@ Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{
 
 [Icons]
 Name: "{group}\{#MyAppFileName}"; Filename: "{app}\EXE\{#MyAppExeName}"
+Name: "{group}\{#MyServerFileName}"; Filename: "{app}\EXE\FLServer.exe"
 Name: "{commondesktop}\{#MyAppFileName}"; Filename: "{app}\EXE\{#MyAppExeName}"; Tasks: desktopicon
 
 [Files]
@@ -82,6 +84,7 @@ Source: "Assets\External\{#VcRedistName}"; DestDir: {tmp}; Flags: dontcopy
 Source: "Assets\Mod\freelancerhd.7z"; DestDir: "{tmp}"; Flags: nocompression deleteafterinstall
 #endif
 Source: "Assets\Images\icon.ico"; DestDir: "{app}\EXE"; DestName: "{#MyAppExeName}"; Flags: ignoreversion
+Source: "Assets\Images\flserver.ico"; DestDir: "{app}\EXE"; DestName: "FLServer.exe"; Flags: ignoreversion
 
 [Run]
 Filename: "{app}\EXE\{#MyAppExeName}"; Description: "{cm:LaunchProgram,{#StringChange(MyAppName, '&', '&&')}}"; Flags: nowait postinstall skipifsilent
