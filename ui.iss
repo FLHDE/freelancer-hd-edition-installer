@@ -589,7 +589,7 @@ begin
   descWeaponGroups.WordWrap := True;
   descWeaponGroups.Top := descWidescreenHud.Top + ScaleY(105);
   descWeaponGroups.Width := PageWidescreenHud.SurfaceWidth;
-  descWeaponGroups.Caption := 'This option adds buttons for selecting 3 different weapon groups in your ship info panel. NOTE: These buttons will not be positioned correctly on aspect ratios other than 16:9 and 4:3.';
+  descWeaponGroups.Caption := 'This option adds buttons for selecting three different weapon groups in your ship info panel.';
   
   WeaponGroups := TCheckBox.Create(PageWidescreenHud);
   WeaponGroups.Parent := PageWidescreenHud.Surface;
