@@ -698,7 +698,7 @@ begin
   DgVoodooGraphicsApi.Parent := PageGraphicsApi.Surface;
   DgVoodooGraphicsApi.Checked := GpuManufacturer = NVIDIAOrOther;
   DgVoodooGraphicsApi.Top := ScaleY(50);
-  DgVoodooGraphicsApi.Caption := 'dgVoodoo (DirectX 11, recommended)';
+  DgVoodooGraphicsApi.Caption := 'dgVoodoo (DirectX 11, recommended for NVIDIA and Intel GPUs)';
   DgVoodooGraphicsApi.Width := PageGraphicsApi.SurfaceWidth - ScaleX(8);
 
   descDgVoodooGraphicsApi := TNewStaticText.Create(PageGraphicsApi);
@@ -716,7 +716,7 @@ begin
   DxWrapperGraphicsApi.Parent := PageGraphicsApi.Surface;
   DxWrapperGraphicsApi.Checked := GpuManufacturer = AMD;
   DxWrapperGraphicsApi.Top := descDgVoodooGraphicsApi.Top + ScaleY(37);
-  DxWrapperGraphicsApi.Caption := 'DxWrapper + d3d8to9 (DirectX 9, recommended)';
+  DxWrapperGraphicsApi.Caption := 'DxWrapper + d3d8to9 (DirectX 9, recommended for all GPUs)';
   DxWrapperGraphicsApi.Width := PageGraphicsApi.SurfaceWidth - ScaleX(8);
 
   descDxWrapperGraphicsApi := TNewStaticText.Create(PageGraphicsApi);
