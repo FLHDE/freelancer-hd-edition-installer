@@ -1076,19 +1076,9 @@ begin
 end;
 
 procedure Process_WeaponGroups();
-var
-  HudShiftPath: string;
 begin
   if WeaponGroups.Checked then
   begin
-      HudShiftPath := ExpandConstant('{app}\DATA\INTERFACE\HudShift.ini')
-
-      // The position of the Weapon Group buttons is hardcoded. Currently we only support the correct position for 4:3 and 16:9 aspect ratios.
-      // By default it's set to 4:3, and by changing HudWeaponGroups in HudShift.ini to true, it'll be set to 16:9.
-      // The 16:9 position will only be set if the aspect ratio is anything wider than 4:3, because it's possible that people with other aspect ratios will disregard the warning (about it only being supported for two aspect ratios).
-      if not IsResWithinAspectRatioRange(MinGeneralFactor, Max4by3Factor) then
-        FileReplaceString(HudShiftPath, ';HudWeaponGroups = true', 'HudWeaponGroups = true');
-
       // Enable weapon groups
       FileReplaceString(
         ExpandConstant('{app}\EXE\dacom.ini'),

@@ -596,9 +596,7 @@ begin
   WeaponGroups.Top := descWidescreenHud.Top + ScaleY(85);
   WeaponGroups.Caption := 'Add Weapon Group buttons';
   WeaponGroups.Width := PageWidescreenHud.SurfaceWidth - ScaleX(8);
-
-  // Only check the weapon groups option if the user's aspect ratio is 4:3 or 16:9
-  WeaponGroups.Checked := IsResWithinAspectRatioRange(Min4by3Factor, Max4By3Factor) or IsResWithinAspectRatioRange(Min16by9Factor, Max16by9Factor);
+  WeaponGroups.Checked := True;
 
   // Initialize Dark HUD page and add content
   PageDarkHud := CreateCustomPage(
