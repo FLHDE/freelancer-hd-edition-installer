@@ -1233,28 +1233,29 @@ begin
   // Activate ReShade by renaming the file
   RenameFile(ReShadePath + ReShadeDllName + '_reshade.dll', ReShadePath + ReShadeDllName + '.dll')
 
-  // Enable the Deband shader by default because it's crucial for Freelancer
-  Techniques := 'Deband@Deband.fx,'
+  // Enable desired ReShade options
+  Techniques := 'Techniques=';
 
-  // Enable checked ReShade options
-  if BloomChecked then
-    Techniques := Techniques + 'MagicBloom@MagicBloom.fx,';
-  if HdrChecked then
-    Techniques := Techniques + 'HDR@FakeHDR.fx,';
-  if SaturationChecked then
-    Techniques := Techniques + 'Colourfulness@Colourfulness.fx,';
+  if SharpeningChecked then
+    Techniques := Techniques + 'ContrastAdaptiveSharpen@CAS.fx,';
+
+  // Enable the Deband shader by default because it's crucial for Freelancer
+  Techniques := Techniques + 'Deband@Deband.fx,';
+
   if (DisplayMode.ItemIndex = 1) or (DisplayMode.ItemIndex = 2) then
     // Use Tonemap only if windowed or fullscreen windowed have been checked
     Techniques := Techniques + 'Tonemap@Tonemap.fx,';
-  if SharpeningChecked then
-    Techniques := Techniques + 'ContrastAdaptiveSharpen@CAS.fx';
+  if SaturationChecked then
+    Techniques := Techniques + 'Colourfulness@Colourfulness.fx,';
+  if BloomChecked then
+    Techniques := Techniques + 'MagicBloom@MagicBloom.fx,';
 
   // Removes a trailing comma at the end of the techniques if it's there
   if (LENGTH(Techniques) > 0) and (Techniques[LENGTH(Techniques)] = ',') then
     SetLength(Techniques, LENGTH(Techniques) - 1);
 
   // Set the techniques
-  FileReplaceString(ReShadePath + 'ReShadePreset.ini', 'Techniques=', 'Techniques=' + Techniques);
+  FileReplaceString(ReShadePath + 'ReShadePreset.ini', 'Techniques=', Techniques);
 end;
 
 procedure Process_DxWrapperReShade();
