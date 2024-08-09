@@ -14,7 +14,7 @@ var
 begin
   Attr := GetFileAttributes(FileName);
 
-  if (Attr and 1) = 1 then          
+  if (Attr and 1) = 1 then
   begin
     Attr := Attr -1;
     SetFileAttributes(FileName, Attr);
@@ -108,7 +108,7 @@ end;
 
 // Gets the user's main monitor resolution
 function GetResolution(): DesktopResolution;
-var 
+var
   DC: DWord;
 begin
   try
@@ -132,7 +132,7 @@ end;
 
 // Gets the user's main monitor refresh rate
 function GetRefreshRate(): Integer;
-var 
+var
   DC: DWord;
 begin
   try
@@ -171,7 +171,7 @@ end;
 // Swaps 2 bytes in a binary string (2 bytes, or 4 characters assumed)
 function SwapBytes(BinaryString: string): string;
 begin
-  Result := BinaryString[3] + BinaryString[4] + BinaryString[1] + BinaryString[2] 
+  Result := BinaryString[3] + BinaryString[4] + BinaryString[1] + BinaryString[2]
 end;
 
 // Used to perform a hex edit in a file at a specific location
@@ -222,7 +222,7 @@ begin
   end;
 end;
 
-// Used to remove an unwanted byte order mark in a file. 
+// Used to remove an unwanted byte order mark in a file.
 // Calls an external program to take care of that.
 function RemoveBOM(const FileName: String): Integer;
 var
@@ -243,7 +243,7 @@ procedure CreateDirIfNotExists(const Dir: String);
 begin
   if not DirExists(Dir) then
     CreateDir(Dir);
-end; 
+end;
 
 // Remove all 2003 files in a folder of a certain type
 procedure RemoveJunkFiles(FileType: string);
@@ -457,7 +457,7 @@ begin
     '6ed61e8db874b5b8bae72d3689ac1f43', '1c5736b9c808538ff77174c29a2ffa08': Result := FL_Russian; // Russian translations by Elite-Games and Noviy Disk
     '17933dcced8a8faa0c1f2316f8289c35': Result := FL_Spanish; // Spanish translation by Clan DLAN
     'eaeab5c42d6d6a4d54dd1927a1351a6d': Result := FL_Mandarin; // Mandarin/Taiwanese translation
-    'fad76d9880579e841b98d018e8dbde6c': Result := FL_Czech; // Czech translation by Spider
+    'fad76d9880579e841b98d018e8dbde6c', '3aa0eda21eca3529fbb23dae54a73053': Result := FL_Czech; // WIP Czech translation by Spider and the complete Czech translation by Starsoul (28/07/2024)
   else
     Result := FL_Unknown;
   end;
