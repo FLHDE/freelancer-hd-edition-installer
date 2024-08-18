@@ -516,7 +516,7 @@ var
   InstalledVersion: String;
 begin
   // Assume it's not needed on Wine
-  if IsWine then
+  if IsWine or NoMsvcRedist then
   begin
     Result := False
     exit;

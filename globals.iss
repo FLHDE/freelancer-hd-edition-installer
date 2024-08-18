@@ -20,6 +20,9 @@ var
   // Used to store the names of all edited config files
   EditedConfigFiles: TStringList;
 
+  // Used to optionally prevent the MSVC redist from being installed
+  NoMsvcRedist: Boolean;
+
 procedure InitConstants();
 begin
   EDD_GET_DEVICE_INTERFACE_NAME := 1;

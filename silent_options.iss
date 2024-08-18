@@ -42,6 +42,9 @@ begin
     GpuManufacturer := NVIDIAOrOther;
   if CmdLineParamExists('/ForceAMD') then
     GpuManufacturer := AMD;
+
+  if CmdLineParamExists('/NoMsvcRedist') then
+    NoMsvcRedist := True;
 end;
 
 // Parses all selected options from the command line arguments and sets them directly in the UI elements
@@ -153,7 +156,6 @@ begin
 
   // DxWrapper options
   DxWrapperAa.ItemIndex := GetParamInt('DxWrapperAa', Integer(DxWrapperAa.ItemIndex));
-
   DxWrapperAf.ItemIndex := GetParamInt('DxWrapperAf', Integer(DxWrapperAf.ItemIndex));
 
   // DxWrapper options #2

@@ -14,7 +14,8 @@
 #define MyFolderName "freelancer-hd-edition-" + MyAppVersion
 #define MyZipName "freelancerhd"
 #define VcRedistName "VC_redist.x86.exe"
-#define VcRedistVersionStr "14.38.33135.00" ; Make sure to not include the "v" at the start
+; The actual included VC Redist is version 14.38.33135.00, but FLHook is the only software part of HDE that depends on it and is built with MSVC v142.
+#define VcRedistVersionStr "14.29.0000.00" ; Make sure to not include the "v" at the start
 ; This variable controls whether the zip is shipped with the exe or downloaded from a mirror
 #define AllInOneInstall true
 #dim Mirrors[2] {"https://archive.org/download/freelancer-hd-edition-" + MyAppVersion + "/freelancer-hd-edition-" + MyAppVersion + ".7z", "https://github.com/BC46/freelancer-hd-edition/archive/refs/tags/" + MyAppVersion + ".zip"}
@@ -385,6 +386,7 @@ begin
     HasLightingBug := GetHasLightingBug();
     GpuManufacturer := GetGpuManufacturer();
     SystemLanguage := GetSystemLanguage();
+    NoMsvcRedist := False;
 
     // Initialize EditedConfigFiles
     EditedConfigFiles := TStringList.Create;
