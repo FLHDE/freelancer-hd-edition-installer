@@ -396,6 +396,7 @@ begin
 
     // Initialize UI. This populates all our ui elements with text, size and other properties
     InitializeUi();
+    SetDefaultOptions();
 
     // If the user wants to do a silent install, parse all selected options from the given command line args
     if WizardSilent then

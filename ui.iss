@@ -337,7 +337,6 @@ begin
   CallSign.Add('Order Omicron 0-0');
   CallSign.Add('LSF Gamma 6-9');
   CallSign.Add('Hacker Kappa 4-20');
-  CallSign.Values[0] := True;
 
   // Initialize PitchVariations page and add content
   GameplayOptions := CreateCustomPage(CallSign.ID,
@@ -353,7 +352,6 @@ begin
 
   PitchVariations := TCheckBox.Create(GameplayOptions);
   PitchVariations.Parent := GameplayOptions.Surface;
-  PitchVariations.Checked := True;
   PitchVariations.Caption := 'Add more voices for the NPCs';
   PitchVariations.Width := GameplayOptions.SurfaceWidth - ScaleX(8);
 
@@ -379,7 +377,6 @@ begin
 
   NoCountermeasureRightClick := TCheckBox.Create(GameplayOptions);
   NoCountermeasureRightClick.Parent := GameplayOptions.Surface;
-  NoCountermeasureRightClick.Checked := True;
   NoCountermeasureRightClick.Top := descRegeneratableShields.Top + ScaleY(45);
   NoCountermeasureRightClick.Caption := 'Prevent Countermeasure dropper activation on right-click';
   NoCountermeasureRightClick.Width := GameplayOptions.SurfaceWidth - ScaleX(8);
@@ -410,12 +407,10 @@ begin
   descEnglishImprovements.Caption := 
   'This option fixes many typos, grammar mistakes, inconsistencies, and more, in the English Freelancer text and audio resources. It also adds a higher quality Freelancer intro (1440x960 instead of 720x480), which is only available in English.' + #13#10#13#10 +  
   'NOTE: This option will set all of Freelancer''s text, voice lines, and the intro to English. Disable this option if you''d like to play Freelancer in a different language like German, French, or Russian.'
-  + #13#10#13#10 + 'NOTE 2: Some text resources will remain English.';
+  + #13#10#13#10 + 'NOTE 2: Some text resources will remain English if this option is disabled.';
 
   EnglishImprovements := TCheckBox.Create(PageEnglishImprovements);
   EnglishImprovements.Parent := PageEnglishImprovements.Surface;
-  // Only check the English improvements option if the user's system language is set to English or other. If otherwise, it's likely the user would want to play FL in a different language.
-  EnglishImprovements.Checked := SystemLanguage = S_EnglishOrOther;
   EnglishImprovements.Caption := 'Apply English Freelancer improvements';
   EnglishImprovements.Width := PageEnglishImprovements.SurfaceWidth - ScaleX(8);
   
@@ -429,8 +424,6 @@ begin
   RussianFonts := TCheckBox.Create(PageEnglishImprovements);
   RussianFonts.Parent := PageEnglishImprovements.Surface;
   RussianFonts.Top := descEnglishImprovements.Top + ScaleY(160);
-  // Only check the Russian fonts + Rus Chat option if the user's system language is set to Russian
-  RussianFonts.Checked := SystemLanguage = S_Russian;
   RussianFonts.Caption := 'Use Russian fonts + Rus Chat';
   RussianFonts.Width := PageEnglishImprovements.SurfaceWidth - ScaleX(8);
 
@@ -446,7 +439,6 @@ begin
   StoryMode.Items.Add('Story Mode (default)');
   StoryMode.Items.Add('Open Single Player (Normal)');
   StoryMode.Items.Add('Open Single Player (Pirate)');
-  StoryMode.ItemIndex := 0;
 
   lblSinglePlayerMode := TLabel.Create(PageSinglePlayer);
   lblSinglePlayerMode.Parent := PageSinglePlayer.Surface;
@@ -504,14 +496,6 @@ begin
   StartupRes.Add('1440p 16:9 - 2560x1440');
   StartupRes.Add('4K 4:3 - 2880x2160');
   StartupRes.Add('4K 16:9 - 3840x2160');
-
-  // Determine best default startup resolution based on user's screen size
-  if DesktopRes.Height >= 2160 then
-    StartupRes.Values[8] := True
-  else if DesktopRes.Height >= 1440 then
-    StartupRes.Values[6] := True
-  else
-    StartupRes.Values[4] := True;
   
   // Initialize LogoRes page and add content
   LogoRes := CreateInputOptionPage(StartupRes.ID,
@@ -530,14 +514,6 @@ begin
   LogoRes.Add('1440p 16:9 - 2560x1440');
   LogoRes.Add('4K 4:3 - 2880x2160');
   LogoRes.Add('4K 16:9 - 3840x2160');
-
-  // Determine best default logo resolution based on user's screen size
-  if DesktopRes.Height >= 2160 then
-    LogoRes.Values[9] := True
-  else if DesktopRes.Height >= 1440 then
-    LogoRes.Values[7] := True
-  else
-    LogoRes.Values[5] := True;
   
   // Fix Small Text on 1440p/4K resolutions
   SmallText := CreateInputOptionPage(LogoRes.ID,
@@ -551,16 +527,6 @@ begin
 
   if IsWine then
     SmallText.Add('Yes, apply fix for 3840x1600 screens');
-
-  // Determine best small text fix based on user's screen size
-  if DesktopRes.Height >= 2160 then
-    SmallText.Values[2] := True
-  else if IsWine and (DesktopRes.Height >= 1600) then
-    SmallText.Values[3] := True
-  else if DesktopRes.Height >= 1200 then
-    SmallText.Values[1] := True
-  else
-    SmallText.Values[0] := True;
   
   // Initialize HUD page and add content
   PageWidescreenHud := CreateCustomPage(
@@ -580,9 +546,6 @@ begin
   WidescreenHud.Parent := PageWidescreenHud.Surface;
   WidescreenHud.Caption := 'Enable Advanced Widescreen HUD';
   WidescreenHud.Width := PageWidescreenHud.SurfaceWidth - ScaleX(8);
-
-  // Only check the wide screen HUD option if the user's aspect ratio is 16:9 or wider
-  WidescreenHud.Checked := IsResWithinAspectRatioRange(Min16by9Factor, MaxGeneralFactor);
   
   descWeaponGroups := TNewStaticText.Create(PageWidescreenHud);
   descWeaponGroups.Parent := PageWidescreenHud.Surface;
@@ -596,7 +559,6 @@ begin
   WeaponGroups.Top := descWidescreenHud.Top + ScaleY(85);
   WeaponGroups.Caption := 'Add Weapon Group buttons';
   WeaponGroups.Width := PageWidescreenHud.SurfaceWidth - ScaleX(8);
-  WeaponGroups.Checked := True;
 
   // Initialize Dark HUD page and add content
   PageDarkHud := CreateCustomPage(
@@ -620,7 +582,6 @@ begin
   VanillaIcons := TRadioButton.Create(PageDarkHud);
   VanillaIcons.Parent := PageDarkHud.Surface;
   VanillaIcons.Top := descDarkHud.Top + ScaleY(45);
-  VanillaIcons.Checked := True;
   VanillaIcons.Caption := 'HD Vanilla Icons';
   VanillaIcons.Width := PageDarkHud.SurfaceWidth - ScaleX(8);
 
@@ -677,9 +638,6 @@ begin
   PlanetScape.Parent := PagePlanetScape.Surface;
   PlanetScape.Caption := 'Fix clipping with 16:9 resolution planetscapes';
   PlanetScape.Width := PagePlanetScape.SurfaceWidth - ScaleX(8);
-
-  // Only check the planetscapes fix option if the user's aspect ratio is 16:9
-  PlanetScape.Checked := IsResWithinAspectRatioRange(Min16by9Factor, Max16by9Factor);
   
   // Choose Graphics API
   PageGraphicsApi := CreateCustomPage(
@@ -696,7 +654,6 @@ begin
 
   DgVoodooGraphicsApi := TRadioButton.Create(PageGraphicsApi);
   DgVoodooGraphicsApi.Parent := PageGraphicsApi.Surface;
-  DgVoodooGraphicsApi.Checked := GpuManufacturer = NVIDIAOrOther;
   DgVoodooGraphicsApi.Top := ScaleY(50);
   DgVoodooGraphicsApi.Caption := 'dgVoodoo (DirectX 11, recommended for NVIDIA and Intel GPUs)';
   DgVoodooGraphicsApi.Width := PageGraphicsApi.SurfaceWidth - ScaleX(8);
@@ -714,7 +671,6 @@ begin
 
   DxWrapperGraphicsApi := TRadioButton.Create(PageGraphicsApi);
   DxWrapperGraphicsApi.Parent := PageGraphicsApi.Surface;
-  DxWrapperGraphicsApi.Checked := GpuManufacturer = AMD;
   DxWrapperGraphicsApi.Top := descDgVoodooGraphicsApi.Top + ScaleY(37);
   DxWrapperGraphicsApi.Caption := 'DxWrapper + d3d8to9 (DirectX 9, recommended for all GPUs)';
   DxWrapperGraphicsApi.Width := PageGraphicsApi.SurfaceWidth - ScaleX(8);
@@ -776,7 +732,6 @@ begin
   DxWrapperAa.Items.Add('4x');
   DxWrapperAa.Items.Add('8x');
   DxWrapperAa.Items.Add('Auto (recommended)');
-  DxWrapperAa.ItemIndex := 4;
   DxWrapperAa.Top := ScaleY(20);
   DxWrapperAa.Width := 155;
 
@@ -801,7 +756,6 @@ begin
   DxWrapperAf.Items.Add('8x');
   DxWrapperAf.Items.Add('16x');
   DxWrapperAf.Items.Add('Auto (recommended)');
-  DxWrapperAf.ItemIndex := 5;
   DxWrapperAf.Top := lblDxWrapperAf.Top + ScaleY(20);
   DxWrapperAf.Width := 155;
 
@@ -830,7 +784,6 @@ begin
   DgVoodooAa.Items.Add('2x');
   DgVoodooAa.Items.Add('4x');
   DgVoodooAa.Items.Add('8x (recommended)');;
-  DgVoodooAa.ItemIndex := 3;
   DgVoodooAa.Top := ScaleY(20);
   DgVoodooAa.Width := 155;
 
@@ -854,7 +807,6 @@ begin
   DgVoodooAf.Items.Add('4x');
   DgVoodooAf.Items.Add('8x');
   DgVoodooAf.Items.Add('16x (recommended)');
-  DgVoodooAf.ItemIndex := 4;
   DgVoodooAf.Top := lblDgVoodooAf.Top + ScaleY(20);
   DgVoodooAf.Width := 155;
 
@@ -881,7 +833,6 @@ begin
     DgVoodooRefreshRate := TNewEdit.Create(DgVoodooPage);
     DgVoodooRefreshRate.Parent := DgVoodooPage.Surface;;
     DgVoodooRefreshRate.Top := lblDgVoodooRefreshRateHz.Top - ScaleY(3);
-    DgVoodooRefreshRate.Text := IntToStr(RefreshRate);
     DgVoodooRefreshRate.OnKeyPress := @DigitFieldKeyPress;
 
     descDgVoodooRefreshRate := TNewStaticText.Create(DgVoodooPage);
@@ -908,7 +859,6 @@ begin
   
   DxWrapperReShade := TCheckBox.Create(DxWrapperPage2);
   DxWrapperReShade.Parent := DxWrapperPage2.Surface;
-  DxWrapperReShade.Checked := True;
   DxWrapperReShade.Caption := txtReShade;
   DxWrapperReShade.Width := DxWrapperPage2.SurfaceWidth - ScaleX(8);
   
@@ -921,7 +871,6 @@ begin
   
   DxWrapperSaturation := TCheckBox.Create(DxWrapperPage2);
   DxWrapperSaturation.Parent := DxWrapperPage2.Surface;
-  DxWrapperSaturation.Checked := True;
   DxWrapperSaturation.Top := descDxWrapperReShade.Top + ScaleY(58);
   DxWrapperSaturation.Caption := txtSaturation;
   DxWrapperSaturation.Width := DxWrapperPage2.SurfaceWidth - ScaleX(8);
@@ -935,7 +884,6 @@ begin
 
   DxWrapperSharpening := TCheckBox.Create(DxWrapperPage2);
   DxWrapperSharpening.Parent := DxWrapperPage2.Surface;
-  DxWrapperSharpening.Checked := True;
   DxWrapperSharpening.Top := descDxWrapperSaturation.Top + ScaleY(28);
   DxWrapperSharpening.Caption := txtSharpening;
   DxWrapperSharpening.Width := DxWrapperPage2.SurfaceWidth - ScaleX(8);
@@ -982,7 +930,6 @@ begin
   
   DgVoodooReShade := TCheckBox.Create(DgVoodooPage2);
   DgVoodooReShade.Parent := DgVoodooPage2.Surface;
-  DgVoodooReShade.Checked := True;
   DgVoodooReShade.Caption := txtReShade;
   DgVoodooReShade.Width := DgVoodooPage2.SurfaceWidth - ScaleX(8);
   
@@ -995,7 +942,6 @@ begin
   
   DgVoodooSaturation := TCheckBox.Create(DgVoodooPage2);
   DgVoodooSaturation.Parent := DgVoodooPage2.Surface;
-  DgVoodooSaturation.Checked := True;
   DgVoodooSaturation.Top := descDgVoodooReShade.Top + ScaleY(58);
   DgVoodooSaturation.Caption := txtSaturation;
   DgVoodooSaturation.Width := DgVoodooPage2.SurfaceWidth - ScaleX(8);
@@ -1009,7 +955,6 @@ begin
 
   DgVoodooSharpening := TCheckBox.Create(DgVoodooPage2);
   DgVoodooSharpening.Parent := DgVoodooPage2.Surface;
-  DgVoodooSharpening.Checked := True;
   DgVoodooSharpening.Top := descDgVoodooSaturation.Top + ScaleY(28);
   DgVoodooSharpening.Caption := txtSharpening;
   DgVoodooSharpening.Width := DgVoodooPage2.SurfaceWidth - ScaleX(8);
@@ -1059,7 +1004,6 @@ begin
   VanillaAf.Items.Add('4x');
   VanillaAf.Items.Add('8x');
   VanillaAf.Items.Add('16x (recommended)');
-  VanillaAf.ItemIndex := 4;
   VanillaAf.Top := lblVanillaAf.Top + ScaleY(20);
   VanillaAf.Width := 155;
 
@@ -1085,7 +1029,6 @@ begin
   ShinyReflections := TRadioButton.Create(PageEffects);
   ShinyReflections.Parent := PageEffects.Surface;
   ShinyReflections.Top := ScaleY(20);
-  ShinyReflections.Checked := True;
   ShinyReflections.Caption := 'Use shiny reflections (recommended)';
   ShinyReflections.Width := PageEffects.SurfaceWidth - ScaleX(8);
   
@@ -1133,7 +1076,6 @@ begin
   EngineTrails := TCheckBox.Create(PageEffects);
   EngineTrails.Parent := PageEffects.Surface;
   EngineTrails.Top := descMissileEffects.Top + ScaleY(47);
-  EngineTrails.Checked := True;
   EngineTrails.Caption := 'Add player ship engine trails';
   EngineTrails.Width := PageEffects.SurfaceWidth - ScaleX(8);
 
@@ -1151,7 +1093,6 @@ begin
   PageDrawDistances.Add('7x');
   PageDrawDistances.Add('8x');
   PageDrawDistances.Add('Maximized (recommended)');
-  PageDrawDistances.Values[8] := True;
 
   // Skips
   PageSkips := CreateCustomPage(
@@ -1169,7 +1110,6 @@ begin
   JumpTunnel5Sec := TRadioButton.Create(PageSkips);
   JumpTunnel5Sec.Parent := PageSkips.Surface;
   JumpTunnel5Sec.Top := ScaleY(20);
-  JumpTunnel5Sec.Checked := True;
   JumpTunnel5Sec.Caption := '5 second jump tunnels';
   JumpTunnel5Sec.Width := PageSkips.SurfaceWidth - ScaleX(8);
   
@@ -1203,7 +1143,6 @@ begin
   SkipIntros := TCheckBox.Create(PageSkips);
   SkipIntros.Parent := PageSkips.Surface;
   SkipIntros.Top := descJumpTunnelDuration.Top + ScaleY(40);
-  SkipIntros.Checked := True;
   SkipIntros.Caption := 'Skip startup intros';
   SkipIntros.Width := PageSkips.SurfaceWidth - ScaleX(8);
 
@@ -1213,12 +1152,11 @@ begin
   descSkippableCutscenes.Top := descSkipIntros.Top + ScaleY(60);
   descSkippableCutscenes.Width := PageSkips.SurfaceWidth;
   descSkippableCutscenes.Caption := 'Normally, the cinematics you see during the storyline cannot be skipped. This option allows you to skip them by pressing the Esc key.'
-  + #13#10 + 'NOTE: This does not apply to space cutscenes; it is not possible to skip those.';
+  + #13#10 + 'NOTE: This does not apply to space cutscenes; it is not possible to skip these.';
 
   SkippableCutscenes := TCheckBox.Create(PageSkips);
   SkippableCutscenes.Parent := PageSkips.Surface;
   SkippableCutscenes.Top := descSkipIntros.Top + ScaleY(40);
-  SkippableCutscenes.Checked := True;
   SkippableCutscenes.Caption := 'Skip story cutscenes with Esc key';
   SkippableCutscenes.Width := PageSkips.SurfaceWidth - ScaleX(8);
   
@@ -1238,7 +1176,6 @@ begin
   
   SinglePlayer := TCheckBox.Create(PageMiscOptions);
   SinglePlayer.Parent := PageMiscOptions.Surface;
-  SinglePlayer.Checked := True;
   SinglePlayer.Caption := 'Single Player Command Console';
   SinglePlayer.Width := PageMiscOptions.SurfaceWidth - ScaleX(8);
   
@@ -1252,7 +1189,6 @@ begin
   
   BestOptions := TCheckBox.Create(PageMiscOptions);
   BestOptions.Parent := PageMiscOptions.Surface;
-  BestOptions.Checked := True;
   BestOptions.Top := descSinglePlayer.Top + ScaleY(55);
   BestOptions.Caption := 'Apply Best Video Options';
   BestOptions.Width := PageMiscOptions.SurfaceWidth - ScaleX(8);
@@ -1264,7 +1200,6 @@ begin
   DisplayMode.Items.Add('Fullscreen (default)');
   DisplayMode.Items.Add('Windowed');
   DisplayMode.Items.Add('Borderless Windowed');
-  DisplayMode.ItemIndex := 0;
   DisplayMode.Top := BestOptions.Top + ScaleY(75);
 
   lblDisplayMode := TLabel.Create(PageMiscOptions);
@@ -1279,7 +1214,6 @@ begin
     lblDisplayMode.Left := ScaleX(240);
     DisplayMode.Width := 230;
     DisplayMode.Items[2] := 'Borderless Windowed (recommended)';
-    DisplayMode.ItemIndex := 2;
   end;
 
   descDisplayMode := TNewStaticText.Create(PageMiscOptions);
@@ -1299,7 +1233,6 @@ begin
   DoNotPauseOnAltTab.Top := descDisplayMode.Top + ScaleY(60);
   DoNotPauseOnAltTab.Caption := 'Keep Freelancer running in the background when Alt-Tabbed';
   DoNotPauseOnAltTab.Width := PageMiscOptions.SurfaceWidth - ScaleX(8);
-  MusicInBackground := False;
 
   with DxWrapperPage do
     OnShouldSkipPage := @PageHandler_ShouldSkipPage;
@@ -1334,4 +1267,108 @@ begin
       + #13#10 + 'dxgi.dll (dgVoodoo ReShade)'
       + #13#10 + 'dinput8.dll (DirectInput)'), mbError, MB_OK);
   end;
+end;
+
+procedure SetDefaultOptions();
+begin
+  CallSign.Values[0] := True;
+  PitchVariations.Checked := True;
+  RegeneratableShields.Checked := False;
+  NoCountermeasureRightClick.Checked := True;
+  AdvancedAudioOptions.Checked := False;
+
+  // Only check the English improvements option if the user's system language is set to English or other. If otherwise, it's likely the user would want to play FL in a different language.
+  EnglishImprovements.Checked := SystemLanguage = S_EnglishOrOther;
+  // Only check the Russian fonts + Rus Chat option if the user's system language is set to Russian
+  RussianFonts.Checked := SystemLanguage = S_Russian;
+
+  StoryMode.ItemIndex := 0;
+  LevelRequirements.Checked := False;
+  NewSaveFolder.Checked := False;
+
+  // Determine best default startup resolution based on user's screen size
+  if DesktopRes.Height >= 2160 then
+    StartupRes.Values[8] := True
+  else if DesktopRes.Height >= 1440 then
+    StartupRes.Values[6] := True
+  else
+    StartupRes.Values[4] := True;
+
+  // Determine best default logo resolution based on user's screen size
+  if DesktopRes.Height >= 2160 then
+    LogoRes.Values[9] := True
+  else if DesktopRes.Height >= 1440 then
+    LogoRes.Values[7] := True
+  else
+    LogoRes.Values[5] := True;
+
+  // Determine best small text fix based on user's screen size
+  if DesktopRes.Height >= 2160 then
+    SmallText.Values[2] := True
+  else if IsWine and (DesktopRes.Height >= 1600) then
+    SmallText.Values[3] := True
+  else if DesktopRes.Height >= 1200 then
+    SmallText.Values[1] := True
+  else
+    SmallText.Values[0] := True;
+
+  // Only check the wide screen HUD option if the user's aspect ratio is 16:9 or wider
+  WidescreenHud.Checked := IsResWithinAspectRatioRange(Min16by9Factor, MaxGeneralFactor);
+  WeaponGroups.Checked := True;
+
+  DarkHud.Checked := False;
+  VanillaIcons.Checked := True;
+  CustomNavMap.Checked := False;
+
+  // Only check the planetscapes fix option if the user's aspect ratio is 16:9
+  PlanetScape.Checked := IsResWithinAspectRatioRange(Min16by9Factor, Max16by9Factor);
+
+  DgVoodooGraphicsApi.Checked := GpuManufacturer = NVIDIAOrOther;
+  DxWrapperGraphicsApi.Checked := GpuManufacturer = AMD;
+
+  DxWrapperAa.ItemIndex := 4;
+  DxWrapperAf.ItemIndex := 5;
+
+  DgVoodooAa.ItemIndex := 3;
+  DgVoodooAf.ItemIndex := 4;
+
+  VanillaAf.ItemIndex := 4;
+
+  if GpuManufacturer = AMD then
+    DgVoodooRefreshRate.Text := IntToStr(RefreshRate);
+
+  DxWrapperReShade.Checked := True;
+  DxWrapperSaturation.Checked := True;
+  DxWrapperSharpening.Checked := True;
+  DxWrapperHdr.Checked := False;
+  DxWrapperBloom.Checked := False;
+
+  DgVoodooReShade.Checked := True;
+  DgVoodooSaturation.Checked := True;
+  DgVoodooSharpening.Checked := True;
+  DgVoodooHdr.Checked := False;
+  DgVoodooBloom.Checked := False;
+
+  ShinyReflections.Checked := True;
+  ExplosionEffects.Checked := False;
+  MissileEffects.Checked := False;
+  EngineTrails.Checked := True;
+
+  PageDrawDistances.Values[8] := True;
+
+  JumpTunnel5Sec.Checked := True;
+  SkipIntros.Checked := True;
+  SkippableCutscenes.Checked := True;
+
+  SinglePlayer.Checked := True;
+  BestOptions.Checked := True;
+  DisplayMode.ItemIndex := 0;
+
+  if IsWine then
+    DisplayMode.ItemIndex := 2
+  else
+    DisplayMode.ItemIndex := 0;
+
+  DoNotPauseOnAltTab.Checked := False;
+  MusicInBackground := False;
 end;
