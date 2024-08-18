@@ -488,12 +488,12 @@ begin
   if ShinyReflections.Checked then begin
     RenameFile(ExpandConstant('{app}\DATA\FX\envmapbasic.mat'),ExpandConstant('{app}\DATA\FX\envmapbasic_vanilla.mat'))
     RenameFile(ExpandConstant('{app}\DATA\FX\envmapbasic_shiny.mat'),ExpandConstant('{app}\DATA\FX\envmapbasic.mat'))
-  end 
+  end
   else if ShiniestReflections.Checked then begin
     RenameFile(ExpandConstant('{app}\DATA\FX\envmapbasic.mat'),ExpandConstant('{app}\DATA\FX\envmapbasic_vanilla.mat'))
     RenameFile(ExpandConstant('{app}\DATA\FX\envmapbasic_shinier.mat'),ExpandConstant('{app}\DATA\FX\envmapbasic.mat'))
   end;
-  
+
   // Add player engine trails
   if EngineTrails.Checked then begin
     RenameFile(ExpandConstant('{app}\DATA\EQUIPMENT\engine_equip.ini'),ExpandConstant('{app}\DATA\EQUIPMENT\engine_equip_vanilla.ini'))
@@ -557,19 +557,19 @@ begin
   // Set draw distances
   if(PageDrawDistances.Values[0]) then // 1x (Vanilla)
     FileReplaceString(FilePath, 'lod_scale = 0', 'lod_scale = 1')
-  else if(PageDrawDistances.Values[1]) then // 2x 
+  else if(PageDrawDistances.Values[1]) then // 2x
     FileReplaceString(FilePath, 'lod_scale = 0', 'lod_scale = 2')
-  else if(PageDrawDistances.Values[2]) then // 3x 
+  else if(PageDrawDistances.Values[2]) then // 3x
     FileReplaceString(FilePath, 'lod_scale = 0', 'lod_scale = 3')
-  else if(PageDrawDistances.Values[3]) then // 4x 
+  else if(PageDrawDistances.Values[3]) then // 4x
     FileReplaceString(FilePath, 'lod_scale = 0', 'lod_scale = 4')
-  else if(PageDrawDistances.Values[4]) then // 5x 
+  else if(PageDrawDistances.Values[4]) then // 5x
     FileReplaceString(FilePath, 'lod_scale = 0', 'lod_scale = 5')
-  else if(PageDrawDistances.Values[5]) then // 6x 
+  else if(PageDrawDistances.Values[5]) then // 6x
     FileReplaceString(FilePath, 'lod_scale = 0', 'lod_scale = 6')
-  else if(PageDrawDistances.Values[6]) then // 7x 
+  else if(PageDrawDistances.Values[6]) then // 7x
     FileReplaceString(FilePath, 'lod_scale = 0', 'lod_scale = 7')
-  else if(PageDrawDistances.Values[7]) then // 8x 
+  else if(PageDrawDistances.Values[7]) then // 8x
     FileReplaceString(FilePath, 'lod_scale = 0', 'lod_scale = 8')
 end;
 
@@ -584,7 +584,7 @@ begin
     RenameFile(EXEPath + 'd3d8.dll', EXEPath + 'd3d8_vanilla.dll');
 
   // Applies the correct graphics API
-  if DxWrapperGraphicsApi.Checked then 
+  if DxWrapperGraphicsApi.Checked then
     RenameFile(EXEPath + 'd3d8_dxwrapper.dll', EXEPath + 'd3d8.dll')
   else if dgVoodooGraphicsApi.Checked then
   begin
@@ -828,7 +828,7 @@ begin
 
     RenameFile(HudPath + 'HUD\hud_shipinfo.cmp', HudPath + 'HUD\hud_shipinfo_vanilla.cmp')
     RenameFile(HudPath + 'HUD\hud_target.cmp', HudPath + 'HUD\hud_target_vanilla.cmp')
-    
+
     if WidescreenHud.Checked then
       begin
         // If both the wide and dark hud have been enabled, use a merged version
@@ -1020,10 +1020,10 @@ begin
 
   // Modify jump in and out tunnel time based on selected option
   if JumpTunnel5Sec.Checked then
-    begin 
+    begin
       FileReplaceString(FilePath, 'jump_out_tunnel_time = 7' + #13#10
                                   'jump_in_tunnel_time = 3'  + #13#10,
-                                   
+
                                   'jump_out_tunnel_time = 3.5' + #13#10
                                   'jump_in_tunnel_time = 1.5'  + #13#10)
   end
@@ -1031,7 +1031,7 @@ begin
     begin
       FileReplaceString(FilePath, 'jump_out_tunnel_time = 7' + #13#10
                                   'jump_in_tunnel_time = 3'  + #13#10,
-                                   
+
                                   'jump_out_tunnel_time = 1.75' + #13#10
                                   'jump_in_tunnel_time = 0.75'  + #13#10)
     end
@@ -1039,7 +1039,7 @@ begin
     begin
       FileReplaceString(FilePath, 'jump_out_tunnel_time = 7' + #13#10
                                   'jump_in_tunnel_time = 3'  + #13#10,
-                                   
+
                                   'jump_out_tunnel_time = 0' + #13#10
                                   'jump_in_tunnel_time = 0'  + #13#10)
     end
@@ -1053,7 +1053,7 @@ begin
 
   // Skip intros if selected
   if SkipIntros.Checked then
-    begin 
+    begin
       FileReplaceString(FilePath, 'movie_file = movies\MGS_Logo_Final.wmv' + #13#10
                                   'movie_file = movies\DA_Logo_Final.wmv'  + #13#10
                                   'movie_file = movies\FL_Intro.wmv'  + #13#10,
@@ -1312,7 +1312,7 @@ begin
 
   if (DisplayMode.ItemIndex = 1) or (DisplayMode.ItemIndex = 2) then // Windowed or borderless windowed selected
     WriteHexToFile(ExePath, $1B16CC, '00'); // Windowed mode
-  
+
   if DisplayMode.ItemIndex = 2 then // Borderless windowed selected
   begin
     WriteHexToFile(ExePath, $02477A, '0000'); // Borderless window #1
@@ -1325,7 +1325,7 @@ begin
       WriteHexToFile(ExePath, $1B2665, 'EB') // Keep Freelancer running in the background when Alt-Tabbed
     else
       WriteHexToFile(ExePath, $1B264C, 'BA0100000090'); // Keep Freelancer and its window running in the background when Alt-Tabbed
-    
+
     if MusicInBackground then
       begin
         WriteHexToFile(ExeFolderPath + 'soundmanager.dll', $0A021, '80'); // Continue playing the game's audio when Alt-Tabbed #1

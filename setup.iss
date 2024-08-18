@@ -51,7 +51,6 @@ InfoBeforeFile={#SourcePath}\Assets\Text\installinfo.txt
 OutputBaseFilename=FreelancerHDESetup
 SetupIconFile={#SourcePath}\Assets\Images\icon.ico
 SolidCompression=yes
-RestartIfNeededByRun=no
 UninstallDisplayIcon={app}\EXE\{#MyAppExeName}
 UninstallDisplayName={#MyAppName}
 WizardImageFile={#SourcePath}\Assets\Images\backgroundpattern.bmp
@@ -264,7 +263,7 @@ begin
     if (PageId = PageMiscOptions.ID) and (DoNotPauseOnAltTab.Checked) then
     begin
       MusicInBackground := MsgBox(
-        'Freelancer will continue running in the background when Alt-Tabbed. Would you also like the game''s audio to continue playing in the background?' + #13#10 + #13#10 + 
+        'Freelancer will continue running in the background when Alt-Tabbed. Would you also like the game''s audio to continue playing in the background?' + #13#10 + #13#10 +
         'You may not want this if you''re planning to run multiple instances of Freelancer simultaneously.',
         mbConfirmation, MB_YESNO) = IDYES
     end;
