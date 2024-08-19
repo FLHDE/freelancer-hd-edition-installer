@@ -294,7 +294,7 @@ begin
     end;
 
     // If the user has selected the "do not pause on Alt-Tab" option, ask them if they want the game audio to continue playing in the background too.
-    if (PageId = PageMiscOptions.ID) and (DoNotPauseOnAltTab.Checked) then
+    if (PageId = PageMiscOptions.ID) and (DoNotPauseOnAltTab.Checked) and (not WizardSilent) then
     begin
       MusicInBackground := MsgBox(
         'Freelancer will continue running in the background when Alt-Tabbed. Would you also like the game''s audio to continue playing in the background?' + #13#10 + #13#10 +

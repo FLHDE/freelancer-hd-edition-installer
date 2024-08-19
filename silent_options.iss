@@ -226,5 +226,6 @@ begin
   BestOptions.Checked := GetParamInt('BestOptions', Integer(BestOptions.Checked)) = 1;
   DisplayMode.ItemIndex := GetParamInt('DisplayMode', Integer(DisplayMode.ItemIndex));
   DoNotPauseOnAltTab.Checked := GetParamInt('DoNotPauseOnAltTab', Integer(DoNotPauseOnAltTab.Checked)) = 1;
+  MusicInBackground := GetParamInt('MusicInBackground', Integer(NewSaveFolder.Checked)) = 1;
 
 end;
