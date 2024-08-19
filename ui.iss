@@ -2,6 +2,7 @@
 var
   // Custom Pages
   DataDirPage: TInputDirWizardPage;
+  PageInstallType: TWizardPage;
   CallSign: TInputOptionWizardPage;
   GameplayOptions: TWizardPage;
   PageEnglishImprovements: TWizardPage;
@@ -28,6 +29,15 @@ var
   DgVoodooPage: TWizardPage;
   DgVoodooPage2: TWizardPage;
   VanillaPage: TWizardPage;
+
+  // Install types
+  ExpressInstall: TRadioButton;
+  CustomInstall: TRadioButton;
+  BasicInstall: TRadioButton;
+  descExpressInstall: TNewStaticText; 
+  descCustomInstall: TNewStaticText; 
+  descBasicInstall: TNewStaticText;
+  descInstallType: TNewStaticText; 
 
   // Pitch variations
   PitchVariations: TCheckBox;
@@ -316,9 +326,64 @@ begin
   // If the Reg key exists, use its content to populate the folder location box. Use the default path if otherwise.
   RegQueryStringValue(HKEY_LOCAL_MACHINE, 'SOFTWARE\Microsoft\Microsoft Games\Freelancer\1.0', 'AppPath', dir)
   DataDirPage.Values[0] := dir
+
+
+  PageInstallType := CreateCustomPage(
+    DataDirPage.ID,
+    'Installation type',
+    'Choose how you''d like to install {#MyAppName}.'
+  );
+
+  descInstallType := TNewStaticText.Create(PageInstallType);
+  descInstallType.Parent := PageInstallType.Surface;
+  descInstallType.WordWrap := True;
+  descInstallType.Width := PageInstallType.SurfaceWidth;
+  descInstallType.Caption := 'The {#MyAppName} installer offers custom options to improve the gameplay experience. The installation types below determine how these options should be applied during the installation process.';
+
+  ExpressInstall := TRadioButton.Create(PageInstallType);
+  ExpressInstall.Parent := PageInstallType.Surface;
+  ExpressInstall.Top := ScaleY(60);
+  ExpressInstall.Caption := 'Express install';
+  ExpressInstall.Width := PageInstallType.SurfaceWidth - ScaleX(8);
+  ExpressInstall.Checked := not WizardSilent;
+
+  descExpressInstall := TNewStaticText.Create(PageInstallType);
+  descExpressInstall.Parent := PageInstallType.Surface;
+  descExpressInstall.WordWrap := True;
+  descExpressInstall.Top := ExpressInstall.Top + ScaleY(20);
+  descExpressInstall.Width := PageInstallType.SurfaceWidth;
+  descExpressInstall.Caption := 'Install the mod with all recommended options automatically applied.';
+
+  CustomInstall := TRadioButton.Create(PageInstallType);
+  CustomInstall.Parent := PageInstallType.Surface;
+  CustomInstall.Top := descExpressInstall.Top + ScaleY(29);
+  CustomInstall.Caption := 'Custom install';
+  CustomInstall.Width := PageInstallType.SurfaceWidth - ScaleX(8);
+  CustomInstall.Checked := WizardSilent;
+
+  descCustomInstall := TNewStaticText.Create(PageInstallType);
+  descCustomInstall.Parent := PageInstallType.Surface;
+  descCustomInstall.WordWrap := True;
+  descCustomInstall.Top := CustomInstall.Top + ScaleY(20);
+  descCustomInstall.Width := PageInstallType.SurfaceWidth;
+  descCustomInstall.Caption := 'Install the mod but for all options manually choose which ones should be applied. This may take some time as there are quite a few options to go through.';
+
+  BasicInstall := TRadioButton.Create(PageInstallType);
+  BasicInstall.Parent := PageInstallType.Surface;
+  BasicInstall.Top := descCustomInstall.Top + ScaleY(42);
+  BasicInstall.Caption := 'Basic install (not recommended)';
+  BasicInstall.Width := PageInstallType.SurfaceWidth - ScaleX(8);
+
+  descBasicInstall := TNewStaticText.Create(PageInstallType);
+  descBasicInstall.Parent := PageInstallType.Surface;
+  descBasicInstall.WordWrap := True;
+  descBasicInstall.Top := BasicInstall.Top + ScaleY(20);
+  descBasicInstall.Width := PageInstallType.SurfaceWidth;
+  descBasicInstall.Caption := 'Install the mod without applying any options. Doing this is not recommended because you may miss out on improvements to the gameplay experience.';
+
   
   // Initialize CallSign page and add content
-  CallSign := CreateInputOptionPage(DataDirPage.ID,
+  CallSign := CreateInputOptionPage(PageInstallType.ID,
   'Single Player ID Code', 'Tired of being called Freelancer Alpha 1-1?',
   'You know when each time an NPC talks to you in-game, they call you Freelancer Alpha 1-1? This mod gives you the ability to change that ID code in Single Player. Select any option you like and the NPCs will call you by that.',
   True, False);

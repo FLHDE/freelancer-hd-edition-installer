@@ -55,6 +55,10 @@ var
   DefaultReflections, SelectedReflections: Integer;
   DefaultJumpTunnel, SelectedJumpTunnel: Integer;
 begin
+  // Installation type
+  if CmdLineParamExists('/NoOptions') then
+    BasicInstall.Checked := True;
+
   // Select Freelancer installation
   DataDirPage.Values[0] := GetParamStr('VanillaFlDir', DataDirPage.Values[0]);
 

@@ -120,6 +120,25 @@ var
 #include "silent_options.iss"
 #include "mod_options.iss"
 
+procedure SelectBestLanguageOptions;
+var
+  DetectedFlLanguage: FlLanguage;
+begin
+  DetectedFlLanguage := GetFreelancerLanguage(DataDirPage.Values[0]);
+
+  // Select the best default checked values based on the detected FL language, which in this case is more appropriate than the system language check
+  // If the detected language is unknown, leave the checked properties as they are (the values determined based on the system language will be used instead)
+  if DetectedFlLanguage = FL_English then
+    EnglishImprovements.Checked := true
+  else if DetectedFlLanguage <> FL_Unknown then
+    EnglishImprovements.Checked := false;
+
+  if DetectedFlLanguage = FL_Russian then
+    RussianFonts.Checked := true
+  else if DetectedFlLanguage <> FL_Unknown then
+    RussianFonts.Checked := false;
+end;
+
 // Checks which step we are on when it changed. If it's the postinstall step then start the actual installing
 procedure CurStepChanged(CurStep: TSetupStep);
 var
@@ -127,6 +146,13 @@ var
 begin
     if CurStep = ssPostInstall then
     begin
+        // Select default options right before the express install starts
+        if ExpressInstall.Checked then
+        begin
+          SetDefaultOptions;
+          SelectBestLanguageOptions;
+        end;
+
         # if !AllInOneInstall
           if OfflineInstall <> 'false' then
             FileCopy(OfflineInstall,ExpandConstant('{tmp}\{#MyZipName}.7z'),false);
@@ -154,41 +180,44 @@ begin
         DelTree(ExpandConstant('{app}\{#MyFolderName}'), True, True, True);
         UpdateProgress(90);
 
-        // Process options
-        WizardForm.StatusLabel.Caption := 'Processing your options...';
-        Process_CallSign();
-        Process_PitchVariations();
-        Process_RegeneratableShields();
-        Process_NoCountermeasureRightClick();
-        Process_AdvancedAudioOptions();
-        Process_EnglishImprovements();
-        Process_SinglePlayerMode();
-        Process_NewSaveFolder();
-        Process_LevelRequirements();
-        Process_StartUpLogo();
-        Process_FreelancerLogo();
-        Process_SmallText(); // Must be called before Process_RussianFonts();
-        Process_RussianFonts(); // Must be called after Process_SmallText();
-        Process_Console();
-        Process_BestOptions();
-        Process_Effects();
-        Process_SkipIntros();
-        Process_SkippableCutscenes();
-        Process_JumpTunnelDurations();
-        Process_DrawDistances();
-        Process_Planetscape();
-        Process_Win10(); // Must be called before Process_DgVoodoo();
-        Process_HUD(); // Must be called before Process_CustomIcons(); and Process_WeaponGroups();
-        Process_DarkHUD();
-        Process_CustomIcons(); // Must be called after Process_HUD();
-        Process_CustomNavMap();
-        Process_WeaponGroups(); // Must be called after Process_HUD();
-        Process_DxWrapper();
-        Process_DxWrapperReShade();
-        Process_DgVoodooReShade();
-        Process_DgVoodoo(); // Must be called after Process_Win10();
-        Process_VanillaGraphics();
-        Process_DisplayMode();
+        // Process options only if the user didn't specify that they should be applied
+        if not BasicInstall.Checked then
+        begin
+          WizardForm.StatusLabel.Caption := 'Processing options...';
+          Process_CallSign();
+          Process_PitchVariations();
+          Process_RegeneratableShields();
+          Process_NoCountermeasureRightClick();
+          Process_AdvancedAudioOptions();
+          Process_EnglishImprovements();
+          Process_SinglePlayerMode();
+          Process_NewSaveFolder();
+          Process_LevelRequirements();
+          Process_StartUpLogo();
+          Process_FreelancerLogo();
+          Process_SmallText(); // Must be called before Process_RussianFonts();
+          Process_RussianFonts(); // Must be called after Process_SmallText();
+          Process_Console();
+          Process_BestOptions();
+          Process_Effects();
+          Process_SkipIntros();
+          Process_SkippableCutscenes();
+          Process_JumpTunnelDurations();
+          Process_DrawDistances();
+          Process_Planetscape();
+          Process_Win10(); // Must be called before Process_DgVoodoo();
+          Process_HUD(); // Must be called before Process_CustomIcons(); and Process_WeaponGroups();
+          Process_DarkHUD();
+          Process_CustomIcons(); // Must be called after Process_HUD();
+          Process_CustomNavMap();
+          Process_WeaponGroups(); // Must be called after Process_HUD();
+          Process_DxWrapper();
+          Process_DxWrapperReShade();
+          Process_DgVoodooReShade();
+          Process_DgVoodoo(); // Must be called after Process_Win10();
+          Process_VanillaGraphics();
+          Process_DisplayMode();
+        end;
 
         WizardForm.StatusLabel.Caption := 'Cleaning up...';
         UpdateProgress(95);
@@ -224,12 +253,17 @@ begin
     end;
 end;
 
+function ShouldSkipPage(PageID: Integer): Boolean;
+begin
+  // If the user doesn't want to select the options manually, skip all the option pages
+  Result := (not CustomInstall.Checked) and (CallSign.ID <= PageID) and (PageID <= PageMiscOptions.ID);
+end;
+
 // Various logic to be applied when the user clicks on the Next button.
 function NextButtonClick(PageId: Integer): Boolean;
 var
   i : Integer;
   RefreshRateError: String;
-  DetectedFlLanguage: FlLanguage;
 begin
     Result := True;
 
@@ -296,19 +330,8 @@ begin
         exit;
       end;
 
-      DetectedFlLanguage := GetFreelancerLanguage(DataDirPage.Values[0]);
-
-      // Select the best default checked values based on the detected FL language, which in this case is more appropriate than the system language check
-      // If the detected language is unknown, leave the checked properties as they are (the values determined based on the system language will be used instead)
-      if DetectedFlLanguage = FL_English then
-        EnglishImprovements.Checked := true
-      else if DetectedFlLanguage <> FL_Unknown then
-        EnglishImprovements.Checked := false;
-
-      if DetectedFlLanguage = FL_Russian then
-        RussianFonts.Checked := true
-      else if DetectedFlLanguage <> FL_Unknown then
-        RussianFonts.Checked := false;
+      // The install directory is valid, so determine the best language options
+      SelectBestLanguageOptions;
     end;
 
     // Validate install location
