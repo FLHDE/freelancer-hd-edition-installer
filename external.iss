@@ -14,6 +14,24 @@ function GetFileAttributes(lpFileName: string): DWORD;
 function SetFileAttributes(lpFileName: string; dwFileAttributes: DWORD): BOOL;
   external 'SetFileAttributesW@kernel32.dll stdcall';
 
+function ShellExecuteEx(var lpExecInfo: TShellExecuteInfo): BOOL;
+  external 'ShellExecuteExW@shell32.dll stdcall';
+
+function WaitForSingleObject(hHandle: THandle; dwMilliseconds: DWORD): DWORD;
+  external 'WaitForSingleObject@kernel32.dll stdcall';
+
+function CloseHandle(hObject: THandle): BOOL; 
+  external 'CloseHandle@kernel32.dll stdcall';
+
+function PeekMessage(var lpMsg: TMsg; hWnd: HWND; wMsgFilterMin, wMsgFilterMax, wRemoveMsg: UINT): BOOL; 
+  external 'PeekMessageA@user32.dll stdcall';
+
+function TranslateMessage(const lpMsg: TMsg): BOOL;
+  external 'TranslateMessage@user32.dll stdcall';
+
+function DispatchMessage(const lpMsg: TMsg): Longint;
+  external 'DispatchMessageA@user32.dll stdcall';
+
 // Gets the device context
 function GetDC(hWnd: DWord): DWord;
   external 'GetDC@user32.dll stdcall';

@@ -139,10 +139,36 @@ begin
     RussianFonts.Checked := false;
 end;
 
+// Used to execute an external program without blocking Inno's UI thread
+procedure ShellExecuteAsync(fileName: string; parameters: string);
+var
+  ExecInfo: TShellExecuteInfo;
+begin
+  ExecInfo.cbSize := SizeOf(ExecInfo);
+  ExecInfo.fMask := SEE_MASK_NOCLOSEPROCESS;
+  ExecInfo.Wnd := 0;
+  ExecInfo.lpFile := fileName;
+  ExecInfo.lpParameters := parameters;
+  ExecInfo.nShow := SW_HIDE;
+
+  if not FileExists(fileName) then
+    RaiseException('File not found to execute: ' + fileName);
+
+  if ShellExecuteEx(ExecInfo) then
+  begin
+    while WaitForSingleObject(ExecInfo.hProcess, 100) = WAIT_TIMEOUT
+    do begin
+      AppProcessMessage;
+      WizardForm.Refresh();
+    end;
+    CloseHandle(ExecInfo.hProcess);
+  end;
+end;
+
 // Checks which step we are on when it changed. If it's the postinstall step then start the actual installing
 procedure CurStepChanged(CurStep: TSetupStep);
 var
-  ResultCode, i: Integer;
+  i: Integer;
 begin
     if CurStep = ssPostInstall then
     begin
@@ -166,7 +192,7 @@ begin
 
         // Unzip
         WizardForm.StatusLabel.Caption := ExpandConstant('Unpacking {#MyAppName}...');
-        Exec(ExpandConstant('{tmp}\7za.exe'), ExpandConstant(' x -y -aoa "{tmp}\{#MyZipName}.7z"  -o"{app}"'), '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
+        ShellExecuteAsync(ExpandConstant('{tmp}\7za.exe'), ExpandConstant(' x -y -aoa "{tmp}\{#MyZipName}.7z"  -o"{app}"'));
         // -aoa Overwrite All existing files without prompt
         // -o Set output directory
         // -y Assume "Yes" on all Queries

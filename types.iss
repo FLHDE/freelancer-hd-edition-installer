@@ -13,6 +13,36 @@ SYSTEMTIME = record
 end;
 
 type
+  TShellExecuteInfo = record
+    cbSize: DWORD;
+    fMask: Cardinal;
+    Wnd: HWND;
+    lpVerb: string;
+    lpFile: string;
+    lpParameters: string;
+    lpDirectory: string;
+    nShow: Integer;
+    hInstApp: THandle;
+    lpIDList: DWORD;
+    lpClass: string;
+    hkeyClass: THandle;
+    dwHotKey: DWORD;
+    hMonitor: THandle;
+    hProcess: THandle;
+  end;
+
+type
+  TMsg = record
+    hwnd: HWND;
+    message: UINT;
+    wParam: Longint;
+    lParam: Longint;
+    time: DWORD;
+    pt: TPoint;
+    lPrivate: DWORD;
+  end;
+
+type
 DISPLAY_DEVICEA = record
   cb: DWORD;
   DeviceName: array [0 .. 31] of AnsiChar;

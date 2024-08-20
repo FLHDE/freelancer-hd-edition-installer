@@ -551,3 +551,13 @@ begin
     ExtractTemporaryFile('{#VcRedistName}');
   end;
 end;
+
+procedure AppProcessMessage;
+var
+  Msg: TMsg;
+begin
+  while PeekMessage(Msg, WizardForm.Handle, 0, 0, PM_REMOVE) do begin
+    TranslateMessage(Msg);
+    DispatchMessage(Msg);
+  end;
+end;
