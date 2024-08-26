@@ -426,6 +426,7 @@ begin
     GpuManufacturer := GetGpuManufacturer();
     SystemLanguage := GetSystemLanguage();
     NoMsvcRedist := False;
+    LegacyDirCpy := False;
 
     // Initialize EditedConfigFiles
     EditedConfigFiles := TStringList.Create;

@@ -122,7 +122,7 @@ end;
 // If this fails for whatever reason, coy the directory the normal way, but this will block the UI thread.
 procedure TryDirectoryCopyAsync(SourcePath, DestPath: string; Move: Boolean; SkipFlExe: Boolean);
 begin
-  if not ShellExecuteAsync(ExpandConstant('{tmp}\dircpy.exe'), Format('"%s" "%s" %d %d', [SourcePath, DestPath, Integer(Move), Integer(SkipFlExe)])) then
+  if LegacyDirCpy or (not ShellExecuteAsync(ExpandConstant('{tmp}\dircpy.exe'), Format('"%s" "%s" %d %d', [SourcePath, DestPath, Integer(Move), Integer(SkipFlExe)]))) then
     DirectoryCopy(SourcePath, DestPath, Move, SkipFlExe);
 end;
 

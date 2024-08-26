@@ -29,6 +29,9 @@ var
   // Used to optionally prevent the MSVC redist from being installed
   NoMsvcRedist: Boolean;
 
+  // Use the old method of copying directories (freezes the UI thread)
+  LegacyDirCpy: Boolean;
+
 procedure InitConstants();
 begin
   EDD_GET_DEVICE_INTERFACE_NAME := 1;

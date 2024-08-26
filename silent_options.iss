@@ -45,6 +45,9 @@ begin
 
   if CmdLineParamExists('/NoMsvcRedist') then
     NoMsvcRedist := True;
+
+  if CmdLineParamExists('/LegacyDirCpy') then
+    LegacyDirCpy := True;
 end;
 
 // Parses all selected options from the command line arguments and sets them directly in the UI elements
