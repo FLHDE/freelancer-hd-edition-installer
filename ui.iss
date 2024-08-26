@@ -849,8 +849,19 @@ begin
   DgVoodooAa.Style := csDropDownList;
   DgVoodooAa.Items.Add('Off');
   DgVoodooAa.Items.Add('2x');
-  DgVoodooAa.Items.Add('4x');
-  DgVoodooAa.Items.Add('8x (recommended)');;
+
+  // High AA settings are not needed on high resolutions like 4K
+  if DesktopRes.Height >= 2160 then
+  begin
+    DgVoodooAa.Items.Add('4x (recommended)');
+    DgVoodooAa.Items.Add('8x');
+  end
+  else 
+  begin
+    DgVoodooAa.Items.Add('4x');
+    DgVoodooAa.Items.Add('8x (recommended)');
+  end;
+
   DgVoodooAa.Top := ScaleY(20);
   DgVoodooAa.Width := 155;
 
@@ -1396,7 +1407,11 @@ begin
   DxWrapperAa.ItemIndex := 4;
   DxWrapperAf.ItemIndex := 5;
 
-  DgVoodooAa.ItemIndex := 3;
+  if DesktopRes.Height >= 2160 then
+    DgVoodooAa.ItemIndex := 2
+  else
+    DgVoodooAa.ItemIndex := 3;
+
   DgVoodooAf.ItemIndex := 4;
 
   VanillaAf.ItemIndex := 4;
