@@ -1275,7 +1275,10 @@ var
   Rp8Path: string;
 begin
   // Do not apply anything if neither the Vanilla graphics API nor the Lighting fix graphics API has been selected
-  if (not VanillaGraphicsApi.Checked) and (not LightingFixGraphicsApi.Checked) then
+  if HasLightingBug and (not VanillaGraphicsApi.Checked) and (not LightingFixGraphicsApi.Checked) then
+    exit;
+
+  if (not HasLightingBug) and (not VanillaGraphicsApi.Checked) then
     exit;
 
   // Do not apply anything if the "Off" option has been selected

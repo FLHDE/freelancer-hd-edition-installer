@@ -141,7 +141,7 @@ begin
     DxWrapperGraphicsApi.Checked := True
   else if SelectedGraphicsApi = 2 then
     VanillaGraphicsApi.Checked := True
-  else if (SelectedGraphicsApi = 3) and LightingFixGraphicsApi.Checked then
+  else if (SelectedGraphicsApi = 3) and HasLightingBug then
     LightingFixGraphicsApi.Checked := True;
 
   // dgVoodoo options

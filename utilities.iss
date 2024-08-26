@@ -57,10 +57,7 @@ begin
 
     if GetExitCodeProcess(ExecInfo.hProcess, ExitCode) then
     begin
-      if ExitCode = 0 then
-        Result := True
-      else
-        Result := False;
+      Result := ExitCode = 0;
     end
     else
       Result := False;
@@ -286,12 +283,12 @@ end;
 
 // Used to remove an unwanted byte order mark in a file.
 // Calls an external program to take care of that.
-function RemoveBOM(const FileName: String): Integer;
+function RemoveBOM(const FileName: String): Boolean;
 var
   ResultCode: Integer;
 begin
-  Exec(ExpandConstant('{tmp}\utf-8-bom-remover.exe'), ExpandConstant('"' + FileName + '"'), '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
-  result := ResultCode;
+  Exec(ExpandConstant('{tmp}\utf-8-bom-remover.exe'), Format('"%s"', [FileName]), '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
+  Result := ResultCode = 0;
 end;
 
 // Whether the given char is a digit

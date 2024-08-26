@@ -247,8 +247,10 @@ begin
     Result := not DxWrapperGraphicsApi.Checked
   else if (Page.Id = DgVoodooPage.Id) or (Page.Id = DgVoodooPage2.Id) then
     Result := not DgVoodooGraphicsApi.Checked
+  else if (Page.Id = VanillaPage.Id) and HasLightingBug then
+    Result := not (VanillaGraphicsApi.Checked or LightingFixGraphicsApi.Checked)
   else if (Page.Id = VanillaPage.Id) then
-    Result := not (VanillaGraphicsApi.Checked or LightingFixGraphicsApi.Checked);
+    Result := not VanillaGraphicsApi.Checked;
 end;
 
 procedure DxWrapperReShadeCheckBoxClick(Sender: TObject);
