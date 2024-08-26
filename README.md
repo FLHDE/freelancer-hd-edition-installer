@@ -8,15 +8,13 @@ This is a setup script for [Freelancer: HD Edition](https://github.com/BC46/free
 ### All-in-one installer (default)
 1. Clone the [Freelancer: HD Edition GitHub repository](https://github.com/BC46/freelancer-hd-edition).
     1. NOTE: Do not download the mod zip from GitHub's "Download ZIP" feature under the green "Code" button (on the mod's homepage). This may result in an incomplete download. Use the `git clone` command instead.
-2. Place all the mod files (DATA & EXE directories, etc.) in a folder named `freelancer-hd-edition-0.7`.
-3. Compress the `freelancer-hd-edition-0.7` folder using an archiver like [7-Zip](https://www.7-zip.org/). NOTE: The zip must NOT be larger than 2.05 GB!
-    1. Compressing the folder using LZMA2 is highly recommended.
-4. Alternatively to step 1, 2, and 3, you may download a pre-packaged zip here: https://archive.org/download/freelancer-hd-edition-0.7/freelancer-hd-edition-0.7.7z.
-5. Name the zip `freelancerhd.7z` and place it in `Assets/Mod`.
-6. Build `setup.iss` using [Inno Setup's standard IDE](https://jrsoftware.org/isinfo.php), or use the [Command Line Compiler](https://jrsoftware.org/ishelp/index.php?topic=compilercmdline).
+2. Compress all the mod files (DATA & EXE directories, etc.) using an archiver like [7-Zip](https://www.7-zip.org/). NOTE: The zip must NOT be larger than 2.05 GB!
+    1. Compressing the files using LZMA2 is highly recommended.
+3. Name the zip `freelancerhd.7z` and place it in `Assets/Mod`.
+4. Build `setup.iss` using [Inno Setup's standard IDE](https://jrsoftware.org/isinfo.php), or use the [Command Line Compiler](https://jrsoftware.org/ishelp/index.php?topic=compilercmdline).
 
 ### Online and offline installer
-1. Open `setup.iss` and find line 16. It should look like `#define AllInOneInstall true`.
+1. Open `setup.iss` and find line 21. It should look like `#define AllInOneInstall true`.
 2. Change this line to `#define AllInOneInstall false`.
 3. Build `setup.iss` using [Inno Setup's standard IDE](https://jrsoftware.org/isinfo.php), or use the [Command Line Compiler](https://jrsoftware.org/ishelp/index.php?topic=compilercmdline).
 
@@ -24,8 +22,11 @@ This is a setup script for [Freelancer: HD Edition](https://github.com/BC46/free
 ### [7-Zip executable](https://www.7-zip.org/download.html)
 7-Zip is licensed under the GNU LGPL license. www.7-zip.org.
 
-### [Hex To Binary](https://github.com/BC46/HexToBinary) by [BC46](https://github.com/BC46)
-Hex To Binary is licensed under the MIT license. https://github.com/BC46/HexToBinary/blob/main/LICENSE.
+### [Hex To Binary](https://github.com/FLHDE/HexToBinary)
+Hex To Binary is licensed under the MIT license. https://github.com/FLHDE/HexToBinary/blob/main/LICENSE.
 
-### [UTF-8 BOM Remover](https://github.com/BC46/utf-8-bom-remover) by [BC46](https://github.com/BC46)
-UTF-8 BOM Remover is licensed under the MIT license. https://github.com/BC46/utf-8-bom-remover/blob/main/LICENSE.
+### [UTF-8 BOM Remover](https://github.com/FLHDE/utf-8-bom-remover)
+UTF-8 BOM Remover is licensed under the MIT license. https://github.com/FLHDE/utf-8-bom-remover.
+
+### [dircpy](https://github.com/FLHDE/dircpy)
+dircpy is licensed under the MIT license. https://github.com/FLHDE/dircpy/blob/main/LICENSE.
