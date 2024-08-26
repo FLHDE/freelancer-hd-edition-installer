@@ -11,6 +11,7 @@
 #define MyAppPublisher MyModName + " Development Team"
 #define MyAppURL "https://github.com/BC46/freelancer-hd-edition"
 #define MyAppExeName "Freelancer.exe"
+#define MyAppServerExeName "FLServer.exe"
 #define MyFolderName "freelancer-hd-edition-" + MyAppVersion
 #define MyZipName "freelancerhd"
 #define VcRedistName "VC_redist.x86.exe"
@@ -67,12 +68,11 @@ Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{
 
 [Icons]
 Name: "{group}\{#MyAppFileName}"; Filename: "{app}\EXE\{#MyAppExeName}"
-Name: "{group}\{#MyServerFileName}"; Filename: "{app}\EXE\FLServer.exe"
+Name: "{group}\{#MyServerFileName}"; Filename: "{app}\EXE\{#MyAppServerExeName}"
 Name: "{commondesktop}\{#MyAppFileName}"; Filename: "{app}\EXE\{#MyAppExeName}"; Tasks: desktopicon
 
 [Files]
-Source: "Assets\Text\installinfo.txt"; DestDir: "{app}"; Flags: ignoreversion deleteafterinstall
-Source: "Assets\Text\PerfOptions.ini"; DestDir: "{app}"; Flags: ignoreversion deleteafterinstall
+Source: "Assets\Text\PerfOptions.ini"; DestDir: "{tmp}"; Flags: ignoreversion deleteafterinstall
 Source: "Assets\Fonts\AGENCYB.TTF"; DestDir: "{autofonts}"; FontInstall: "Agency FB Bold"; Flags: onlyifdoesntexist uninsneveruninstall
 Source: "Assets\Fonts\AGENCYR.TTF"; DestDir: "{autofonts}"; FontInstall: "Agency FB"; Flags: onlyifdoesntexist uninsneveruninstall
 Source: "Assets\Fonts\AGENCYR_CR.TTF"; DestDir: "{autofonts}"; FontInstall: "Agency FB Cyrillic"; Flags: onlyifdoesntexist uninsneveruninstall
@@ -85,8 +85,9 @@ Source: "Assets\External\{#VcRedistName}"; DestDir: {tmp}; Flags: dontcopy
 # if AllInOneInstall
 Source: "Assets\Mod\freelancerhd.7z"; DestDir: "{tmp}"; Flags: nocompression deleteafterinstall
 #endif
+; Needed to make sure icons exist for the exes right before the shortcuts are created
 Source: "Assets\Images\icon.ico"; DestDir: "{app}\EXE"; DestName: "{#MyAppExeName}"; Flags: ignoreversion
-Source: "Assets\Images\flserver.ico"; DestDir: "{app}\EXE"; DestName: "FLServer.exe"; Flags: ignoreversion
+Source: "Assets\Images\flserver.ico"; DestDir: "{app}\EXE"; DestName: "{#MyAppServerExeName}"; Flags: ignoreversion
 
 [Run]
 Filename: "{app}\EXE\{#MyAppExeName}"; Description: "{cm:LaunchProgram,{#StringChange(MyAppName, '&', '&&')}}"; Flags: nowait postinstall skipifsilent

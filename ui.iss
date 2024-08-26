@@ -331,14 +331,14 @@ begin
   PageInstallType := CreateCustomPage(
     DataDirPage.ID,
     'Installation type',
-    'Choose how you''d like to install {#MyAppName}.'
+    'Choose how you''d like to install {#MyModName}.'
   );
 
   descInstallType := TNewStaticText.Create(PageInstallType);
   descInstallType.Parent := PageInstallType.Surface;
   descInstallType.WordWrap := True;
   descInstallType.Width := PageInstallType.SurfaceWidth;
-  descInstallType.Caption := 'The {#MyAppName} installer offers custom options to improve the gameplay experience. The installation types below determine how these options should be applied during the installation process.';
+  descInstallType.Caption := 'The {#MyModName} installer offers custom options to improve the gameplay experience. The installation types below determine how these options should be applied during the installation process.';
 
   ExpressInstall := TRadioButton.Create(PageInstallType);
   ExpressInstall.Parent := PageInstallType.Surface;
@@ -366,7 +366,7 @@ begin
   descCustomInstall.WordWrap := True;
   descCustomInstall.Top := CustomInstall.Top + ScaleY(20);
   descCustomInstall.Width := PageInstallType.SurfaceWidth;
-  descCustomInstall.Caption := 'Install the mod but for all options manually choose which ones should be applied. This may take some time as there are quite a few options to go through.';
+  descCustomInstall.Caption := 'Install the mod but for every option manually select whether it should be applied. This may take some time as there are quite a few options to go through.';
 
   BasicInstall := TRadioButton.Create(PageInstallType);
   BasicInstall.Parent := PageInstallType.Surface;
