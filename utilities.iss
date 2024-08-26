@@ -225,6 +225,11 @@ begin
   Result := Format('%.*x', [Digits, Value])
 end;
 
+function StrContainsNonAsciiChars(const str: string): Boolean;
+begin
+  Result := Pos('?', string(AnsiString(str))) > 0;
+end;
+
 // Swaps 2 bytes in a binary string (2 bytes, or 4 characters assumed)
 function SwapBytes(BinaryString: string): string;
 begin
