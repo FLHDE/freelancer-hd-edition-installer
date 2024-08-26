@@ -396,7 +396,7 @@ begin
     FileReplaceString(OptionsPath, 'general_graphics =',         'general_graphics = 1.00;')
     FileReplaceString(OptionsPath, 'advanced_graphics =',        'advanced_graphics = 1.00;')
     FileReplaceString(OptionsPath, 'USE_DYNAMIC_COMM_HEAD =',    'USE_DYNAMIC_COMM_HEAD = 1.00;')
-    FileReplaceString(OptionsPath, 'max_submitted_sounds =',     'max_submitted_sounds = 1.00;')
+    FileReplaceString(OptionsPath, 'max_submitted_sounds =',     'max_submitted_sounds = 1.20;')
     FileReplaceString(OptionsPath, 'color_bpp=',                 'color_bpp= 32;')
     FileReplaceString(OptionsPath, 'depth_bpp=',                 'depth_bpp= 32;')
   end
@@ -421,7 +421,7 @@ begin
 
   OptionsPath := GetOptionsPath('PerfOptions')
   InDirectoryOptionsPath := ExpandConstant('{app}\SAVE\PerfOptions.ini')
-  PreDefinedOptionsPath := ExpandConstant('{app}\PerfOptions.ini')
+  PreDefinedOptionsPath := ExpandConstant('{tmp}\PerfOptions.ini')
 
   // Set the best options in both PerfOptions.ini's from the regular save folder and the in-directory save folder
   SetBestOptions(OptionsPath, PreDefinedOptionsPath);
