@@ -17,6 +17,9 @@ function SetFileAttributes(lpFileName: string; dwFileAttributes: DWORD): BOOL;
 function ShellExecuteEx(var lpExecInfo: TShellExecuteInfo): BOOL;
   external 'ShellExecuteExW@shell32.dll stdcall';
 
+function GetExitCodeProcess(Process: THandle; var ExitCode: Cardinal): Boolean;
+  external 'GetExitCodeProcess@kernel32.dll stdcall';
+
 function WaitForSingleObject(hHandle: THandle; dwMilliseconds: DWORD): DWORD;
   external 'WaitForSingleObject@kernel32.dll stdcall';
 

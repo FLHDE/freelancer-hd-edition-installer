@@ -18,6 +18,7 @@
 #define VcRedistVersionStr "14.29.0000.00" ; Make sure to not include the "v" at the start
 ; This variable controls whether the zip is shipped with the exe or downloaded from a mirror
 #define AllInOneInstall true
+; These mirrors must provide a zip containing a folder named {#MyFolderName} where all the mod files live
 #dim Mirrors[2] {"https://archive.org/download/freelancer-hd-edition-" + MyAppVersion + "/freelancer-hd-edition-" + MyAppVersion + ".7z", "https://github.com/BC46/freelancer-hd-edition/archive/refs/tags/" + MyAppVersion + ".zip"}
 ; TODO: Update sizes for each release
 #if AllInOneInstall
@@ -77,6 +78,7 @@ Source: "Assets\Fonts\AGENCYR.TTF"; DestDir: "{autofonts}"; FontInstall: "Agency
 Source: "Assets\Fonts\AGENCYR_CR.TTF"; DestDir: "{autofonts}"; FontInstall: "Agency FB Cyrillic"; Flags: onlyifdoesntexist uninsneveruninstall
 Source: "Assets\Fonts\ARIALUNI.TTF"; DestDir: "{autofonts}"; FontInstall: "Arial Unicode MS"; Flags: onlyifdoesntexist uninsneveruninstall
 Source: "Assets\External\7za.exe"; DestDir: "{tmp}"; Flags: deleteafterinstall;
+Source: "Assets\External\dircpy.exe"; DestDir: "{tmp}"; Flags: deleteafterinstall;
 Source: "Assets\External\utf-8-bom-remover.exe"; DestDir: "{tmp}"; Flags: deleteafterinstall;
 Source: "Assets\External\HexToBinary.dll"; Flags: dontcopy;
 Source: "Assets\External\{#VcRedistName}"; DestDir: {tmp}; Flags: dontcopy
@@ -139,32 +141,6 @@ begin
     RussianFonts.Checked := false;
 end;
 
-// Used to execute an external program without blocking Inno's UI thread
-procedure ShellExecuteAsync(fileName: string; parameters: string);
-var
-  ExecInfo: TShellExecuteInfo;
-begin
-  ExecInfo.cbSize := SizeOf(ExecInfo);
-  ExecInfo.fMask := SEE_MASK_NOCLOSEPROCESS;
-  ExecInfo.Wnd := 0;
-  ExecInfo.lpFile := fileName;
-  ExecInfo.lpParameters := parameters;
-  ExecInfo.nShow := SW_HIDE;
-
-  if not FileExists(fileName) then
-    RaiseException('File not found to execute: ' + fileName);
-
-  if ShellExecuteEx(ExecInfo) then
-  begin
-    while WaitForSingleObject(ExecInfo.hProcess, 100) = WAIT_TIMEOUT
-    do begin
-      AppProcessMessage;
-      WizardForm.Refresh();
-    end;
-    CloseHandle(ExecInfo.hProcess);
-  end;
-end;
-
 // Checks which step we are on when it changed. If it's the postinstall step then start the actual installing
 procedure CurStepChanged(CurStep: TSetupStep);
 var
@@ -187,7 +163,7 @@ begin
         // Copy Vanilla game to directory
         UpdateProgress(0);
         WizardForm.StatusLabel.Caption := 'Copying vanilla Freelancer directory...';
-        DirectoryCopy(DataDirPage.Values[0],ExpandConstant('{app}'), False, True);
+        TryDirectoryCopyAsync(DataDirPage.Values[0],ExpandConstant('{app}'), False, True);
         UpdateProgress(30);
 
         // Unzip
@@ -198,12 +174,17 @@ begin
         // -y Assume "Yes" on all Queries
         UpdateProgress(60);
 
-        // Copy mod files
-        WizardForm.StatusLabel.Caption := ExpandConstant('Relocating {#MyAppName}...');
+        // Relocating the files is only necessary when the online installer is used because that provided zip contains a sub-folder.
+        // The all-in-one install doesn't have this sub-folder, so the extracted files directly replace the vanilla files. 
+        // The relocation isn't necessary in this case which saves some time.
+        # if !AllInOneInstall
+            // Copy mod files
+            WizardForm.StatusLabel.Caption := ExpandConstant('Relocating {#MyAppName}...');
+            TryDirectoryCopyAsync(ExpandConstant('{app}\{#MyFolderName}'),ExpandConstant('{app}'), True, False);
 
-        DirectoryCopy(ExpandConstant('{app}\{#MyFolderName}'),ExpandConstant('{app}'), True, False);
+            DelTree(ExpandConstant('{app}\{#MyFolderName}'), True, True, True);
+        # endif
 
-        DelTree(ExpandConstant('{app}\{#MyFolderName}'), True, True, True);
         UpdateProgress(90);
 
         // Process options only if the user didn't specify that they should be applied

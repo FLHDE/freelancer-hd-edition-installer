@@ -21,7 +21,56 @@ begin
   end;
 end;
 
+// The two procs below are used to execute an external program without blocking Inno's UI thread
+procedure AppProcessMessage;
+var
+  Msg: TMsg;
+begin
+  while PeekMessage(Msg, WizardForm.Handle, 0, 0, PM_REMOVE) do begin
+    TranslateMessage(Msg);
+    DispatchMessage(Msg);
+  end;
+end;
+
+function ShellExecuteAsync(fileName: string; parameters: string): Boolean;
+var
+  ExecInfo: TShellExecuteInfo;
+  ExitCode: Cardinal;
+begin
+  ExecInfo.cbSize := SizeOf(ExecInfo);
+  ExecInfo.fMask := SEE_MASK_NOCLOSEPROCESS;
+  ExecInfo.Wnd := 0;
+  ExecInfo.lpFile := fileName;
+  ExecInfo.lpParameters := parameters;
+  ExecInfo.nShow := SW_HIDE;
+
+  if not FileExists(fileName) then
+    RaiseException('File not found to execute: ' + fileName);
+
+  if ShellExecuteEx(ExecInfo) then
+  begin
+    while WaitForSingleObject(ExecInfo.hProcess, 100) = WAIT_TIMEOUT
+    do begin
+      AppProcessMessage;
+      WizardForm.Refresh();
+    end;
+
+    if GetExitCodeProcess(ExecInfo.hProcess, ExitCode) then
+    begin
+      if ExitCode = 0 then
+        Result := True
+      else
+        Result := False;
+    end
+    else
+      Result := False;
+
+    CloseHandle(ExecInfo.hProcess);
+  end;
+end;
+
 // Used to copy the vanilla install to {app}, also the extracted .zip file back to {app}
+// Old method because this blocks the UI thread, causing the installer to "freeze"
 procedure DirectoryCopy(SourcePath, DestPath: string; Move: Boolean; SkipFlExe: Boolean);
 var
   FindRec: TFindRec;
@@ -70,6 +119,14 @@ begin
   begin
     RaiseException(Format('Failed to list %s', [SourcePath]));
   end;
+end;
+
+// Tries to copy a directory without blocking the UI thread.
+// If this fails for whatever reason, coy the directory the normal way, but this will block the UI thread.
+procedure TryDirectoryCopyAsync(SourcePath, DestPath: string; Move: Boolean; SkipFlExe: Boolean);
+begin
+  if not ShellExecuteAsync(ExpandConstant('{tmp}\dircpy.exe'), Format('"%s" "%s" %d %d', [SourcePath, DestPath, Integer(Move), Integer(SkipFlExe)])) then
+    DirectoryCopy(SourcePath, DestPath, Move, SkipFlExe);
 end;
 
 // Used to replace strings in files. This replaces FLMM functions
@@ -549,15 +606,5 @@ begin
   if Result then
   begin
     ExtractTemporaryFile('{#VcRedistName}');
-  end;
-end;
-
-procedure AppProcessMessage;
-var
-  Msg: TMsg;
-begin
-  while PeekMessage(Msg, WizardForm.Handle, 0, 0, PM_REMOVE) do begin
-    TranslateMessage(Msg);
-    DispatchMessage(Msg);
   end;
 end;
