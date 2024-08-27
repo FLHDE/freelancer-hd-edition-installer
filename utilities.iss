@@ -287,8 +287,7 @@ function RemoveBOM(const FileName: String): Boolean;
 var
   ResultCode: Integer;
 begin
-  Exec(ExpandConstant('{tmp}\utf-8-bom-remover.exe'), Format('"%s"', [FileName]), '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
-  Result := ResultCode = 0;
+  Result := ShellExecuteAsync(ExpandConstant('{tmp}\utf-8-bom-remover.exe'), Format('"%s"', [FileName]));
 end;
 
 // Whether the given char is a digit
