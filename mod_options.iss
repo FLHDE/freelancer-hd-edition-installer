@@ -38,19 +38,52 @@ end;
 
 procedure Process_PitchVariations();
 var
-  FactionPropPath : string;
+  FactionPropFile : string;
+  legF01NewVoiceEntries : string;
 begin
-  FactionPropPath := ExpandConstant('{app}\DATA\MISSIONS\');
+  // Option must be checked
+  if not PitchVariations.Checked then
+    exit;
 
-  // Option is checked
-  if PitchVariations.Checked then
-    begin
-    // Rename vanilla faction properties file
-    RenameFile(FactionPropPath + 'faction_prop.ini', FactionPropPath + 'faction_prop_vanilla.ini')
+  FactionPropFile := ExpandConstant('{app}\DATA\MISSIONS\faction_prop.ini');
+  legF01NewVoiceEntries := 'voice = pilot_f_leg_f01a' #13#10 'voice = pilot_f_leg_f01b';
 
-    // Rename extended voices faction properties file
-    RenameFile(FactionPropPath + 'faction_prop_extended_voices.ini', FactionPropPath + 'faction_prop.ini')
-    end;
+  FileReplaceString(FactionPropFile, 'voice = pilot_f_mil_m01', 
+    'voice = pilot_f_mil_m01' #13#10 
+    'voice = pilot_f_mil_m01a' #13#10
+    'voice = pilot_f_mil_m01b');
+
+  FileReplaceString(FactionPropFile, 'voice = pilot_f_mil_m02', 
+    'voice = pilot_f_mil_m02' #13#10 
+    'voice = pilot_f_mil_m02a' #13#10
+    'voice = pilot_f_mil_m02b');
+
+  FileReplaceString(FactionPropFile, 'voice = pilot_f_leg_f01a',
+    legF01NewVoiceEntries);
+
+  FileReplaceString(FactionPropFile, 'voice = pilot_f_leg_m01', 
+    'voice = pilot_f_leg_m01' #13#10 
+    'voice = pilot_f_leg_m01b');
+
+  FileReplaceString(FactionPropFile, 'voice = pilot_f_ill_m01', 
+    'voice = pilot_f_ill_m01' #13#10 
+    'voice = pilot_f_ill_m01b');
+
+  FileReplaceString(FactionPropFile, 'voice = pilot_f_ill_m02', 
+    'voice = pilot_f_ill_m02' #13#10 
+    'voice = pilot_f_ill_m02a' #13#10
+    'voice = pilot_f_ill_m02b');
+
+  // A few hacky fixes to make sure the modified file exactly matches the old faction_prop_extended_voices.ini
+  FileReplaceString(FactionPropFile, 'voice = pilot_f_leg_f01' #13#10 'mc_costume', 
+    'voice = pilot_f_leg_f01' + #13#10 +
+    legF01NewVoiceEntries + #13#10 + 
+    'mc_costume');
+
+  FileReplaceString(FactionPropFile, 'voice = pilot_f_leg_m01b' #13#10 'voice = pilot_f_leg_f01a', 
+    'voice = pilot_f_leg_m01b' + #13#10 + 
+    'voice = pilot_f_leg_f01' + #13#10 +
+    'voice = pilot_f_leg_f01a');
 end;
 
 procedure Process_RegeneratableShields();
