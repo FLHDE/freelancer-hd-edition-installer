@@ -528,10 +528,8 @@ begin
   end;
 
   // Add player engine trails
-  if EngineTrails.Checked then begin
-    RenameFile(ExpandConstant('{app}\DATA\EQUIPMENT\engine_equip.ini'),ExpandConstant('{app}\DATA\EQUIPMENT\engine_equip_vanilla.ini'))
-    RenameFile(ExpandConstant('{app}\DATA\EQUIPMENT\engine_equip_player_trails.ini'),ExpandConstant('{app}\DATA\EQUIPMENT\engine_equip.ini'))
-  end;
+  if EngineTrails.Checked then
+    FileReplaceString(ExpandConstant('{app}\DATA\EQUIPMENT\engine_equip.ini'), 'playtrail', 'trail');
 end;
 
 procedure Process_Planetscape();
