@@ -162,23 +162,24 @@ begin
         # endif
 
         // Copy Vanilla game to directory
-        UpdateProgress(0);
+        UpdateProgress(15);
         WizardForm.StatusLabel.Caption := 'Copying vanilla Freelancer directory...';
         TryDirectoryCopyAsync(DataDirPage.Values[0],ExpandConstant('{app}'), False, True);
-        UpdateProgress(30);
 
         // Unzip
+        UpdateProgress(50);
         WizardForm.StatusLabel.Caption := ExpandConstant('Unpacking {#MyAppName}...');
         ShellExecuteAsync(ExpandConstant('{tmp}\7za.exe'), ExpandConstant(' x -y -aoa "{tmp}\{#MyZipName}.7z"  -o"{app}"'));
         // -aoa Overwrite All existing files without prompt
         // -o Set output directory
         // -y Assume "Yes" on all Queries
-        UpdateProgress(60);
 
         // Relocating the files is only necessary when the online installer is used because that provided zip contains a sub-folder.
         // The all-in-one install doesn't have this sub-folder, so the extracted files directly replace the vanilla files. 
         // The relocation isn't necessary in this case which saves some time.
         # if !AllInOneInstall
+            UpdateProgress(70);
+
             // Copy mod files
             WizardForm.StatusLabel.Caption := ExpandConstant('Relocating {#MyAppName}...');
             TryDirectoryCopyAsync(ExpandConstant('{app}\{#MyFolderName}'),ExpandConstant('{app}'), True, False);
@@ -186,7 +187,7 @@ begin
             DelTree(ExpandConstant('{app}\{#MyFolderName}'), True, True, True);
         # endif
 
-        UpdateProgress(90);
+        UpdateProgress(95);
 
         // Process options only if the user didn't specify that they should be applied
         if not BasicInstall.Checked then
@@ -227,9 +228,6 @@ begin
           Process_DisplayMode();
         end;
 
-        WizardForm.StatusLabel.Caption := 'Cleaning up...';
-        UpdateProgress(95);
-
         if not IsWine then
         begin
           // Delete potential UTF-8 BOM headers in all edited config files. May not work properly on Wine.
@@ -240,6 +238,9 @@ begin
           // Write d3d8 DLL override for Wine/Linux. For more information, see https://wiki.winehq.org/Wine_User%27s_Guide#DLL_Overrides
           RegWriteStringValue(HKEY_CURRENT_USER, 'Software\Wine\DllOverrides', 'd3d8', 'native,builtin');
         end;
+
+        //UpdateProgress(95);
+        //WizardForm.StatusLabel.Caption := 'Cleaning up...';
 
         // Delete Restart.fl to stop crashes
         DeleteFile(ExpandConstant('{userdocs}\My Games\Freelancer\Accts\SinglePlayer\Restart.fl'));
