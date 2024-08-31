@@ -54,4 +54,11 @@ begin
 
   MinGeneralFactor := 0.01;
   MaxGeneralFactor := 100.0;
+
+  NoMsvcRedist := False;
+  LegacyDirCpy := False;
+
+  // Initialize EditedConfigFiles
+  EditedConfigFiles := TStringList.Create;
+  EditedConfigFiles.Sorted := true;
 end;

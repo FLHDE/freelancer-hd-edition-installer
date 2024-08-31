@@ -426,12 +426,6 @@ begin
     HasLightingBug := GetHasLightingBug();
     GpuManufacturer := GetGpuManufacturer();
     SystemLanguage := GetSystemLanguage();
-    NoMsvcRedist := False;
-    LegacyDirCpy := False;
-
-    // Initialize EditedConfigFiles
-    EditedConfigFiles := TStringList.Create;
-    EditedConfigFiles.Sorted := true;
 
     // Get the debug options before initializing the UI
     SetDebugOptions();
