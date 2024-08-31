@@ -1,6 +1,6 @@
 ; Inno Install Script for Freelancer: HD Edition
-; GitHub: https://github.com/oliverpechey/Freelancer-hd-edition-install-script
-; Main GitHub: https://github.com/BC46/Freelancer-hd-edition
+; GitHub: https://github.com/FLHDE/freelancer-hd-edition-installer
+; Main GitHub: https://github.com/BC46/freelancer-hd-edition
 
 #define MyAppVersion "0.7"
 #define MyModName "Freelancer: HD Edition"
@@ -83,7 +83,7 @@ Source: "Assets\External\utf-8-bom-remover.exe"; DestDir: "{tmp}"; Flags: delete
 Source: "Assets\External\HexToBinary.dll"; Flags: dontcopy;
 Source: "Assets\External\{#VcRedistName}"; DestDir: {tmp}; Flags: dontcopy
 # if AllInOneInstall
-Source: "Assets\Mod\freelancerhd.7z"; DestDir: "{tmp}"; Flags: nocompression deleteafterinstall
+Source: "Assets\Mod\{#MyZipName}.7z"; DestDir: "{tmp}"; Flags: nocompression deleteafterinstall
 #endif
 ; Needed to make sure icons exist for the exes right before the shortcuts are created
 Source: "Assets\Images\icon.ico"; DestDir: "{app}\EXE"; DestName: "{#MyAppExeName}"; Flags: ignoreversion
