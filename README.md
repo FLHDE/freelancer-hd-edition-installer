@@ -10,6 +10,7 @@ This is a setup script for [Freelancer: HD Edition](https://github.com/BC46/free
     1. NOTE: Do not download the mod zip from GitHub's "Download ZIP" feature under the green "Code" button (on the mod's homepage). This may result in an incomplete download. Use the `git clone` command instead.
 2. Compress all the mod files (DATA & EXE directories, etc.) using an archiver like [7-Zip](https://www.7-zip.org/). NOTE: The zip must NOT be larger than 2.05 GB!
     1. Compressing the files using LZMA2 is highly recommended.
+    2. If it is inevitable that the zip exceeds the 2.05 GB file size limit, you may specify [DiskSpanning=yes under [Setup]](https://jrsoftware.org/is6help/index.php?topic=setup_diskspanning) in `setup.iss` to make the build process succeed regardless.
 3. Name the zip `freelancerhd.7z` and place it in `Assets/Mod`.
 4. Build `setup.iss` using [Inno Setup's standard IDE](https://jrsoftware.org/isinfo.php), or use the [Command Line Compiler](https://jrsoftware.org/ishelp/index.php?topic=compilercmdline).
 
