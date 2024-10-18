@@ -1267,19 +1267,21 @@ begin
   // Enable desired ReShade options
   Techniques := 'Techniques=';
 
-  if SharpeningChecked then
-    Techniques := Techniques + 'ContrastAdaptiveSharpen@CAS.fx,';
+  if SaturationChecked then
+    Techniques := Techniques + 'Colourfulness@Colourfulness.fx,';
+  if HdrChecked then
+    Techniques := Techniques + 'HDR@FakeHDR.fx,';
+  if BloomChecked then
+    Techniques := Techniques + 'MagicBloom@MagicBloom.fx,';
+  if (DisplayMode.ItemIndex = 1) or (DisplayMode.ItemIndex = 2) then
+    // Use Tonemap only if windowed or fullscreen windowed have been checked
+    Techniques := Techniques + 'Tonemap@Tonemap.fx,';
 
   // Enable the Deband shader by default because it's crucial for Freelancer
   Techniques := Techniques + 'Deband@Deband.fx,';
 
-  if (DisplayMode.ItemIndex = 1) or (DisplayMode.ItemIndex = 2) then
-    // Use Tonemap only if windowed or fullscreen windowed have been checked
-    Techniques := Techniques + 'Tonemap@Tonemap.fx,';
-  if SaturationChecked then
-    Techniques := Techniques + 'Colourfulness@Colourfulness.fx,';
-  if BloomChecked then
-    Techniques := Techniques + 'MagicBloom@MagicBloom.fx,';
+  if SharpeningChecked then
+    Techniques := Techniques + 'ContrastAdaptiveSharpen@CAS.fx,';
 
   // Removes a trailing comma at the end of the techniques if it's there
   if (LENGTH(Techniques) > 0) and (Techniques[LENGTH(Techniques)] = ',') then
