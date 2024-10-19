@@ -221,7 +221,7 @@ begin
 
   if NewSaveFolder.Checked then
     begin
-    FileReplaceString(FlPlusPlusPath, 'save_folder_name = Freelancer', 'save_folder_name = FreelancerHD')
+    FileReplaceString(FlPlusPlusPath, 'save_folder_name = Freelancer', 'save_folder_name = {#MyCustomSaveFolderName}')
     end;
 end;
 
@@ -394,7 +394,7 @@ begin
   MyGamesFolder := ExpandConstant('{userdocs}\My Games\')
 
   if NewSaveFolder.Checked then
-    OptionsFolder := 'FreelancerHD'
+    OptionsFolder := '{#MyCustomSaveFolderName}'
   else
     OptionsFolder := 'Freelancer';
 

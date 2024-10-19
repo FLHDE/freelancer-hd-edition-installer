@@ -13,7 +13,8 @@
 #define MyAppExeName "Freelancer.exe"
 #define MyAppServerExeName "FLServer.exe"
 #define MyFolderName "freelancer-hd-edition-" + MyAppVersion
-#define MyZipName "freelancerhd"
+#define MyZipName "freelancerhde"
+#define MyCustomSaveFolderName "FreelancerHDE"
 #define VcRedistName "VC_redist.x86.exe"
 ; The actual included VC Redist is version 14.38.33135.00, but FLHook is the only software part of HDE that depends on it and is built with MSVC v142.
 #define VcRedistVersionStr "14.29.0000.00" ; Make sure to not include the "v" at the start
@@ -244,7 +245,7 @@ begin
 
         // Delete Restart.fl to stop crashes
         DeleteFile(ExpandConstant('{userdocs}\My Games\Freelancer\Accts\SinglePlayer\Restart.fl'));
-        DeleteFile(ExpandConstant('{userdocs}\My Games\FreelancerHD\Accts\SinglePlayer\Restart.fl'));
+        DeleteFile(ExpandConstant('{userdocs}\My Games\{#MyCustomSaveFolderName}\Accts\SinglePlayer\Restart.fl'));
         DeleteFile(ExpandConstant('{app}\SAVE\Accts\SinglePlayer\Restart.fl'));
 
         // Remove 2003 junk files

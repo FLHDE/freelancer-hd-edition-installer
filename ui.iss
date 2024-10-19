@@ -539,7 +539,7 @@ begin
   descNewSaveFolder.WordWrap := True;
   descNewSaveFolder.Top := descLevelRequirements.Top + ScaleY(50);
   descNewSaveFolder.Width := PageSinglePlayer.SurfaceWidth;
-  descNewSaveFolder.Caption := 'Normally, Freelancer save games are stored in "Documents/My Games/Freelancer". This option ensures save games will be stored in "Documents/My Games/FreelancerHD" instead, which may help avoid conflicts when having multiple mods installed simultaneously.';
+  descNewSaveFolder.Caption := 'Normally, Freelancer save games are stored in "Documents/My Games/Freelancer". This option ensures save games will be stored in "Documents/My Games/{#MyCustomSaveFolderName}" instead, which may help avoid conflicts when having multiple mods installed simultaneously.';
   
   NewSaveFolder := TCheckBox.Create(PageSinglePlayer);
   NewSaveFolder.Parent := PageSinglePlayer.Surface;

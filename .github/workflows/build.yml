@@ -15,7 +15,7 @@ jobs:
 
         - name: Add mod zip
           run: |
-            type NUL > ${{ github.workspace }}\Assets\Mod\freelancerhd.7z
+            type NUL > ${{ github.workspace }}\Assets\Mod\freelancerhde.7z
           shell: cmd
             
         - name: Compile script
