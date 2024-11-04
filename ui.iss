@@ -115,8 +115,12 @@ var
 
   // Vanilla
   lblVanillaAf: TLabel;
+  lblVanillaAa: TLabel;
   VanillaAf: TComboBox;
+  VanillaAa: TComboBox;
   descVanillaAf: TNewStaticText;
+  descVanillaAa: TNewStaticText;
+  VanillaAfAndAaWarning: TNewStaticText;
 
   // DxWrapper
   lblDxWrapperAf: TLabel;
@@ -1070,9 +1074,42 @@ begin
     txtEnhancementsPage
   );
 
+  lblVanillaAa := TLabel.Create(VanillaPage);
+  lblVanillaAa.Parent := VanillaPage.Surface;
+  lblVanillaAa.Caption := txtAa;
+
+  VanillaAa := TComboBox.Create(VanillaPage);
+  VanillaAa.Parent := VanillaPage.Surface;
+  VanillaAa.Style := csDropDownList;
+  VanillaAa.Items.Add('Off');
+  VanillaAa.Items.Add('2x');
+
+  // High AA settings are not needed on high resolutions like 4K
+  if DesktopRes.Height >= 2160 then
+  begin
+    VanillaAa.Items.Add('4x (recommended)');
+    VanillaAa.Items.Add('8x');
+  end
+  else
+  begin
+    VanillaAa.Items.Add('4x');
+    VanillaAa.Items.Add('8x (recommended)');
+  end;
+
+  VanillaAa.Top := ScaleY(20);
+  VanillaAa.Width := 155;
+
+  descVanillaAa := TNewStaticText.Create(VanillaPage);
+  descVanillaAa.Parent := VanillaPage.Surface;
+  descVanillaAa.WordWrap := True;
+  descVanillaAa.Width := VanillaPage.SurfaceWidth;
+  descVanillaAa.Caption := txtAaDesc;
+  descVanillaAa.Top := VanillaAa.Top + ScaleY(25);
+
   lblVanillaAf := TLabel.Create(VanillaPage);
   lblVanillaAf.Parent := VanillaPage.Surface;
   lblVanillaAf.Caption := txtAf;
+  lblVanillaAf.Top := descVanillaAa.Top + ScaleY(55);
 
   VanillaAf := TComboBox.Create(VanillaPage);
   VanillaAf.Parent := VanillaPage.Surface;
@@ -1091,6 +1128,13 @@ begin
   descVanillaAf.Width := VanillaPage.SurfaceWidth;
   descVanillaAf.Caption := txtAfDesc;
   descVanillaAf.Top := VanillaAf.Top + ScaleY(25);
+
+  VanillaAfAndAaWarning := TNewStaticText.Create(VanillaPage);
+  VanillaAfAndAaWarning.Parent := VanillaPage.Surface;
+  VanillaAfAndAaWarning.WordWrap := True;
+  VanillaAfAndAaWarning.Width := VanillaPage.SurfaceWidth;
+  VanillaAfAndAaWarning.Caption := 'NOTE: The anti-aliasing and anisotropic filtering options for the Vanilla Graphics APIs effectively force the game to enable these enhancements. When enabling them, please make sure that your system supports these options, otherwise the game may crash on startup.';
+  VanillaAfAndAaWarning.Top := descVanillaAf.Top + ScaleY(50);
 
   // Add improved reflections
   PageEffects := CreateCustomPage(
@@ -1408,9 +1452,15 @@ begin
   DxWrapperAf.ItemIndex := 5;
 
   if DesktopRes.Height >= 2160 then
-    DgVoodooAa.ItemIndex := 2
+    begin
+      DgVoodooAa.ItemIndex := 2
+      VanillaAa.ItemIndex := 2
+    end
   else
-    DgVoodooAa.ItemIndex := 3;
+    begin
+      DgVoodooAa.ItemIndex := 3
+      VanillaAa.ItemIndex := 3
+    end;
 
   DgVoodooAf.ItemIndex := 4;
 

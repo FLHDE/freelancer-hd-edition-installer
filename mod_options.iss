@@ -1314,15 +1314,14 @@ begin
   if (not HasLightingBug) and (not VanillaGraphicsApi.Checked) then
     exit;
 
-  // Do not apply anything if the "Off" option has been selected
-  if VanillaAf.ItemIndex = 0 then
-    exit;
-
   Rp8Path := ExpandConstant('{app}\EXE\rp8.dll');
 
-  WriteHexToFile(Rp8Path, $01A48C, '03'); // Magnification filtering mode = "anisotropic"
-  WriteHexToFile(Rp8Path, $01A4C5, '03'); // Minification filtering mode = "anisotropic"
-  WriteHexToFile(Rp8Path, $01A4FE, '03'); // Mipmap filtering mode = "anisotropic"
+  if VanillaAf.ItemIndex <> 0 then
+  begin
+    WriteHexToFile(Rp8Path, $01A48C, '03'); // Magnification filtering mode = "anisotropic"
+    WriteHexToFile(Rp8Path, $01A4C5, '03'); // Minification filtering mode = "anisotropic"
+    WriteHexToFile(Rp8Path, $01A4FE, '03'); // Mipmap filtering mode = "anisotropic"
+  end;
 
   if VanillaAf.ItemIndex = 1 then
     // Maximum anisotropy = 2x
@@ -1336,6 +1335,27 @@ begin
   if VanillaAf.ItemIndex = 4 then
     // Maximum anisotropy = 16x
     WriteHexToFile(Rp8Path, $01A5B8, '10');
+
+  if VanillaAa.ItemIndex <> 0 then
+  begin
+    // Sets the swap effect to "discard" (required for anti-aliasing to work).
+    WriteHexToFile(Rp8Path, $008E75, '01');
+    WriteHexToFile(Rp8Path, $008E87, '01');
+    WriteHexToFile(Rp8Path, $008E90, '01');
+    WriteHexToFile(Rp8Path, $008ED2, '01');
+    WriteHexToFile(Rp8Path, $008EE4, '01');
+    WriteHexToFile(Rp8Path, $008EED, '01');
+  end;
+
+  if VanillaAa.ItemIndex = 1 then
+    // Multisample anti-aliasing = 2x
+    WriteHexToFile(Rp8Path, $008F5F, '02');
+  if VanillaAa.ItemIndex = 2 then
+    // Multisample anti-aliasing = 4x
+    WriteHexToFile(Rp8Path, $008F5F, '04');
+  if VanillaAa.ItemIndex = 3 then
+    // Multisample anti-aliasing = 8x
+    WriteHexToFile(Rp8Path, $008F5F, '08');
 end;
 
 procedure Process_DisplayMode();
