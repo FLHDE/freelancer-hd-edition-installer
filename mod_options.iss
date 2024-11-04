@@ -585,23 +585,71 @@ var
 begin
   FilePath := ExpandConstant('{app}\EXE\flplusplus.ini');
 
-  // Set draw distances
-  if(PageDrawDistances.Values[0]) then // 1x (Vanilla)
-    FileReplaceString(FilePath, 'lod_scale = 0', 'lod_scale = 1')
-  else if(PageDrawDistances.Values[1]) then // 2x
-    FileReplaceString(FilePath, 'lod_scale = 0', 'lod_scale = 2')
-  else if(PageDrawDistances.Values[2]) then // 3x
-    FileReplaceString(FilePath, 'lod_scale = 0', 'lod_scale = 3')
-  else if(PageDrawDistances.Values[3]) then // 4x
-    FileReplaceString(FilePath, 'lod_scale = 0', 'lod_scale = 4')
-  else if(PageDrawDistances.Values[4]) then // 5x
-    FileReplaceString(FilePath, 'lod_scale = 0', 'lod_scale = 5')
-  else if(PageDrawDistances.Values[5]) then // 6x
-    FileReplaceString(FilePath, 'lod_scale = 0', 'lod_scale = 6')
-  else if(PageDrawDistances.Values[6]) then // 7x
-    FileReplaceString(FilePath, 'lod_scale = 0', 'lod_scale = 7')
-  else if(PageDrawDistances.Values[7]) then // 8x
-    FileReplaceString(FilePath, 'lod_scale = 0', 'lod_scale = 8')
+  // Set general draw distances
+  if GeneralDrawDistances.ItemIndex = 0 then // 1x (Vanilla)
+    FileReplaceString(FilePath, 'lod_scale = 15', 'lod_scale = 1')
+  else if GeneralDrawDistances.ItemIndex = 1 then // 2x
+    FileReplaceString(FilePath, 'lod_scale = 15', 'lod_scale = 2')
+  else if GeneralDrawDistances.ItemIndex = 2 then // 3x
+    FileReplaceString(FilePath, 'lod_scale = 15', 'lod_scale = 3')
+  else if GeneralDrawDistances.ItemIndex = 3 then // 4x
+    FileReplaceString(FilePath, 'lod_scale = 15', 'lod_scale = 4')
+  else if GeneralDrawDistances.ItemIndex = 4 then // 5x
+    FileReplaceString(FilePath, 'lod_scale = 15', 'lod_scale = 5')
+  else if GeneralDrawDistances.ItemIndex = 5 then // 6x
+    FileReplaceString(FilePath, 'lod_scale = 15', 'lod_scale = 6')
+  else if GeneralDrawDistances.ItemIndex = 6 then // 7x
+    FileReplaceString(FilePath, 'lod_scale = 15', 'lod_scale = 7')
+  else if GeneralDrawDistances.ItemIndex = 7 then // 8x
+    FileReplaceString(FilePath, 'lod_scale = 15', 'lod_scale = 8')
+  else if GeneralDrawDistances.ItemIndex = 8 then // 10x
+    FileReplaceString(FilePath, 'lod_scale = 15', 'lod_scale = 10')
+  else if GeneralDrawDistances.ItemIndex = 9 then // 12x
+    FileReplaceString(FilePath, 'lod_scale = 15', 'lod_scale = 12');
+
+  // Set effect draw distances
+  if EffectDrawDistances.ItemIndex = 0 then // 1x (Vanilla)
+    FileReplaceString(FilePath, 'pbubble_scale = 15', 'pbubble_scale = 1')
+  else if EffectDrawDistances.ItemIndex = 1 then // 2x
+    FileReplaceString(FilePath, 'pbubble_scale = 15', 'pbubble_scale = 2')
+  else if EffectDrawDistances.ItemIndex = 2 then // 3x
+    FileReplaceString(FilePath, 'pbubble_scale = 15', 'pbubble_scale = 3')
+  else if EffectDrawDistances.ItemIndex = 3 then // 4x
+    FileReplaceString(FilePath, 'pbubble_scale = 15', 'pbubble_scale = 4')
+  else if EffectDrawDistances.ItemIndex = 4 then // 5x
+    FileReplaceString(FilePath, 'pbubble_scale = 15', 'pbubble_scale = 5')
+  else if EffectDrawDistances.ItemIndex = 5 then // 6x
+    FileReplaceString(FilePath, 'pbubble_scale = 15', 'pbubble_scale = 6')
+  else if EffectDrawDistances.ItemIndex = 6 then // 7x
+    FileReplaceString(FilePath, 'pbubble_scale = 15', 'pbubble_scale = 7')
+  else if EffectDrawDistances.ItemIndex = 7 then // 8x
+    FileReplaceString(FilePath, 'pbubble_scale = 15', 'pbubble_scale = 8')
+  else if EffectDrawDistances.ItemIndex = 8 then // 10x
+    FileReplaceString(FilePath, 'pbubble_scale = 15', 'pbubble_scale = 10')
+  else if EffectDrawDistances.ItemIndex = 9 then // 12x
+    FileReplaceString(FilePath, 'pbubble_scale = 15', 'pbubble_scale = 12');
+
+  // Set character draw distances
+  if CharacterDrawDistances.ItemIndex = 0 then // 1x (Vanilla)
+    FileReplaceString(FilePath, 'character_detail_scale = 15', 'character_detail_scale = 1')
+  else if CharacterDrawDistances.ItemIndex = 1 then // 2x
+    FileReplaceString(FilePath, 'character_detail_scale = 15', 'character_detail_scale = 2')
+  else if CharacterDrawDistances.ItemIndex = 2 then // 3x
+    FileReplaceString(FilePath, 'character_detail_scale = 15', 'character_detail_scale = 3')
+  else if CharacterDrawDistances.ItemIndex = 3 then // 4x
+    FileReplaceString(FilePath, 'character_detail_scale = 15', 'character_detail_scale = 4')
+  else if CharacterDrawDistances.ItemIndex = 4 then // 5x
+    FileReplaceString(FilePath, 'character_detail_scale = 15', 'character_detail_scale = 5')
+  else if CharacterDrawDistances.ItemIndex = 5 then // 6x
+    FileReplaceString(FilePath, 'character_detail_scale = 15', 'character_detail_scale = 6')
+  else if CharacterDrawDistances.ItemIndex = 6 then // 7x
+    FileReplaceString(FilePath, 'character_detail_scale = 15', 'character_detail_scale = 7')
+  else if CharacterDrawDistances.ItemIndex = 7 then // 8x
+    FileReplaceString(FilePath, 'character_detail_scale = 15', 'character_detail_scale = 8')
+  else if CharacterDrawDistances.ItemIndex = 8 then // 10x
+    FileReplaceString(FilePath, 'character_detail_scale = 15', 'character_detail_scale = 10')
+  else if CharacterDrawDistances.ItemIndex = 9 then // 12x
+    FileReplaceString(FilePath, 'character_detail_scale = 15', 'character_detail_scale = 12');
 end;
 
 procedure Process_Win10();

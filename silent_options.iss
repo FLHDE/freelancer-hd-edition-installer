@@ -174,6 +174,7 @@ begin
 
   // Vanilla graphics options
   VanillaAf.ItemIndex := GetParamInt('VanillaAf', Integer(VanillaAf.ItemIndex));
+  VanillaAa.ItemIndex := GetParamInt('VanillaAa', Integer(VanillaAa.ItemIndex));
 
   // Add custom effects
   if VanillaReflections.Checked then
@@ -197,7 +198,9 @@ begin
   EngineTrails.Checked := GetParamInt('EngineTrails', Integer(EngineTrails.Checked)) = 1;
 
   // Set draw distances
-  PageDrawDistances.SelectedValueIndex := GetParamInt('DrawDistances', PageDrawDistances.SelectedValueIndex);
+  GeneralDrawDistances.ItemIndex := GetParamInt('GeneralDrawDistances', GeneralDrawDistances.ItemIndex);
+  EffectDrawDistances.ItemIndex := GetParamInt('EffectDrawDistances', EffectDrawDistances.ItemIndex);
+  CharacterDrawDistances.ItemIndex := GetParamInt('CharacterDrawDistances', CharacterDrawDistances.ItemIndex);
 
   // Skippable options
   SkipIntros.Checked := GetParamInt('SkipIntros', Integer(SkipIntros.Checked)) = 1;

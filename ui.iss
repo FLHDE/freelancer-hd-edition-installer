@@ -15,7 +15,7 @@ var
   PagePlanetScape: TWizardPage;
   PageGraphicsApi: TWizardPage;
   PageEffects: TWizardPage;
-  PageDrawDistances: TInputOptionWizardPage;
+  PageDrawDistances: TWizardPage;
   PageSkips: TWizardPage;
   PageMiscOptions: TWizardPage;
 
@@ -181,11 +181,22 @@ var
   EngineTrails: TCheckBox;
   descEngineTrails: TNewStaticText;
 
+  // Draw distances
+  lblGeneralDrawDistances: TLabel;
+  GeneralDrawDistances: TComboBox;
+  descGeneralDrawDistances: TNewStaticText;
+  lblEffectDrawDistances: TLabel;
+  EffectDrawDistances: TComboBox;
+  descEffectDrawDistances: TNewStaticText;
+  lblCharacterDrawDistances: TLabel;
+  CharacterDrawDistances: TComboBox;
+  descCharacterDrawDistances: TNewStaticText;
+
   // Skip intros
   SkipIntros: TCheckBox;
   descSkipIntros: TNewStaticText;
 
-  // Skipable cutscenes
+  // Skippable cutscenes
   SkippableCutscenes: TCheckBox;
   descSkippableCutscenes: TNewStaticText;
 
@@ -1202,19 +1213,97 @@ begin
   EngineTrails.Width := PageEffects.SurfaceWidth - ScaleX(8);
 
   // Draw distances
-  PageDrawDistances := CreateInputOptionPage(PageEffects.ID,
-  'Set draw distances', 'Check to install.',
-  'This option sets the draw distances scale; changing it to a higher value allows you to see things in space from further away. 1x will give you the same draw distances as vanilla Freelancer. Every option after that scales the vanilla values by a multiplier (2x, 3x, etc). The Maximized option sets all draw distances to the highest possible values, which includes the jump hole visibility distances.',
-  True, False);
-  PageDrawDistances.Add('1x (Vanilla)');
-  PageDrawDistances.Add('2x');
-  PageDrawDistances.Add('3x');
-  PageDrawDistances.Add('4x');
-  PageDrawDistances.Add('5x');
-  PageDrawDistances.Add('6x');
-  PageDrawDistances.Add('7x');
-  PageDrawDistances.Add('8x');
-  PageDrawDistances.Add('Maximized (recommended)');
+  PageDrawDistances := CreateCustomPage(
+    PageEffects.ID,
+    'Adjust draw distances',
+    'Scale Freelancer''s default draw distances to see things from further away.'
+  );
+
+  lblGeneralDrawDistances := TLabel.Create(PageDrawDistances);
+  lblGeneralDrawDistances.Parent := PageDrawDistances.Surface;
+  lblGeneralDrawDistances.Caption := 'General draw distances';
+  
+  GeneralDrawDistances := TComboBox.Create(PageDrawDistances);
+  GeneralDrawDistances.Parent := PageDrawDistances.Surface;
+  GeneralDrawDistances.Style := csDropDownList;
+  GeneralDrawDistances.Items.Add('1x (Vanilla)');
+  GeneralDrawDistances.Items.Add('2x');
+  GeneralDrawDistances.Items.Add('3x');
+  GeneralDrawDistances.Items.Add('4x');
+  GeneralDrawDistances.Items.Add('5x');
+  GeneralDrawDistances.Items.Add('6x');
+  GeneralDrawDistances.Items.Add('7x');
+  GeneralDrawDistances.Items.Add('8x');
+  GeneralDrawDistances.Items.Add('10x');
+  GeneralDrawDistances.Items.Add('12x');
+  GeneralDrawDistances.Items.Add('15x');
+  GeneralDrawDistances.Top := lblGeneralDrawDistances.Top + ScaleY(20);
+  GeneralDrawDistances.Width := 155;
+
+  descGeneralDrawDistances := TNewStaticText.Create(PageDrawDistances);
+  descGeneralDrawDistances.Parent := PageDrawDistances.Surface;
+  descGeneralDrawDistances.WordWrap := True;
+  descGeneralDrawDistances.Width := PageDrawDistances.SurfaceWidth;
+  descGeneralDrawDistances.Caption := 'Scales the draw distances for objects you see in space. Many players enjoy playing with higher scaling values like 10x or 15x to see everything from very far distances. However, others may prefer lowering the scaling value to 3x or 4x.';
+  descGeneralDrawDistances.Top := GeneralDrawDistances.Top + ScaleY(25);
+
+  lblEffectDrawDistances := TLabel.Create(PageDrawDistances);
+  lblEffectDrawDistances.Parent := PageDrawDistances.Surface;
+  lblEffectDrawDistances.Caption := 'Effect draw distances';
+  lblEffectDrawDistances.Top := descGeneralDrawDistances.Top + ScaleY(55);
+
+  EffectDrawDistances := TComboBox.Create(PageDrawDistances);
+  EffectDrawDistances.Parent := PageDrawDistances.Surface;
+  EffectDrawDistances.Style := csDropDownList;
+  EffectDrawDistances.Items.Add('1x (Vanilla)');
+  EffectDrawDistances.Items.Add('2x');
+  EffectDrawDistances.Items.Add('3x');
+  EffectDrawDistances.Items.Add('4x');
+  EffectDrawDistances.Items.Add('5x');
+  EffectDrawDistances.Items.Add('6x');
+  EffectDrawDistances.Items.Add('7x');
+  EffectDrawDistances.Items.Add('8x');
+  EffectDrawDistances.Items.Add('10x');
+  EffectDrawDistances.Items.Add('12x');
+  EffectDrawDistances.Items.Add('15x');
+  EffectDrawDistances.Top := lblEffectDrawDistances.Top + ScaleY(20);
+  EffectDrawDistances.Width := 155;
+
+  descEffectDrawDistances := TNewStaticText.Create(PageDrawDistances);
+  descEffectDrawDistances.Parent := PageDrawDistances.Surface;
+  descEffectDrawDistances.WordWrap := True;
+  descEffectDrawDistances.Width := PageDrawDistances.SurfaceWidth;
+  descEffectDrawDistances.Caption := 'Scales the draw distances for effects like weapons, engines, and jump holes.';
+  descEffectDrawDistances.Top := EffectDrawDistances.Top + ScaleY(25);
+
+  lblCharacterDrawDistances := TLabel.Create(PageDrawDistances);
+  lblCharacterDrawDistances.Parent := PageDrawDistances.Surface;
+  lblCharacterDrawDistances.Caption := 'Character model draw distances';
+  lblCharacterDrawDistances.Top := descEffectDrawDistances.Top + ScaleY(30);
+
+  CharacterDrawDistances := TComboBox.Create(PageDrawDistances);
+  CharacterDrawDistances.Parent := PageDrawDistances.Surface;
+  CharacterDrawDistances.Style := csDropDownList;
+  CharacterDrawDistances.Items.Add('1x (Vanilla)');
+  CharacterDrawDistances.Items.Add('2x');
+  CharacterDrawDistances.Items.Add('3x');
+  CharacterDrawDistances.Items.Add('4x');
+  CharacterDrawDistances.Items.Add('5x');
+  CharacterDrawDistances.Items.Add('6x');
+  CharacterDrawDistances.Items.Add('7x');
+  CharacterDrawDistances.Items.Add('8x');
+  CharacterDrawDistances.Items.Add('10x');
+  CharacterDrawDistances.Items.Add('12x');
+  CharacterDrawDistances.Items.Add('15x (Recommended)');
+  CharacterDrawDistances.Top := lblCharacterDrawDistances.Top + ScaleY(20);
+  CharacterDrawDistances.Width := 155;
+
+  descCharacterDrawDistances := TNewStaticText.Create(PageDrawDistances);
+  descCharacterDrawDistances.Parent := PageDrawDistances.Surface;
+  descCharacterDrawDistances.WordWrap := True;
+  descCharacterDrawDistances.Width := PageDrawDistances.SurfaceWidth;
+  descCharacterDrawDistances.Caption := 'Scales the draw distances for character models which can be seen at bases and in cutscenes.';
+  descCharacterDrawDistances.Top := CharacterDrawDistances.Top + ScaleY(25);
 
   // Skips
   PageSkips := CreateCustomPage(
@@ -1486,7 +1575,9 @@ begin
   MissileEffects.Checked := False;
   EngineTrails.Checked := True;
 
-  PageDrawDistances.Values[8] := True;
+  GeneralDrawDistances.ItemIndex := 10;
+  EffectDrawDistances.ItemIndex := 10;
+  CharacterDrawDistances.ItemIndex := 10;
 
   JumpTunnel5Sec.Checked := True;
   SkipIntros.Checked := True;
