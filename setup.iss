@@ -1,6 +1,6 @@
 ; Inno Install Script for Freelancer: HD Edition
 ; GitHub: https://github.com/FLHDE/freelancer-hd-edition-installer
-; Main GitHub: https://github.com/BC46/freelancer-hd-edition
+; Main GitHub: https://github.com/FLHDE/freelancer-hd-edition
 
 #define MyAppVersion "0.7"
 #define MyModName "Freelancer: HD Edition"
@@ -9,7 +9,7 @@
 #define MyServerFileName "FLServer HD Edition"
 #define MyAppName MyModName + " v" + MyAppVersion
 #define MyAppPublisher MyModName + " Development Team"
-#define MyAppURL "https://github.com/BC46/freelancer-hd-edition"
+#define MyAppURL "https://github.com/FLHDE/freelancer-hd-edition"
 #define MyAppExeName "Freelancer.exe"
 #define MyAppServerExeName "FLServer.exe"
 #define MyFolderName "freelancer-hd-edition-" + MyAppVersion
@@ -21,7 +21,7 @@
 ; This variable controls whether the zip is shipped with the exe or downloaded from a mirror
 #define AllInOneInstall true
 ; These mirrors must provide a zip containing a folder named {#MyFolderName} where all the mod files live
-#dim Mirrors[2] {"https://archive.org/download/freelancer-hd-edition-" + MyAppVersion + "/freelancer-hd-edition-" + MyAppVersion + ".7z", "https://github.com/BC46/freelancer-hd-edition/archive/refs/tags/" + MyAppVersion + ".zip"}
+#dim Mirrors[2] {"https://archive.org/download/freelancer-hd-edition-" + MyAppVersion + "/freelancer-hd-edition-" + MyAppVersion + ".7z", "https://github.com/FLHDE/freelancer-hd-edition/archive/refs/tags/" + MyAppVersion + ".zip"}
 ; TODO: Update sizes for each release
 #if AllInOneInstall
   #define SizeZip 0 ; The zip size is already included in the pre-calculated required diskspace
