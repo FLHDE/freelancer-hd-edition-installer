@@ -1536,8 +1536,8 @@ begin
   // Only check the planetscapes fix option if the user's aspect ratio is 16:9
   PlanetScape.Checked := IsResWithinAspectRatioRange(Min16by9Factor, Max16by9Factor);
 
-  DgVoodooGraphicsApi.Checked := GpuManufacturer = NVIDIAOrOther;
-  DxWrapperGraphicsApi.Checked := GpuManufacturer = AMD;
+  DgVoodooGraphicsApi.Checked := (GpuManufacturer = NVIDIAOrOther) and (not IsWine);
+  DxWrapperGraphicsApi.Checked := (GpuManufacturer = AMD) or IsWine;
 
   DxWrapperAa.ItemIndex := 4;
   DxWrapperAf.ItemIndex := 5;
