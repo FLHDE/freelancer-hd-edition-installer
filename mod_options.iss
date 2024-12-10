@@ -1324,12 +1324,11 @@ begin
   if (DisplayMode.ItemIndex = 1) or (DisplayMode.ItemIndex = 2) then
     // Use Tonemap only if windowed or fullscreen windowed have been checked
     Techniques := Techniques + 'Tonemap@Tonemap.fx,';
+  if SharpeningChecked then
+    Techniques := Techniques + 'ContrastAdaptiveSharpen@CAS.fx,';
 
   // Enable the Deband shader by default because it's crucial for Freelancer
   Techniques := Techniques + 'Deband@Deband.fx,';
-
-  if SharpeningChecked then
-    Techniques := Techniques + 'ContrastAdaptiveSharpen@CAS.fx,';
 
   // Removes a trailing comma at the end of the techniques if it's there
   if (LENGTH(Techniques) > 0) and (Techniques[LENGTH(Techniques)] = ',') then
