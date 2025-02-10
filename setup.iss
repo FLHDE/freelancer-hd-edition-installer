@@ -13,7 +13,7 @@
 #define MyAppExeName "Freelancer.exe"
 #define MyAppServerExeName "FLServer.exe"
 #define MyFolderName "freelancer-hd-edition-" + MyAppVersion
-#define MyZipName "freelancerhde"
+#define MyZipName "freelancerhde.7z"
 #define MyCustomSaveFolderName "FreelancerHDE"
 #define VcRedistName "VC_redist.x86.exe"
 ; The actual included VC Redist is version 14.38.33135.00, but FLHook is the only software part of HDE that depends on it and is built with MSVC v142.
@@ -84,7 +84,7 @@ Source: "Assets\External\utf-8-bom-remover.exe"; DestDir: "{tmp}"; Flags: delete
 Source: "Assets\External\HexToBinary.dll"; Flags: dontcopy;
 Source: "Assets\External\{#VcRedistName}"; DestDir: {tmp}; Flags: dontcopy
 # if AllInOneInstall
-Source: "Assets\Mod\{#MyZipName}.7z"; DestDir: "{tmp}"; Flags: nocompression deleteafterinstall
+Source: "Assets\Mod\{#MyZipName}"; DestDir: "{tmp}"; Flags: nocompression deleteafterinstall
 #endif
 ; Needed to make sure icons exist for the exes right before the shortcuts are created
 Source: "Assets\Images\icon.ico"; DestDir: "{app}\EXE"; DestName: "{#MyAppExeName}"; Flags: ignoreversion
@@ -159,7 +159,7 @@ begin
 
         # if !AllInOneInstall
           if OfflineInstall <> 'false' then
-            FileCopy(OfflineInstall,ExpandConstant('{tmp}\{#MyZipName}.7z'),false);
+            FileCopy(OfflineInstall,ExpandConstant('{tmp}\{#MyZipName}'),false);
         # endif
 
         // Copy Vanilla game to directory
@@ -170,7 +170,7 @@ begin
         // Unzip
         UpdateProgress(50);
         WizardForm.StatusLabel.Caption := ExpandConstant('Unpacking {#MyAppName}...');
-        ShellExecuteAsync(ExpandConstant('{tmp}\7za.exe'), ExpandConstant(' x -y -aoa "{tmp}\{#MyZipName}.7z"  -o"{app}"'));
+        ShellExecuteAsync(ExpandConstant('{tmp}\7za.exe'), ExpandConstant(' x -y -aoa "{tmp}\{#MyZipName}"  -o"{app}"'));
         // -aoa Overwrite All existing files without prompt
         // -o Set output directory
         // -y Assume "Yes" on all Queries
@@ -374,7 +374,7 @@ begin
       for i:= 0 to mirrors.Count - 1 do
       begin
         DownloadPage.Clear;
-        DownloadPage.Add(mirrors[i], ExpandConstant('{#MyZipName}.7z'), '');
+        DownloadPage.Add(mirrors[i], ExpandConstant('{#MyZipName}'), '');
         DownloadPage.SetText('Downloading {#MyModName}...', '');
         DownloadPage.Show;
         DownloadPage.ProgressBar.Style := npbstNormal;

@@ -11,7 +11,7 @@ This is a setup script for [Freelancer: HD Edition](https://github.com/FLHDE/fre
 2. Compress all the mod files (DATA & EXE directories, etc.) using an archiver like [7-Zip](https://www.7-zip.org/). NOTE: The zip must NOT be larger than 2.05 GB!
     1. Compressing the files using LZMA2 is highly recommended.
     2. If it is inevitable that the zip exceeds the 2.05 GB file size limit, you may specify [DiskSpanning=yes under [Setup]](https://jrsoftware.org/is6help/index.php?topic=setup_diskspanning) in `setup.iss` to make the build process succeed regardless.
-3. Name the zip `freelancerhd.7z` and place it in `Assets/Mod`.
+3. Name the zip `freelancerhde.7z` and place it in `Assets/Mod`.
 4. Build `setup.iss` using [Inno Setup's standard IDE](https://jrsoftware.org/isinfo.php), or use the [Command Line Compiler](https://jrsoftware.org/ishelp/index.php?topic=compilercmdline).
 
 ### Online and offline installer
