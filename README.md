@@ -1,12 +1,12 @@
 # Freelancer: HD Edition Inno Installer Script
 [![Discord](https://badgen.net/badge/icon/discord?icon=discord&label)](https://discord.gg/ScqgYuFqmU)
-[![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://GitHub.com/oliverpechey/Freelancer-hd-edition-install-script/graphs/commit-activity)
+[![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://GitHub.com/FLHDE/freelancer-hd-edition-installer/graphs/commit-activity)
 
-This is a setup script for [Freelancer: HD Edition](https://github.com/BC46/freelancer-hd-edition). It was created using Inno Setup with the help of custom Pascal scripting.
+This is a setup script for [Freelancer: HD Edition](https://github.com/FLHDE/freelancer-hd-edition). It was created using Inno Setup with the help of custom Pascal scripting.
 
 ## Build instructions
 ### All-in-one installer (default)
-1. Clone the [Freelancer: HD Edition GitHub repository](https://github.com/BC46/freelancer-hd-edition).
+1. Clone the [Freelancer: HD Edition GitHub repository](https://github.com/FLHDE/freelancer-hd-edition).
     1. NOTE: Do not download the mod zip from GitHub's "Download ZIP" feature under the green "Code" button (on the mod's homepage). This may result in an incomplete download. Use the `git clone` command instead.
 2. Compress all the mod files (DATA & EXE directories, etc.) using an archiver like [7-Zip](https://www.7-zip.org/). NOTE: The zip must NOT be larger than 2.05 GB!
     1. Compressing the files using LZMA2 is highly recommended.
