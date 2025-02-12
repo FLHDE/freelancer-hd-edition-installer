@@ -455,7 +455,11 @@ begin
     //else
     //  Result := Other;
 
-    if MsgBox('We weren''t able to automatically determine what graphics card is in your system. We use this information to apply the best compatibility options.'
+    // If the wizard is running silently and the GPU manufacturer couldn't be determined, just assume AMD since it's the safest option.
+    // Though this can still be adjusted manually via the debug options (see silent_options.iss)
+    if WizardSilent then
+      Result := AMD
+    else if MsgBox('We weren''t able to automatically determine what graphics card is in your system. We use this information to apply the best compatibility options.'
     + #13#10#13#10 + 'Please click "Yes" if your computer has an AMD graphics card. Click "No" if the graphics card is from another manufacturer like Intel or NVIDIA.', mbConfirmation, MB_YESNO) = IDYES then
       Result := AMD
     else
