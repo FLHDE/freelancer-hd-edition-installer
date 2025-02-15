@@ -489,7 +489,7 @@ begin
   descEnglishImprovements.Caption := 
   'This option fixes many typos, grammar mistakes, inconsistencies, and more, in the English Freelancer text and audio resources. It also adds a higher quality Freelancer intro (1440x960 instead of 720x480), which is only available in English.' + #13#10#13#10 +  
   'NOTE: This option will set all of Freelancer''s text, voice lines, and the intro to English. Disable this option if you''d like to play Freelancer in a different language like German, French, or Russian.'
-  + #13#10#13#10 + 'NOTE 2: Some text resources will remain English if this option is disabled.';
+  + #13#10#13#10 + 'NOTE 2: Some text resources will remain English, even if this option is disabled.';
 
   EnglishImprovements := TCheckBox.Create(PageEnglishImprovements);
   EnglishImprovements.Parent := PageEnglishImprovements.Surface;
@@ -604,11 +604,12 @@ begin
   'Select the option corresponding to the resolution you''re going to play Freelancer in. If you play in 1920x1080 or lower, the "No" option is fine as the elements are configured correctly already.',
   True, False);
   SmallText.Add('No');
-  SmallText.Add('Yes, apply fix for 2560x1440 and 1920x1200 screens');
-  SmallText.Add('Yes, apply fix for 3840x2160 screens');
+  SmallText.Add('Yes, apply fix for 2560x1440 (Quad HD) and 1920x1200 screens');
+  SmallText.Add('Yes, apply fix for 3840x2160 (4K) screens');
+  SmallText.Add('Yes, apply fix for 5120x2880 (5K) screens');
 
   if IsWine then
-    SmallText.Add('Yes, apply fix for 3840x1600 screens');
+    SmallText.Add('Yes, apply fix for 3840x1600 screens on Wine');
   
   // Initialize HUD page and add content
   PageWidescreenHud := CreateCustomPage(
@@ -1516,10 +1517,12 @@ begin
     LogoRes.Values[5] := True;
 
   // Determine best small text fix based on user's screen size
-  if DesktopRes.Height >= 2160 then
+  if DesktopRes.Height >= 2880 then
+    SmallText.Values[3] := True
+  else if DesktopRes.Height >= 2160 then
     SmallText.Values[2] := True
   else if IsWine and (DesktopRes.Height >= 1600) then
-    SmallText.Values[3] := True
+    SmallText.Values[4] := True
   else if DesktopRes.Height >= 1200 then
     SmallText.Values[1] := True
   else

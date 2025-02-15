@@ -330,7 +330,7 @@ begin
       'font = Agency FB' + #13#10 +
       'fixed_height = 0.025');
 
-    if SmallText.Values[2] or (IsWine and SmallText.Values[3]) then begin // Fix for 3840x2160 screens and 1600p screens on Wine
+    if SmallText.Values[2] or (IsWine and SmallText.Values[4]) then begin // Fix for 3840x2160 screens and 1600p screens on Wine
       // On Wine/Luris the lowered fixed_height for HudSmall and Normal is not enough to fix the missing text. Therefore, it has to be lowered even more.
       if IsWine and SmallText.Values[2] then
         New4KHeight := '0.024'
@@ -353,6 +353,24 @@ begin
         'nickname = Normal' + #13#10 +
         'font = Agency FB' + #13#10 +
         'fixed_height = ' + New4KHeight);
+    end
+    else if SmallText.Values[3] then begin
+      FileReplaceString(FilePath,
+        'nickname = HudSmall' + #13#10 +
+        'font = Agency FB' + #13#10 +
+        'fixed_height = 0.03',
+
+        'nickname = HudSmall' + #13#10 +
+        'font = Agency FB' + #13#10 +
+        'fixed_height = 0.02');
+      FileReplaceString(FilePath,
+        'nickname = Normal' + #13#10 +
+        'font = Agency FB' + #13#10 +
+        'fixed_height = 0.035',
+
+        'nickname = Normal' + #13#10 +
+        'font = Agency FB' + #13#10 +
+        'fixed_height = 0.02');
     end;
 end;
 
