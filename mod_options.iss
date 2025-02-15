@@ -1426,10 +1426,11 @@ end;
 procedure Process_DisplayMode();
 var
   ExeFolderPath: string;
-  ExePath: string;
+  ExePath, JflpPath: string;
 begin
   ExeFolderPath := ExpandConstant('{app}\EXE\');
   ExePath := ExeFolderPath + 'Freelancer.exe';
+  JflpPath := ExeFolderPath + 'jflp.dll';
 
   if (DisplayMode.ItemIndex = 1) or (DisplayMode.ItemIndex = 2) then // Windowed or borderless windowed selected
     WriteHexToFile(ExePath, $1B16CC, '00'); // Windowed mode
@@ -1444,8 +1445,16 @@ begin
   begin
     if DisplayMode.ItemIndex = 0 then // Fullscreen selected
       WriteHexToFile(ExePath, $1B2665, 'EB') // Keep Freelancer running in the background when Alt-Tabbed
-    else
+    else begin
       WriteHexToFile(ExePath, $1B264C, 'BA0100000090'); // Keep Freelancer and its window running in the background when Alt-Tabbed
+
+      // Prevents the JFLP dll from making USER_FULLSCREEN work.
+      // This is important because with the above Alt-Tab patch, the game must never run in fullscreen mode.
+      // Every time you Alt-Tab in fullscreen mode with this patch, the window will continuously regain focus.
+      // Running the game in fullscreen is still possible with the "-f" flag, but that's up to the user to decide.
+      // Keep in mind that whenever the JFLP dll gets updated, this patch may need to be adjusted too.
+      WriteHexToFile(JflpPath, $001528, '04');
+    end;
 
     if MusicInBackground then
       begin
