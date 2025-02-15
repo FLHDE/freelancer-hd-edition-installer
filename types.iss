@@ -68,4 +68,4 @@ type
   TSystemLanguage = (S_German, S_French, S_Russian, S_EnglishOrOther);
 
 type
-  FlLanguage = (FL_English, FL_German, FL_French, FL_Russian, FL_Spanish, FL_Mandarin, FL_Czech, FL_Unknown);
+  FlLanguage = (FL_English, FL_German, FL_French, FL_Russian, FL_Spanish, FL_Mandarin, FL_Czech, FL_Hungarian, FL_Unknown);

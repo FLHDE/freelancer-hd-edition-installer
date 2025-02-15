@@ -511,13 +511,14 @@ begin
 
   // Compare the MD5 hash to a list of known MD5 hashes from different language files
   case OfferBribeResourcesMD5 of
-    '9fb0c85a1f88e516762d71cbfbb69fa7', '801c5c314887e43de8f04dbeee921a31', 'f002ba64816723cb96d82af2c7af988a': Result := FL_English; // Vanilla English (official), JFLP v1.27 English, TSR v1.2 English
+    '9fb0c85a1f88e516762d71cbfbb69fa7', '801c5c314887e43de8f04dbeee921a31', 'f002ba64816723cb96d82af2c7af988a': Result := FL_English; // Vanilla English (official), JFLP v1.25 English, TSR v1.2 English
     '403c420f051dc3ce14fcd2f7b63cf0c8': Result := FL_German; // German (official)
     '78a283161a7aa6c91756733a4b456ab1': Result := FL_French; // French (official)
     '6ed61e8db874b5b8bae72d3689ac1f43', '1c5736b9c808538ff77174c29a2ffa08': Result := FL_Russian; // Russian translations by Elite-Games and Noviy Disk
     '17933dcced8a8faa0c1f2316f8289c35': Result := FL_Spanish; // Spanish translation by Clan DLAN
     'eaeab5c42d6d6a4d54dd1927a1351a6d': Result := FL_Mandarin; // Mandarin/Taiwanese translation
     'fad76d9880579e841b98d018e8dbde6c', '3aa0eda21eca3529fbb23dae54a73053': Result := FL_Czech; // WIP Czech translation by Spider and the complete Czech translation by Starsoul (28/07/2024)
+    '7bcd1ff86475b9050ec32fc0b2d1743b', '12bb9c278af7dda8505867f3e4a5da06': Result := FL_Hungarian; // Hungarian translation by Guillotine and another one by Garner, Dömike, Jip, and Cerberus
   else
     Result := FL_Unknown;
   end;

@@ -1144,7 +1144,7 @@ begin
   VanillaAfAndAaWarning.Parent := VanillaPage.Surface;
   VanillaAfAndAaWarning.WordWrap := True;
   VanillaAfAndAaWarning.Width := VanillaPage.SurfaceWidth;
-  VanillaAfAndAaWarning.Caption := 'NOTE: The anti-aliasing and anisotropic filtering options for the Vanilla Graphics APIs effectively force the game to enable these enhancements. When enabling them, please make sure that your system supports these options, otherwise the game may crash on startup.';
+  VanillaAfAndAaWarning.Caption := 'NOTE: The anti-aliasing and anisotropic filtering options for the Vanilla Graphics APIs effectively force the game to use these enhancements. When enabling them, please make sure that your system supports these options, otherwise the game may crash on startup.';
   VanillaAfAndAaWarning.Top := descVanillaAf.Top + ScaleY(50);
 
   // Add improved reflections
