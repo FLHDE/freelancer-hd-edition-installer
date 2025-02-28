@@ -612,3 +612,26 @@ begin
     ExtractTemporaryFile('{#VcRedistName}');
   end;
 end;
+
+// Sets the ambient volume equal to the music volume and sets the interface volume equal to the sfx volume
+// This is needed because if the user has different values for all audio values and no longer has the sliders available,
+// Then it won't be possible to adjust the missing sliders.
+procedure SetSimpleAudioOptions(OptionsPath: string);
+var
+  MusicVolume, SfxVolume: string;
+begin
+  if not FileExists(OptionsPath) then
+    exit;
+  
+  // Get the volume values for music and sfx
+  MusicVolume := GetIniString('PerfOptions', 'audio_music', '0.50', OptionsPath);
+  SfxVolume := GetIniString('PerfOptions', 'audio_sfx', '0.50', OptionsPath);
+
+  // Comment out existing ambient and interface entries
+  FileReplaceString(OptionsPath, 'audio_ambient', ';audio_ambient');
+  FileReplaceString(OptionsPath, 'audio_interface', ';audio_interface');
+
+  // Write new strings for ambient and interface volume with the values equal to music and sfx, respectively
+  SetIniString('PerfOptions', 'audio_ambient', MusicVolume, OptionsPath);
+  SetIniString('PerfOptions', 'audio_interface', SfxVolume, OptionsPath);
+end;

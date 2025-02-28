@@ -117,13 +117,39 @@ begin
   end;
 end;
 
+// Gets the path of a file in the My Games\Freelancer(HD) directory
+function GetOptionsPath(FileName: string): string;
+var
+  OptionsFolder: string;
+  MyGamesFolder: string;
+begin
+  MyGamesFolder := ExpandConstant('{userdocs}\My Games\')
+
+  if NewSaveFolder.Checked then
+    OptionsFolder := '{#MyCustomSaveFolderName}'
+  else
+    OptionsFolder := 'Freelancer';
+
+  CreateDirIfNotExists(MyGamesFolder);
+  CreateDirIfNotExists(MyGamesFolder + OptionsFolder);
+
+  Result := MyGamesFolder + OptionsFolder + '\' + FileName + '.ini'
+end;
+
 procedure Process_AdvancedAudioOptions();
 var
-  ExePath : string;
-  OptListPath : string;
+  ExePath: string;
+  OptListPath: string;
+  OptionsPath, InDirectoryOptionsPath: string;
 begin
-  if not AdvancedAudioOptions.Checked then
-    exit;
+  if not AdvancedAudioOptions.Checked then begin
+    OptionsPath := GetOptionsPath('PerfOptions')
+    InDirectoryOptionsPath := ExpandConstant('{app}\SAVE\Accts\PerfOptions.ini')
+
+    SetSimpleAudioOptions(OptionsPath)
+    SetSimpleAudioOptions(InDirectoryOptionsPath)
+    exit
+  end;
 
   ExePath := ExpandConstant('{app}\EXE\Freelancer.exe');
   OptListPath := ExpandConstant('{app}\DATA\INTERFACE\optlist.ini');
@@ -401,25 +427,6 @@ end;
 procedure Process_Console();
 begin
   if not SinglePlayer.Checked then FileReplaceString(ExpandConstant('{app}\EXE\dacom.ini'), 'console.dll', ';console.dll')
-end;
-
-// Gets the path of a file in the My Games\Freelancer(HD) directory
-function GetOptionsPath(FileName: string): string;
-var
-  OptionsFolder: string;
-  MyGamesFolder: string;
-begin
-  MyGamesFolder := ExpandConstant('{userdocs}\My Games\')
-
-  if NewSaveFolder.Checked then
-    OptionsFolder := '{#MyCustomSaveFolderName}'
-  else
-    OptionsFolder := 'Freelancer';
-
-  CreateDirIfNotExists(MyGamesFolder);
-  CreateDirIfNotExists(MyGamesFolder + OptionsFolder);
-
-  Result := MyGamesFolder + OptionsFolder + '\' + FileName + '.ini'
 end;
 
 procedure SetBestOptions(OptionsPath: string; PreDefinedOptionsPath: string);
