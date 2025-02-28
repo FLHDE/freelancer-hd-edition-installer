@@ -135,10 +135,18 @@ var
 begin
   MyFile := TStringList.Create;
 
+  if not FileExists(FileName) then
+  begin
+    result := false
+    exit
+  end;
+
   try
     result := true;
 
     try
+      RemoveReadOnly(FileName);
+
       MyFile.LoadFromFile(FileName);
       MyText := MyFile.Text;
 
@@ -240,6 +248,14 @@ var
   Buffer: string;
   Size: LongWord;
 begin
+  if not FileExists(FileName) then
+  begin
+    Result := false
+    exit
+  end;
+
+  RemoveReadOnly(FileName);
+
   Stream := TFileStream.Create(FileName, fmOpenReadWrite);
 
   try
