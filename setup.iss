@@ -366,7 +366,7 @@ begin
       // Apparently this check can be bypassed when enabling the "Use Unicode UTF-8 for worldwide language support)" option in Windows.
       // Though FL seems to run fine when this option is enabled while it's running from a path with non-ASCII chars, so I guess it doesn't really matter.
       if StrContainsNonAsciiChars(ExpandConstant('{app}')) then begin
-        MsgBox('{#MyModName} cannot be installed to a path that contains non-ASCII characters. Freelancer would not run when launched from such a location. Please choose a directory path containing only characters within the ASCII range.', mbError, MB_OK);
+        MsgBox('{#MyModName} cannot be installed to a path that contains non-ASCII characters. Freelancer would not run when launched from such location. Please choose a directory path containing only characters within the ASCII range.', mbError, MB_OK);
         Result := False;
         exit;
       end;
