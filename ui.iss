@@ -746,7 +746,7 @@ begin
   descDgVoodooGraphicsApi.WordWrap := True;
   descDgVoodooGraphicsApi.Top := DgVoodooGraphicsApi.Top + ScaleY(15);
   descDgVoodooGraphicsApi.Width := PageGraphicsApi.SurfaceWidth;
-  descDgVoodooGraphicsApi.Caption := 'Fixes the lighting, stuttering, and glass bugs on Windows 10 and 11. Supports native Anti-Aliasing, Anisotropic Filtering, and ReShade.';
+  descDgVoodooGraphicsApi.Caption := 'Fixes the lighting and stuttering bugs on Windows 10 and 11. Supports native Anti-Aliasing, Anisotropic Filtering, and ReShade.';
 
   // Refresh rate input is only required if the user has an AMD GPU
   if GpuManufacturer = AMD then
