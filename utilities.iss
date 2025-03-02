@@ -119,7 +119,7 @@ begin
 end;
 
 // Tries to copy a directory without blocking the UI thread.
-// If this fails for whatever reason, coy the directory the normal way, but this will block the UI thread.
+// If this fails for whatever reason, copy the directory the normal way, but this will block the UI thread.
 procedure TryDirectoryCopyAsync(SourcePath, DestPath: string; Move: Boolean; SkipFlExe: Boolean);
 begin
   if LegacyDirCpy or (not ShellExecuteAsync(ExpandConstant('{tmp}\dircpy.exe'), Format('"%s" "%s" %d %d', [SourcePath, DestPath, Integer(Move), Integer(SkipFlExe)]))) then

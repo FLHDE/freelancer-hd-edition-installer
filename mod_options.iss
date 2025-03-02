@@ -204,12 +204,14 @@ begin
     RenameFile(AudioPath + 'pilot_f_ill_m02.utf', AudioPath + 'pilot_f_ill_m02_vanilla.utf')
     RenameFile(AudioPath + 'pilot_f_ill_m02a.utf', AudioPath + 'pilot_f_ill_m02a_vanilla.utf')
     RenameFile(AudioPath + 'pilot_f_ill_m02b.utf', AudioPath + 'pilot_f_ill_m02b_vanilla.utf')
+    RenameFile(AudioPath + 'pilot_f_leg_m01.utf', AudioPath + 'pilot_f_leg_m01_vanilla.utf')
 
     // Rename new audio files
     RenameFile(AudioPath + 'nnvoice_eng.utf', AudioPath + 'nnvoice.utf')
     RenameFile(AudioPath + 'pilot_f_ill_m02_eng.utf', AudioPath + 'pilot_f_ill_m02.utf')
     RenameFile(AudioPath + 'pilot_f_ill_m02a_eng.utf', AudioPath + 'pilot_f_ill_m02a.utf')
     RenameFile(AudioPath + 'pilot_f_ill_m02b_eng.utf', AudioPath + 'pilot_f_ill_m02b.utf')
+    RenameFile(AudioPath + 'pilot_f_leg_m01_eng.utf', AudioPath + 'pilot_f_leg_m01.utf')
     end;
 end;
 
