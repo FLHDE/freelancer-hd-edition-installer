@@ -212,6 +212,15 @@ begin
     RenameFile(AudioPath + 'pilot_f_ill_m02a_eng.utf', AudioPath + 'pilot_f_ill_m02a.utf')
     RenameFile(AudioPath + 'pilot_f_ill_m02b_eng.utf', AudioPath + 'pilot_f_ill_m02b.utf')
     RenameFile(AudioPath + 'pilot_f_leg_m01_eng.utf', AudioPath + 'pilot_f_leg_m01.utf')
+
+    // The hex edits below add a custom message for the "You must be on friendlier terms to purchase this." notice in the dealer menus.
+    // This custom version prints the actual reputation requirement too. However, this custom IDS is only available in English.
+
+    // Changes the IDS of the insufficient reputation message for equipment and commodities to an IDS in controls.dll with a custom message.
+    WriteHexToFile(TextStringsPath + 'Freelancer.exe', $08073C, '1E000700'); // 1E000700 = 458782 in hexadecimal
+
+    // Changes the IDS of the insufficient reputation message for ships to an IDS in controls.dll with a custom message.
+    WriteHexToFile(TextStringsPath + 'Freelancer.exe', $0B9011, '1E000700'); // 1E000700 = 458782 in hexadecimal
     end;
 end;
 
