@@ -250,6 +250,10 @@ begin
   if NewSaveFolder.Checked then
     begin
     FileReplaceString(FlPlusPlusPath, 'save_folder_name = Freelancer', 'save_folder_name = {#MyCustomSaveFolderName}')
+
+    // The automatic restart file regeneration could be turned off in this case since other mods should now no longer interfere with HDE's save folder.
+    // However, the user may have manually added custom content to their HDE installation, so leave the feature on just in case.
+    //FileReplaceString(FlPlusPlusPath, 'always_regenerate_restart_file = true', 'always_regenerate_restart_file = false')
     end;
 end;
 
