@@ -14,10 +14,12 @@ This is a setup script for [Freelancer: HD Edition](https://github.com/FLHDE/fre
 3. Name the zip `freelancerhde.7z` and place it in `Assets/Mod`.
 4. Build `setup.iss` using [Inno Setup's standard IDE](https://jrsoftware.org/isinfo.php), or use the [Command Line Compiler](https://jrsoftware.org/ishelp/index.php?topic=compilercmdline).
 
-### Online and offline installer
-1. Open `setup.iss` and find line 21. It should look like `#define AllInOneInstall true`.
-2. Change this line to `#define AllInOneInstall false`.
+### Online and offline installer (not officially supported)
+1. Open `setup.iss` and find the line that says `#define AllInOneInstall true`.
+2. Change `true` to `false`.
 3. Build `setup.iss` using [Inno Setup's standard IDE](https://jrsoftware.org/isinfo.php), or use the [Command Line Compiler](https://jrsoftware.org/ishelp/index.php?topic=compilercmdline).
+
+Note that the online and offline mode is a legacy feature that is no longer supported. The code for it is present but it has not been maintained after the release of v0.6 so there is no guarantee that it will still work.
 
 ## Programs used
 ### [7-Zip executable](https://www.7-zip.org/download.html)
