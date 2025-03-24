@@ -192,6 +192,11 @@ begin
   end;
 end;
 
+function DesktopResPixelAmount: Integer;
+begin
+  Result := DesktopRes.Width * DesktopRes.Height;
+end;
+
 // Gets the user's main monitor refresh rate
 function GetRefreshRate(): Integer;
 var

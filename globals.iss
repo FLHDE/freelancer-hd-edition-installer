@@ -32,6 +32,9 @@ var
   // Use the old method of copying directories (freezes the UI thread)
   LegacyDirCpy: Boolean;
 
+  // Amount of desktop resolution pixels which is considered high
+  HighDesktopResPixelAmount: Integer;
+
 procedure InitConstants();
 begin
   EDD_GET_DEVICE_INTERFACE_NAME := 1;
@@ -57,6 +60,8 @@ begin
 
   NoMsvcRedist := False;
   LegacyDirCpy := False;
+
+  HighDesktopResPixelAmount := 4000000;
 
   // Initialize EditedConfigFiles
   EditedConfigFiles := TStringList.Create;

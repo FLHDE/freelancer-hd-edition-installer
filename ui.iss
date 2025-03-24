@@ -867,7 +867,7 @@ begin
   DgVoodooAa.Items.Add('2x');
 
   // High AA settings are not needed on high resolutions like 4K
-  if DesktopRes.Height >= 2160 then
+  if (DesktopRes.Height >= 2160) or (DesktopResPixelAmount >= HighDesktopResPixelAmount) then
   begin
     DgVoodooAa.Items.Add('4x (recommended)');
     DgVoodooAa.Items.Add('8x');
@@ -1097,7 +1097,7 @@ begin
   VanillaAa.Items.Add('2x');
 
   // High AA settings are not needed on high resolutions like 4K
-  if DesktopRes.Height >= 2160 then
+  if (DesktopRes.Height >= 2160) or (DesktopResPixelAmount >= HighDesktopResPixelAmount) then
   begin
     VanillaAa.Items.Add('4x (recommended)');
     VanillaAa.Items.Add('8x');
@@ -1545,7 +1545,7 @@ begin
   DxWrapperAa.ItemIndex := 4;
   DxWrapperAf.ItemIndex := 5;
 
-  if DesktopRes.Height >= 2160 then
+  if (DesktopRes.Height >= 2160) or (DesktopResPixelAmount >= HighDesktopResPixelAmount) then
     begin
       DgVoodooAa.ItemIndex := 2
       VanillaAa.ItemIndex := 2
