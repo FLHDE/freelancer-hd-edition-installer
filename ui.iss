@@ -311,7 +311,7 @@ begin
   txtAf := 'Anisotropic Filtering';
   txtAfDesc := 'Anisotropic Filtering improves the quality of textures when viewing them from the side with minimal performance overhead.';
   txtEnhancementsPage := 'Choose additional graphics enhancements.';
-  txtReShade := 'Enable ReShade';
+  txtReShade := 'Enable ReShade (some effects may be heavy on low-end hardware)';
   txtReShadeDesc := 'This option enables ReShade, which allows for the use of various post-processing effects to improve the game''s appearance. If it''s been enabled, the configuration below can be adjusted at any time by pressing the ''Home'' key in-game.';
   txtSaturation := 'Add increased saturation (recommended)';
   txtSaturationDesc := 'Simply gives Freelancer a slightly more-saturated look.';
