@@ -1217,12 +1217,12 @@ begin
   PageDrawDistances := CreateCustomPage(
     PageEffects.ID,
     'Adjust draw distances',
-    'Scale Freelancer''s default draw distances to see things from further away.'
+    'Scale Freelancer''s default detail levels and draw distances to improve visibility.'
   );
 
   lblGeneralDrawDistances := TLabel.Create(PageDrawDistances);
   lblGeneralDrawDistances.Parent := PageDrawDistances.Surface;
-  lblGeneralDrawDistances.Caption := 'General draw distances';
+  lblGeneralDrawDistances.Caption := 'General detail and draw distance scale';
   
   GeneralDrawDistances := TComboBox.Create(PageDrawDistances);
   GeneralDrawDistances.Parent := PageDrawDistances.Surface;
@@ -1245,12 +1245,12 @@ begin
   descGeneralDrawDistances.Parent := PageDrawDistances.Surface;
   descGeneralDrawDistances.WordWrap := True;
   descGeneralDrawDistances.Width := PageDrawDistances.SurfaceWidth;
-  descGeneralDrawDistances.Caption := 'Scales the draw distances for objects you see in space. Many players enjoy playing with higher scaling values like 10x or 15x to see everything from very far distances. However, others may prefer lowering the scaling value to 3x or 4x.';
+  descGeneralDrawDistances.Caption := 'Scales the detail and draw distances for objects you see in space. Many players enjoy playing with higher scales like 10x or 15x to see everything from very far distances. Others may prefer lowering the scale to 3x or 4x for a more vanilla-like feel.';
   descGeneralDrawDistances.Top := GeneralDrawDistances.Top + ScaleY(25);
 
   lblEffectDrawDistances := TLabel.Create(PageDrawDistances);
   lblEffectDrawDistances.Parent := PageDrawDistances.Surface;
-  lblEffectDrawDistances.Caption := 'Effect draw distances';
+  lblEffectDrawDistances.Caption := 'Effect draw distance scale';
   lblEffectDrawDistances.Top := descGeneralDrawDistances.Top + ScaleY(55);
 
   EffectDrawDistances := TComboBox.Create(PageDrawDistances);
@@ -1279,7 +1279,7 @@ begin
 
   lblCharacterDrawDistances := TLabel.Create(PageDrawDistances);
   lblCharacterDrawDistances.Parent := PageDrawDistances.Surface;
-  lblCharacterDrawDistances.Caption := 'Character model draw distances';
+  lblCharacterDrawDistances.Caption := 'Character model detail and draw distance scale';
   lblCharacterDrawDistances.Top := descEffectDrawDistances.Top + ScaleY(30);
 
   CharacterDrawDistances := TComboBox.Create(PageDrawDistances);
@@ -1303,7 +1303,7 @@ begin
   descCharacterDrawDistances.Parent := PageDrawDistances.Surface;
   descCharacterDrawDistances.WordWrap := True;
   descCharacterDrawDistances.Width := PageDrawDistances.SurfaceWidth;
-  descCharacterDrawDistances.Caption := 'Scales the draw distances for character models which can be seen at bases and in cutscenes.';
+  descCharacterDrawDistances.Caption := 'Scales the detail and draw distances for character models which can be seen at bases and in cutscenes.';
   descCharacterDrawDistances.Top := CharacterDrawDistances.Top + ScaleY(25);
 
   // Skips
