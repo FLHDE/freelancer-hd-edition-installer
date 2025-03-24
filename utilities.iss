@@ -84,7 +84,7 @@ begin
           DestFilePath := DestPath + '\' + FindRec.Name;
           if FindRec.Attributes and FILE_ATTRIBUTE_DIRECTORY = 0 then
           begin
-            if not FileCopy(SourceFilePath, DestFilePath, False) then
+            if not CopyFile(SourceFilePath, DestFilePath, False) then
             begin
               RaiseException(Format('Failed to copy %s to %s', [
                 SourceFilePath, DestFilePath]));
