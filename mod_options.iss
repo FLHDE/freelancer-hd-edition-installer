@@ -136,6 +136,29 @@ begin
   Result := MyGamesFolder + OptionsFolder + '\' + FileName + '.ini'
 end;
 
+// Sets the ambient volume equal to the music volume and sets the interface volume equal to the sfx volume
+// This is needed because if the user has different values for all audio values and no longer has the sliders available,
+// Then it won't be possible to adjust the missing sliders.
+procedure SetSimpleAudioOptions(OptionsPath: string);
+var
+  MusicVolume, SfxVolume: string;
+begin
+  if not FileExists(OptionsPath) then
+    exit;
+
+  // Get the volume values for music and sfx
+  MusicVolume := GetIniString('PerfOptions', 'audio_music', '0.50', OptionsPath);
+  SfxVolume := GetIniString('PerfOptions', 'audio_sfx', '0.50', OptionsPath);
+
+  // Comment out existing ambient and interface entries
+  FileReplaceString(OptionsPath, 'audio_ambient', ';audio_ambient');
+  FileReplaceString(OptionsPath, 'audio_interface', ';audio_interface');
+
+  // Write new strings for ambient and interface volume with the values equal to music and sfx, respectively
+  SetIniString('PerfOptions', 'audio_ambient', MusicVolume, OptionsPath);
+  SetIniString('PerfOptions', 'audio_interface', SfxVolume, OptionsPath);
+end;
+
 procedure Process_AdvancedAudioOptions();
 var
   ExePath: string;
@@ -373,7 +396,7 @@ begin
       'font = Agency FB' + #13#10 +
       'fixed_height = 0.025');
 
-    if SmallText.Values[2] or (IsWine and SmallText.Values[4]) then begin // Fix for 3840x2160 screens and 1600p screens on Wine
+    if SmallText.Values[2] or (IsWine and SmallText.Values[4]) then begin // Fix for 3840x2160 (4K) screens and 1600p screens on Wine
       // On Wine/Luris the lowered fixed_height for HudSmall and Normal is not enough to fix the missing text. Therefore, it has to be lowered even more.
       if IsWine and SmallText.Values[2] then
         New4KHeight := '0.024'
@@ -397,7 +420,7 @@ begin
         'font = Agency FB' + #13#10 +
         'fixed_height = ' + New4KHeight);
     end
-    else if SmallText.Values[3] then begin
+    else if SmallText.Values[3] then begin // Fix for 5120x2880 (5K) screens
       FileReplaceString(FilePath,
         'nickname = HudSmall' + #13#10 +
         'font = Agency FB' + #13#10 +
@@ -476,7 +499,7 @@ begin
     FileReplaceString(OptionsPath, 'depth_bpp=',                 'depth_bpp= 32;')
   end
   else
-    FileCopy(PreDefinedOptionsPath, OptionsPath, false);
+    CopyFile(PreDefinedOptionsPath, OptionsPath, false);
 
   // Set the user's desktop resolution as the display size in the options file
   FileReplaceString(OptionsPath, 'size=', 'size= ' + IntToStr(DesktopRes.Width) + ', ' + IntToStr(DesktopRes.Height) + ';')
