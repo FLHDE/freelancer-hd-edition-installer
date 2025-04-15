@@ -30,8 +30,8 @@
 #endif
 #define SizeExtracted 4646719488
 #define SizeVanilla 985624576
-#define SizeBuffer 200000
-#define SizeMsvcRedist 500000
+#define SizeBuffer 20000000
+#define SizeMsvcRedist 50000000
 #define SizeAll SizeZip + SizeExtracted + SizeVanilla + SizeBuffer + SizeMsvcRedist
 
 [Setup]
