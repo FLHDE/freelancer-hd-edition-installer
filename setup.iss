@@ -20,6 +20,7 @@
 #define VcRedistVersionStr "14.29.0000.00" ; Make sure to not include the "v" at the start
 ; This variable controls whether the zip is shipped with the exe or downloaded from a mirror
 #define AllInOneInstall true
+#define PostInstallInfo "%n%nNOTE: [name] has been installed as a separate application. Therefore, your vanilla Freelancer installation has not been modified and can still be played at any time."
 ; These mirrors must provide a zip containing a folder named {#MyFolderName} where all the mod files live
 #dim Mirrors[2] {"https://archive.org/download/freelancer-hd-edition-" + MyAppVersion + "/freelancer-hd-edition-" + MyAppVersion + ".7z", "https://github.com/FLHDE/freelancer-hd-edition/archive/refs/tags/" + MyAppVersion + ".zip"}
 ; TODO: Update sizes for each release
@@ -99,7 +100,10 @@ Type: filesandordirs; Name: "{app}"
 
 [Messages]
 WelcomeLabel2={#MyModName} is a mod that aims to improve every aspect of the game Freelancer (2003) while keeping the look and feel as close to vanilla as possible. Experience enhanced visuals with HD textures, high-quality soundtracks, and seamless gameplay with bug fixes and quality of life improvements. The mod is fully compatible with the original game, allowing for seamless integration into vanilla servers. Easy to install and customize, it revitalizes the beloved Freelancer experience for modern systems.%n%nThis installer requires a clean, freshly installed copy of Freelancer.
-FinishedLabel=Setup has finished installing [name] on your computer. The application may be launched by selecting the installed shortcut.%n%nNOTE: [name] has been installed as a separate application. Therefore, your vanilla Freelancer installation has not been modified and can still be played at any time.
+FinishedLabelNoIcons=Setup has finished installing [name] on your computer.{#PostInstallInfo}
+FinishedLabel=Setup has finished installing [name] on your computer. The application may be launched by selecting the installed shortcuts.{#PostInstallInfo}
+FinishedRestartLabel=To complete the installation of [name], Setup must restart your computer. Would you like to restart now?{#PostInstallInfo}
+FinishedRestartMessage=To complete the installation of [name], Setup must restart your computer.%n%nWould you like to restart now?{#PostInstallInfo}
 SelectDirBrowseLabel=To continue, click Next. If you would like to select a different folder, click Browse. Installing in the Program Files folder is not recommended because it may cause permission-related issues.
 
 [Code]
