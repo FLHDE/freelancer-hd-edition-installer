@@ -776,7 +776,7 @@ begin
   descVanillaGraphicsApi.WordWrap := True;
   descVanillaGraphicsApi.Top := VanillaGraphicsApi.Top + ScaleY(15);
   descVanillaGraphicsApi.Width := PageGraphicsApi.SurfaceWidth;
-  descVanillaGraphicsApi.Caption := 'Uses your PC''s default DirectX 8 API for Freelancer. You may experience compatibility issues when using it. Supports Anisotropic Filtering.';
+  descVanillaGraphicsApi.Caption := 'Uses your PC''s default DirectX 8 API for Freelancer. You may experience compatibility issues when using it. Supports Anti-Aliasing and Anisotropic Filtering.';
 
   // Only display the Lighting Bug Fix option if the current operating system could potentially suffer from it. If it won't, enabling this option may cause the game to not launch.
   // On top of that, the Lighting Bug isn't present on such operating systems anyway (but the stuttering bug may be).
