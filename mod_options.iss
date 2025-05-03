@@ -177,8 +177,7 @@ begin
   ExePath := ExpandConstant('{app}\EXE\Freelancer.exe');
   OptListPath := ExpandConstant('{app}\DATA\INTERFACE\optlist.ini');
 
-  // The hex edits must succeed, otherwise a crash will occur when adjusting the added sliders
-
+  // The hex edits below must succeed, otherwise a crash will occur when adjusting the added sliders
   if WriteHexToFile(ExePath, $0B1503, '83') then // Interface volume can be controlled independently
     FileReplaceString(OptListPath, ';option = 1411, 2454, 50, true, false', 'option = 1411, 2454, 50, true, false'); // Add interface volume slider
 
@@ -397,7 +396,7 @@ begin
       'fixed_height = 0.025');
 
     if SmallText.Values[2] or (IsWine and SmallText.Values[4]) then begin // Fix for 3840x2160 (4K) screens and 1600p screens on Wine
-      // On Wine/Luris the lowered fixed_height for HudSmall and Normal is not enough to fix the missing text. Therefore, it has to be lowered even more.
+      // On Wine/Lutris the lowered fixed_height for HudSmall and Normal is not enough to fix the missing text. Therefore, it has to be lowered even more.
       if IsWine and SmallText.Values[2] then
         New4KHeight := '0.024'
       else

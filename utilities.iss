@@ -615,7 +615,7 @@ begin
 
     try
       // Is the installed version lower than the packaged version?
-      Result := (CompareVersion(InstalledVersion, '{#VcRedistVersionStr}') < 0);
+      Result := (CompareVersion(InstalledVersion, ExpandConstant('{#VcRedistVersionStr}')) < 0);
     except
       // If something went wrong, just assume it needs to be installed
       Result := True;
@@ -630,6 +630,6 @@ begin
 
   if Result then
   begin
-    ExtractTemporaryFile('{#VcRedistName}');
+    ExtractTemporaryFile(ExpandConstant('{#VcRedistName}'));
   end;
 end;
