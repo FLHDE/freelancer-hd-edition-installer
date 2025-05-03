@@ -615,6 +615,8 @@ begin
 
     try
       // Is the installed version lower than the packaged version?
+      // This check is possibly redundant because the VC redist exe checks if a newer version is already installed.
+      // However, the user doesn't necessarily need the very redist latest version.
       Result := (CompareVersion(InstalledVersion, ExpandConstant('{#VcRedistVersionStr}')) < 0);
     except
       // If something went wrong, just assume it needs to be installed

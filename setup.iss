@@ -16,7 +16,7 @@
 #define MyZipName "freelancerhde.7z"
 #define MyCustomSaveFolderName "FreelancerHDE"
 #define VcRedistName "VC_redist.x86.exe"
-; The actual included VC Redist is version 14.38.33135.00, but FLHook is the only software part of HDE that depends on it and is built with MSVC v142.
+; The actual included VC Redist is version 14.42.34438.00, but FLHook is the only software part of HDE that depends on it and is built with MSVC v142.
 #define VcRedistVersionStr "14.29.0000.00" ; Make sure to not include the "v" at the start
 ; This variable controls whether the zip is shipped with the exe or downloaded from a mirror
 #define AllInOneInstall true
