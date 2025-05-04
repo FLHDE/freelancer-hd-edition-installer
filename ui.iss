@@ -306,7 +306,7 @@ var
   txtBloomDesc: String;
   txtAuto: String;
 begin
-  txtAa := 'Anti-Aliasing';
+  txtAa := 'Multisample Anti-Aliasing';
   txtAaDesc := 'Anti-Aliasing removes jagged edges in-game, effectively making them appear smoother at a performance cost. Disable this option if you''re running low-end hardware.';
   txtAf := 'Anisotropic Filtering';
   txtAfDesc := 'Anisotropic Filtering improves the quality of textures when viewing them from the side with minimal performance overhead.';
