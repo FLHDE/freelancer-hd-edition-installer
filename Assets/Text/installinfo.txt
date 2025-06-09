@@ -1,35 +1,31 @@
-Thank you for downloading Freelancer: HD Edition!
+Thank you for downloading Freelancer: HD Edition! Join our Discord community: https://discord.gg/ScqgYuFqmU.
 
-If you encounter any issues related to this mod during installation or gameplay, please refer to the wiki at https://github.com/BC46/freelancer-hd-edition/wiki for potential solutions. In the event that you need support or have questions, please join our Discord server: https://discord.gg/ScqgYuFqmU.
-
-Mod Key Features:
-HD Space Stations
-HD Ships
-HD Planets
-HD Effects
-HD Asteroids
-HD Character Models
-HD Base Interiors & Planetscapes
-HD HUD & Icons
-HD Nebulae
-HD Starspheres
-Maximized Draw Distances
-Anti-Aliasing and Anisotropic Filtering support
-ReShade
-HQ Music
-Windows 10 & 11 compatibility fixes
-Jason's Freelancer Patch
-Full Widescreen support
-Improvements
-New features
-Bug fixes
-flplusplus
-No-CD Patch
-Official 1.1 Patch
-Tons of additional bug fixes
-Additional gameplay improvements
-Easy customization
-Full vanilla Multiplayer support
+If you encounter any issues related to this mod during installation or gameplay, please refer to the wiki at https://github.com/FLHDE/freelancer-hd-edition/wiki for potential solutions.
 
 Mod files: https://github.com/FLHDE/freelancer-hd-edition
 Installer source code: https://github.com/FLHDE/freelancer-hd-edition-installer
+
+Mod Key Features:
+- HD Textures
+- Increased Draw Distances
+- Anti-Aliasing and Anisotropic Filtering support
+- ReShade
+- HQ Music
+- No-CD Executable
+- Official 1.1 Patch
+- Jason's Freelancer Patch
+    - Full Widescreen support
+    - Improvements
+    - New features
+    - Bug fixes
+- flplusplus plugin & FLSharp plugin
+    - New features
+    - Quality of life improvements
+    - Bug fixes
+- FLHook
+    - Server-side enhancements
+- Tons of additional bug fixes
+- Additional gameplay improvements
+- Windows 10 & 11 compatibility fixes
+- Full vanilla Multiplayer support
+- Easy customization
