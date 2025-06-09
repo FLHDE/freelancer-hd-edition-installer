@@ -27,9 +27,9 @@
 #if AllInOneInstall
   #define SizeZip 0 ; The zip size is already included in the pre-calculated required diskspace
 #else
-  #define SizeZip 2688696320 ; The zip provided by the GitHub mirror is larger than the archive.org one
+  #define SizeZip 3000000000 ; The zip provided by the GitHub mirror is larger than the archive.org one
 #endif
-#define SizeExtracted 4646719488
+#define SizeExtracted 5190762496
 #define SizeVanilla 985624576
 #define SizeBuffer 20000000
 #define SizeMsvcRedist 50000000
@@ -194,7 +194,7 @@ begin
 
         UpdateProgress(95);
 
-        // Process options only if the user didn't specify that they should be applied
+        // Process options only if the user doesn't want a basic install
         if not BasicInstall.Checked then
         begin
           WizardForm.StatusLabel.Caption := 'Processing options...';
@@ -438,7 +438,7 @@ begin
     // Get the debug options before initializing the UI
     SetDebugOptions();
 
-    // Initialize UI. This populates all our ui elements with text, size and other properties
+    // Initialize UI. This populates all our UI elements with text, size and other properties
     InitializeUi();
     SetDefaultOptions();
 

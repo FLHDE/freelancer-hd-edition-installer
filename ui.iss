@@ -1436,7 +1436,7 @@ begin
   descDisplayMode.Top := lblDisplayMode.Top + ScaleY(25);
 
   // Windowed and borderless windowed mode should work fine on Windows due to the snapping fix
-  // On Linux/Wine however, there may be issues. At the same time though, there is an Alt-Tab bug with fullscreen windowed mode
+  // On Linux/Wine however, there may be issues. At the same time though, there is an Alt-Tab bug with fullscreen mode
   if IsWine then
     descDisplayMode.Caption := descDisplayMode.Caption + ' On Wine there is an Alt-Tab bug when playing in Fullscreen mode. The Windowed mode options may help, but they could also cause other issues.';
   
