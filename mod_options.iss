@@ -88,9 +88,10 @@ end;
 
 procedure Process_RegeneratableShields();
 var
-  LoadoutsPath : string;
+  LoadoutsPath, LootPropsIniPath : string;
 begin
   LoadoutsPath := ExpandConstant('{app}\DATA\SHIPS\');
+  LootPropsIniPath := ExpandConstant('{app}\DATA\MISSIONS\lootprops.ini');
 
   // Option is checked
   if RegeneratableShields.Checked then
@@ -100,6 +101,9 @@ begin
 
     // Rename regen loadouts file
     RenameFile(LoadoutsPath + 'loadouts_regen.ini', LoadoutsPath + 'loadouts.ini')
+
+    // Prevent NPCs from dropping the regeneratable shields
+    FileReplaceString(LootPropsIniPath, 'drop_properties = 6', 'drop_properties = 0')
     end;
 end;
 
