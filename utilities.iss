@@ -279,6 +279,42 @@ begin
   end;
 end;
 
+// Checks if the given hex bytes are present in a file at a specific location
+function VerifyHexInFile(FileName: string; Offset: longint; Hex: string): Boolean;
+var
+  Stream: TFileStream;
+  SrcBuffer, FileBuffer: AnsiString;
+  BufferLen: LongWord;
+begin
+  if not FileExists(FileName) then
+  begin
+    Result := false
+    exit
+  end;
+
+  RemoveReadOnly(FileName);
+
+  Stream := TFileStream.Create(FileName, fmOpenRead);
+
+  try
+    BufferLen := Length(Hex) div 2;
+    SetLength(SrcBuffer, BufferLen);
+    SetLength(FileBuffer, BufferLen);
+
+    if not ConvertHexToBinary(Hex, Length(Hex), SrcBuffer) then
+      RaiseException('Could not convert string to binary stream');
+
+    Stream.Seek(Offset, soFromBeginning);
+    Stream.ReadBuffer(FileBuffer, BufferLen);
+
+    Result := CompareStr(SrcBuffer, FileBuffer) = 0;
+  except
+    Result := false
+  finally
+    Stream.Free;
+  end;
+end;
+
 // Returns true if the directory is empty
 function isEmptyDir(dirName: String): Boolean;
 var

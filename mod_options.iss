@@ -1477,10 +1477,12 @@ procedure Process_DisplayMode();
 var
   ExeFolderPath: string;
   ExePath, JflpPath: string;
+  JflpFullscreenOffset: longint;
 begin
   ExeFolderPath := ExpandConstant('{app}\EXE\');
   ExePath := ExeFolderPath + 'Freelancer.exe';
   JflpPath := ExeFolderPath + 'jflp.dll';
+  JflpFullscreenOffset := $001528;
 
   if (DisplayMode.ItemIndex = 1) or (DisplayMode.ItemIndex = 2) then // Windowed or borderless windowed selected
     WriteHexToFile(ExePath, $1B16CC, '00'); // Windowed mode
@@ -1503,7 +1505,8 @@ begin
       // Every time you Alt-Tab in fullscreen mode with this patch, the window will continuously regain focus.
       // Running the game in fullscreen is still possible with the "-f" flag, but that's up to the user to decide.
       // Keep in mind that whenever the JFLP dll gets updated, this patch may need to be adjusted too.
-      WriteHexToFile(JflpPath, $001528, '04');
+      if VerifyHexInFile(JflpPath, JflpFullscreenOffset, '33') then
+        WriteHexToFile(JflpPath, JflpFullscreenOffset, '04');
     end;
 
     if MusicInBackground then
