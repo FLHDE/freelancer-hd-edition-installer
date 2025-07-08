@@ -16,6 +16,22 @@ begin
     MsgBox('Debug Message: ' + msg, mbError, MB_OK)
 end;
 
+// "Safe" version of RenameFile which shows a debug message if something went wrong while renaming the file.
+// If for a particular file it does not matter that it cannot be renamed, feel free to call RenameFile directly instead.
+function RenameFileSafe(const OldName, NewName: String): Boolean;
+begin
+  if FileExists(NewName) then begin
+    DebugMsg(Format('Cannot rename "%s" to "%s" because a file with the new name already exists.', [OldName, NewName]));
+    Result := False
+    Exit;
+  end;
+
+  Result := RenameFile(OldName, NewName);
+
+  if not Result then
+    DebugMsg(Format('Failed to rename "%s" to "%s".', [OldName, NewName]));
+end;
+
 // Removes a read-only attribute from a file
 procedure RemoveReadOnly(FileName : String);
 var
