@@ -268,7 +268,7 @@ var
 begin
   if not FileExists(FileName) then
   begin
-    DebugMsg(Format('Cannot write hex to file "%s" because the file does not exist.', [FileName]));
+    DebugMsg(Format('Cannot write hex "%s" to file "%s" because the file does not exist.', [Hex, FileName]));
     Result := false
     exit
   end;
@@ -302,7 +302,7 @@ var
 begin
   if not FileExists(FileName) then
   begin
-    DebugMsg(Format('Cannot read hex in file "%s" because the file does not exist.', [FileName]));
+    DebugMsg(Format('Cannot read hex "%s" in file "%s" because the file does not exist.', [Hex, FileName]));
     Result := false
     exit
   end;
