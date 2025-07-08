@@ -250,8 +250,8 @@ end;
 function WriteHexToFile(FileName: string; Offset: longint; Hex: string): Boolean;
 var
   Stream: TFileStream;
-  Buffer: string;
-  Size: LongWord;
+  Buffer: AnsiString;
+  BufferLen: LongWord;
 begin
   if not FileExists(FileName) then
   begin
@@ -264,8 +264,8 @@ begin
   Stream := TFileStream.Create(FileName, fmOpenReadWrite);
 
   try
-    SetLength(Buffer, (Length(Hex) div 4) + 1);
-    Size := Length(Hex) div 2;
+    BufferLen := Length(Hex) div 2;
+    SetLength(Buffer, BufferLen);
 
     Result := ConvertHexToBinary(Hex, Length(Hex), Buffer);
 
@@ -273,7 +273,7 @@ begin
       RaiseException('Could not convert string to binary stream');
 
     Stream.Seek(Offset, soFromBeginning);
-    Stream.WriteBuffer(Buffer, Size);
+    Stream.WriteBuffer(Buffer, BufferLen);
   finally
     Stream.Free;
   end;

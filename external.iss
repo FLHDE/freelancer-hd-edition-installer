@@ -48,7 +48,7 @@ function GetDeviceCaps(hDC, nIndex: Integer): Integer;
  external 'GetDeviceCaps@GDI32 stdcall';
 
 // Used to convert a binary expression in string format to an actual binary stream
-function ConvertHexToBinary(hexString: string; hexLength: LongWord; binaryString: string): Boolean;
+function ConvertHexToBinary(hexString: string; hexLength: LongWord; binaryString: AnsiString): Boolean;
   external 'ConvertHexToBinary@files:HexToBinary.dll cdecl setuponly delayload';
 
 // Use Windows function to convert date modified to a useable format
