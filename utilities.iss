@@ -26,6 +26,12 @@ begin
     Exit;
   end;
 
+  if not FileExists(OldName) then begin
+    DebugMsg(Format('Cannot rename "%s" to "%s" because the old file does not exist.', [OldName, NewName]));
+    Result := False
+    Exit;
+  end;
+
   Result := RenameFile(OldName, NewName);
 
   if not Result then
