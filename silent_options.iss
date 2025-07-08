@@ -28,6 +28,8 @@ end;
 // These options are mostly for debugging
 procedure SetDebugOptions();
 begin
+  DebugMode := CmdLineParamExists('/DebugMode');
+
   if CmdLineParamExists('/ForceWineOff') then
     IsWine := false;
   if CmdLineParamExists('/ForceWineOn') then

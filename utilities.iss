@@ -7,6 +7,15 @@ begin
   Result := GetProcAddress(LibHandle, 'wine_get_version') <> 0;
 end;
 
+// Shows a debug message to the screen if debug mode is turned on.
+// This function is basicaly like a debug assert but instead of stopping the program, it shows a message.
+// This is useful for catching bugs during development.
+procedure DebugMsg(msg : string);
+begin
+  if DebugMode then
+    MsgBox('Debug Message: ' + msg, mbError, MB_OK)
+end;
+
 // Removes a read-only attribute from a file
 procedure RemoveReadOnly(FileName : String);
 var
@@ -137,6 +146,7 @@ begin
 
   if not FileExists(FileName) then
   begin
+    DebugMsg(Format('Cannot replace string "%s" in file "%s" because the file does not exist.', [SearchString, FileName]));
     result := false
     exit
   end;
@@ -159,6 +169,9 @@ begin
         // Keep track of all config files that have been edited. We only want to store each file name once.
         if not EditedConfigFiles.Find(FileName, Index) then
           EditedConfigFiles.Add(FileName);
+      end
+      else begin
+        DebugMsg(Format('No occurrence of the string "%s" found to replace in file "%s".', [SearchString, FileName]));
       end;
     except
       result := false;
@@ -255,6 +268,7 @@ var
 begin
   if not FileExists(FileName) then
   begin
+    DebugMsg(Format('Cannot write hex to file "%s" because the file does not exist.', [FileName]));
     Result := false
     exit
   end;
@@ -288,6 +302,7 @@ var
 begin
   if not FileExists(FileName) then
   begin
+    DebugMsg(Format('Cannot read hex in file "%s" because the file does not exist.', [FileName]));
     Result := false
     exit
   end;

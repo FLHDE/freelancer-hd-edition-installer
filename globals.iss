@@ -11,6 +11,7 @@ var
   RefreshRate: Integer;
   IsWine: Boolean;
   HasLightingBug: Boolean;
+  DebugMode: Boolean;
   GpuManufacturer: TGpuManufacturer;
   SystemLanguage: TSystemLanguage;
   EDD_GET_DEVICE_INTERFACE_NAME, DISPLAY_DEVICE_PRIMARY_DEVICE: integer;
@@ -60,6 +61,7 @@ begin
 
   NoMsvcRedist := False;
   LegacyDirCpy := False;
+  DebugMode := False;
 
   HighDesktopResPixelAmount := 4000000;
 

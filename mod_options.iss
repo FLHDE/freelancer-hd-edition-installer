@@ -1506,7 +1506,9 @@ begin
       // Running the game in fullscreen is still possible with the "-f" flag, but that's up to the user to decide.
       // Keep in mind that whenever the JFLP dll gets updated, this patch may need to be adjusted too.
       if VerifyHexInFile(JflpPath, JflpFullscreenOffset, '33') then
-        WriteHexToFile(JflpPath, JflpFullscreenOffset, '04');
+        WriteHexToFile(JflpPath, JflpFullscreenOffset, '04')
+      else
+        DebugMsg('JFLP USER_FULLSCREEN patch is no longer valid. Please update the offset.');
     end;
 
     if MusicInBackground then
