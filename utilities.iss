@@ -617,7 +617,7 @@ begin
       // Is the installed version lower than the packaged version?
       // This check is possibly redundant because the VC redist exe checks if a newer version is already installed.
       // However, the user doesn't necessarily need the very latest redist version.
-      Result := (CompareVersion(InstalledVersion, ExpandConstant('{#VcRedistVersionStr}')) < 0);
+      Result := (CompareVersion(InstalledVersion, '{#VcRedistVersionStr}') < 0);
     except
       // If something went wrong, just assume it needs to be installed
       Result := True;
@@ -632,6 +632,6 @@ begin
 
   if Result then
   begin
-    ExtractTemporaryFile(ExpandConstant('{#VcRedistName}'));
+    ExtractTemporaryFile('{#VcRedistName}');
   end;
 end;

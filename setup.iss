@@ -173,7 +173,7 @@ begin
 
         // Unzip
         UpdateProgress(50);
-        WizardForm.StatusLabel.Caption := ExpandConstant('Unpacking {#MyAppName}...');
+        WizardForm.StatusLabel.Caption := 'Unpacking {#MyAppName}...';
         ShellExecuteAsync(ExpandConstant('{tmp}\7za.exe'), ExpandConstant(' x -y -aoa "{tmp}\{#MyZipName}"  -o"{app}"'));
         // -aoa Overwrite All existing files without prompt
         // -o Set output directory
@@ -186,7 +186,7 @@ begin
             UpdateProgress(70);
 
             // Copy mod files
-            WizardForm.StatusLabel.Caption := ExpandConstant('Relocating {#MyAppName}...');
+            WizardForm.StatusLabel.Caption := 'Relocating {#MyAppName}...';
             TryDirectoryCopyAsync(ExpandConstant('{app}\{#MyFolderName}'),ExpandConstant('{app}'), True, False);
 
             DelTree(ExpandConstant('{app}\{#MyFolderName}'), True, True, True);
@@ -341,8 +341,8 @@ begin
       // This checks if the active installer has been ran from any directory inside the selected vanilla Freelancer folder.
       // No issues occur when Freelancer from the vanilla directory is running, so no need to check for that.
       if Pos(DataDirPage.Values[0], GetCurrentDir()) > 0 then begin
-        MsgBox(ExpandConstant('The {#MyAppName} installer is located in the same directory as the vanilla Freelancer directory. This would cause the installation to fail because this file cannot be copied.' + #13#10 + #13#10
-          + 'Please close the {#MyAppName} installer, move the installer .exe file to a directory outside your vanilla Freelancer installation and try again.'), mbError, MB_OK);
+        MsgBox('The {#MyAppName} installer is located in the same directory as the vanilla Freelancer directory. This would cause the installation to fail because this file cannot be copied.' + #13#10 + #13#10
+          + 'Please close the {#MyAppName} installer, move the installer .exe file to a directory outside your vanilla Freelancer installation and try again.', mbError, MB_OK);
         Result := False;
         exit;
       end;
@@ -381,7 +381,7 @@ begin
       for i:= 0 to mirrors.Count - 1 do
       begin
         DownloadPage.Clear;
-        DownloadPage.Add(mirrors[i], ExpandConstant('{#MyZipName}'), '');
+        DownloadPage.Add(mirrors[i], '{#MyZipName}', '');
         DownloadPage.SetText('Downloading {#MyModName}...', '');
         DownloadPage.Show;
         DownloadPage.ProgressBar.Style := npbstNormal;

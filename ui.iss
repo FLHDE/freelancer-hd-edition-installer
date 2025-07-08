@@ -325,7 +325,7 @@ begin
 
   # if !AllInOneInstall
   // Read download size
-  DownloadSize := IntToStr(StrToInt64(ExpandConstant('{#SizeZip}'))/1048576);
+  DownloadSize := IntToStr(StrToInt64('{#SizeZip}')/1048576);
   // Initialize DownloadPage
   DownloadPage := CreateDownloadPage(SetupMessage(msgWizardPreparing), SetupMessage(msgPreparingDesc), @OnDownloadProgress);
   # endif
@@ -1470,7 +1470,7 @@ begin
   if IsWine then
   begin
     // Give Wine users some tips on how to avoid compatibility issues; could be useful.
-    MsgBox(ExpandConstant(
+    MsgBox(
       'It seems you''re using Wine. It''s possible that {#MyAppName} won''t run out of the box on your setup due to incompatibilities. From our testing, {#MyAppName} works best on Linux when the mod is installed and launched with Lutris.'
       + #13#10#13#10 + 'This installer will automatically set the "native,builtin" d3d8 override in your environment to ensure the graphics-related DLLs provided by {#MyAppName} are loaded. However, this may or may not work on your setup.'
       + #13#10#13#10 + 'If you experience crashes, bad colors, or other compatibility issues during gameplay, you may need to remove/replace/override any of the following DLLs in the EXE folder:'
@@ -1479,7 +1479,7 @@ begin
       + #13#10 + 'dxgi.dll (dgVoodoo ReShade)'
       + #13#10 + 'dinput8.dll (DirectInput)'
       + #13#10#13#10 + 'Moreover, there is a comprehensive guide available on how to run {#MyAppName} with Lutris on Linux:'
-      + #13#10 + 'https://bit.ly/flhde-linux-setup'), mbError, MB_OK);
+      + #13#10 + 'https://bit.ly/flhde-linux-setup', mbError, MB_OK);
   end;
 end;
 
