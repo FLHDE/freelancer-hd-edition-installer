@@ -735,21 +735,18 @@ begin
     RenameFileSafe(EXEPath + 'd3d8_dxwrapper.dll', EXEPath + 'd3d8.dll')
   else if dgVoodooGraphicsApi.Checked then
   begin
-    RenameFileSafe(EXEPath + 'd3d8_dgvoodoo.dll', EXEPath + 'd3d8.dll')
     // Rename correct dgVoodoo files based on whether or not the user has an AMD GPU for the best compatibility
     if GpuManufacturer = AMD then
       begin
       RenameFileSafe(EXEPath + 'd3d8_dgvoodoo_old.dll', EXEPath + 'd3d8.dll')
       RenameFileSafe(EXEPath + 'dgVoodoo_old.conf', EXEPath + 'dgVoodoo.conf')
-      RenameFileSafe(EXEPath + 'dgVoodooCpl_old.exe', EXEPath + 'dgVoodooCpl.exe')
-      RenameFileSafe(EXEPath + 'dgVoodooCpl_new.exe', EXEPath + 'dgVoodooCpl_new_exe') // Remove extension from other exe so people don't get confused with the 2 exes
+      RenameFileSafe(EXEPath + 'dgVoodooCpl_old.7z', EXEPath + 'dgVoodooCpl.7z')
       end
     else
       begin
       RenameFileSafe(EXEPath + 'd3d8_dgvoodoo_new.dll', EXEPath + 'd3d8.dll')
       RenameFileSafe(EXEPath + 'dgVoodoo_new.conf', EXEPath + 'dgVoodoo.conf')
-      RenameFileSafe(EXEPath + 'dgVoodooCpl_new.exe', EXEPath + 'dgVoodooCpl.exe')
-      RenameFileSafe(EXEPath + 'dgVoodooCpl_old.exe', EXEPath + 'dgVoodooCpl_old_exe') // Remove extension from other exe so people don't get confused with the 2 exes
+      RenameFileSafe(EXEPath + 'dgVoodooCpl_new.7z', EXEPath + 'dgVoodooCpl.7z')
     end;
   end
   else if HasLightingBug and LightingFixGraphicsApi.Checked then
