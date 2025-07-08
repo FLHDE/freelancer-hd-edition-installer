@@ -2,7 +2,7 @@
 ; GitHub: https://github.com/FLHDE/freelancer-hd-edition-installer
 ; Main GitHub: https://github.com/FLHDE/freelancer-hd-edition
 
-#define MyAppVersion "0.7"
+#define MyAppVersion "0.7.1"
 #define MyModName "Freelancer: HD Edition"
 ; Name without the colon to prevent file/explorer-related issues
 #define MyAppFileName "Freelancer HD Edition"
