@@ -271,11 +271,22 @@ begin
 end;
 
 procedure Process_SinglePlayerMode();
+var
+  ExePath: string;
 begin
+  ExePath := ExpandConstant('{app}\EXE\Freelancer.exe');
+
   if StoryMode.ItemIndex = 1 then // OSP Normal selected
     EnableOpenSP('normal')
   else if StoryMode.ItemIndex = 2 then // OSP Pirate selected
+  begin
     EnableOpenSP('pirate');
+
+    // Changes the faction which is by default added to the list of known factions after opening the Player Status menu
+    // "li_p_grp" -> "fc_j_grp" (Liberty Police to Junkers)
+    // However, this change takes effect too when the player plays on a vanilla server where they initially spawn on Manhattan, in which case this change would be inappropriate.
+    //WriteHexToFile(ExePath, $1D4848, '66635F6A'); // "fc_j"
+  end;
 end;
 
 procedure Process_NewSaveFolder();
