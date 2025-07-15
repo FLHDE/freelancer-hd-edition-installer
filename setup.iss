@@ -29,7 +29,7 @@
 #else
   #define SizeZip 3000000000 ; The zip provided by the GitHub mirror is larger than the archive.org one
 #endif
-#define SizeExtracted 5190762496
+#define SizeExtracted 5190504448
 #define SizeVanilla 985624576
 #define SizeBuffer 20000000
 #define SizeMsvcRedist 50000000
@@ -173,7 +173,7 @@ begin
 
         // Unzip
         UpdateProgress(50);
-        WizardForm.StatusLabel.Caption := 'Unpacking {#MyAppName}...';
+        WizardForm.StatusLabel.Caption := 'Unpacking {#MyAppName} files...';
         ShellExecuteAsync(ExpandConstant('{tmp}\7za.exe'), ExpandConstant(' x -y -aoa "{tmp}\{#MyZipName}"  -o"{app}"'));
         // -aoa Overwrite All existing files without prompt
         // -o Set output directory
@@ -186,7 +186,7 @@ begin
             UpdateProgress(70);
 
             // Copy mod files
-            WizardForm.StatusLabel.Caption := 'Relocating {#MyAppName}...';
+            WizardForm.StatusLabel.Caption := 'Relocating {#MyAppName} files...';
             TryDirectoryCopyAsync(ExpandConstant('{app}\{#MyFolderName}'),ExpandConstant('{app}'), True, False);
 
             DelTree(ExpandConstant('{app}\{#MyFolderName}'), True, True, True);
