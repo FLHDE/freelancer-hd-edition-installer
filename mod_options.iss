@@ -244,10 +244,10 @@ begin
     // If the English text fixes are disabled, it'd be possible to disable the `print_rep_requirements` option in FLSharp.ini.
     // However, it doesn't hurt to leave it on if the feature isn't used.
 
-    // Changes the IDS of the insufficient reputation message for equipment and commodities to an IDS in controls.dll with a custom message.
+    // Changes the IDS of the insufficient reputation message for equipment and commodities to an IDS in hderesources.dll with a custom message.
     WriteHexToFile(TextStringsPath + 'Freelancer.exe', $08073C, '1E000700'); // 1E000700 = 458782 in hexadecimal
 
-    // Changes the IDS of the insufficient reputation message for ships to an IDS in controls.dll with a custom message.
+    // Changes the IDS of the insufficient reputation message for ships to an IDS in hderesources.dll with a custom message.
     WriteHexToFile(TextStringsPath + 'Freelancer.exe', $0B9011, '1E000700'); // 1E000700 = 458782 in hexadecimal
     end;
 end;
