@@ -715,7 +715,7 @@ begin
   descPlanetScape.Width := PagePlanetScape.SurfaceWidth;
   descPlanetScape.Caption := 'Since Freelancer was never optimized for 16:9 resolutions, there are several inconsistencies with planetscapes that occur while viewing them in 16:9, such as clipping and geometry issues.' + #13#10 + #13#10 +
   'This mod gives you the option of fixing this, as it adjusts the camera values in the planetscapes so the issues are no longer visible in 16:9 resolutions.' + #13#10 + #13#10 +
-  'Disable this option if you play in 4:3. Also please note that the planetscape views may look zoomed in when using this option with an ultrawide resolution.'
+  'Disable this option if you play in 4:3 or any ultrawide resolution.'
   
   PlanetScape := TCheckBox.Create(PagePlanetScape);
   PlanetScape.Parent := PagePlanetScape.Surface;
