@@ -8,7 +8,7 @@ begin
 end;
 
 // Shows a debug message to the screen if debug mode is turned on.
-// This function is basicaly like a debug assert but instead of stopping the program, it shows a message.
+// This function is basically like a debug assert but instead of stopping the program, it shows a message.
 // This is useful for catching bugs during development.
 procedure DebugMsg(msg : string);
 begin
