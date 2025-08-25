@@ -20,14 +20,14 @@ end;
 // If for a particular file it does not matter that it cannot be renamed, feel free to call RenameFile directly instead.
 function RenameFileSafe(const OldName, NewName: String): Boolean;
 begin
-  if FileExists(NewName) then begin
-    DebugMsg(Format('Cannot rename "%s" to "%s" because a file with the new name already exists.', [OldName, NewName]));
+  if FileExists(NewName) or DirExists(NewName) then begin
+    DebugMsg(Format('Cannot rename "%s" to "%s" because a file/dir with the new name already exists.', [OldName, NewName]));
     Result := False
     Exit;
   end;
 
-  if not FileExists(OldName) then begin
-    DebugMsg(Format('Cannot rename "%s" to "%s" because the old file does not exist.', [OldName, NewName]));
+  if (not FileExists(OldName)) and (not DirExists(OldName)) then begin
+    DebugMsg(Format('Cannot rename "%s" to "%s" because the old file/dir does not exist.', [OldName, NewName]));
     Result := False
     Exit;
   end;
