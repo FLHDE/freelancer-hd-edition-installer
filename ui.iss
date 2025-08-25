@@ -506,7 +506,7 @@ begin
   RussianFonts := TCheckBox.Create(PageEnglishImprovements);
   RussianFonts.Parent := PageEnglishImprovements.Surface;
   RussianFonts.Top := descEnglishImprovements.Top + ScaleY(160);
-  RussianFonts.Caption := 'Use Russian fonts + Rus Chat';
+  RussianFonts.Caption := 'Use Russian fonts + Cyrillic Chat';
   RussianFonts.Width := PageEnglishImprovements.SurfaceWidth - ScaleX(8);
 
 

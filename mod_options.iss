@@ -473,8 +473,8 @@ begin
     FileReplaceString(FontsPath + 'fonts.ini', 'path = FONTS/AGENCYR.ttf', ';path = FONTS/AGENCYR.ttf')
     FileReplaceString(FontsPath + 'fonts.ini', ';path = FONTS/AGENCYR_CR.ttf', 'path = FONTS/AGENCYR_CR.ttf')
 
-    // Enable Rus Chat plugin
-    FileReplaceString(ExpandConstant('{app}\EXE\dacom.ini'), ';rus_chat.dll', 'rus_chat.dll')
+    // Enable Cyrillic Chat plugin
+    FileReplaceString(ExpandConstant('{app}\EXE\dacom.ini'), ';cyrillic_chat.dll', 'cyrillic_chat.dll')
 end;
 
 // SinglePlayer console processing logic
