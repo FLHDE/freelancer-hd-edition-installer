@@ -143,8 +143,9 @@ begin
 
   if DetectedFlLanguage = FL_Russian then
     RussianFonts.Checked := true
-  else if DetectedFlLanguage <> FL_Unknown then
-    RussianFonts.Checked := false;
+  // Users with Russian OS installs who play FL in English may still want to type in Russian (Cyrillic Chat plugin).
+  //else if DetectedFlLanguage <> FL_Unknown then
+  //  RussianFonts.Checked := false;
 end;
 
 // Checks which step we are on when it changed. If it's the postinstall step then start the actual installing
