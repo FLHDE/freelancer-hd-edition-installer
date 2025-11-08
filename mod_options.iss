@@ -209,6 +209,7 @@ begin
 
     // Rename vanilla resource files
     RenameFileSafe(TextStringsPath + 'resources.dll', TextStringsPath + 'resources_vanilla.dll')
+    RenameFileSafe(TextStringsPath + 'serverresources.dll', TextStringsPath + 'serverresources_vanilla.dll')
     RenameFileSafe(TextStringsPath + 'offerbriberesources.dll', TextStringsPath + 'offerbriberesources_vanilla.dll')
     RenameFileSafe(TextStringsPath + 'nameresources.dll', TextStringsPath + 'nameresources_vanilla.dll')
     RenameFileSafe(TextStringsPath + 'misctextinfo2.dll', TextStringsPath + 'misctextinfo2_vanilla.dll')
@@ -218,6 +219,7 @@ begin
 
     // Rename new resource files
     RenameFileSafe(TextStringsPath + 'resources_tsr.dll', TextStringsPath + 'resources.dll')
+    RenameFileSafe(TextStringsPath + 'serverresources_tsr.dll', TextStringsPath + 'serverresources.dll')
     RenameFileSafe(TextStringsPath + 'offerbriberesources_tsr.dll', TextStringsPath + 'offerbriberesources.dll')
     RenameFileSafe(TextStringsPath + 'nameresources_tsr.dll', TextStringsPath + 'nameresources.dll')
     RenameFileSafe(TextStringsPath + 'misctextinfo2_tsr.dll', TextStringsPath + 'misctextinfo2.dll')
