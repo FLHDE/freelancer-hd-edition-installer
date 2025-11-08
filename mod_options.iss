@@ -762,6 +762,8 @@ begin
   end
   else if HasLightingBug and LightingFixGraphicsApi.Checked then
     RenameFileSafe(EXEPath + 'd3d8_legacy.dll', EXEPath + 'd3d8.dll')
+  else if HasLightingBug and VanillaGraphicsApi.Checked then
+    FileReplaceString(EXEPath + 'dacom.ini', ';LightingBugFix.dll', 'LightingBugFix.dll') // native standalone lighting bug fix
 end;
 
 procedure Process_HUD();
@@ -820,6 +822,7 @@ begin
   FileReplaceString(HudShiftPath, 'position = 4e14db, -0.2020, 4e14e3, -0.3700		; TargetTradeButton', 'position = 4e14db, -0.0180, 4e14e3, -0.3700		; TargetTradeButton')
 
   // Disable the "Target View" (Alt + T) key because it's obsolete with the Adv Wide HUD
+  // TODO: Don't disable the button since there's now a use for it. Instead, change the button's IDS (see DynamicTargetScreen readme).
   FileReplaceString(InterfacePath + 'keylist.ini',
     '[key]' + #13#10 +
     'id = USER_SWITCH_TO_TARGET',
