@@ -738,7 +738,7 @@ begin
   DgVoodooGraphicsApi := TRadioButton.Create(PageGraphicsApi);
   DgVoodooGraphicsApi.Parent := PageGraphicsApi.Surface;
   DgVoodooGraphicsApi.Top := ScaleY(50);
-  DgVoodooGraphicsApi.Caption := 'dgVoodoo (DirectX 11, recommended for NVIDIA and Intel GPUs)';
+  DgVoodooGraphicsApi.Caption := 'dgVoodoo (DirectX 11)';
   DgVoodooGraphicsApi.Width := PageGraphicsApi.SurfaceWidth - ScaleX(8);
 
   descDgVoodooGraphicsApi := TNewStaticText.Create(PageGraphicsApi);
@@ -755,7 +755,7 @@ begin
   DxWrapperGraphicsApi := TRadioButton.Create(PageGraphicsApi);
   DxWrapperGraphicsApi.Parent := PageGraphicsApi.Surface;
   DxWrapperGraphicsApi.Top := descDgVoodooGraphicsApi.Top + ScaleY(37);
-  DxWrapperGraphicsApi.Caption := 'DxWrapper + d3d8to9 (DirectX 9, recommended for all GPUs)';
+  DxWrapperGraphicsApi.Caption := 'DxWrapper + d3d8to9 (DirectX 9, recommended)';
   DxWrapperGraphicsApi.Width := PageGraphicsApi.SurfaceWidth - ScaleX(8);
 
   descDxWrapperGraphicsApi := TNewStaticText.Create(PageGraphicsApi);
@@ -1539,8 +1539,7 @@ begin
   // Only check the planetscapes fix option if the user's aspect ratio is 16:9
   PlanetScape.Checked := IsResWithinAspectRatioRange(Min16by9Factor, Max16by9Factor);
 
-  DgVoodooGraphicsApi.Checked := (GpuManufacturer = NVIDIAOrOther) and (not IsWine);
-  DxWrapperGraphicsApi.Checked := (GpuManufacturer = AMD) or IsWine;
+  DxWrapperGraphicsApi.Checked := True;
 
   DxWrapperAa.ItemIndex := 4;
   DxWrapperAf.ItemIndex := 5;
