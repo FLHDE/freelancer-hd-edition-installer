@@ -772,12 +772,14 @@ procedure Process_HUD();
 var
   InterfacePath: string;
   HudShiftPath: string;
+  ExePath: string;
 begin
   if not WidescreenHud.Checked then
     exit;
 
   InterfacePath := ExpandConstant('{app}\DATA\INTERFACE\')
   HudShiftPath := InterfacePath + 'HudShift.ini'
+  ExePath := ExpandConstant('{app}\EXE\Freelancer.exe');
 
   // Enable plugins
   FileReplaceString(
@@ -823,33 +825,17 @@ begin
   FileReplaceString(HudShiftPath, 'position = 4da2fa,  0.4180, 4da30e, -0.2900', 'position = 4da2fa,  0.1765, 4da30e, -0.3025')
   FileReplaceString(HudShiftPath, 'position = 4e14db, -0.2020, 4e14e3, -0.3700		; TargetTradeButton', 'position = 4e14db, -0.0180, 4e14e3, -0.3700		; TargetTradeButton')
 
-  // Disable the "Target View" (Alt + T) key because it's obsolete with the Adv Wide HUD
-  // TODO: Don't disable the button since there's now a use for it. Instead, change the button's IDS (see DynamicTargetScreen readme).
-  FileReplaceString(InterfacePath + 'keylist.ini',
-    '[key]' + #13#10 +
-    'id = USER_SWITCH_TO_TARGET',
-
-    ';[key]' + #13#10 +
-    ';id = USER_SWITCH_TO_TARGET'
-  )
-
+  // Change IDS values of the USER_SWITCH_TO_TARGET based on the DynamicTargetScreen feature.
+  // This plugin is enabled even without the Adv Wide HUD, but with the Adv Wide HUD, the button exists solely for the DynamicTargetScreen feature.
   FileReplaceString(InterfacePath + 'keymap.ini',
-    '[KeyCmd]' + #13#10 +
-    'nickname = USER_SWITCH_TO_TARGET' + #13#10 +
     'ids_name = 458757' + #13#10 +
-    'ids_info = 2409' + #13#10 +
-    'state = keydown' + #13#10 +
-    'key = "T", ALT',
+    'ids_info = 2409',
 
-    ';[KeyCmd]' + #13#10 +
-    ';nickname = USER_SWITCH_TO_TARGET' + #13#10 +
-    ';ids_name = 458757' + #13#10 +
-    ';ids_info = 2409' + #13#10 +
-    ';state = keydown' + #13#10 +
-    ';key = "T", ALT'
+    'ids_name = 458791' + #13#10 +
+    'ids_info = 458792'
   )
-
-  FileReplaceString(InterfacePath + 'keymap.ini', 'key = USER_SWITCH_TO_TARGET', ';key = USER_SWITCH_TO_TARGET')
+  
+  WriteHexToFile(ExePath, $0E15D3, '26000700'); // 1E000700 = 458790 in hexadecimal
 end;
 
 procedure Process_DarkHud();
