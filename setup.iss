@@ -13,7 +13,7 @@
 #define MyAppExeName "Freelancer.exe"
 #define MyAppServerExeName "FLServer.exe"
 #define MyFolderName "freelancer-hd-edition-" + MyAppVersion
-#define MyZipName "freelancerhde.7z"
+#define MyZipName "freelancer-hd-edition.7z"
 #define MyCustomSaveFolderName "FreelancerHDE"
 #define VcRedistName "VC_redist.x86.exe"
 ; The actual included VC Redist is version 14.42.34438.00, but FLHook is the only software part of HDE that depends on it and is built with MSVC v142.
