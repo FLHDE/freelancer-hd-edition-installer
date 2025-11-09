@@ -83,6 +83,10 @@ var
   // Weapon Groups
   WeaponGroups: TCheckBox;
   descWeaponGroups: TNewStaticText;
+  
+  // Top-down target view
+  TopDownTargetView: TCheckBox;
+  descTopDownTargetView: TNewStaticText;
 
   // Dark HUD
   DarkHud: TCheckBox;
@@ -642,6 +646,19 @@ begin
   WeaponGroups.Top := descWidescreenHud.Top + ScaleY(85);
   WeaponGroups.Caption := 'Add Weapon Group buttons';
   WeaponGroups.Width := PageWidescreenHud.SurfaceWidth - ScaleX(8);
+  
+  descTopDownTargetView := TNewStaticText.Create(PageWidescreenHud);
+  descTopDownTargetView.Parent := PageWidescreenHud.Surface;
+  descTopDownTargetView.WordWrap := True;
+  descTopDownTargetView.Top := descWeaponGroups.Top + ScaleY(80);
+  descTopDownTargetView.Width := PageWidescreenHud.SurfaceWidth;
+  descTopDownTargetView.Caption := 'Enables top-down mode in the target wireframe view by default. This may make selecting subtargets easier.';
+  
+  TopDownTargetView := TCheckBox.Create(PageWidescreenHud);
+  TopDownTargetView.Parent := PageWidescreenHud.Surface;
+  TopDownTargetView.Top := descWeaponGroups.Top + ScaleY(60);
+  TopDownTargetView.Caption := 'Top-Down Target View';
+  TopDownTargetView.Width := PageWidescreenHud.SurfaceWidth - ScaleX(8);
 
   // Initialize Dark HUD page and add content
   PageDarkHud := CreateCustomPage(
@@ -1531,6 +1548,7 @@ begin
   // Only check the wide screen HUD option if the user's aspect ratio is 16:9 or wider
   WidescreenHud.Checked := IsResWithinAspectRatioRange(Min16by9Factor, MaxGeneralFactor);
   WeaponGroups.Checked := True;
+  TopDownTargetView.Checked := False;
 
   DarkHud.Checked := False;
   VanillaIcons.Checked := True;

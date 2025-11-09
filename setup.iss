@@ -226,6 +226,7 @@ begin
           Process_CustomIcons(); // Must be called after Process_HUD();
           Process_CustomNavMap();
           Process_WeaponGroups(); // Must be called after Process_HUD();
+          Process_TopDownTargetView();
           Process_DxWrapper();
           Process_DxWrapperReShade();
           Process_DgVoodooReShade();

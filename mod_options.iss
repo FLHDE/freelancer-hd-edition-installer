@@ -1236,6 +1236,16 @@ begin
   end
 end;
 
+procedure Process_TopDownTargetView();
+var
+  ExePath : string;
+begin
+  ExePath := ExpandConstant('{app}\EXE\Freelancer.exe');
+
+  if TopDownTargetView.Checked then
+    WriteHexToFile(ExePath, $214470, '01');
+end;
+
 procedure Process_DxWrapper();
 var
   DxWrapperPath: string;
