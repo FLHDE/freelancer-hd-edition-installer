@@ -835,7 +835,7 @@ begin
     'ids_info = 458792'
   )
   
-  WriteHexToFile(ExePath, $0E15D3, '26000700'); // 1E000700 = 458790 in hexadecimal
+  WriteHexToFile(ExePath, $0E15D3, '26000700'); // 26000700 = 458790 in hexadecimal
 end;
 
 procedure Process_DarkHud();
