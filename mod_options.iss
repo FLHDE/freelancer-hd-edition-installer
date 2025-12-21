@@ -1242,7 +1242,7 @@ var
 begin
   ExePath := ExpandConstant('{app}\EXE\Freelancer.exe');
 
-  if TopDownTargetView.Checked then
+  if TopDownTargetView.Checked then // Enable Top-down target view if checked
     WriteHexToFile(ExePath, $214470, '01');
 end;
 

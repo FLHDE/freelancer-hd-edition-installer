@@ -1291,7 +1291,7 @@ begin
   descEffectDrawDistances.Parent := PageDrawDistances.Surface;
   descEffectDrawDistances.WordWrap := True;
   descEffectDrawDistances.Width := PageDrawDistances.SurfaceWidth;
-  descEffectDrawDistances.Caption := 'Scales the draw distances for effects like weapons, engines, and jump holes.';
+  descEffectDrawDistances.Caption := 'Scales the draw distances for effects like weapons, ship engines, and jump holes.';
   descEffectDrawDistances.Top := EffectDrawDistances.Top + ScaleY(25);
 
   lblCharacterDrawDistances := TLabel.Create(PageDrawDistances);
