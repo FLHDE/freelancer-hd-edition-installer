@@ -103,6 +103,7 @@ begin
   // Advanced Widescreen HUD
   WidescreenHud.Checked := GetParamInt('WidescreenHud', Integer(WidescreenHud.Checked)) = 1;
   WeaponGroups.Checked := GetParamInt('WeaponGroups', Integer(WeaponGroups.Checked)) = 1;
+  TopDownTargetView.Checked := GetParamInt('TopDownTargetView', Integer(TopDownTargetView.Checked)) = 1;
 
   // Custom HUD, Icons and NavMap
   DarkHud.Checked := GetParamInt('DarkHud', Integer(DarkHud.Checked)) = 1;
