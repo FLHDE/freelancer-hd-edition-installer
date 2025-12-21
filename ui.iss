@@ -755,7 +755,7 @@ begin
   DgVoodooGraphicsApi := TRadioButton.Create(PageGraphicsApi);
   DgVoodooGraphicsApi.Parent := PageGraphicsApi.Surface;
   DgVoodooGraphicsApi.Top := ScaleY(50);
-  DgVoodooGraphicsApi.Caption := 'dgVoodoo (DirectX 11)';
+  DgVoodooGraphicsApi.Caption := 'dgVoodoo (DirectX 11, may not work on some systems)';
   DgVoodooGraphicsApi.Width := PageGraphicsApi.SurfaceWidth - ScaleX(8);
 
   descDgVoodooGraphicsApi := TNewStaticText.Create(PageGraphicsApi);
