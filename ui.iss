@@ -742,7 +742,7 @@ begin
   // Choose Graphics API
   PageGraphicsApi := CreateCustomPage(
     PagePlanetScape.ID,
-    'Graphics API',
+    'Graphics Renderer',
     'Choose the one that suits your needs.'
   );
 
@@ -750,7 +750,7 @@ begin
   descGraphicsApi.Parent := PageGraphicsApi.Surface;
   descGraphicsApi.WordWrap := True;
   descGraphicsApi.Width := PageGraphicsApi.SurfaceWidth;
-  descGraphicsApi.Caption := 'This page allows you to choose the graphics API. If you have no idea what this means, just go with the first or second option, since those offer the best graphics enhancements and fixes. If they cause issues for you, choose a different option.';
+  descGraphicsApi.Caption := 'This page allows you to choose the graphics renderer. If you have no idea what this means, just go with the first or second option, since those offer the best graphics enhancements and fixes. If they cause issues for you, choose a different option.';
 
   DgVoodooGraphicsApi := TRadioButton.Create(PageGraphicsApi);
   DgVoodooGraphicsApi.Parent := PageGraphicsApi.Surface;
@@ -1162,7 +1162,7 @@ begin
   VanillaAfAndAaWarning.Parent := VanillaPage.Surface;
   VanillaAfAndAaWarning.WordWrap := True;
   VanillaAfAndAaWarning.Width := VanillaPage.SurfaceWidth;
-  VanillaAfAndAaWarning.Caption := 'NOTE: The anti-aliasing and anisotropic filtering options for the Vanilla Graphics APIs effectively force the game to use these enhancements. When enabling them, please make sure that your system supports these options, otherwise the game may crash on startup.';
+  VanillaAfAndAaWarning.Caption := 'NOTE: The anti-aliasing and anisotropic filtering options for the Vanilla Graphics Renderers effectively force the game to use these enhancements. When enabling them, please make sure that your system supports these options, otherwise the game may crash on startup.';
   VanillaAfAndAaWarning.Top := descVanillaAf.Top + ScaleY(50);
 
   // Add improved reflections
