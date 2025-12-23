@@ -739,9 +739,9 @@ var
 begin
   EXEPath := ExpandConstant('{app}\EXE\');
 
-  // If a d3d8.dll already exists in the vanilla installation, rename that away because otherwise the new d3d8.dll can't be activated.
+  // If a d3d8.dll already exists in the vanilla installation, delete it because otherwise the new d3d8.dll can't be activated.
   if FileExists(EXEPath + 'd3d8.dll') then
-    RenameFileSafe(EXEPath + 'd3d8.dll', EXEPath + 'd3d8_vanilla.dll');
+    DeleteFile(EXEPath + 'd3d8.dll');
 
   // Applies the correct graphics API
   if DxWrapperGraphicsApi.Checked then
@@ -1378,18 +1378,18 @@ var
 begin
   ReShadePath := ExpandConstant('{app}\EXE\');
 
-  // If a ReShade dll already exists in the vanilla installation, rename that away because otherwise the new ReShade file can't be activated.
+  // If a ReShade dll already exists in the vanilla installation, delete it because otherwise the new ReShade file can't be activated.
   if FileExists(ReShadePath + ReShadeDllName + '.dll') then
-    RenameFileSafe(ReShadePath + ReShadeDllName + '.dll', ReShadePath + ReShadeDllName + '_vanilla.dll');
+    DeleteFile(ReShadePath + ReShadeDllName + '.dll');
 
-  // Rename the other DLL if it already exists because they can cause conflicts
+  // Delete the other DLL if it already exists because it can cause conflicts
   if (CompareText(ReshadeDllName, 'd3d9') = 0) and FileExists(ReShadePath + 'dxgi.dll') then
-    RenameFileSafe(ReShadePath + 'dxgi.dll', ReShadePath + 'dxgi_vanilla.dll')
+    DeleteFile(ReShadePath + 'dxgi.dll')
   else if (CompareText(ReshadeDllName, 'dxgi') = 0) and FileExists(ReShadePath + 'd3d9.dll') then
-    RenameFileSafe(ReShadePath + 'd3d9.dll', ReShadePath + 'd3d9_vanilla.dll');
+    DeleteFile(ReShadePath + 'd3d9.dll');
 
   // Activate ReShade by renaming the file
-  RenameFileSafe(ReShadePath + ReShadeDllName + '_reshade.dll', ReShadePath + ReShadeDllName + '.dll')
+  RenameFileSafe(ReShadePath + 'ReShade32.dll', ReShadePath + ReShadeDllName + '.dll')
 
   // Enable desired ReShade options
   Techniques := 'Techniques=';
