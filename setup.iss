@@ -106,6 +106,12 @@ FinishedRestartLabel=To complete the installation of [name], Setup must restart 
 FinishedRestartMessage=To complete the installation of [name], Setup must restart your computer.%n%nWould you like to restart now?{#PostInstallInfo}
 SelectDirBrowseLabel=To continue, click Next. If you would like to select a different folder, click Browse. Installing in the Program Files folder is not recommended because it may cause permission-related issues.
 
+[LangOptions]
+DialogFontName=Tahoma
+DialogFontSize=8
+DialogFontBaseScaleHeight=13
+DialogFontBaseScaleWidth=6
+
 [Code]
 # if !AllInOneInstall
 // Declaration of global variables
