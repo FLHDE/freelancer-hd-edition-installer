@@ -750,7 +750,7 @@ begin
   descGraphicsApi.Parent := PageGraphicsApi.Surface;
   descGraphicsApi.WordWrap := True;
   descGraphicsApi.Width := PageGraphicsApi.SurfaceWidth;
-  descGraphicsApi.Caption := 'This page allows you to choose the graphics renderer. If you have no idea what this means, just go with the first or second option, since those offer the best graphics enhancements and fixes. If they cause issues for you, choose a different option.';
+  descGraphicsApi.Caption := 'This page allows you to choose the graphics renderer. If you have no idea what this means, just go with the second option since it offers the best enhancements while being the most stable. If it causes issues on your system, choose a different option.';
 
   DgVoodooGraphicsApi := TRadioButton.Create(PageGraphicsApi);
   DgVoodooGraphicsApi.Parent := PageGraphicsApi.Surface;
@@ -767,7 +767,7 @@ begin
 
   // Refresh rate input is only required if the user has an AMD GPU
   if GpuManufacturer = AMD then
-    descDgVoodooGraphicsApi.Caption := descDgVoodooGraphicsApi.Caption + ' Requires refresh rate input.';
+    descDgVoodooGraphicsApi.Caption := descDgVoodooGraphicsApi.Caption + ' Requires manual refresh rate input.';
 
   DxWrapperGraphicsApi := TRadioButton.Create(PageGraphicsApi);
   DxWrapperGraphicsApi.Parent := PageGraphicsApi.Surface;
