@@ -750,7 +750,7 @@ begin
   descGraphicsApi.Parent := PageGraphicsApi.Surface;
   descGraphicsApi.WordWrap := True;
   descGraphicsApi.Width := PageGraphicsApi.SurfaceWidth;
-  descGraphicsApi.Caption := 'This page allows you to choose the graphics renderer. If you have no idea what this means, just go with the second option since it offers the best enhancements while being the most stable. If it causes issues on your system, choose a different option.';
+  descGraphicsApi.Caption := 'This page allows you to choose the graphics renderer. If you have no idea what this means, choose DxWrapper + d3d8to9 (the 2nd option) since it offers the best enhancements while being the most stable. If it causes issues on your system, choose a different option.';
 
   DgVoodooGraphicsApi := TRadioButton.Create(PageGraphicsApi);
   DgVoodooGraphicsApi.Parent := PageGraphicsApi.Surface;
