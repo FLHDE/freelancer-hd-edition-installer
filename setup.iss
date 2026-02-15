@@ -345,7 +345,8 @@ begin
     if PageId = DataDirPage.ID then begin
       // Check if Freelancer is installed in the folder they have specified
       if not FileExists(DataDirPage.Values[0] + '\EXE\Freelancer.exe') then begin
-        MsgBox('Freelancer does not seem to be installed in that folder. Please select the correct folder. It should contain a sub-directory "EXE" which has a file named "Freelancer.exe".', mbError, MB_OK);
+        MsgBox('Freelancer does not seem to be installed in that folder. Please select the correct folder. It should contain a sub-directory "EXE" which has a file named "Freelancer.exe".'
+          + #13#10#13#10 + 'Note that in order to install {#MyModName}, a copy of the original Freelancer must be present on your computer.' , mbError, MB_OK);
         Result := False;
         exit;
       end;
