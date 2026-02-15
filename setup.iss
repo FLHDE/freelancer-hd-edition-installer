@@ -241,6 +241,10 @@ begin
           Process_DisplayMode();
         end;
 
+        // Patch fldirectip.hta to ensure it won't launch the vanilla Freelancer instance specified in the registry.
+        if FileExists(ExpandConstant('{app}\EXE\fldirectip.hta')) then
+          FileReplaceString(ExpandConstant('{app}\EXE\fldirectip.hta'), 'If Err Then', 'If True Then');
+
         if not IsWine then
         begin
           // Delete potential UTF-8 BOM headers in all edited config files. May not work properly on Wine.
