@@ -50,6 +50,7 @@ DefaultDirName={sd}\Games\{#MyAppFileName}
 DefaultGroupName={#MyAppFileName}
 DisableWelcomePage=False
 DisableDirPage=False
+DirExistsWarning=no
 ExtraDiskSpaceRequired = {#SizeAll}
 InfoBeforeFile={#SourcePath}\Assets\Text\installinfo.txt
 OutputBaseFilename=FreelancerHDESetup
