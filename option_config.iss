@@ -30,21 +30,20 @@ procedure AddCheckedOptionToMemoStr(var MemoStr: string; CheckBoxOption: TCheckB
 var
   Prefix: String;
 begin
-  // The heavy check mark and cross mark symbols didn't work on my Linux setup,
+  // The heavy check mark and cross mark symbols didn't work on my Linux setup (showed up as blank boxes),
   // so for Wine I added non-unicode alternatives.
   if IsWine then begin
     if CheckBoxOption.Checked then
-    Prefix := './'    // Non-unicode check mark
+      Prefix := './'    // Non-unicode check mark
     else
-      Prefix := 'X'; // Non-unicode cross
-    Prefix := Prefix + ' ';
+      Prefix := 'X';    // Non-unicode cross
   end else begin
     if CheckBoxOption.Checked then
       Prefix := #$2714  // Heavy check mark
     else
       Prefix := #$274C; // Cross mark
-    Prefix := Prefix + ' ';
   end;
+  Prefix := Prefix + ' ';
 
   AddInfoToMemoStr(MemoStr, Prefix + CheckBoxOption.Caption, NewLine, Space);
 end;
@@ -52,8 +51,9 @@ end;
 // Called automatically when the Ready to Install wizard page becomes the active page.
 function UpdateReadyMemo(Space, NewLine, MemoUserInfoInfo, MemoDirInfo, MemoTypeInfo, MemoComponentsInfo, MemoGroupInfo, MemoTasksInfo: String): String;
 var
-  VanillaDirStr, InstallationTypeStr, SinglePlayerIdCodeStr, GameplayStr, LocalizationStr: string;
-  InstallTypeNameArr, SinglePlayerIdCodeArr: TArrayOfString;
+  i: Integer;
+  VanillaDirStr, InstallationTypeStr, SinglePlayerIdCodeStr, GameplayStr, LocalizationStr, SinglePlayerStr: string;
+  InstallTypeNameArr, SinglePlayerIdCodeArr, StoryModeNameArr: TArrayOfString;
   InstallTypeSelectedIndex: Integer; 
 begin
   // If the express install option is checked, select the default options right before the memo page is shown.
@@ -93,20 +93,21 @@ begin
 
   InstallationTypeStr := PageInstallType.Caption + ':';
   AddChosenOptionToMemoStr(InstallationTypeStr, InstallTypeNameArr, InstallTypeSelectedIndex, NewLine, Space);
-  AddToReadyMemo(Result, InstallationTypeStr, NewLine);
   
   // If the user chose a basic install, then the installer doesn't change the default selection of the options.
   // Instead, it simply makes it so that the options won't be applied.
   // Therefore, the selected options printed below will not be the correct ones. Just skip them in this case.
   // This makes the most sense anyway as none of the option code will be executed, so the user isn't missing out on any information.
-  if BasicInstall.Checked then
+  if BasicInstall.Checked then begin
+    AddToReadyMemo(Result, InstallationTypeStr, '');
     exit;
-  
+  end else
+    AddToReadyMemo(Result, InstallationTypeStr, NewLine);
 
   // Single Player ID Code
-  SinglePlayerIdCodeArr := ['Freelancer Alpha 1-1 (Default)', 'Navy Beta 2-5', 'Bretonia Police Iota 3-4', 'Military Epsilon 11-6', 
-    'Naval Forces Matsu 4-9','IMG Red 18-6', 'Kishiro Yanagi 7-3', 'Outcasts Lambda 9-12', 'Dragons Green 16-13',
-    'Spa and Cruise Omega 8-0', 'Daumann Zeta 11-17', 'Bowex Delta 5-7', 'Order Omicron 0-0', 'LSF Gamma 6-9', 'Hacker Kappa 4-20'];
+  SetArrayLength(SinglePlayerIdCodeArr, CallSign.CheckListBox.Items.Count)
+  for i := 0 to CallSign.CheckListBox.Items.Count - 1 do
+    SinglePlayerIdCodeArr[i] := CallSign.CheckListBox.Items[i];
   
   SinglePlayerIdCodeStr := CallSign.Caption + ':';
   AddChosenOptionToMemoStr(SinglePlayerIdCodeStr, SinglePlayerIdCodeArr, CallSign.SelectedValueIndex, NewLine, Space);
@@ -130,6 +131,17 @@ begin
   AddCheckedOptionToMemoStr(LocalizationStr, EnglishImprovements, NewLine, Space);
   AddCheckedOptionToMemoStr(LocalizationStr, RussianFonts, NewLine, Space);
 
-  AddToReadyMemo(Result, LocalizationStr, NewLine); 
+  AddToReadyMemo(Result, LocalizationStr, NewLine);
+  
+  
+  // Single Player options
+  StoryModeNameArr := [StoryMode.Items[0], StoryMode.Items[1], StoryMode.Items[2]];
+  
+  SinglePlayerStr := PageSinglePlayer.Caption + ':';
+  AddChosenOptionToMemoStr(SinglePlayerStr, StoryModeNameArr, StoryMode.ItemIndex, NewLine, Space);
+  AddCheckedOptionToMemoStr(SinglePlayerStr, LevelRequirements, NewLine, Space);
+  AddCheckedOptionToMemoStr(SinglePlayerStr, NewSaveFolder, NewLine, Space);
+  
+  AddToReadyMemo(Result, SinglePlayerStr, '');
   
 end;
