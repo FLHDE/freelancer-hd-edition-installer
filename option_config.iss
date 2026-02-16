@@ -26,10 +26,23 @@ begin
   AddInfoToMemoStr(MemoStr, Options[ActualIndex], NewLine, Space);
 end;
 
+procedure AddCheckedOptionToMemoStr(var MemoStr: string; CheckBoxOption: TCheckBox; NewLine, Space: string);
+var
+  Prefix: String;
+begin
+  if CheckBoxOption.Checked then
+    Prefix := #$2714 // Heavy check mark
+  else
+    Prefix := #$274C; // Cross mark
+  Prefix := Prefix + ' ';
+
+  AddInfoToMemoStr(MemoStr, Prefix + CheckBoxOption.Caption, NewLine, Space);
+end;
+
 // Called automatically when the Ready to Install wizard page becomes the active page.
 function UpdateReadyMemo(Space, NewLine, MemoUserInfoInfo, MemoDirInfo, MemoTypeInfo, MemoComponentsInfo, MemoGroupInfo, MemoTasksInfo: String): String;
 var
-  VanillaDirStr, InstallationTypeStr, SinglePlayerIdCodeStr: string;
+  VanillaDirStr, InstallationTypeStr, SinglePlayerIdCodeStr, GameplayStr, LocalizationStr: string;
   InstallTypeNameArr, SinglePlayerIdCodeArr: TArrayOfString;
   InstallTypeSelectedIndex: Integer; 
 begin
@@ -88,5 +101,25 @@ begin
   SinglePlayerIdCodeStr := CallSign.Caption + ':';
   AddChosenOptionToMemoStr(SinglePlayerIdCodeStr, SinglePlayerIdCodeArr, CallSign.SelectedValueIndex, NewLine, Space);
   AddToReadyMemo(Result, SinglePlayerIdCodeStr, NewLine);
+  
+  
+  // Gameplay customization
+  GameplayStr := GameplayOptions.Caption + ':';
+  
+  AddCheckedOptionToMemoStr(GameplayStr, PitchVariations, NewLine, Space);
+  AddCheckedOptionToMemoStr(GameplayStr, RegeneratableShields, NewLine, Space);
+  AddCheckedOptionToMemoStr(GameplayStr, NoCountermeasureRightClick, NewLine, Space);
+  AddCheckedOptionToMemoStr(GameplayStr, AdvancedAudioOptions, NewLine, Space);
+  
+  AddToReadyMemo(Result, GameplayStr, NewLine);
+  
+  
+  // Localization
+  LocalizationStr := PageEnglishImprovements.Caption + ':';
+  
+  AddCheckedOptionToMemoStr(LocalizationStr, EnglishImprovements, NewLine, Space);
+  AddCheckedOptionToMemoStr(LocalizationStr, RussianFonts, NewLine, Space);
+
+  AddToReadyMemo(Result, LocalizationStr, NewLine); 
   
 end;
