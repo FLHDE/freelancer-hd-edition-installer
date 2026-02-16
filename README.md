@@ -8,6 +8,7 @@ This is the installer for [Freelancer: HD Edition](https://github.com/FLHDE/free
 ### All-in-one installer (default)
 1. Clone the [Freelancer: HD Edition GitHub repository](https://github.com/FLHDE/freelancer-hd-edition).
     1. NOTE: Do not download the mod zip from GitHub's "Download ZIP" feature under the green "Code" button (on the mod's homepage). This may result in an incomplete download. Use the `git clone` command instead.
+	2. Ensure all text-based files have CRLF line endings. Otherwise some installer options may not work correctly.
 2. Compress all the mod files (DATA & EXE directories, etc.) using an archiver like [7-Zip](https://www.7-zip.org/). NOTE: The zip must NOT be larger than 2.05 GB!
     1. Compressing the files using LZMA2 is highly recommended.
     2. If it is inevitable that the zip exceeds the 2.05 GB file size limit, you may specify [DiskSpanning=yes under [Setup]](https://jrsoftware.org/is6help/index.php?topic=setup_diskspanning) in `setup.iss` to make the build process succeed regardless.
