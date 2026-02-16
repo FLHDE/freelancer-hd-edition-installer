@@ -145,7 +145,7 @@ begin
     begin
         # if !AllInOneInstall
           if OfflineInstall <> 'false' then
-            FileCopy(OfflineInstall,ExpandConstant('{tmp}\{#MyZipName}'),false);
+            CopyFile(OfflineInstall,ExpandConstant('{tmp}\{#MyZipName}'),false);
         # endif
 
         // Copy Vanilla game to directory
