@@ -30,11 +30,21 @@ procedure AddCheckedOptionToMemoStr(var MemoStr: string; CheckBoxOption: TCheckB
 var
   Prefix: String;
 begin
-  if CheckBoxOption.Checked then
-    Prefix := #$2714 // Heavy check mark
-  else
-    Prefix := #$274C; // Cross mark
-  Prefix := Prefix + ' ';
+  // The heavy check mark and cross mark symbols didn't work on my Linux setup,
+  // so for Wine I added non-unicode alternatives.
+  if IsWine then begin
+    if CheckBoxOption.Checked then
+    Prefix := './'    // Non-unicode check mark
+    else
+      Prefix := 'X'; // Non-unicode cross
+    Prefix := Prefix + ' ';
+  end else begin
+    if CheckBoxOption.Checked then
+      Prefix := #$2714  // Heavy check mark
+    else
+      Prefix := #$274C; // Cross mark
+    Prefix := Prefix + ' ';
+  end;
 
   AddInfoToMemoStr(MemoStr, Prefix + CheckBoxOption.Caption, NewLine, Space);
 end;
