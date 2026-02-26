@@ -52,9 +52,10 @@ end;
 function UpdateReadyMemo(Space, NewLine, MemoUserInfoInfo, MemoDirInfo, MemoTypeInfo, MemoComponentsInfo, MemoGroupInfo, MemoTasksInfo: String): String;
 var
   i: Integer;
-  VanillaDirStr, InstallationTypeStr, SinglePlayerIdCodeStr, GameplayStr, LocalizationStr, SinglePlayerStr: string;
-  InstallTypeNameArr, SinglePlayerIdCodeArr, StoryModeNameArr: TArrayOfString;
-  InstallTypeSelectedIndex: Integer; 
+  VanillaDirStr, InstallationTypeStr, SinglePlayerIdCodeStr, GameplayStr, LocalizationStr, SinglePlayerStr, StartupScreenStr, LogoResStr, SmallTextStr,
+  AdvWideStr, CustomHudStr, FixClippingStr: string;
+  InstallTypeNameArr, SinglePlayerIdCodeArr, StoryModeNameArr, StartupScreenArr, LogoResArr, SmallTextArr, IconsArr: TArrayOfString;
+  InstallTypeSelectedIndex, IconsSelectedIndex: Integer; 
 begin
   // If the express install option is checked, select the default options right before the memo page is shown.
   // Otherwise the selected options will be the ones that the user selected which may be different from the defaults.
@@ -142,6 +143,72 @@ begin
   AddCheckedOptionToMemoStr(SinglePlayerStr, LevelRequirements, NewLine, Space);
   AddCheckedOptionToMemoStr(SinglePlayerStr, NewSaveFolder, NewLine, Space);
   
-  AddToReadyMemo(Result, SinglePlayerStr, '');
+  AddToReadyMemo(Result, SinglePlayerStr, NewLine);
+  
+  
+  // Startup Screen Resolution
+  SetArrayLength(StartupScreenArr, StartupRes.CheckListBox.Items.Count)
+  for i := 0 to StartupRes.CheckListBox.Items.Count - 1 do
+    StartupScreenArr[i] := StartupRes.CheckListBox.Items[i];
+  
+  StartupScreenStr := StartupRes.Caption + ':';
+  AddChosenOptionToMemoStr(StartupScreenStr, StartupScreenArr, StartupRes.SelectedValueIndex, NewLine, Space);
+  AddToReadyMemo(Result, StartupScreenStr, NewLine);
+  
+  
+  // Freelancer Logo Resolution
+  SetArrayLength(LogoResArr, LogoRes.CheckListBox.Items.Count)
+  for i := 0 to LogoRes.CheckListBox.Items.Count - 1 do
+    LogoResArr[i] := LogoRes.CheckListBox.Items[i];
+  
+  LogoResStr := LogoRes.Caption + ':';
+  AddChosenOptionToMemoStr(LogoResStr, LogoResArr, LogoRes.SelectedValueIndex, NewLine, Space);
+  AddToReadyMemo(Result, LogoResStr, NewLine);
+  
+  
+  // Fix small text on larger resolutions
+  SetArrayLength(SmallTextArr, SmallText.CheckListBox.Items.Count)
+  for i := 0 to SmallText.CheckListBox.Items.Count - 1 do
+    SmallTextArr[i] := SmallText.CheckListBox.Items[i];
+  
+  SmallTextStr := SmallText.Caption + ':';
+  AddChosenOptionToMemoStr(SmallTextStr, SmallTextArr, SmallText.SelectedValueIndex, NewLine, Space);
+  AddToReadyMemo(Result, SmallTextStr, NewLine);
+  
+  
+  // Advanced Widescreen HUD
+  AdvWideStr := PageWidescreenHud.Caption + ':';
+  
+  AddCheckedOptionToMemoStr(AdvWideStr, WidescreenHud, NewLine, Space);
+  AddCheckedOptionToMemoStr(AdvWideStr, WeaponGroups, NewLine, Space);
+  AddCheckedOptionToMemoStr(AdvWideStr, TopDownTargetView, NewLine, Space);
+  
+  AddToReadyMemo(Result, AdvWideStr, NewLine);
+  
+  
+  // Custom HUD, Icons, and Nav Map
+  CustomHudStr := PageDarkHud.Caption + ':';
+  
+  AddCheckedOptionToMemoStr(CustomHudStr, DarkHud, NewLine, Space);
+  
+  IconsArr := [VanillaIcons.Caption, AlternativeIcons.Caption, FlatIcons.Caption];
+  if VanillaIcons.Checked then
+    IconsSelectedIndex := 0
+  else if AlternativeIcons.Checked then
+    IconsSelectedIndex := 1
+  else if FlatIcons.Checked then
+    IconsSelectedIndex := 2;
+    
+  AddChosenOptionToMemoStr(CustomHudStr, IconsArr, IconsSelectedIndex, NewLine, Space);
+  
+  AddCheckedOptionToMemoStr(CustomHudStr, CustomNavMap, NewLine, Space);
+  AddToReadyMemo(Result, CustomHudStr, NewLine);
+  
+  
+  // Fix clipping with 16:9 resolution planetscapes
+  FixClippingStr := PagePlanetScape.Caption + ':';
+  AddCheckedOptionToMemoStr(FixClippingStr, PlanetScape, NewLine, Space);
+  AddToReadyMemo(Result, FixClippingStr, '');
+  
   
 end;
