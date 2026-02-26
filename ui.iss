@@ -765,8 +765,8 @@ begin
   descDgVoodooGraphicsApi.Width := PageGraphicsApi.SurfaceWidth;
   descDgVoodooGraphicsApi.Caption := 'Fixes the lighting and stuttering bugs on Windows 10 and 11. Supports native Anti-Aliasing, Anisotropic Filtering, and ReShade.';
 
-  // Refresh rate input is only required if the user has an AMD GPU
-  if GpuManufacturer = AMD then
+  // Refresh rate input is only required if the user has an AMD or other GPU
+  if GpuManufacturer = AMDOrOther then
     descDgVoodooGraphicsApi.Caption := descDgVoodooGraphicsApi.Caption + ' Requires manual refresh rate input.';
 
   DxWrapperGraphicsApi := TRadioButton.Create(PageGraphicsApi);
@@ -928,7 +928,7 @@ begin
   descDgVoodooAf.Caption := txtAfDesc;
   descDgVoodooAf.Top := DgVoodooAf.Top + ScaleY(25);
 
-  if GpuManufacturer = AMD then
+  if GpuManufacturer = AMDOrOther then
   begin
     lblDgVoodooRefreshRate := TLabel.Create(DgVoodooPage);
     lblDgVoodooRefreshRate.Parent := DgVoodooPage.Surface;
@@ -1597,7 +1597,7 @@ begin
 
   VanillaAf.ItemIndex := 4;
 
-  if GpuManufacturer = AMD then
+  if GpuManufacturer = AMDOrOther then
     DgVoodooRefreshRate.Text := IntToStr(RefreshRate);
 
   DxWrapperReShade.Checked := True;

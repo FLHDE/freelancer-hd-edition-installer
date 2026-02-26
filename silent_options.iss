@@ -41,9 +41,9 @@ begin
     HasLightingBug := true;
 
   if CmdLineParamExists('/ForceNVIDIA') then
-    GpuManufacturer := NVIDIAOrOther;
+    GpuManufacturer := NVIDIA;
   if CmdLineParamExists('/ForceAMD') then
-    GpuManufacturer := AMD;
+    GpuManufacturer := AMDOrOther;
 
   if CmdLineParamExists('/NoMsvcRedist') then
     NoMsvcRedist := True;
@@ -154,7 +154,7 @@ begin
   DgVoodooAa.ItemIndex := GetParamInt('DgVoodooAa', Integer(DgVoodooAa.ItemIndex));
   DgVoodooAf.ItemIndex := GetParamInt('DgVoodooAf', Integer(DgVoodooAf.ItemIndex));
 
-  if GpuManufacturer = AMD then
+  if GpuManufacturer = AMDOrOther then
     DgVoodooRefreshRate.Text := IntToStr(GetParamInt('DgVoodooRefreshRate', StrToIntDef(DgVoodooRefreshRate.Text, RefreshRate)));
 
   // dgVoodoo options #2

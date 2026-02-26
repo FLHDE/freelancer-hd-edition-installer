@@ -525,18 +525,16 @@ begin
     // Determine what the most likely primary GPU is
     // In the installer we currently do the same thing for NVIDIA GPUs and any GPU other than AMD, hence they don't need to be distinguishable.
     if isAmdMain then
-      Result := AMD
+      Result := AMDOrOther
     else if isNvidiaMain then
-      //Result := NVIDIA
-      Result := NVIDIAOrOther
+      Result := NVIDIA
     else if isOtherMain and hasAmd and not hasNvidia then
-      Result := AMD
+      Result := AMDOrOther
     else if isOtherMain and not hasAmd and hasNvidia then
-      //Result := NVIDIA
-      Result := NVIDIAOrOther
+      Result := NVIDIA
     else if isOtherMain and not hasAmd and not hasNvidia then
       //Result := Other
-      Result := NVIDIAOrOther
+      Result := AMDOrOther
     else
       RaiseException('Couldn''t determine GPU manufacturer');
   except
@@ -552,12 +550,12 @@ begin
     // If the wizard is running silently and the GPU manufacturer couldn't be determined, just assume AMD since it's the safest option.
     // Though this can still be adjusted manually via the debug options (see silent_options.iss)
     if WizardSilent then
-      Result := AMD
+      Result := AMDOrOther
     else if MsgBox('We weren''t able to automatically determine what graphics card is in your system. We use this information to apply the best compatibility options.'
-    + #13#10#13#10 + 'Please click "Yes" if your computer has an AMD graphics card. Click "No" if the graphics card is from another manufacturer like Intel or NVIDIA.', mbConfirmation, MB_YESNO) = IDYES then
-      Result := AMD
+    + #13#10#13#10 + 'Please click "Yes" if your computer has an NVIDIA graphics card. Click "No" if the graphics card is from another manufacturer like Intel or AMD.', mbConfirmation, MB_YESNO) = IDYES then
+      Result := NVIDIA
     else
-      Result := NVIDIAOrOther;
+      Result := AMDOrOther;
   end;
 end;
 

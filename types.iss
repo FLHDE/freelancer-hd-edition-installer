@@ -60,9 +60,9 @@ end;
 
 // Enum for GPU manufacturers
 type
-  // NVIDIA and Other are currently not distinguished
+  // AMD and Other are currently not distinguished
   // TGpuManufacturer = (NVIDIA, AMD, Other);
-  TGpuManufacturer = (NVIDIAOrOther, AMD);
+  TGpuManufacturer = (NVIDIA, AMDOrOther);
 
 type
   TSystemLanguage = (S_German, S_French, S_Russian, S_EnglishOrOther);
