@@ -30,7 +30,7 @@ Note that the online and offline mode is a legacy feature that is no longer supp
 Hex To Binary is licensed under the MIT license. https://github.com/FLHDE/HexToBinary/blob/main/LICENSE.
 
 ### [UTF-8 BOM Remover](https://github.com/FLHDE/utf-8-bom-remover)
-UTF-8 BOM Remover is licensed under the MIT license. https://github.com/FLHDE/utf-8-bom-remover.
+UTF-8 BOM Remover is licensed under the MIT license. https://github.com/FLHDE/utf-8-bom-remover/blob/main/LICENSE.
 
 ### [dircpy](https://github.com/FLHDE/dircpy)
 dircpy is licensed under the MIT license. https://github.com/FLHDE/dircpy/blob/main/LICENSE.
