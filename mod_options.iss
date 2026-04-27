@@ -782,6 +782,8 @@ begin
   ExePath := ExpandConstant('{app}\EXE\Freelancer.exe');
 
   // Enable plugins
+  // TODO: does HudFacility.dll need to be enabled?
+  // The HUD works fine without it because the other Hud DLLs already load it
   FileReplaceString(
     ExpandConstant('{app}\EXE\dacom.ini')
     ,

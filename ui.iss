@@ -1521,6 +1521,8 @@ begin
 end;
 
 procedure SetDefaultOptions();
+var
+  Dummy: TObject;
 begin
   CallSign.Values[0] := True;
   PitchVariations.Checked := True;
@@ -1600,17 +1602,20 @@ begin
   if GpuManufacturer = AMDOrOther then
     DgVoodooRefreshRate.Text := IntToStr(RefreshRate);
 
-  DxWrapperReShade.Checked := True;
-  DxWrapperSaturation.Checked := True;
-  DxWrapperSharpening.Checked := True;
+  // ReShade doesn't seem to work well on VMs.
+  DxWrapperReShade.Checked := not IsVirtualMachine;
+  DxWrapperSaturation.Checked := not IsVirtualMachine;
+  DxWrapperSharpening.Checked := not IsVirtualMachine;
   DxWrapperHdr.Checked := False;
   DxWrapperBloom.Checked := False;
+  DxWrapperReShadeCheckBoxClick(Dummy); // enable/disable the ReShade effect buttons
 
-  DgVoodooReShade.Checked := True;
-  DgVoodooSaturation.Checked := True;
-  DgVoodooSharpening.Checked := True;
+  DgVoodooReShade.Checked := not IsVirtualMachine;
+  DgVoodooSaturation.Checked := not IsVirtualMachine;
+  DgVoodooSharpening.Checked := not IsVirtualMachine;
   DgVoodooHdr.Checked := False;
   DgVoodooBloom.Checked := False;
+  dgVoodooReShadeCheckBoxClick(Dummy); // enable/disable the ReShade effect buttons
 
   ShinyReflections.Checked := True;
   ExplosionEffects.Checked := False;

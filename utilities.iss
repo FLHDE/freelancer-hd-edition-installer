@@ -559,6 +559,67 @@ begin
   end;
 end;
 
+// Checks if the installer is being run from a virtual machine.
+// This is mainly used to determine whether it's safe to enable ReShade as it doesn't seem to work correctly on VMs.
+function IsRunningFromVirtualMachine(): Boolean;
+var
+  i, j: Integer;
+  ModelOutputFile: string;
+  ScriptExitCode: integer;
+  ModelOutput, VmKeywords: TArrayOfString;
+  LoadStringsResult: Boolean;
+begin
+  // I'm not sure how well ReShade works on Wine and other environments, so to play it safe I'll assume VM if the functions don't succeed.
+  Result := true;
+
+  if IsWine then
+    exit;
+  
+  ModelOutputFile := ExpandConstant('{tmp}') + '\computer_model.txt';
+  
+  // Gets the computer model name(s) through a Powershell call
+  // Put it in a try-catch just to be sure
+  // TODO: try if ((Get-CimInstance win32_computersystem).Model -eq \'82XE\') { exit 0 } else { exit 1 } 
+  try
+    // This script returns 1 if it thinks the PC is a VM, 0 otherwise.
+    if not (Exec('powershell.exe', '$pc_model = (Get-CimInstance win32_computersystem).Model;' +
+      'if ($pc_model.ToLower().Contains(''virtual machine'') -Or $pc_model.ToLower().Contains(''vmware'') -Or $pc_model.ToLower().Contains(''virtualbox'')) { exit 1 } else { exit 0 }', 
+      '', SW_HIDE, ewWaitUntilTerminated, ScriptExitCode)) then
+      ScriptExitCode := 1;
+    // Exec(ExpandConstant('{cmd}'), '/c powershell -c "Get-CimInstance win32_computersystem | select Model" > ' + '"' + ModelOutputFile + '"', '', SW_HIDE, ewWaitUntilTerminated, ScriptExitCode);
+  except
+    ScriptExitCode := 1;
+  end;
+  
+  Result := ScriptExitCode = 1;
+  exit;
+  
+  if ScriptExitCode <> 0 then begin
+    DeleteFile(ModelOutputFile);
+    exit;
+  end;
+  
+  LoadStringsResult := LoadStringsFromFile(ModelOutputFile, ModelOutput);
+  DeleteFile(ModelOutputFile);
+    
+  if not LoadStringsResult then
+    exit;
+  
+  VmKeyWords := [LowerCase('Virtual Machine'), LowerCase('VMware'), LowerCase('VirtualBox')];
+  
+  // TODO: test on VM and with HyperV enabled
+  // Check the model output for likely keywords
+  for i := 0 to GetArrayLength(ModelOutput) - 1 do begin
+    for j := 0 to GetArrayLength(VmKeyWords) - 1 do begin
+      if Pos(VmKeyWords[j], LowerCase(ModelOutput[i])) > 0 then
+        exit;
+    end;
+  end;
+  
+  // If all checks passed, then the machine is most likely not a VM
+  Result := false;
+end;
+
 // Determine what language the user's system is
 function GetSystemLanguage(): TSystemLanguage;
 var

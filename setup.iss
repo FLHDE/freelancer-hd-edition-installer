@@ -422,6 +422,7 @@ begin
     HasLightingBug := GetHasLightingBug();
     GpuManufacturer := GetGpuManufacturer();
     SystemLanguage := GetSystemLanguage();
+    IsVirtualMachine := IsRunningFromVirtualMachine();
 
     // Get the debug options before initializing the UI
     SetDebugOptions();

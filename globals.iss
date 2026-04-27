@@ -12,6 +12,7 @@ var
   IsWine: Boolean;
   HasLightingBug: Boolean;
   DebugMode: Boolean;
+  IsVirtualMachine: Boolean;
   GpuManufacturer: TGpuManufacturer;
   SystemLanguage: TSystemLanguage;
   EDD_GET_DEVICE_INTERFACE_NAME, DISPLAY_DEVICE_PRIMARY_DEVICE: integer;
