@@ -120,7 +120,6 @@ begin
   
   AddCheckedOptionToMemoStr(GameplayStr, PitchVariations, NewLine, Space);
   AddCheckedOptionToMemoStr(GameplayStr, RegeneratableShields, NewLine, Space);
-  AddCheckedOptionToMemoStr(GameplayStr, NoCountermeasureRightClick, NewLine, Space);
   AddCheckedOptionToMemoStr(GameplayStr, AdvancedAudioOptions, NewLine, Space);
   
   AddToReadyMemo(Result, GameplayStr, NewLine);

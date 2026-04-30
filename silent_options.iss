@@ -76,9 +76,6 @@ begin
   // Regeneratable NPC shields
   RegeneratableShields.Checked := GetParamInt('RegeneratableShields', Integer(RegeneratableShields.Checked)) = 1;
 
-  // No Countermeasure activation on right-click
-  NoCountermeasureRightClick.Checked := GetParamInt('NoCountermeasureRightClick', Integer(NoCountermeasureRightClick.Checked)) = 1;
-
   // Advanced audio options
   AdvancedAudioOptions.Checked := GetParamInt('AdvancedAudioOptions', Integer(AdvancedAudioOptions.Checked)) = 1;
 

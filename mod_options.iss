@@ -107,20 +107,6 @@ begin
     end;
 end;
 
-procedure Process_NoCountermeasureRightClick();
-var
-  ExePath : string;
-begin
-  ExePath := ExpandConstant('{app}\EXE\Freelancer.exe');
-
-  // Prevent Countermeasure droppers from activating on right-click if checked
-  if NoCountermeasureRightClick.Checked then
-  begin
-    WriteHexToFile(ExePath, $12D279, '39F1740330C0C3');
-    WriteHexToFile(ExePath, $1DD5A8, '79');
-  end;
-end;
-
 // Gets the path of a file in the My Games\Freelancer(HD) directory
 function GetOptionsPath(FileName: string): string;
 var
