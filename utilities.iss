@@ -733,3 +733,9 @@ begin
     ExtractTemporaryFile('{#VcRedistName}');
   end;
 end;
+
+// Write DLL override for Wine/Linux. For more information, see https://wiki.winehq.org/Wine_User%27s_Guide#DLL_Overrides
+procedure SetWineDllOverride(const DllName: String);
+begin
+  RegWriteStringValue(HKEY_CURRENT_USER, 'Software\Wine\DllOverrides', DllName, 'native,builtin');
+end;

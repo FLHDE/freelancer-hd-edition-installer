@@ -229,8 +229,13 @@ begin
           // Prevents the mouse from warping on some Wine setups. See https://gitlab.winehq.org/wine/wine/-/wikis/Useful-Registry-Keys
           RegWriteStringValue(HKEY_CURRENT_USER, 'Software\Wine\DirectInput', 'MouseWarpOverride', 'disable');
 
-          // Write d3d8 DLL override for Wine/Linux. For more information, see https://wiki.winehq.org/Wine_User%27s_Guide#DLL_Overrides
-          RegWriteStringValue(HKEY_CURRENT_USER, 'Software\Wine\DllOverrides', 'd3d8', 'native,builtin');
+          // Write DLL override(s) for Wine/Linux. For more information, see https://wiki.winehq.org/Wine_User%27s_Guide#DLL_Overrides
+          SetWineDllOverride('d3d8');
+
+          if DxWrapperGraphicsApi.Checked and DxWrapperReShade.Checked then
+            SetWineDllOverride('d3d9')
+          else if DgVoodooGraphicsApi.Checked and DgVoodooReShade.Checked then
+            SetWineDllOverride('dxgi');
         end;
 
         //UpdateProgress(95);
