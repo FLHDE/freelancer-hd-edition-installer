@@ -1522,20 +1522,25 @@ begin
   NewSaveFolder.Checked := False;
 
   // Determine best default startup resolution based on user's screen size
+  // TODO: Add 4:3 aspect ratio checks for selecting StartupRes and LogoRes options
   if DesktopRes.Height >= 2160 then
     StartupRes.Values[8] := True
   else if DesktopRes.Height >= 1440 then
     StartupRes.Values[6] := True
+  else if DesktopRes.Height >= 1080 then
+    StartupRes.Values[4] := True
   else
-    StartupRes.Values[4] := True;
+    StartupRes.Values[1] := True;
 
   // Determine best default logo resolution based on user's screen size
   if DesktopRes.Height >= 2160 then
     LogoRes.Values[9] := True
   else if DesktopRes.Height >= 1440 then
     LogoRes.Values[7] := True
+  else if DesktopRes.Height >= 1080 then
+    LogoRes.Values[5] := True
   else
-    LogoRes.Values[5] := True;
+    LogoRes.Values[3] := True;
 
   // Determine best small text fix based on user's screen size
   if DesktopRes.Height >= 2880 then
