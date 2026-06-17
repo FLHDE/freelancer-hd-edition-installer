@@ -48,14 +48,29 @@ begin
   AddInfoToMemoStr(MemoStr, Prefix + CheckBoxOption.Caption, NewLine, Space);
 end;
 
+procedure AddSelectedBoxOptionToMemo(var Memo: string; Caption: string; SelectedBoxOption: TComboBox; NewLine, Space: string);
+var
+  i: Integer;
+  ItemsArr: TArrayOfString;
+  MemoStr: String;
+begin
+  SetArrayLength(ItemsArr, SelectedBoxOption.Items.Count)
+  for i := 0 to SelectedBoxOption.Items.Count - 1 do
+    ItemsArr[i] := SelectedBoxOption.Items[i];
+
+  MemoStr := Caption + ':';
+  AddChosenOptionToMemoStr(MemoStr, ItemsArr, SelectedBoxOption.ItemIndex, NewLine, Space);
+  AddToReadyMemo(Memo, MemoStr, NewLine);
+end;
+
 // Called automatically when the Ready to Install wizard page becomes the active page.
 function UpdateReadyMemo(Space, NewLine, MemoUserInfoInfo, MemoDirInfo, MemoTypeInfo, MemoComponentsInfo, MemoGroupInfo, MemoTasksInfo: String): String;
 var
   i: Integer;
   VanillaDirStr, InstallationTypeStr, SinglePlayerIdCodeStr, GameplayStr, LocalizationStr, SinglePlayerStr, StartupScreenStr, LogoResStr, SmallTextStr,
-  AdvWideStr, CustomHudStr, FixClippingStr: string;
-  InstallTypeNameArr, SinglePlayerIdCodeArr, StoryModeNameArr, StartupScreenArr, LogoResArr, SmallTextArr, IconsArr: TArrayOfString;
-  InstallTypeSelectedIndex, IconsSelectedIndex: Integer; 
+  AdvWideStr, CustomHudStr, FixClippingStr, GraphicsRendererStr, GraphicsRendererOptStr: string;
+  InstallTypeNameArr, SinglePlayerIdCodeArr, StoryModeNameArr, StartupScreenArr, LogoResArr, SmallTextArr, IconsArr, GraphicsRendererArr, AfArr, AaArr: TArrayOfString;
+  InstallTypeSelectedIndex, IconsSelectedIndex, GraphicsRendererSelectedIndex, AaSelectedIndex, AfSelectedIndex: Integer;
 begin
   // If the express install option is checked, select the default options right before the memo page is shown.
   // Otherwise the selected options will be the ones that the user selected which may be different from the defaults.
@@ -189,7 +204,7 @@ begin
   CustomHudStr := PageDarkHud.Caption + ':';
   
   AddCheckedOptionToMemoStr(CustomHudStr, DarkHud, NewLine, Space);
-  
+
   IconsArr := [VanillaIcons.Caption, AlternativeIcons.Caption, FlatIcons.Caption];
   if VanillaIcons.Checked then
     IconsSelectedIndex := 0
@@ -207,7 +222,38 @@ begin
   // Fix clipping with 16:9 resolution planetscapes
   FixClippingStr := PagePlanetScape.Caption + ':';
   AddCheckedOptionToMemoStr(FixClippingStr, PlanetScape, NewLine, Space);
-  AddToReadyMemo(Result, FixClippingStr, '');
+  AddToReadyMemo(Result, FixClippingStr, NewLine);
+
+  // Graphics Renderer
+  GraphicsRendererStr := PageGraphicsApi.Caption + ':';
+  GraphicsRendererArr := [DgVoodooGraphicsApi.Caption, DxWrapperGraphicsApi.Caption, VanillaGraphicsApi.Caption];
+  if HasLightingBug then begin
+    SetLength(GraphicsRendererArr, Length(GraphicsRendererArr) + 1)
+    GraphicsRendererArr[3] := LightingFixGraphicsApi.Caption
+  end;
+
+  if DgVoodooGraphicsApi.Checked then
+    GraphicsRendererSelectedIndex := 0
+  else if DxWrapperGraphicsApi.Checked then
+    GraphicsRendererSelectedIndex := 1
+  else if VanillaGraphicsApi.Checked then
+    GraphicsRendererSelectedIndex := 2
+  else if HasLightingBug and LightingFixGraphicsApi.Checked then
+    GraphicsRendererSelectedIndex := 3;
+
+  AddChosenOptionToMemoStr(GraphicsRendererStr, GraphicsRendererArr, GraphicsRendererSelectedIndex, NewLine, Space);
+  AddToReadyMemo(Result, GraphicsRendererStr, NewLine);
+
+  // Graphics Renderer options
+  if DgVoodooGraphicsApi.Checked then begin
+    // dgVoodoo
+    AddSelectedBoxOptionToMemo(Result, lblDgVoodooAa.Caption, DgVoodooAa, NewLine, Space);
+    AddSelectedBoxOptionToMemo(Result, lblDgVoodooAf.Caption, DgVoodooAf, NewLine, Space);
+  end else if DxWrapperGraphicsApi.Checked then begin
   
+  end else if VanillaGraphicsApi.Checked then begin
   
+  end else if HasLightingBug and LightingFixGraphicsApi.Checked then begin
+
+  end;
 end;

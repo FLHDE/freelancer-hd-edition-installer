@@ -102,7 +102,7 @@ var
   PlanetScape: TCheckBox;
   descPlanetScape: TNewStaticText;
 
-  // Graphics API
+  // Graphics Renderer
   DxWrapperGraphicsApi: TRadioButton;
   DgVoodooGraphicsApi: TRadioButton;
   VanillaGraphicsApi: TRadioButton;
