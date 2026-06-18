@@ -48,22 +48,47 @@ begin
   AddInfoToMemoStr(MemoStr, Prefix + CheckBoxOption.Caption, NewLine, Space);
 end;
 
-procedure AddSelectedComboBoxOptionToMemo(var Memo: string; CaptionLabel: TLabel; ComboBoxOption: TComboBox; NewLine, Space: string);
+procedure AddChosenRadioOptionToMemoStr(var MemoStr: string; RadioButtons: array of TRadioButton; NewLine, Space: string);
+var
+  i, SelectedIndex: Integer;
+  StringsArr: TArrayOfString;
+  RadioButtonsLen: LongInt;
+begin
+  RadioButtonsLen := Length(RadioButtons);
+  SetArrayLength(StringsArr, RadioButtonsLen);
+
+  for i := 0 to RadioButtonsLen - 1 do begin
+    StringsArr[i] := RadioButtons[i].Caption
+
+    if RadioButtons[i].Checked then
+      SelectedIndex := i;
+  end;
+
+  AddChosenOptionToMemoStr(MemoStr, StringsArr, SelectedIndex, NewLine, Space);
+end;
+
+procedure AddChosenComboBoxOptionToMemoStr(var MemoStr: string; ComboBoxOption: TComboBox; NewLine, Space: string);
 var
   i: Integer;
   ItemsArr: TArrayOfString;
-  MemoStr: String;
 begin
   SetArrayLength(ItemsArr, ComboBoxOption.Items.Count)
   for i := 0 to ComboBoxOption.Items.Count - 1 do
     ItemsArr[i] := ComboBoxOption.Items[i];
 
-  MemoStr := CaptionLabel.Caption + ':';
   AddChosenOptionToMemoStr(MemoStr, ItemsArr, ComboBoxOption.ItemIndex, NewLine, Space);
+end;
+
+procedure AddChosenComboBoxOptionToMemo(var Memo: string; CaptionLabel: TLabel; ComboBoxOption: TComboBox; NewLine, Space: string);
+var
+  MemoStr: String;
+begin
+  MemoStr := CaptionLabel.Caption + ':';
+  AddChosenComboBoxOptionToMemoStr(MemoStr, ComboBoxOption, NewLine, Space);
   AddToReadyMemo(Memo, MemoStr, NewLine);
 end;
 
-procedure AddSelectedInputOptionToMemo(var Memo: string; InputPage: TInputOptionWizardPage; NewLine, Space: string);
+procedure AddChosenInputOptionToMemo(var Memo: string; InputPage: TInputOptionWizardPage; NewLine, Space: string);
 var
   i: Integer;
   ItemsArr: TArrayOfString;
@@ -84,7 +109,8 @@ var
   i: Integer;
   VanillaDirStr, InstallationTypeStr, SinglePlayerIdCodeStr, GameplayStr, LocalizationStr, SinglePlayerStr, StartupScreenStr, LogoResStr, SmallTextStr,
   AdvWideStr, CustomHudStr, FixClippingStr, GraphicsRendererStr, GraphicsRendererOptStr: string;
-  InstallTypeNameArr, SinglePlayerIdCodeArr, StoryModeNameArr, StartupScreenArr, LogoResArr, SmallTextArr, IconsArr, GraphicsRendererArr, AfArr, AaArr: TArrayOfString;
+  InstallTypeNameArr, SinglePlayerIdCodeArr, StoryModeNameArr, StartupScreenArr, LogoResArr, SmallTextArr, GraphicsRendererArr, AfArr, AaArr: TArrayOfString;
+  IconsArr: array of TRadioButton;
   InstallTypeSelectedIndex, IconsSelectedIndex, GraphicsRendererSelectedIndex, AaSelectedIndex, AfSelectedIndex: Integer;
 begin
   // If the express install option is checked, select the default options right before the memo page is shown.
@@ -113,17 +139,8 @@ begin
 
   // Add all our custom options to the memo.
   // Installation type
-  InstallTypeNameArr := [ExpressInstall.Caption, CustomInstall.Caption, BasicInstall.Caption];
-
-  if ExpressInstall.Checked then
-    InstallTypeSelectedIndex := 0
-  else if CustomInstall.Checked then
-    InstallTypeSelectedIndex := 1
-  else if BasicInstall.Checked then
-    InstallTypeSelectedIndex := 2;
-
   InstallationTypeStr := PageInstallType.Caption + ':';
-  AddChosenOptionToMemoStr(InstallationTypeStr, InstallTypeNameArr, InstallTypeSelectedIndex, NewLine, Space);
+  AddChosenRadioOptionToMemoStr(InstallationTypeStr, [ExpressInstall, CustomInstall, BasicInstall], NewLine, Space);
   
   // If the user chose a basic install, then the installer doesn't change the default selection of the options.
   // Instead, it simply makes it so that the options won't be applied.
@@ -136,7 +153,7 @@ begin
     AddToReadyMemo(Result, InstallationTypeStr, NewLine);
 
   // Single Player ID Code
-  AddSelectedInputOptionToMemo(Result, CallSign, NewLine, Space);
+  AddChosenInputOptionToMemo(Result, CallSign, NewLine, Space);
 
   // Gameplay customization
   GameplayStr := GameplayOptions.Caption + ':';
@@ -158,10 +175,8 @@ begin
   
   
   // Single Player options
-  StoryModeNameArr := [StoryMode.Items[0], StoryMode.Items[1], StoryMode.Items[2]];
-  
   SinglePlayerStr := PageSinglePlayer.Caption + ':';
-  AddChosenOptionToMemoStr(SinglePlayerStr, StoryModeNameArr, StoryMode.ItemIndex, NewLine, Space);
+  AddChosenComboBoxOptionToMemoStr(SinglePlayerStr, StoryMode, NewLine, Space)
   AddCheckedOptionToMemoStr(SinglePlayerStr, LevelRequirements, NewLine, Space);
   AddCheckedOptionToMemoStr(SinglePlayerStr, NewSaveFolder, NewLine, Space);
   
@@ -169,13 +184,13 @@ begin
   
   
   // Startup Screen Resolution
-  AddSelectedInputOptionToMemo(Result, StartupRes, NewLine, Space);
+  AddChosenInputOptionToMemo(Result, StartupRes, NewLine, Space);
 
   // Freelancer Logo Resolution
-  AddSelectedInputOptionToMemo(Result, LogoRes, NewLine, Space);
+  AddChosenInputOptionToMemo(Result, LogoRes, NewLine, Space);
   
   // Fix small text on larger resolutions
-  AddSelectedInputOptionToMemo(Result, SmallText, NewLine, Space);
+  AddChosenInputOptionToMemo(Result, SmallText, NewLine, Space);
   
   
   // Advanced Widescreen HUD
@@ -193,15 +208,7 @@ begin
   
   AddCheckedOptionToMemoStr(CustomHudStr, DarkHud, NewLine, Space);
 
-  IconsArr := [VanillaIcons.Caption, AlternativeIcons.Caption, FlatIcons.Caption];
-  if VanillaIcons.Checked then
-    IconsSelectedIndex := 0
-  else if AlternativeIcons.Checked then
-    IconsSelectedIndex := 1
-  else if FlatIcons.Checked then
-    IconsSelectedIndex := 2;
-    
-  AddChosenOptionToMemoStr(CustomHudStr, IconsArr, IconsSelectedIndex, NewLine, Space);
+  AddChosenRadioOptionToMemoStr(CustomHudStr, [VanillaIcons, AlternativeIcons, FlatIcons], NewLine, Space);
   
   AddCheckedOptionToMemoStr(CustomHudStr, CustomNavMap, NewLine, Space);
   AddToReadyMemo(Result, CustomHudStr, NewLine);
@@ -235,8 +242,8 @@ begin
   // Graphics Renderer options
   if DgVoodooGraphicsApi.Checked then begin
     // dgVoodoo
-    AddSelectedComboBoxOptionToMemo(Result, lblDgVoodooAa, DgVoodooAa, NewLine, Space);
-    AddSelectedComboBoxOptionToMemo(Result, lblDgVoodooAf, DgVoodooAf, NewLine, Space);
+    AddChosenComboBoxOptionToMemo(Result, lblDgVoodooAa, DgVoodooAa, NewLine, Space);
+    AddChosenComboBoxOptionToMemo(Result, lblDgVoodooAf, DgVoodooAf, NewLine, Space);
   end else if DxWrapperGraphicsApi.Checked then begin
   
   end else if VanillaGraphicsApi.Checked then begin
