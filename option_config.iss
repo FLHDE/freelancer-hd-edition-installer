@@ -106,12 +106,10 @@ end;
 // Called automatically when the Ready to Install wizard page becomes the active page.
 function UpdateReadyMemo(Space, NewLine, MemoUserInfoInfo, MemoDirInfo, MemoTypeInfo, MemoComponentsInfo, MemoGroupInfo, MemoTasksInfo: String): String;
 var
-  i: Integer;
-  VanillaDirStr, InstallationTypeStr, SinglePlayerIdCodeStr, GameplayStr, LocalizationStr, SinglePlayerStr, StartupScreenStr, LogoResStr, SmallTextStr,
-  AdvWideStr, CustomHudStr, FixClippingStr, GraphicsRendererStr, GraphicsRendererOptStr: string;
-  InstallTypeNameArr, SinglePlayerIdCodeArr, StoryModeNameArr, StartupScreenArr, LogoResArr, SmallTextArr, GraphicsRendererArr, AfArr, AaArr: TArrayOfString;
-  IconsArr: array of TRadioButton;
-  InstallTypeSelectedIndex, IconsSelectedIndex, GraphicsRendererSelectedIndex, AaSelectedIndex, AfSelectedIndex: Integer;
+  VanillaDirStr, InstallationTypeStr, GameplayStr, LocalizationStr, SinglePlayerStr,
+  AdvWideStr, CustomHudStr, FixClippingStr, GraphicsRendererStr, DgVoodooRefreshRateStr, ReShadeStr: string;
+  GraphicsRendererArr: TArrayOfString;
+  GraphicsRendererSelectedIndex: Integer;
 begin
   // If the express install option is checked, select the default options right before the memo page is shown.
   // Otherwise the selected options will be the ones that the user selected which may be different from the defaults.
@@ -241,14 +239,51 @@ begin
 
   // Graphics Renderer options
   if DgVoodooGraphicsApi.Checked then begin
-    // dgVoodoo
+    // dgVoodoo AA & AF
     AddChosenComboBoxOptionToMemo(Result, lblDgVoodooAa, DgVoodooAa, NewLine, Space);
     AddChosenComboBoxOptionToMemo(Result, lblDgVoodooAf, DgVoodooAf, NewLine, Space);
-  end else if DxWrapperGraphicsApi.Checked then begin
-  
-  end else if VanillaGraphicsApi.Checked then begin
-  
-  end else if HasLightingBug and LightingFixGraphicsApi.Checked then begin
 
+    // dgVoodoo Refresh Rate
+    if GpuManufacturer = AMDOrOther then begin
+      DgVoodooRefreshRateStr := lblDgVoodooRefreshRate.Caption + ':';
+      AddInfoToMemoStr(DgVoodooRefreshRateStr, DgVoodooRefreshRate.Text + ' ' + lblDgVoodooRefreshRateHz.Caption, NewLine, Space);
+      AddToReadyMemo(Result, DgVoodooRefreshRateStr, NewLine);
+    end;
+
+    // dgVoodoo ReShade
+    ReShadeStr := DgVoodooPage.Caption + ':';
+    AddCheckedOptionToMemoStr(ReShadeStr, DgVoodooReShade, NewLine, Space);
+
+    // dgVoodoo ReShade shaders
+    if DgVoodooReShade.Checked then begin
+      AddCheckedOptionToMemoStr(ReShadeStr, DgVoodooSaturation, NewLine, Space);
+      AddCheckedOptionToMemoStr(ReShadeStr, DgVoodooSharpening, NewLine, Space);
+      AddCheckedOptionToMemoStr(ReShadeStr, DgVoodooHdr, NewLine, Space);
+      AddCheckedOptionToMemoStr(ReShadeStr, DgVoodooBloom, NewLine, Space);
+    end;
+
+    AddToReadyMemo(Result, ReShadeStr, NewLine);
+  end else if DxWrapperGraphicsApi.Checked then begin
+    // DxWrapper AA & AF
+    AddChosenComboBoxOptionToMemo(Result, lblDxWrapperAa, DxWrapperAa, NewLine, Space);
+    AddChosenComboBoxOptionToMemo(Result, lblDxWrapperAf, DxWrapperAf, NewLine, Space);
+
+    // DxWrapper ReShade
+    ReShadeStr := DxWrapperPage.Caption + ':';
+    AddCheckedOptionToMemoStr(ReShadeStr, DxWrapperReShade, NewLine, Space);
+
+    // DxWrapper ReShade shaders
+    if DxWrapperReShade.Checked then begin
+      AddCheckedOptionToMemoStr(ReShadeStr, DxWrapperSaturation, NewLine, Space);
+      AddCheckedOptionToMemoStr(ReShadeStr, DxWrapperSharpening, NewLine, Space);
+      AddCheckedOptionToMemoStr(ReShadeStr, DxWrapperHdr, NewLine, Space);
+      AddCheckedOptionToMemoStr(ReShadeStr, DxWrapperBloom, NewLine, Space);
+    end;
+
+    AddToReadyMemo(Result, ReShadeStr, NewLine);
+  end else if (VanillaGraphicsApi.Checked) or (HasLightingBug and LightingFixGraphicsApi.Checked) then begin
+    // Vanilla and Lighting Fix AA & AF
+    AddChosenComboBoxOptionToMemo(Result, lblVanillaAa, VanillaAa, NewLine, Space);
+    AddChosenComboBoxOptionToMemo(Result, lblVanillaAf, VanillaAf, NewLine, Space);
   end;
 end;
