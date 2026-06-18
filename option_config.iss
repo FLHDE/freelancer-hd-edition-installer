@@ -48,18 +48,33 @@ begin
   AddInfoToMemoStr(MemoStr, Prefix + CheckBoxOption.Caption, NewLine, Space);
 end;
 
-procedure AddSelectedBoxOptionToMemo(var Memo: string; Caption: string; SelectedBoxOption: TComboBox; NewLine, Space: string);
+procedure AddSelectedComboBoxOptionToMemo(var Memo: string; CaptionLabel: TLabel; ComboBoxOption: TComboBox; NewLine, Space: string);
 var
   i: Integer;
   ItemsArr: TArrayOfString;
   MemoStr: String;
 begin
-  SetArrayLength(ItemsArr, SelectedBoxOption.Items.Count)
-  for i := 0 to SelectedBoxOption.Items.Count - 1 do
-    ItemsArr[i] := SelectedBoxOption.Items[i];
+  SetArrayLength(ItemsArr, ComboBoxOption.Items.Count)
+  for i := 0 to ComboBoxOption.Items.Count - 1 do
+    ItemsArr[i] := ComboBoxOption.Items[i];
 
-  MemoStr := Caption + ':';
-  AddChosenOptionToMemoStr(MemoStr, ItemsArr, SelectedBoxOption.ItemIndex, NewLine, Space);
+  MemoStr := CaptionLabel.Caption + ':';
+  AddChosenOptionToMemoStr(MemoStr, ItemsArr, ComboBoxOption.ItemIndex, NewLine, Space);
+  AddToReadyMemo(Memo, MemoStr, NewLine);
+end;
+
+procedure AddSelectedInputOptionToMemo(var Memo: string; InputPage: TInputOptionWizardPage; NewLine, Space: string);
+var
+  i: Integer;
+  ItemsArr: TArrayOfString;
+  MemoStr: String;
+begin
+  SetArrayLength(ItemsArr, InputPage.CheckListBox.Items.Count)
+  for i := 0 to InputPage.CheckListBox.Items.Count - 1 do
+    ItemsArr[i] := InputPage.CheckListBox.Items[i];
+
+  MemoStr := InputPage.Caption + ':';
+  AddChosenOptionToMemoStr(MemoStr, ItemsArr, InputPage.SelectedValueIndex, NewLine, Space);
   AddToReadyMemo(Memo, MemoStr, NewLine);
 end;
 
@@ -121,15 +136,8 @@ begin
     AddToReadyMemo(Result, InstallationTypeStr, NewLine);
 
   // Single Player ID Code
-  SetArrayLength(SinglePlayerIdCodeArr, CallSign.CheckListBox.Items.Count)
-  for i := 0 to CallSign.CheckListBox.Items.Count - 1 do
-    SinglePlayerIdCodeArr[i] := CallSign.CheckListBox.Items[i];
-  
-  SinglePlayerIdCodeStr := CallSign.Caption + ':';
-  AddChosenOptionToMemoStr(SinglePlayerIdCodeStr, SinglePlayerIdCodeArr, CallSign.SelectedValueIndex, NewLine, Space);
-  AddToReadyMemo(Result, SinglePlayerIdCodeStr, NewLine);
-  
-  
+  AddSelectedInputOptionToMemo(Result, CallSign, NewLine, Space);
+
   // Gameplay customization
   GameplayStr := GameplayOptions.Caption + ':';
   
@@ -161,33 +169,13 @@ begin
   
   
   // Startup Screen Resolution
-  SetArrayLength(StartupScreenArr, StartupRes.CheckListBox.Items.Count)
-  for i := 0 to StartupRes.CheckListBox.Items.Count - 1 do
-    StartupScreenArr[i] := StartupRes.CheckListBox.Items[i];
-  
-  StartupScreenStr := StartupRes.Caption + ':';
-  AddChosenOptionToMemoStr(StartupScreenStr, StartupScreenArr, StartupRes.SelectedValueIndex, NewLine, Space);
-  AddToReadyMemo(Result, StartupScreenStr, NewLine);
-  
-  
+  AddSelectedInputOptionToMemo(Result, StartupRes, NewLine, Space);
+
   // Freelancer Logo Resolution
-  SetArrayLength(LogoResArr, LogoRes.CheckListBox.Items.Count)
-  for i := 0 to LogoRes.CheckListBox.Items.Count - 1 do
-    LogoResArr[i] := LogoRes.CheckListBox.Items[i];
-  
-  LogoResStr := LogoRes.Caption + ':';
-  AddChosenOptionToMemoStr(LogoResStr, LogoResArr, LogoRes.SelectedValueIndex, NewLine, Space);
-  AddToReadyMemo(Result, LogoResStr, NewLine);
-  
+  AddSelectedInputOptionToMemo(Result, LogoRes, NewLine, Space);
   
   // Fix small text on larger resolutions
-  SetArrayLength(SmallTextArr, SmallText.CheckListBox.Items.Count)
-  for i := 0 to SmallText.CheckListBox.Items.Count - 1 do
-    SmallTextArr[i] := SmallText.CheckListBox.Items[i];
-  
-  SmallTextStr := SmallText.Caption + ':';
-  AddChosenOptionToMemoStr(SmallTextStr, SmallTextArr, SmallText.SelectedValueIndex, NewLine, Space);
-  AddToReadyMemo(Result, SmallTextStr, NewLine);
+  AddSelectedInputOptionToMemo(Result, SmallText, NewLine, Space);
   
   
   // Advanced Widescreen HUD
@@ -247,8 +235,8 @@ begin
   // Graphics Renderer options
   if DgVoodooGraphicsApi.Checked then begin
     // dgVoodoo
-    AddSelectedBoxOptionToMemo(Result, lblDgVoodooAa.Caption, DgVoodooAa, NewLine, Space);
-    AddSelectedBoxOptionToMemo(Result, lblDgVoodooAf.Caption, DgVoodooAf, NewLine, Space);
+    AddSelectedComboBoxOptionToMemo(Result, lblDgVoodooAa, DgVoodooAa, NewLine, Space);
+    AddSelectedComboBoxOptionToMemo(Result, lblDgVoodooAf, DgVoodooAf, NewLine, Space);
   end else if DxWrapperGraphicsApi.Checked then begin
   
   end else if VanillaGraphicsApi.Checked then begin
