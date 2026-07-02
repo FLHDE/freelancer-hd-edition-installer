@@ -237,7 +237,13 @@ begin
 
     // Changes the IDS of the insufficient reputation message for ships to an IDS in hderesources.dll with a custom message.
     WriteHexToFile(TextStringsPath + 'Freelancer.exe', $0B9011, '1E000700'); // 1E000700 = 458782 in hexadecimal
-    end;
+    end
+  else begin
+    // If the English fixes are not enabled, disable some plugins which add English text to not confuse players with non-English installs.
+    FileReplaceString(ExpandConstant('{app}\EXE\dacom.ini'), 'Zone.dll', ';Zone.dll')
+    FileReplaceString(ExpandConstant('{app}\EXE\dacom.ini'), 'Territory.dll', ';Territory.dll')
+    FileReplaceString(ExpandConstant('{app}\EXE\dacom.ini'), 'ranks.dll', ';ranks.dll')
+  end;
 end;
 
 procedure EnableOpenSP(FileName: string);
