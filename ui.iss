@@ -1351,12 +1351,15 @@ begin
   descSkipIntros.Top := descJumpTunnelDuration.Top + ScaleY(60);
   descSkipIntros.Width := PageSkips.SurfaceWidth;
   descSkipIntros.Caption := 'This option skips the 3 movies that play when the game starts, which include the Microsoft logo, Digital Anvil logo, and Freelancer intro.';
+  if IsWine then
+    descSkipIntros.Caption := descSkipIntros.Caption + ' Unfortunately, these movies do not work on Wine.';
   
   SkipIntros := TCheckBox.Create(PageSkips);
   SkipIntros.Parent := PageSkips.Surface;
   SkipIntros.Top := descJumpTunnelDuration.Top + ScaleY(40);
   SkipIntros.Caption := 'Skip startup intros';
   SkipIntros.Width := PageSkips.SurfaceWidth - ScaleX(8);
+  SkipIntros.Enabled := not IsWine;
 
   descSkippableCutscenes := TNewStaticText.Create(PageSkips);
   descSkippableCutscenes.Parent := PageSkips.Surface;
