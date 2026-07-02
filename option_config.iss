@@ -107,7 +107,7 @@ end;
 function UpdateReadyMemo(Space, NewLine, MemoUserInfoInfo, MemoDirInfo, MemoTypeInfo, MemoComponentsInfo, MemoGroupInfo, MemoTasksInfo: String): String;
 var
   VanillaDirStr, InstallationTypeStr, GameplayStr, LocalizationStr, SinglePlayerStr,
-  AdvWideStr, CustomHudStr, FixClippingStr, GraphicsRendererStr, DgVoodooRefreshRateStr, ReShadeStr: string;
+  AdvWideStr, CustomHudStr, FixClippingStr, GraphicsRendererStr, DgVoodooRefreshRateStr, ReShadeStr, CustomEffectsStr, SkipsStr, MiscStr: string;
   GraphicsRendererArr: TArrayOfString;
   GraphicsRendererSelectedIndex: Integer;
 begin
@@ -174,7 +174,7 @@ begin
   
   // Single Player options
   SinglePlayerStr := PageSinglePlayer.Caption + ':';
-  AddChosenComboBoxOptionToMemoStr(SinglePlayerStr, StoryMode, NewLine, Space)
+  AddChosenComboBoxOptionToMemoStr(SinglePlayerStr, StoryMode, NewLine, Space);
   AddCheckedOptionToMemoStr(SinglePlayerStr, LevelRequirements, NewLine, Space);
   AddCheckedOptionToMemoStr(SinglePlayerStr, NewSaveFolder, NewLine, Space);
   
@@ -286,4 +286,50 @@ begin
     AddChosenComboBoxOptionToMemo(Result, lblVanillaAa, VanillaAa, NewLine, Space);
     AddChosenComboBoxOptionToMemo(Result, lblVanillaAf, VanillaAf, NewLine, Space);
   end;
+
+  // Add custom effects
+  CustomEffectsStr := PageEffects.Caption + ':';
+
+  AddChosenRadioOptionToMemoStr(CustomEffectsStr, [VanillaReflections, ShinyReflections, ShiniestReflections], NewLine, Space);
+
+  AddCheckedOptionToMemoStr(CustomEffectsStr, ExplosionEffects, NewLine, Space);
+  AddCheckedOptionToMemoStr(CustomEffectsStr, MissileEffects, NewLine, Space);
+
+  AddCheckedOptionToMemoStr(CustomEffectsStr, EngineTrails, NewLine, Space);
+
+  AddToReadyMemo(Result, CustomEffectsStr, NewLine);
+
+
+  // Adjust draw distances
+  AddChosenComboBoxOptionToMemo(Result, lblGeneralDrawDistances, GeneralDrawDistances, NewLine, Space);
+  AddChosenComboBoxOptionToMemo(Result, lblEffectDrawDistances, EffectDrawDistances, NewLine, Space);
+  AddChosenComboBoxOptionToMemo(Result, lblCharacterDrawDistances, CharacterDrawDistances, NewLine, Space);
+
+
+  // Skippable options
+  SkipsStr := PageSkips.Caption + ':';
+
+  AddChosenRadioOptionToMemoStr(SkipsStr, [JumpTunnel10Sec, JumpTunnel5Sec, JumpTunnel2Sec, JumpTunnelSkip], NewLine, Space);
+
+  AddCheckedOptionToMemoStr(SkipsStr, SkipIntros, NewLine, Space);
+  AddCheckedOptionToMemoStr(SkipsStr, SkippableCutscenes, NewLine, Space);
+
+  AddToReadyMemo(Result, SkipsStr, NewLine);
+
+
+  // Misc options
+  MiscStr := PageMiscOptions.Caption + ':';
+
+  AddCheckedOptionToMemoStr(MiscStr, SinglePlayer, NewLine, Space);
+  AddCheckedOptionToMemoStr(MiscStr, BestOptions, NewLine, Space);
+
+  AddChosenComboBoxOptionToMemoStr(MiscStr, DisplayMode, NewLine, Space);
+
+  AddCheckedOptionToMemoStr(MiscStr, DoNotPauseOnAltTab, NewLine, Space);
+
+  if DoNotPauseOnAltTab.Checked and MusicInBackground then
+    AddInfoToMemoStr(MiscStr, 'Play Freelancer audio in the background when Alt-Tabbed', NewLine, Space);
+
+  AddToReadyMemo(Result, MiscStr, '');
+
 end;
