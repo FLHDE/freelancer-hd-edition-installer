@@ -1,5 +1,5 @@
 # Freelancer: HD Edition Installer
-[![Discord](https://badgen.net/badge/icon/discord?icon=discord&label)](https://discord.gg/ScqgYuFqmU)
+[![Discord](https://badgen.net/badge/icon/discord?icon=discord&label)](https://discord.gg/HkAeTaFVQk)
 [![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://GitHub.com/FLHDE/freelancer-hd-edition-installer/graphs/commit-activity)
 
 This is the installer for [Freelancer: HD Edition](https://github.com/FLHDE/freelancer-hd-edition). It was created using Inno Setup with the help of custom Pascal scripting.
