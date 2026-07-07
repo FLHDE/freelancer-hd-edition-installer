@@ -177,15 +177,14 @@ end;
 
 procedure Process_EnglishImprovements();
 var
-  FreelancerIntroPath: string;
-  TextStringsPath: string;
-  AudioPath: string;
+  FreelancerIntroPath, TextStringsPath, AudioPath, EquipmentPath: string;
 begin
   if EnglishImprovements.Checked then
     begin
     FreelancerIntroPath := ExpandConstant('{app}\DATA\MOVIES\')
     TextStringsPath := ExpandConstant('{app}\EXE\')
     AudioPath := ExpandConstant('{app}\DATA\AUDIO\')
+    EquipmentPath := ExpandConstant('{app}\DATA\EQUIPMENT\')
 
     // Rename vanilla intro
     RenameFileSafe(FreelancerIntroPath + 'fl_intro.wmv', FreelancerIntroPath + 'fl_intro_vanilla.wmv')
@@ -237,6 +236,9 @@ begin
 
     // Changes the IDS of the insufficient reputation message for ships to an IDS in hderesources.dll with a custom message.
     WriteHexToFile(TextStringsPath + 'Freelancer.exe', $0B9011, '1E000700'); // 1E000700 = 458782 in hexadecimal
+
+    // Changes the name of the cargo pods as seen in the Target View window from "Cargo Space" to "Cargo Pod"
+    FileReplaceString(EquipmentPath + 'select_equip.ini', 'ids_name = 1083', 'ids_name = 458812')
     end
   else begin
     // If the English fixes are not enabled, disable some plugins which add English text to not confuse players with non-English installs.
