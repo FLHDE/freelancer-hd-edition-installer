@@ -3,7 +3,7 @@
 function GetIsWine: boolean;
 var  LibHandle  : THandle;
 begin
-  LibHandle := LoadLibraryA('ntdll.dll');
+  LibHandle := GetModuleHandleA('ntdll.dll');
   Result := GetProcAddress(LibHandle, 'wine_get_version') <> 0;
 end;
 
