@@ -22,7 +22,7 @@ This is the installer for [Freelancer: HD Edition](https://github.com/FLHDE/free
 
 Note that the online and offline mode is a legacy feature that is no longer supported. The code for it is present but it has not been maintained after the release of v0.6 so there is no guarantee that it will still work.
 
-## Programs used
+## External software used
 ### [7-Zip executable](https://www.7-zip.org/download.html)
 7-Zip is licensed under the GNU LGPL license. www.7-zip.org.
 
