@@ -270,7 +270,7 @@ end;
 // Various logic to be applied when the user clicks on the Next button.
 function NextButtonClick(PageId: Integer): Boolean;
 var
-  i : Integer;
+  i, RefreshRateInt: Integer;
   RefreshRateError: String;
 begin
     Result := True;
@@ -281,14 +281,6 @@ begin
         + #13#10#13#10 + 'Note that the DxWrapper graphics renderer from the previous page does not require you to set a refresh rate manually.'
 
       // dgVoodoo options page refresh rate validation
-      // Checks if the input is a valid number between 30 and 3840
-      if (StrToInt(DgVoodooRefreshRate.Text) < 30) or (StrToInt(DgVoodooRefreshRate.Text) > 3840) then
-        begin
-          MsgBox(RefreshRateError, mbError, MB_OK);
-          Result := False;
-          Exit;
-        end;
-
       // Checks if the input consists entirely of digits
       for i := 1 to Length(DgVoodooRefreshRate.Text) do
       begin
@@ -299,6 +291,15 @@ begin
           Exit;
         end;
       end;
+
+      // Checks if the input is a valid number between 30 and 3840
+      RefreshRateInt := StrToInt(DgVoodooRefreshRate.Text);
+      if (RefreshRateInt < 30) or (RefreshRateInt > 3840) then
+        begin
+          MsgBox(RefreshRateError, mbError, MB_OK);
+          Result := False;
+          Exit;
+        end;
     end;
 
     // If the user has selected the "do not pause on Alt-Tab" option, ask them if they want the game audio to continue playing in the background too.

@@ -1286,7 +1286,7 @@ var
   RefreshRateBinary: string;
   RefreshRateInt: Integer;
 begin
-  RefreshRateInt := StrToInt(DgVoodooRefreshRate.Text)
+  RefreshRateInt := StrToIntDef(DgVoodooRefreshRate.Text, 60);
 
   if DgVoodooAa.ItemIndex = 1 then
     // Enable AA 2x
