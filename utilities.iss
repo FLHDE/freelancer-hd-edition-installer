@@ -45,6 +45,9 @@ var
 begin
   Attr := GetFileAttributes(FileName);
 
+  if Attr = INVALID_FILE_ATTRIBUTES then
+    exit;
+
   if (Attr and 1) = 1 then
   begin
     Attr := Attr -1;

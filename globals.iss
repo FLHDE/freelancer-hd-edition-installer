@@ -3,6 +3,7 @@ const
   WAIT_TIMEOUT = $00000102;
   SEE_MASK_NOCLOSEPROCESS = $00000040;
   INFINITE = $FFFFFFFF;
+  INVALID_FILE_ATTRIBUTES = $FFFFFFFF;
   PM_REMOVE = 1;
 
 // Used to store values used across numerous files and functions so they don't have to be requested multiple times

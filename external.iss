@@ -1,7 +1,7 @@
 [Code]
 // Used to detect if the user is using WINE or not
-function LoadLibraryA(lpLibFileName: PAnsiChar): THandle;
-  external 'LoadLibraryA@kernel32.dll stdcall';
+function GetModuleHandleA(lpLibFileName: PAnsiChar): THandle;
+  external 'GetModuleHandleA@kernel32.dll stdcall';
 
 function GetProcAddress(Module: THandle; ProcName: PAnsiChar): Longword;
   external 'GetProcAddress@kernel32.dll stdcall';
