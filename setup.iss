@@ -346,7 +346,7 @@ begin
     // Validate install location
     if (PageId = 6) then begin
       // Needs to be in a seperate if statement since it tries to expand {app} even if not on PageID 6. Pascal what are you doing?!
-      if(Pos(AddBackslash(DataDirPage.Values[0]),ExpandConstant('{app}')) > 0) then begin
+      if (Pos(AddBackslash(DataDirPage.Values[0]), AddBackslash(ExpandConstant('{app}'))) > 0) then begin
         MsgBox('{#MyModName} cannot be installed to the same location as your vanilla install. Please select a new location.', mbError, MB_OK);
         Result := False;
         exit;
