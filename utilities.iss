@@ -375,13 +375,6 @@ begin
   end;
 end;
 
-// Used to remove an unwanted byte order mark in a file.
-// Calls an external program to take care of that.
-function RemoveBOM(const FileName: String): Boolean;
-begin
-  Result := ShellExecuteAsync(ExpandConstant('{tmp}\utf-8-bom-remover.exe'), Format('"%s"', [FileName]));
-end;
-
 // Whether the given char is a digit
 function IsDigit(C: Char): Boolean;
 begin

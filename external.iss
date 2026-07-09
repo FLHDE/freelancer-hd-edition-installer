@@ -48,8 +48,13 @@ function GetDeviceCaps(hDC, nIndex: Integer): Integer;
  external 'GetDeviceCaps@GDI32 stdcall';
 
 // Used to convert a binary expression in string format to an actual binary stream
-function ConvertHexToBinary(hexString: string; hexLength: LongWord; binaryString: AnsiString): Boolean;
+function ConvertHexToBinary(const hexString: string; hexLength: LongWord; binaryString: AnsiString): Boolean;
   external 'ConvertHexToBinary@files:HexToBinary.dll cdecl setuponly delayload';
+
+// Used to remove an unwanted byte order mark in a file.
+// Calls an external program to take care of that.
+procedure RemoveUtf8Bom(const FileName: String);
+  external 'RemoveUtf8Bom@files:lib-utf-8-bom-remover.dll cdecl setuponly delayload';
 
 // Use Windows function to convert date modified to a useable format
 function FileTimeToSystemTime(

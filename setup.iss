@@ -82,7 +82,7 @@ Source: "Assets\Fonts\AGENCYR_CR.TTF"; DestDir: "{autofonts}"; FontInstall: "Age
 Source: "Assets\Fonts\ARIALUNI.TTF"; DestDir: "{autofonts}"; FontInstall: "Arial Unicode MS"; Flags: onlyifdoesntexist uninsneveruninstall
 Source: "Assets\External\7za.exe"; DestDir: "{tmp}"; Flags: deleteafterinstall;
 Source: "Assets\External\dircpy.exe"; DestDir: "{tmp}"; Flags: deleteafterinstall;
-Source: "Assets\External\utf-8-bom-remover.exe"; DestDir: "{tmp}"; Flags: deleteafterinstall;
+Source: "Assets\External\lib-utf-8-bom-remover.dll"; DestDir: "{tmp}"; Flags: deleteafterinstall;
 Source: "Assets\External\HexToBinary.dll"; Flags: dontcopy;
 Source: "Assets\External\{#VcRedistName}"; DestDir: {tmp}; Flags: dontcopy
 # if AllInOneInstall
@@ -223,7 +223,7 @@ begin
         begin
           // Delete potential UTF-8 BOM headers in all edited config files. May not work properly on Wine.
           for i := 0 to EditedConfigFiles.Count - 1 do
-            RemoveBOM(EditedConfigFiles[i]);
+            RemoveUtf8Bom(EditedConfigFiles[i]);
         end else
         begin
           // Prevents the mouse from warping on some Wine setups. See https://gitlab.winehq.org/wine/wine/-/wikis/Useful-Registry-Keys
