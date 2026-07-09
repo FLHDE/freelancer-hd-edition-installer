@@ -169,7 +169,7 @@ begin
 
             // Copy mod files
             WizardForm.StatusLabel.Caption := 'Relocating {#MyAppName} files...';
-            TryDirectoryCopyAsync(ExpandConstant('{app}\{#MyFolderName}'),ExpandConstant('{app}'), True, False);
+            TryDirectoryCopyAsync(ExpandConstant('{app}\{#MyFolderName}'), ExpandConstant('{app}'), True, False);
 
             DelTree(ExpandConstant('{app}\{#MyFolderName}'), True, True, True);
         # endif
@@ -333,7 +333,7 @@ begin
       // If the installer is being run from the same directory as the vanilla Freelancer directory, the installation will fail because the running installer cannot be copied.
       // This checks if the active installer has been ran from any directory inside the selected vanilla Freelancer folder.
       // No issues occur when Freelancer from the vanilla directory is running, so no need to check for that.
-      if Pos(DataDirPage.Values[0], GetCurrentDir()) > 0 then begin
+      if Pos(AddBackslash(DataDirPage.Values[0]), AddBackslash(ExpandConstant('{src}'))) > 0 then begin
         MsgBox('The {#MyAppName} installer is located in the same directory as the vanilla Freelancer directory. This would cause the installation to fail because this file cannot be copied.' + #13#10 + #13#10
           + 'Please close the {#MyAppName} installer, move the installer .exe file to a directory outside your vanilla Freelancer installation and try again.', mbError, MB_OK);
         Result := False;
