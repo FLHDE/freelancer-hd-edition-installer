@@ -54,6 +54,7 @@ var
   StringsArr: TArrayOfString;
   RadioButtonsLen: LongInt;
 begin
+  SelectedIndex := 0;
   RadioButtonsLen := Length(RadioButtons);
   SetArrayLength(StringsArr, RadioButtonsLen);
 
