@@ -756,7 +756,7 @@ begin
       RenameFileSafe(EXEPath + 'dgVoodooCpl_new.7z', EXEPath + 'dgVoodooCpl.7z')
     end;
   end
-  else if HasLightingBug and LightingFixGraphicsApi.Checked then
+  else if IsLightingFixChecked then
     RenameFileSafe(EXEPath + 'd3d8_legacy.dll', EXEPath + 'd3d8.dll')
   else if HasLightingBug and VanillaGraphicsApi.Checked then
     FileReplaceString(EXEPath + 'dacom.ini', ';LightingBugFix.dll', 'LightingBugFix.dll') // native standalone lighting bug fix
@@ -1430,10 +1430,7 @@ var
   Rp8Path: string;
 begin
   // Do not apply anything if neither the Vanilla graphics API nor the Lighting fix graphics API has been selected
-  if HasLightingBug and (not VanillaGraphicsApi.Checked) and (not LightingFixGraphicsApi.Checked) then
-    exit;
-
-  if (not HasLightingBug) and (not VanillaGraphicsApi.Checked) then
+  if (not VanillaGraphicsApi.Checked) and (not IsLightingFixChecked) then
     exit;
 
   Rp8Path := ExpandConstant('{app}\EXE\rp8.dll');

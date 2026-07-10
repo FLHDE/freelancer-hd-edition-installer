@@ -251,6 +251,13 @@ begin
   begin
     Key := #0;
   end;
+end;
+
+function IsLightingFixChecked: Boolean;
+begin
+  Result := False;
+  if HasLightingBug then
+    Result := LightingFixGraphicsApi.Checked;
 end;        
 
 // Ensures the DxWrapper or dgVoodoo pages are skipped if they haven't been checked in the Graphics API menu
@@ -262,10 +269,8 @@ begin
     Result := not DxWrapperGraphicsApi.Checked
   else if (Page.Id = DgVoodooPage.Id) or (Page.Id = DgVoodooPage2.Id) then
     Result := not DgVoodooGraphicsApi.Checked
-  else if (Page.Id = VanillaPage.Id) and HasLightingBug then
-    Result := not (VanillaGraphicsApi.Checked or LightingFixGraphicsApi.Checked)
   else if (Page.Id = VanillaPage.Id) then
-    Result := not VanillaGraphicsApi.Checked;
+    Result := not (VanillaGraphicsApi.Checked or IsLightingFixChecked);
 end;
 
 procedure DxWrapperReShadeCheckBoxClick(Sender: TObject);

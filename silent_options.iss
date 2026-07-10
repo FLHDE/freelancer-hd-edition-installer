@@ -133,7 +133,7 @@ begin
     DefaultGraphicsApi := 1
   else if VanillaGraphicsApi.Checked then
     DefaultGraphicsApi := 2
-  else if HasLightingBug and LightingFixGraphicsApi.Checked then
+  else if IsLightingFixChecked then
     DefaultGraphicsApi := 3;
 
   SelectedGraphicsApi := GetParamInt('GraphicsApi', DefaultGraphicsApi);

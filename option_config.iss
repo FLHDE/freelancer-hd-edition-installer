@@ -232,7 +232,7 @@ begin
     GraphicsRendererSelectedIndex := 1
   else if VanillaGraphicsApi.Checked then
     GraphicsRendererSelectedIndex := 2
-  else if HasLightingBug and LightingFixGraphicsApi.Checked then
+  else if IsLightingFixChecked then
     GraphicsRendererSelectedIndex := 3;
 
   AddChosenOptionToMemoStr(GraphicsRendererStr, GraphicsRendererArr, GraphicsRendererSelectedIndex, NewLine, Space);
@@ -282,7 +282,7 @@ begin
     end;
 
     AddToReadyMemo(Result, ReShadeStr, NewLine);
-  end else if (VanillaGraphicsApi.Checked) or (HasLightingBug and LightingFixGraphicsApi.Checked) then begin
+  end else if VanillaGraphicsApi.Checked or IsLightingFixChecked then begin
     // Vanilla and Lighting Fix AA & AF
     AddChosenComboBoxOptionToMemo(Result, lblVanillaAa, VanillaAa, NewLine, Space);
     AddChosenComboBoxOptionToMemo(Result, lblVanillaAf, VanillaAf, NewLine, Space);
