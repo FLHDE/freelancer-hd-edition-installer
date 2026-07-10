@@ -59,6 +59,7 @@ var
   DefaultGraphicsApi, SelectedGraphicsApi: Integer;
   DefaultReflections, SelectedReflections: Integer;
   DefaultJumpTunnel, SelectedJumpTunnel: Integer;
+  SmallTextParam: Integer;
 begin
   // Installation type
   if CmdLineParamExists('/NoOptions') then
@@ -95,7 +96,9 @@ begin
   LogoRes.SelectedValueIndex := GetParamInt('LogoRes', LogoRes.SelectedValueIndex);
 
   // Small text on larger resolutions
-  SmallText.SelectedValueIndex := GetParamInt('SmallText', SmallText.SelectedValueIndex);
+  SmallTextParam := GetParamInt('SmallText', SmallText.SelectedValueIndex);
+  if SmallTextParam < SmallText.CheckListBox.Items.Count then
+    SmallText.SelectedValueIndex := SmallTextParam;
 
   // Advanced Widescreen HUD
   WidescreenHud.Checked := GetParamInt('WidescreenHud', Integer(WidescreenHud.Checked)) = 1;
