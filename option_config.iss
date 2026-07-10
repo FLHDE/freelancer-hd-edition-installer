@@ -19,7 +19,7 @@ begin
     ActualIndex := SelectedIndex
   else
   begin
-    ActualIndex := 0
+    ActualIndex := 0;
     DebugMsg('Chosen option index is out of bounds.');
   end;
 

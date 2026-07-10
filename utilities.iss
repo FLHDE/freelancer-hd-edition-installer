@@ -502,7 +502,7 @@ begin
       if not EnumDisplayDevices(0, i, device, EDD_GET_DEVICE_INTERFACE_NAME) then
         break;
 
-      deviceString := '' // The string needs to be made empty first, otherwise bad things will happen
+      deviceString := ''; // The string needs to be made empty first, otherwise bad things will happen
       deviceString := CharArrayToStringAnsi(device.DeviceString);
 
       // Main GPU?
