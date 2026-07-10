@@ -314,7 +314,7 @@ begin
 
     // If they specify an offline file in the cmd line. Check if it's valid, if not don't let them continue.
     # if !AllInOneInstall
-    if ((PageId = 1) and (OfflineInstall <> 'false') and (not FileExists(OfflineInstall) or (Pos('.7z',OfflineInstall) < 1))) then begin
+    if ((PageId = wpWelcome) and (OfflineInstall <> 'false') and (not FileExists(OfflineInstall) or (Pos('.7z',OfflineInstall) < 1))) then begin
       MsgBox('The specified source file either doesn''t exist or is not a valid .7z file', mbError, MB_OK);
       Result := False;
       exit;
@@ -346,7 +346,7 @@ begin
     end;
 
     // Validate install location
-    if (PageId = 6) then begin
+    if (PageId = wpSelectDir) then begin
       // Needs to be in a seperate if statement since it tries to expand {app} even if not on PageID 6. Pascal what are you doing?!
       if (Pos(AddBackslash(DataDirPage.Values[0]), AddBackslash(ExpandConstant('{app}'))) > 0) then begin
         MsgBox('{#MyModName} cannot be installed to the same location as your vanilla install. Please select a new location.', mbError, MB_OK);
@@ -371,7 +371,7 @@ begin
     end;
     # if !AllInOneInstall
     // Start downloading the mod
-    if ((PageId = 10) and (OfflineInstall = 'false')) then begin
+    if ((PageId = wpReady) and (OfflineInstall = 'false')) then begin
       for i:= 0 to mirrors.Count - 1 do
       begin
         DownloadPage.Clear;
