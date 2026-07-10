@@ -50,7 +50,7 @@ begin
 
   if (Attr and 1) = 1 then
   begin
-    Attr := Attr -1;
+    Attr := Attr - 1;
     SetFileAttributes(FileName, Attr);
   end;
 end;
@@ -152,12 +152,23 @@ begin
   end;
 end;
 
+// Safely escapes a trailing backslash so it doesn't break commandline quotes.
+function EscapeCmdPath(const Path: String): String;
+begin
+  Result := Path;
+  if (Length(Result) > 0) and (Result[Length(Result)] = '\') then
+    Result := Result + '\';
+end;
+
 // Tries to copy a directory without blocking the UI thread.
 // If this fails for whatever reason, copy the directory the normal way, but this will block the UI thread.
 procedure TryDirectoryCopyAsync(SourcePath, DestPath: string; Move: Boolean; SkipFlExe: Boolean);
 begin
-  if LegacyDirCpy or (not ShellExecuteAsync(ExpandConstant('{tmp}\dircpy.exe'), Format('"%s" "%s" %d %d', [SourcePath, DestPath, Integer(Move), Integer(SkipFlExe)]))) then
+  if LegacyDirCpy or (not ShellExecuteAsync(ExpandConstant('{tmp}\dircpy.exe'),
+    Format('"%s" "%s" %d %d', [EscapeCmdPath(SourcePath), EscapeCmdPath(DestPath), Integer(Move), Integer(SkipFlExe)])))
+  then begin
     DirectoryCopy(SourcePath, DestPath, Move, SkipFlExe);
+  end;
 end;
 
 // Used to replace strings in files. This replaces FLMM functions

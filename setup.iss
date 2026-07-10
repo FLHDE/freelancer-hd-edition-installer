@@ -145,18 +145,19 @@ begin
     begin
         # if !AllInOneInstall
           if OfflineInstall <> 'false' then
-            CopyFile(OfflineInstall,ExpandConstant('{tmp}\{#MyZipName}'),false);
+            CopyFile(OfflineInstall,ExpandConstant('{tmp}\{#MyZipName}'), false);
         # endif
 
         // Copy Vanilla game to directory
         UpdateProgress(15);
         WizardForm.StatusLabel.Caption := 'Copying vanilla Freelancer directory...';
-        TryDirectoryCopyAsync(DataDirPage.Values[0],ExpandConstant('{app}'), False, True);
+        TryDirectoryCopyAsync(DataDirPage.Values[0], ExpandConstant('{app}'), False, True);
 
         // Unzip
         UpdateProgress(50);
         WizardForm.StatusLabel.Caption := 'Unpacking {#MyAppName} files...';
-        ShellExecuteAsync(ExpandConstant('{tmp}\7za.exe'), ExpandConstant(' x -y -aoa "{tmp}\{#MyZipName}"  -o"{app}"'));
+        ShellExecuteAsync(ExpandConstant('{tmp}\7za.exe'),
+          Format('x -y -aoa "%s" -o"%s"', [ExpandConstant('{tmp}\{#MyZipName}'), EscapeCmdPath(ExpandConstant('{app}'))]));
         // -aoa Overwrite All existing files without prompt
         // -o Set output directory
         // -y Assume "Yes" on all Queries
