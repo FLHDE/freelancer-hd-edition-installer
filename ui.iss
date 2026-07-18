@@ -1486,7 +1486,7 @@ begin
       + #13#10 + 'd3d9.dll (DxWrapper ReShade)'
       + #13#10 + 'dxgi.dll (dgVoodoo ReShade)'
       + #13#10#13#10 + 'Moreover, there is a comprehensive guide available on how to run {#MyAppName} with Lutris on Linux:'
-      + #13#10 + 'https://bit.ly/flhde-linux-setup', mbError, MB_OK);
+      + #13#10 + 'https://bit.ly/flhde-setup-on-linux', mbError, MB_OK);
   end;
 end;
 
