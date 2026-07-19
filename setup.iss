@@ -441,3 +441,14 @@ begin
     if WizardSilent then
       SetSilentOptions();
  end;
+
+ procedure DeinitializeSetup;
+ begin
+  if EditedConfigFiles <> nil then
+    EditedConfigFiles.Free;
+
+  # if !AllInOneInstall
+    if mirrors <> nil then
+      mirrors.Free;
+  # endif
+end;
