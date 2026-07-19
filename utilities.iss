@@ -335,6 +335,7 @@ var
   Stream: TFileStream;
   SrcBuffer, FileBuffer: AnsiString;
   BufferLen: LongWord;
+  i: Integer;
 begin
   if not FileExists(FileName) then
   begin
@@ -358,7 +359,13 @@ begin
     Stream.Seek(Offset, soFromBeginning);
     Stream.ReadBuffer(FileBuffer, BufferLen);
 
-    Result := CompareStr(SrcBuffer, FileBuffer) = 0;
+    Result := True
+    for i := 1 to BufferLen do begin
+      if SrcBuffer[i] <> FileBuffer[i] then begin
+        Result := false;
+        break;
+      end;
+    end;
   except
     Result := false
   finally
