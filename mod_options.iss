@@ -107,7 +107,7 @@ begin
     end;
 end;
 
-// Gets the path of a file in the My Games\Freelancer(HD) directory
+// Gets the path of a file in the My Games\Freelancer(HDE) directory
 function GetOptionsPath(FileName: string): string;
 var
   OptionsFolder: string;

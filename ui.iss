@@ -1100,18 +1100,8 @@ begin
   VanillaAa.Style := csDropDownList;
   VanillaAa.Items.Add('Off');
   VanillaAa.Items.Add('2x');
-
-  // High AA settings are not needed on high resolutions like 4K
-  if (DesktopRes.Height >= 2160) or (DesktopResPixelAmount >= HighDesktopResPixelAmount) then
-  begin
-    VanillaAa.Items.Add('4x (recommended)');
-    VanillaAa.Items.Add('8x');
-  end
-  else
-  begin
-    VanillaAa.Items.Add('4x');
-    VanillaAa.Items.Add('8x (recommended)');
-  end;
+  VanillaAa.Items.Add('4x');
+  VanillaAa.Items.Add('8x');
 
   VanillaAa.Top := ScaleY(20);
   VanillaAa.Width := 155;
@@ -1135,7 +1125,7 @@ begin
   VanillaAf.Items.Add('2x');
   VanillaAf.Items.Add('4x');
   VanillaAf.Items.Add('8x');
-  VanillaAf.Items.Add('16x (recommended)');
+  VanillaAf.Items.Add('16x');
   VanillaAf.Top := lblVanillaAf.Top + ScaleY(20);
   VanillaAf.Width := 155;
 
@@ -1581,17 +1571,16 @@ begin
   if (DesktopRes.Height >= 2160) or (DesktopResPixelAmount >= HighDesktopResPixelAmount) then
     begin
       DgVoodooAa.ItemIndex := 2
-      VanillaAa.ItemIndex := 2
     end
   else
     begin
       DgVoodooAa.ItemIndex := 3
-      VanillaAa.ItemIndex := 3
     end;
 
   DgVoodooAf.ItemIndex := 4;
 
-  VanillaAf.ItemIndex := 4;
+  VanillaAa.ItemIndex := 0;
+  VanillaAf.ItemIndex := 0;
 
   if GpuManufacturer = AMDOrOther then
     DgVoodooRefreshRate.Text := IntToStr(RefreshRate);
