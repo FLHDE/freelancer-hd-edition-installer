@@ -1440,19 +1440,23 @@ end;
 
 procedure Process_VanillaGraphics();
 var
-  Rp8Path: string;
+  Rp8Path, FlPath: string;
 begin
   // Do not apply anything if neither the Vanilla graphics API nor the Lighting fix graphics API has been selected
   if (not VanillaGraphicsApi.Checked) and (not IsLightingFixChecked) then
     exit;
 
   Rp8Path := ExpandConstant('{app}\EXE\rp8.dll');
+  FlPath := ExpandConstant('{app}\EXE\Freelancer.exe');
 
   if VanillaAf.ItemIndex <> 0 then
   begin
     WriteHexToFile(Rp8Path, $01A48C, '03'); // Magnification filtering mode = "anisotropic"
     WriteHexToFile(Rp8Path, $01A4C5, '03'); // Minification filtering mode = "anisotropic"
-    WriteHexToFile(Rp8Path, $01A4FE, '03'); // Mipmap filtering mode = "anisotropic"
+
+    WriteHexToFile(FlPath,  $0246D6, '03'); // Mipmap filtering mode = "anisotropic" #1
+    WriteHexToFile(FlPath,  $210860, '03'); // Mipmap filtering mode = "anisotropic" #2
+    WriteHexToFile(Rp8Path, $01A4FE, '03'); // Mipmap filtering mode = "anisotropic" #3
   end;
 
   if VanillaAf.ItemIndex = 1 then
